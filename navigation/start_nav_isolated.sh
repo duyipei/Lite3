@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# Starts Nav2 with all velocity output remapped to /patrol/cmd_vel_raw.
+set -Eeuo pipefail
+
+PROJECT=/home/ysc/lite3_patrol_project
+MAP_ID=${LITE3_PATROL_MAP_ID:-site_fusion_20260909_001}
+MAP_DIR=$PROJECT/navigation/$MAP_ID
+source "$PROJECT/navigation/patrol_env.sh"
+
+if [[ ! "$MAP_ID" =~ ^[A-Za-z0-9._-]+$ ]]; then
+  echo "invalid map id: $MAP_ID" >&2
+  exit 1
+fi
+for artifact in patrol_map.yaml localization_map.pcd nav2_safe.yaml; do
+  if [[ ! -r "$MAP_DIR/$artifact" ]]; then
+    echo "missing map artifact: $MAP_DIR/$artifact" >&2
+    exit 1
+  fi
+done
+
+cmd_publishers=$(ros2 topic info /cmd_vel 2>/dev/null | awk '/Publisher count:/ {print $3}')
+if [[ "${cmd_publishers:-0}" != 0 ]]; then
+  echo "refusing to start: /cmd_vel already has ${cmd_publishers} publisher(s)" >&2
+  exit 1
+fi
+corrected_publishers=$(ros2 topic info /cmd_vel_corrected 2>/dev/null | awk '/Publisher count:/ {print $3}')
+if [[ "${corrected_publishers:-0}" != 0 ]]; then
+  echo "refusing to start: /cmd_vel_corrected already has ${corrected_publishers} publisher(s)" >&2
+  exit 1
+fi
+# Check both conditions in one bounded rclpy process.  Full Nav2 is never
+# started before manual NDT initialization: costmaps require map -> base_link
+# while activating and can otherwise block the lifecycle manager.
+preflight=$(timeout 25s env RMW_IMPLEMENTATION=rmw_cyclonedds_cpp python3 - <<'PY' || true
+import time
+import rclpy
+from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
+from rclpy.time import Time
+from std_msgs.msg import Bool
+from tf2_ros import Buffer, TransformListener
+
+rclpy.init()
+node = Node('patrol_nav_preflight')
+buffer = Buffer()
+listener = TransformListener(buffer, node)
+state = {'ready': False}
+ready_qos = QoSProfile(depth=1)
+ready_qos.reliability = ReliabilityPolicy.RELIABLE
+ready_qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
+subscription = node.create_subscription(
+    Bool, '/patrol/localization_ready',
+    lambda msg: state.update(ready=msg.data), ready_qos)
+deadline = time.monotonic() + 20.0
+ok = False
+while time.monotonic() < deadline:
+    rclpy.spin_once(node, timeout_sec=0.1)
+    try:
+        buffer.lookup_transform('map', 'base_link', Time())
+        tf_ok = True
+    except Exception:
+        tf_ok = False
+    if tf_ok and state['ready']:
+        ok = True
+        break
+print('NAV_PREFLIGHT_OK' if ok else 'NAV_PREFLIGHT_FAIL')
+node.destroy_node()
+rclpy.shutdown()
+PY
+)
+if [[ "$preflight" != *"NAV_PREFLIGHT_OK"* ]]; then
+  echo "refusing to start: map TF or localization confirmation is unavailable" >&2
+  exit 1
+fi
+
+nav_pid=
+cleanup() {
+  if [[ -n "${nav_pid:-}" ]]; then
+    kill -INT -- "-$nav_pid" 2>/dev/null || true
+    for _ in {1..20}; do
+      kill -0 -- "-$nav_pid" 2>/dev/null || break
+      sleep 0.25
+    done
+    kill -TERM -- "-$nav_pid" 2>/dev/null || true
+    wait "$nav_pid" 2>/dev/null || true
+  fi
+}
+trap cleanup EXIT INT TERM HUP
+
+setsid ros2 launch lite3_patrol_nav patrol_navigation.launch.py \
+  map_yaml:="$MAP_DIR/patrol_map.yaml" \
+  globalmap_pcd:="$MAP_DIR/localization_map.pcd" \
+  params_file:="$MAP_DIR/nav2_safe.yaml" \
+  start_localization:=False start_navigation:=True &
+nav_pid=$!
+wait "$nav_pid"

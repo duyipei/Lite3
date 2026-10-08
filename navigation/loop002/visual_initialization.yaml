@@ -1,0 +1,32 @@
+visual_pose_initializer:
+  ros__parameters:
+    # This must stay false until a real visual localization database and the
+    # visual_map -> loop002 lidar-map alignment have both been verified.
+    configured: false
+    visual_pose_topic: /visual_localization/pose
+    visual_map_frame: visual_map
+    lidar_map_frame: map
+
+    # T_lidar_map_visual_map, planar form. Do not assume identity merely
+    # because both systems call their frame "map".
+    map_transform_x: 0.0
+    map_transform_y: 0.0
+    map_transform_z: 0.0
+    map_transform_yaw: 0.0
+
+    stable_samples: 10
+    stable_duration_s: 0.8
+    max_sample_gap_s: 0.75
+    max_position_std_m: 0.12
+    max_yaw_std_rad: 0.12
+    max_visual_covariance_xy: 0.25
+
+    ndt_confirmation_samples: 5
+    ndt_settle_s: 1.0
+    ndt_timeout_s: 12.0
+    max_ndt_position_delta_m: 0.50
+    max_ndt_yaw_delta_rad: 0.35
+    auto_initialize: false
+    odom_topic: /odom
+    initialpose_topic: /initialpose
+    ready_topic: /patrol/localization_ready

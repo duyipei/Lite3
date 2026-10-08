@@ -1,0 +1,227 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-09-28-11-22-08-732767-lite-5267
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [hdl_localization_composition-1]: process started with pid [5300]
+[hdl_localization_composition-1] [INFO] [1790565733.463210144] [patrol_localization]: status_max_correspondence_dist is: 0.500000
+[hdl_localization_composition-1] [INFO] [1790565733.467967392] [patrol_localization]: status_max_valid_point_dist is: 25.000000
+[hdl_localization_composition-1] [INFO] [1790565733.472160192] [patrol_localization]: robot_odom_frame_id is: robot_odom
+[hdl_localization_composition-1] [INFO] [1790565733.475013632] [patrol_localization]: robot_odom_child_frame_id is: leg_base_link
+[hdl_localization_composition-1] [INFO] [1790565733.475297888] [patrol_localization]: odom_child_frame_id is: base_link
+[hdl_localization_composition-1] [INFO] [1790565733.475473056] [patrol_localization]: use_imu is: 0
+[hdl_localization_composition-1] [INFO] [1790565733.475594144] [patrol_localization]: invert_acc is: 0
+[hdl_localization_composition-1] [INFO] [1790565733.476786656] [patrol_localization]: invert_gyro is: 0
+[hdl_localization_composition-1] [INFO] [1790565733.476988160] [patrol_localization]: t_diff is: 0.250000
+[hdl_localization_composition-1] [INFO] [1790565733.477124128] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [INFO] [1790565733.477278400] [patrol_localization]: use_global_localization is: 0
+[hdl_localization_composition-1] [INFO] [1790565733.477376672] [patrol_localization]: specify_init_pose is: 0
+[hdl_localization_composition-1] [INFO] [1790565733.477485376] [patrol_localization]: init_pos_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.477853920] [patrol_localization]: init_pos_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.478266912] [patrol_localization]: init_pos_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.478407072] [patrol_localization]: init_ori_w is: 1.000000
+[hdl_localization_composition-1] [INFO] [1790565733.478516128] [patrol_localization]: init_ori_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.478717440] [patrol_localization]: init_ori_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.478844032] [patrol_localization]: init_ori_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790565733.479175904] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1790565733.479277056] [patrol_localization]: reg_method is: NDT_OMP
+[hdl_localization_composition-1] [INFO] [1790565733.479370976] [patrol_localization]: ndt_neighbor_search_method is: DIRECT1
+[hdl_localization_composition-1] [INFO] [1790565733.479466464] [patrol_localization]: ndt_neighbor_search_radius is: 3.000000
+[hdl_localization_composition-1] [INFO] [1790565733.479563328] [patrol_localization]: ndt_resolution is: 1.000000
+[hdl_localization_composition-1] Warning: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+[hdl_localization_composition-1]          at line 133 in /tmp/binarydeb/ros-foxy-tf2-0.13.14/src/buffer_core.cpp
+[hdl_localization_composition-1] [WARN] [1790565733.480429792] [patrol_localization]: Waiting for transform from rslidar to base_link
+[hdl_localization_composition-1] [INFO] [1790565734.480730336] [patrol_localization]: create registration method for localization
+[hdl_localization_composition-1] [INFO] [1790565734.482479904] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1790565734.483590848] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1790565734.483808064] [patrol_localization]: create registration method for fallback during relocalization
+[hdl_localization_composition-1] [INFO] [1790565734.483931552] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1790565734.484037280] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1790565734.484180544] [patrol_localization]: disable imu-based pose prediction; keep IMU leveling enabled
+[hdl_localization_composition-1] [WARN] [1790565734.678582528] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[hdl_localization_composition-1] [INFO] [1790565734.725476288] [patrol_localization]: globalmap_pcd is: /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/localization_map.pcd
+[hdl_localization_composition-1] [INFO] [1790565736.281097152] [patrol_localization]: convert_utm_to_local is: 0
+[hdl_localization_composition-1] [INFO] [1790565736.284987712] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [WARN] [1790565737.117825088] [patrol_localization]: received first lidar
+[hdl_localization_composition-1] [WARN] [1790565737.117988928] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1790565737.118147840] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.118370656] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.159836000] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.160003072] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.241176768] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.241412800] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.345060096] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.345222592] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.479521856] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.479919584] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.539797952] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.539963040] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.706873056] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.707190848] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.745646112] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.745822304] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.937345440] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.937509696] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565737.948382720] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565737.948546688] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565738.064328480] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790565738.064579232] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790565738.332063072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.392241568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.455326144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.551748992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.687027040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.755938624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.872079008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565738.957561216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.068393280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.250675744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.366734176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.467750400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.546996128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.768808032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.927223680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565739.955001216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.054529024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.233770464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.259654528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.353778304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.464454752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.552888320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.652321792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.763829312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.852175072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565740.948528576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.061760768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.234400576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.272166496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.347240928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.447869600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.549720256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.652726560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.752615456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.852454752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565741.949463776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.049193024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.207896512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.291829280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.348477536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.453009792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.564402752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.653184000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.761834592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.846174752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565742.965760512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.053336352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.297178144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.352282816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.452980704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.551414560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.700226496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.762982144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.852958080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565743.961900896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.051715168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.298526368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.353461600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.448730016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790565744.484299648] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790565744.557453184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.664636192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.749180992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.848385792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565744.960397792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.052184512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.208016288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.253953024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.352617952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.459441984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.550960576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.650880352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.748223808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.862426848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565745.953858784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.052750016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.210232512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.261136832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.352273184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.471038944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.561326112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.648921728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.752854368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.874776000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565746.952709760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.057827296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.206637600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.245159456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.359258912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.458893792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.571962528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.658596128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.747999552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.854313344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565747.952500288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.047075424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.295887616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.348315296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.461554272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.613340256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.649963264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.762071936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.858398400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565748.951479136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.044509280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.198462560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.248717056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.369548896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.468064576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.554262336] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.648304000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.749619392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.844920384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565749.949530880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.048239360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.249800064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.346504288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.444591776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.547846848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.646902592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.745037504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.846307040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565750.949233952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.046287040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.194557632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.246914848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.352122976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.447249024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.547724224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.653495584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.757797536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.855788160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565751.966164864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.061987712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.227850528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.248427200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.349020000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.451596320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.544344800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.668648832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.747392448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.853199456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565752.947265440] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.047531680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.197897792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.248215040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.344299904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.504093728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.546193056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.651777632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.748885120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.853873344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565753.951415584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565754.049374464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565754.223892704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565754.247568416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565754.348596288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790565754.447126176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790565754.484323424] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790565754.549282528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790565754.581956704] [rclcpp]: signal_handler(signal_value=2)
+[INFO] [hdl_localization_composition-1]: process has finished cleanly [pid 5300]

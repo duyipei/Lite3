@@ -1,0 +1,37 @@
+mission: 11 waypoints, map=outdoor_20260921_003_area_review
+[GOAL] 1/11 wp_001
+[MOTION] wp=1 xy=(0.399,0.393) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.000 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.399,0.392) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=-0.002 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.399,0.394) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.003 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.399,0.394) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=-0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.400,0.390) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.002 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.397,0.389) yaw_deg=-8.3 bearing_error_deg=-1.1 target_yaw_deg=-2.7 odom_w=-0.000 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.398,0.387) yaw_deg=-8.3 bearing_error_deg=-1.1 target_yaw_deg=-2.7 odom_w=0.000 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.400,0.388) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.400,0.389) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=-0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.398,0.390) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=-0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.399,0.390) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.000 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.401,0.389) yaw_deg=-8.2 bearing_error_deg=-1.1 target_yaw_deg=-2.7 odom_w=-0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.401,0.388) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.000 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.401,0.389) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=-0.002 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.400,0.390) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.003 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.401,0.391) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.002 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.402,0.391) yaw_deg=-8.3 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.001 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.401,0.395) yaw_deg=-8.2 bearing_error_deg=-1.3 target_yaw_deg=-2.7 odom_w=-0.002 cmd_v_w=(0.0, 0.0)
+[MOTION] wp=1 xy=(0.400,0.390) yaw_deg=-8.2 bearing_error_deg=-1.2 target_yaw_deg=-2.7 odom_w=0.000 cmd_v_w=(0.0, 0.0)
+[STOP] DISARM acknowledged; goal cancellation requested
+Traceback (most recent call last):
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 275, in <module>
+    main()
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 271, in main
+    execute(mission, args.goal_timeout)
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 241, in execute
+    node.run()
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 212, in run
+    self.wait(lambda: self.result is True, goal_timeout)
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 161, in wait
+    self.check()
+  File "/tmp/lite3_patrol_mission.iIteNY/patrol_runner.py", line 152, in check
+    raise RuntimeError(self.failure)
+RuntimeError: RESULT:GOAL_1:ABORTED:READY_FOR_NEXT_GOAL
+Connection to 192.168.1.103 closed.

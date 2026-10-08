@@ -1,0 +1,41 @@
+{
+  "elapsed_monotonic_s": 700.1114058239999,
+  "finished_realtime_ns": 1700602279725514304,
+  "started_realtime_ns": 1700601579614143072,
+  "topics": {
+    "/fast_livo2/cloud_registered": {
+      "count": 2325,
+      "first_stamp_ns": 1700601587570898688,
+      "frames": [
+        "fast_livo2_map"
+      ],
+      "last_stamp_ns": 1700602242528054336,
+      "non_monotonic": 0
+    },
+    "/fast_livo2/odometry": {
+      "count": 2395,
+      "first_stamp_ns": 1700601587528491520,
+      "frames": [
+        "fast_livo2_map"
+      ],
+      "last_stamp_ns": 1700602242514002912,
+      "non_monotonic": 0
+    },
+    "/fast_livo2/path": {
+      "count": 2416,
+      "first_stamp_ns": 1700601577828860960,
+      "frames": [
+        "fast_livo2_map"
+      ],
+      "last_stamp_ns": 1700601577828860960,
+      "non_monotonic": 0
+    },
+    "/fast_livo2/status": {
+      "count": 1592,
+      "first_stamp_ns": null,
+      "frames": [],
+      "last_stamp_ns": null,
+      "non_monotonic": 0
+    }
+  }
+}

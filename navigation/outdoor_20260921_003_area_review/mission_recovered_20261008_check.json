@@ -1,0 +1,197 @@
+{
+  "waypoints": [
+    {
+      "id": 1,
+      "x": 3.4961,
+      "y": -0.1237,
+      "yaw_deg": -2.73,
+      "free": true,
+      "clearance_lower_bound_m": 1.353,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 2,
+      "x": 9.6845,
+      "y": -0.1941,
+      "yaw_deg": 0,
+      "free": true,
+      "clearance_lower_bound_m": 0.873,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 3,
+      "x": 15.5916,
+      "y": -0.3347,
+      "yaw_deg": -3.81,
+      "free": true,
+      "clearance_lower_bound_m": 0.985,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 4,
+      "x": 19.2484,
+      "y": -0.405,
+      "yaw_deg": -10.3,
+      "free": true,
+      "clearance_lower_bound_m": 0.984,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 5,
+      "x": 19.6,
+      "y": 1.9859,
+      "yaw_deg": 90,
+      "free": true,
+      "clearance_lower_bound_m": 3.268,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 6,
+      "x": 19.5297,
+      "y": 4.5879,
+      "yaw_deg": 175.03,
+      "free": true,
+      "clearance_lower_bound_m": 0.686,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 7,
+      "x": 15.029,
+      "y": 4.6582,
+      "yaw_deg": 171.87,
+      "free": true,
+      "clearance_lower_bound_m": 0.927,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 8,
+      "x": 9.7548,
+      "y": 5.0098,
+      "yaw_deg": -180,
+      "free": true,
+      "clearance_lower_bound_m": 0.874,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 9,
+      "x": 4.34,
+      "y": 5.1505,
+      "yaw_deg": -180,
+      "free": true,
+      "clearance_lower_bound_m": 1.119,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 10,
+      "x": 3.0039,
+      "y": 2.8298,
+      "yaw_deg": -111.04,
+      "free": true,
+      "clearance_lower_bound_m": 1.402,
+      "component": 1,
+      "conservative_disk_component": 1
+    },
+    {
+      "id": 11,
+      "x": 0.1206,
+      "y": 0.0169,
+      "yaw_deg": 0,
+      "free": true,
+      "clearance_lower_bound_m": 0.424,
+      "component": 1,
+      "conservative_disk_component": 1
+    }
+  ],
+  "segments": [
+    {
+      "start": 1,
+      "end": 2,
+      "straight_distance_m": 6.189,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.559
+    },
+    {
+      "start": 2,
+      "end": 3,
+      "straight_distance_m": 5.909,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.759
+    },
+    {
+      "start": 3,
+      "end": 4,
+      "straight_distance_m": 3.657,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.959
+    },
+    {
+      "start": 4,
+      "end": 5,
+      "straight_distance_m": 2.417,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.959
+    },
+    {
+      "start": 5,
+      "end": 6,
+      "straight_distance_m": 2.603,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.659
+    },
+    {
+      "start": 6,
+      "end": 7,
+      "straight_distance_m": 4.501,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.659
+    },
+    {
+      "start": 7,
+      "end": 8,
+      "straight_distance_m": 5.286,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.807
+    },
+    {
+      "start": 8,
+      "end": 9,
+      "straight_distance_m": 5.417,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0.843
+    },
+    {
+      "start": 9,
+      "end": 10,
+      "straight_distance_m": 2.678,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 1.059
+    },
+    {
+      "start": 10,
+      "end": 11,
+      "straight_distance_m": 4.028,
+      "sampled_centerline_free": true,
+      "sampled_clearance_lower_bound_m": 0
+    }
+  ],
+  "straight_total_m": 42.684999999999995,
+  "conservative_robot_radius_m": 0.4301162633521313,
+  "all_free": true,
+  "same_free_component": true,
+  "scope": "Offline static-map screening only. Not a Nav2 plan, swept-footprint collision certificate, or field safety approval.",
+  "warnings": [
+    "Segment 10 to 11 centerline is in free cells but approaches blocked/unknown cells too closely for a straight-line footprint clearance guarantee.",
+    "Waypoint 11 conservative clearance lower bound 0.424m does not certify the padded-footprint circumscribed radius 0.430m.",
+    "Initial robot pose to waypoint 1 is not included; goals must be planned with current localization.",
+    "Do not execute via legacy patrol_runner until guarded goal-bridge integration has been verified."
+  ]
+}

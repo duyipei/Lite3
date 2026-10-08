@@ -1,0 +1,2 @@
+[WARN] [1790669109.864928096] [patrol_velocity_gate]: velocity gate started DISARMED; non-zero output is blocked
+[INFO] [1790669109.869439168] [patrol_velocity_gate]: zero-command heartbeat active on /cmd_vel_corrected

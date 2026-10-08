@@ -1,0 +1,8 @@
+[WARN] [1790566145.617720608] [patrol_velocity_gate]: velocity gate started DISARMED; non-zero output is blocked
+[INFO] [1790566145.622950496] [patrol_velocity_gate]: zero-command heartbeat active on /cmd_vel_corrected
+[WARN] [1790566274.590602240] [patrol_velocity_gate]: velocity output ARMED by explicit service call
+[WARN] [1790566331.010787136] [patrol_velocity_gate]: navigation goal finished; ARMED session is idle and the next RViz goal may start immediately
+[WARN] [1790566391.854607680] [patrol_velocity_gate]: navigation goal finished; ARMED session is idle and the next RViz goal may start immediately
+[WARN] [1790566567.388835744] [patrol_velocity_gate]: navigation goal finished; ARMED session is idle and the next RViz goal may start immediately
+[WARN] [1790566594.800096672] [patrol_velocity_gate]: navigation goal finished; ARMED session is idle and the next RViz goal may start immediately
+[WARN] [1790566622.313285376] [patrol_velocity_gate]: navigation goal finished; ARMED session is idle and the next RViz goal may start immediately

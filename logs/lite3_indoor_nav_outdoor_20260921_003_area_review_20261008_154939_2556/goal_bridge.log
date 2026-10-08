@@ -1,0 +1,22 @@
+[INFO] [1790566133.146932640] [patrol_goal_pose_bridge]: bridging isolated /patrol/goal_request to Foxy /navigate_to_pose; the first goal requires ARM and later goals run in the same explicitly armed session
+[INFO] [1790566133.496392288] [patrol_goal_pose_bridge]: Foxy /navigate_to_pose action server is ready
+[WARN] [1790566252.658717600] [patrol_goal_pose_bridge]: queued bridged goal 1; only the first goal requires ARM
+[INFO] [1790566252.740750688] [patrol_goal_pose_bridge]: path preview ready for queued goal 1 (165 poses)
+[WARN] [1790566274.664609920] [patrol_goal_pose_bridge]: Nav2 accepted bridged goal 1
+[WARN] [1790566331.008048576] [patrol_goal_pose_bridge]: Nav2 bridged goal 1 finished with status 4
+[WARN] [1790566347.065437760] [patrol_goal_pose_bridge]: executing bridged goal 2 immediately in the existing ARMED session
+[INFO] [1790566347.172932128] [patrol_goal_pose_bridge]: path preview ready for queued goal 2 (134 poses)
+[WARN] [1790566347.179019712] [patrol_goal_pose_bridge]: Nav2 accepted bridged goal 2
+[WARN] [1790566391.863863360] [patrol_goal_pose_bridge]: Nav2 bridged goal 2 finished with status 4
+[WARN] [1790566414.321409952] [patrol_goal_pose_bridge]: executing bridged goal 3 immediately in the existing ARMED session
+[INFO] [1790566414.513944256] [patrol_goal_pose_bridge]: path preview ready for queued goal 3 (298 poses)
+[WARN] [1790566414.520719904] [patrol_goal_pose_bridge]: Nav2 accepted bridged goal 3
+[WARN] [1790566567.392375008] [patrol_goal_pose_bridge]: Nav2 bridged goal 3 finished with status 4
+[WARN] [1790566594.580387904] [patrol_goal_pose_bridge]: executing bridged goal 4 immediately in the existing ARMED session
+[WARN] [1790566594.747409408] [patrol_goal_pose_bridge]: Nav2 accepted bridged goal 4
+[INFO] [1790566594.756576576] [patrol_goal_pose_bridge]: path preview ready for queued goal 4 (7 poses)
+[WARN] [1790566594.797449824] [patrol_goal_pose_bridge]: Nav2 bridged goal 4 finished with status 4
+[WARN] [1790566618.531038240] [patrol_goal_pose_bridge]: executing bridged goal 5 immediately in the existing ARMED session
+[WARN] [1790566618.679106144] [patrol_goal_pose_bridge]: Nav2 accepted bridged goal 5
+[INFO] [1790566618.695596704] [patrol_goal_pose_bridge]: path preview ready for queued goal 5 (12 poses)
+[WARN] [1790566622.313170432] [patrol_goal_pose_bridge]: Nav2 bridged goal 5 finished with status 4

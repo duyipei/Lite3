@@ -1,0 +1,5 @@
+input_db=/home/ysc/lite3_patrol_project/results/round3a_lio_motion/lite3_campus_loop_001_lio.db3
+config=/home/ysc/lite3_patrol_project/config/lite3_mid360_lio_only.yaml
+voxel_override=0.5
+playback_rate=0.5
+save_pcd=1

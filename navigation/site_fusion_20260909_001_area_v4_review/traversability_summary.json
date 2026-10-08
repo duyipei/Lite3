@@ -1,0 +1,554 @@
+{
+  "source_bag": "/home/ysc/lite3_patrol_project/bags/site_fusion_20260909_001/sensors",
+  "trajectory_csv": "/home/ysc/lite3_patrol_project/results/round3a_lio_motion/site_fusion_20260909_001_map_05x_pcd/trajectory.csv",
+  "lidar_messages": 4550,
+  "totals": {
+    "frames_considered": 2275,
+    "frames_processed": 2233,
+    "raw_points": 44707488,
+    "sampled_points": 7451248,
+    "valid_points": 2470060,
+    "ground_points": 794492,
+    "obstacle_points": 591700,
+    "rays": 454847
+  },
+  "bounds": {
+    "x_min": -13.200000000000001,
+    "x_max": 55.0,
+    "y_min": -13.100000000000001,
+    "y_max": 20.5
+  },
+  "grid": {
+    "width": 683,
+    "height": 337,
+    "resolution_m": 0.1
+  },
+  "cells": {
+    "observed_ground": 61138,
+    "ray_free": 97363,
+    "candidate_free_before_component_filter": 74043,
+    "connected_free": 71194,
+    "occupied": 16811,
+    "unknown": 142166,
+    "rough": 0,
+    "slope_rejected": 17245
+  },
+  "components_before_route_filter": 112,
+  "ground_model": {
+    "pcd_points": 2732713,
+    "pcd_ground_candidates": 220204,
+    "pcd_ground_seed_cells": 112816,
+    "height_bin_m": 0.05
+  },
+  "relative_z_histogram": [
+    {
+      "center_m": -1.4875,
+      "count": 159
+    },
+    {
+      "center_m": -1.4625,
+      "count": 172
+    },
+    {
+      "center_m": -1.4375,
+      "count": 190
+    },
+    {
+      "center_m": -1.4125,
+      "count": 163
+    },
+    {
+      "center_m": -1.3875,
+      "count": 212
+    },
+    {
+      "center_m": -1.3625,
+      "count": 208
+    },
+    {
+      "center_m": -1.3375,
+      "count": 180
+    },
+    {
+      "center_m": -1.3125,
+      "count": 191
+    },
+    {
+      "center_m": -1.2875,
+      "count": 196
+    },
+    {
+      "center_m": -1.2625,
+      "count": 246
+    },
+    {
+      "center_m": -1.2375,
+      "count": 503
+    },
+    {
+      "center_m": -1.2125,
+      "count": 563
+    },
+    {
+      "center_m": -1.1875,
+      "count": 543
+    },
+    {
+      "center_m": -1.1625,
+      "count": 520
+    },
+    {
+      "center_m": -1.1375,
+      "count": 539
+    },
+    {
+      "center_m": -1.1125,
+      "count": 635
+    },
+    {
+      "center_m": -1.0875,
+      "count": 716
+    },
+    {
+      "center_m": -1.0625,
+      "count": 725
+    },
+    {
+      "center_m": -1.0375,
+      "count": 711
+    },
+    {
+      "center_m": -1.0125,
+      "count": 647
+    },
+    {
+      "center_m": -0.9875,
+      "count": 799
+    },
+    {
+      "center_m": -0.9625,
+      "count": 701
+    },
+    {
+      "center_m": -0.9375,
+      "count": 745
+    },
+    {
+      "center_m": -0.9125,
+      "count": 938
+    },
+    {
+      "center_m": -0.8875,
+      "count": 1127
+    },
+    {
+      "center_m": -0.8625,
+      "count": 1257
+    },
+    {
+      "center_m": -0.8375,
+      "count": 1204
+    },
+    {
+      "center_m": -0.8125,
+      "count": 1068
+    },
+    {
+      "center_m": -0.7875,
+      "count": 1042
+    },
+    {
+      "center_m": -0.7625,
+      "count": 899
+    },
+    {
+      "center_m": -0.7375,
+      "count": 873
+    },
+    {
+      "center_m": -0.7125,
+      "count": 886
+    },
+    {
+      "center_m": -0.6875,
+      "count": 909
+    },
+    {
+      "center_m": -0.6625,
+      "count": 829
+    },
+    {
+      "center_m": -0.6375,
+      "count": 757
+    },
+    {
+      "center_m": -0.6125,
+      "count": 820
+    },
+    {
+      "center_m": -0.5875,
+      "count": 728
+    },
+    {
+      "center_m": -0.5625,
+      "count": 802
+    },
+    {
+      "center_m": -0.5375,
+      "count": 970
+    },
+    {
+      "center_m": -0.5125,
+      "count": 1217
+    },
+    {
+      "center_m": -0.4875,
+      "count": 1798
+    },
+    {
+      "center_m": -0.4625,
+      "count": 1417
+    },
+    {
+      "center_m": -0.4375,
+      "count": 1458
+    },
+    {
+      "center_m": -0.4125,
+      "count": 1550
+    },
+    {
+      "center_m": -0.3875,
+      "count": 1572
+    },
+    {
+      "center_m": -0.3625,
+      "count": 1950
+    },
+    {
+      "center_m": -0.3375,
+      "count": 2880
+    },
+    {
+      "center_m": -0.3125,
+      "count": 3162
+    },
+    {
+      "center_m": -0.2875,
+      "count": 3475
+    },
+    {
+      "center_m": -0.2625,
+      "count": 4052
+    },
+    {
+      "center_m": -0.2375,
+      "count": 4361
+    },
+    {
+      "center_m": -0.2125,
+      "count": 4767
+    },
+    {
+      "center_m": -0.1875,
+      "count": 4829
+    },
+    {
+      "center_m": -0.1625,
+      "count": 6127
+    },
+    {
+      "center_m": -0.1375,
+      "count": 7767
+    },
+    {
+      "center_m": -0.1125,
+      "count": 9795
+    },
+    {
+      "center_m": -0.0875,
+      "count": 14307
+    },
+    {
+      "center_m": -0.0625,
+      "count": 23935
+    },
+    {
+      "center_m": -0.0375,
+      "count": 59589
+    },
+    {
+      "center_m": -0.0125,
+      "count": 271697
+    },
+    {
+      "center_m": 0.0125,
+      "count": 293512
+    },
+    {
+      "center_m": 0.0375,
+      "count": 61451
+    },
+    {
+      "center_m": 0.0625,
+      "count": 26943
+    },
+    {
+      "center_m": 0.0875,
+      "count": 20460
+    },
+    {
+      "center_m": 0.1125,
+      "count": 17772
+    },
+    {
+      "center_m": 0.1375,
+      "count": 15221
+    },
+    {
+      "center_m": 0.1625,
+      "count": 15518
+    },
+    {
+      "center_m": 0.1875,
+      "count": 15450
+    },
+    {
+      "center_m": 0.2125,
+      "count": 14696
+    },
+    {
+      "center_m": 0.2375,
+      "count": 15236
+    },
+    {
+      "center_m": 0.2625,
+      "count": 15036
+    },
+    {
+      "center_m": 0.2875,
+      "count": 14353
+    },
+    {
+      "center_m": 0.3125,
+      "count": 14094
+    },
+    {
+      "center_m": 0.3375,
+      "count": 14043
+    },
+    {
+      "center_m": 0.3625,
+      "count": 13732
+    },
+    {
+      "center_m": 0.3875,
+      "count": 13608
+    },
+    {
+      "center_m": 0.4125,
+      "count": 13939
+    },
+    {
+      "center_m": 0.4375,
+      "count": 14263
+    },
+    {
+      "center_m": 0.4625,
+      "count": 14461
+    },
+    {
+      "center_m": 0.4875,
+      "count": 14691
+    },
+    {
+      "center_m": 0.5125,
+      "count": 15320
+    },
+    {
+      "center_m": 0.5375,
+      "count": 15439
+    },
+    {
+      "center_m": 0.5625,
+      "count": 15359
+    },
+    {
+      "center_m": 0.5875,
+      "count": 15231
+    },
+    {
+      "center_m": 0.6125,
+      "count": 16137
+    },
+    {
+      "center_m": 0.6375,
+      "count": 17206
+    },
+    {
+      "center_m": 0.6625,
+      "count": 18587
+    },
+    {
+      "center_m": 0.6875,
+      "count": 18958
+    },
+    {
+      "center_m": 0.7125,
+      "count": 18050
+    },
+    {
+      "center_m": 0.7375,
+      "count": 16604
+    },
+    {
+      "center_m": 0.7625,
+      "count": 15617
+    },
+    {
+      "center_m": 0.7875,
+      "count": 14124
+    },
+    {
+      "center_m": 0.8125,
+      "count": 13946
+    },
+    {
+      "center_m": 0.8375,
+      "count": 13583
+    },
+    {
+      "center_m": 0.8625,
+      "count": 12736
+    },
+    {
+      "center_m": 0.8875,
+      "count": 12573
+    },
+    {
+      "center_m": 0.9125,
+      "count": 12853
+    },
+    {
+      "center_m": 0.9375,
+      "count": 13342
+    },
+    {
+      "center_m": 0.9625,
+      "count": 15220
+    },
+    {
+      "center_m": 0.9875,
+      "count": 18079
+    },
+    {
+      "center_m": 1.0125,
+      "count": 14811
+    },
+    {
+      "center_m": 1.0375,
+      "count": 11307
+    },
+    {
+      "center_m": 1.0625,
+      "count": 9212
+    },
+    {
+      "center_m": 1.0875,
+      "count": 9158
+    },
+    {
+      "center_m": 1.1125,
+      "count": 8314
+    },
+    {
+      "center_m": 1.1375,
+      "count": 8047
+    },
+    {
+      "center_m": 1.1625,
+      "count": 8610
+    },
+    {
+      "center_m": 1.1875,
+      "count": 10157
+    },
+    {
+      "center_m": 1.2125,
+      "count": 11259
+    },
+    {
+      "center_m": 1.2375,
+      "count": 10164
+    },
+    {
+      "center_m": 1.2625,
+      "count": 8041
+    },
+    {
+      "center_m": 1.2875,
+      "count": 6918
+    },
+    {
+      "center_m": 1.3125,
+      "count": 6596
+    },
+    {
+      "center_m": 1.3375,
+      "count": 6193
+    },
+    {
+      "center_m": 1.3625,
+      "count": 6130
+    },
+    {
+      "center_m": 1.3875,
+      "count": 6012
+    },
+    {
+      "center_m": 1.4125,
+      "count": 5924
+    },
+    {
+      "center_m": 1.4375,
+      "count": 5476
+    },
+    {
+      "center_m": 1.4625,
+      "count": 4599
+    },
+    {
+      "center_m": 1.4875,
+      "count": 3728
+    }
+  ],
+  "parameters": {
+    "bag_dir": "/home/ysc/lite3_patrol_project/bags/site_fusion_20260909_001/sensors",
+    "trajectory_csv": "/home/ysc/lite3_patrol_project/results/round3a_lio_motion/site_fusion_20260909_001_map_05x_pcd/trajectory.csv",
+    "output_dir": "/home/ysc/lite3_patrol_project/results/navigation_area/site_fusion_20260909_001_area_v4",
+    "playback_rate": 0.5,
+    "reference_pcd": "/home/ysc/lite3_patrol_project/results/round3a_lio_motion/site_fusion_20260909_001_map_05x_pcd/map_voxel_10cm.pcd",
+    "resolution": 0.1,
+    "max_range": 12.0,
+    "margin": 1.0,
+    "frame_stride": 2,
+    "point_stride": 6,
+    "angular_bins": 360,
+    "sensor_height": 0.47,
+    "ground_band_below": 0.12,
+    "ground_band_above": 0.12,
+    "min_obstacle_height": 0.15,
+    "max_obstacle_height": 1.2,
+    "min_ground_observations": 2,
+    "min_free_observations": 3,
+    "min_obstacle_observations": 3,
+    "obstacle_ground_ratio": 0.5,
+    "ground_support_radius": 0.65,
+    "max_slope_deg": 20.0,
+    "max_ground_std": 0.12,
+    "obstacle_inflation": 0.15,
+    "free_close_radius": 0.2,
+    "guaranteed_route_radius": 0.45,
+    "max_frames": 0
+  }
+}

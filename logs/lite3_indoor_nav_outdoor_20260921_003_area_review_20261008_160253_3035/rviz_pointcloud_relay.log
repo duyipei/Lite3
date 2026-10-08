@@ -1,0 +1,3 @@
+[INFO] [1791446703.284477027] [patrol_rviz_pointcloud_relay]: relaying /aligned_points -> /patrol/rviz_aligned_points with best-effort remote input
+[INFO] [1791446704.296111839] [patrol_rviz_pointcloud_relay]: first aligned point cloud relayed: frame=map points=4758
+[INFO] [1791448235.263830962] [patrol_rviz_pointcloud_relay]: navigation session ended; stopping relay

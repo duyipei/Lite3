@@ -1,0 +1,49 @@
+{
+  "count": 3275,
+  "collector_elapsed_s": 701.1726828800001,
+  "message_duration_s": 654.985511392,
+  "output_rate_hz": 4.998583851178587,
+  "non_monotonic_stamps": 0,
+  "frames": [
+    [
+      "fast_livo2_map",
+      "fast_livo2_body"
+    ]
+  ],
+  "initial_position_m": [
+    -0.0012818996975382888,
+    -0.00023460693445038485,
+    0.0051328994779492945
+  ],
+  "final_position_m": [
+    14.305829227525557,
+    24.120431266739622,
+    3.1014003965510435
+  ],
+  "net_displacement_m": 28.215010604456047,
+  "max_displacement_from_initial_m": 48.546486351380196,
+  "trajectory_length_3d_m": 113.51252942863667,
+  "trajectory_length_xy_m": 104.86470000306007,
+  "stationary_window_samples": 200,
+  "stationary_mean_initial_position_m": [
+    -0.0060104239918762235,
+    -0.0003645001936863639,
+    0.003926460622139122
+  ],
+  "stationary_mean_final_position_m": [
+    17.62113997157669,
+    21.9534290550132,
+    4.17823972129811
+  ],
+  "closure_xy_m": 28.154670705455544,
+  "closure_z_m": 4.17431326067597,
+  "closure_position_3d_m": 28.46243794426071,
+  "initial_yaw_deg": -0.026496346273613608,
+  "final_yaw_deg": 144.37435594162855,
+  "closure_yaw_deg": 144.40085228790215,
+  "step_m": {
+    "median": 0.04041746954937758,
+    "p95": 0.06754492403083982,
+    "max": 0.3075902329345011
+  }
+}

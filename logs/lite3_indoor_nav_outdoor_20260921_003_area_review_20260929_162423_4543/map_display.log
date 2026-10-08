@@ -1,0 +1,34 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-09-29-16-26-44-742850-lite-17476
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [map_server-1]: process started with pid [17483]
+[INFO] [lifecycle_manager-2]: process started with pid [17485]
+[map_server-1] [INFO] [1790670405.506677920] [manual_initial_pose_map_server]: 
+[map_server-1] 	manual_initial_pose_map_server lifecycle node launched. 
+[map_server-1] 	Waiting on external lifecycle transitions to activate
+[map_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[map_server-1] [INFO] [1790670405.507100416] [manual_initial_pose_map_server]: Creating
+[lifecycle_manager-2] [INFO] [1790670405.622890048] [manual_initial_pose_lifecycle_manager]: Creating
+[lifecycle_manager-2] [INFO] [1790670405.694769600] [manual_initial_pose_lifecycle_manager]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[lifecycle_manager-2] [INFO] [1790670405.707978752] [manual_initial_pose_lifecycle_manager]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-2] [INFO] [1790670405.708139136] [manual_initial_pose_lifecycle_manager]: [34m[1mConfiguring manual_initial_pose_map_server[0m[0m
+[map_server-1] [INFO] [1790670405.711059488] [manual_initial_pose_map_server]: Configuring
+[map_server-1] [INFO] [map_io]: Loading yaml file: /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/patrol_map.yaml
+[map_server-1] [DEBUG] [map_io]: resolution: 0.1
+[map_server-1] [DEBUG] [map_io]: origin[0]: -13.1
+[map_server-1] [DEBUG] [map_io]: origin[1]: -15.1
+[map_server-1] [DEBUG] [map_io]: origin[2]: 0
+[map_server-1] [DEBUG] [map_io]: free_thresh: 0.196
+[map_server-1] [DEBUG] [map_io]: occupied_thresh: 0.65
+[map_server-1] [DEBUG] [map_io]: mode: trinary
+[map_server-1] [DEBUG] [map_io]: negate: 0
+[map_server-1] [INFO] [map_io]: Loading image_file: /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/patrol_map_area.pgm
+[map_server-1] [DEBUG] [map_io]: Read map /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/patrol_map_area.pgm: 654 X 342 map @ 0.1 m/cell
+[lifecycle_manager-2] [INFO] [1790670405.839789824] [manual_initial_pose_lifecycle_manager]: [34m[1mActivating manual_initial_pose_map_server[0m[0m
+[map_server-1] [INFO] [1790670405.840452352] [manual_initial_pose_map_server]: Activating
+[lifecycle_manager-2] [INFO] [1790670405.845817248] [manual_initial_pose_lifecycle_manager]: [34m[1mManaged nodes are active[0m[0m
+[map_server-1] [INFO] [1790670411.280317920] [rclcpp]: signal_handler(signal_value=2)
+[lifecycle_manager-2] [INFO] [1790670411.280467872] [rclcpp]: signal_handler(signal_value=2)
+[map_server-1] [INFO] [1790670411.297026944] [manual_initial_pose_map_server]: Destroying
+[lifecycle_manager-2] [INFO] [1790670411.310758080] [manual_initial_pose_lifecycle_manager]: Destroying
+[INFO] [lifecycle_manager-2]: process has finished cleanly [pid 17485]
+[INFO] [map_server-1]: process has finished cleanly [pid 17483]

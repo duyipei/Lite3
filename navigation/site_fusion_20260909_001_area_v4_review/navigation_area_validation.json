@@ -1,0 +1,33 @@
+{
+  "status": "offline_validation_pass_review_required",
+  "source_run": "site_fusion_20260909_001",
+  "map_variant": "area_v4",
+  "resolution_m": 0.1,
+  "free_area_m2": 711.94,
+  "previous_corridor_free_area_m2": 75.76,
+  "expansion_ratio": 9.3976,
+  "waypoints": {
+    "count": 43,
+    "centers_in_free_space": 43,
+    "minimum_center_clearance_m": 0.4997,
+    "padded_footprint_passed": 43,
+    "padded_footprint_failed": 0,
+    "footprint_m": [[0.4, 0.3], [0.4, -0.3], [-0.4, -0.3], [-0.4, 0.3]]
+  },
+  "safe_connected_area": {
+    "clearance_0_30_m_area_m2": 488.33,
+    "clearance_0_30_m_waypoints_connected": 43,
+    "clearance_0_35_m_area_m2": 449.48,
+    "clearance_0_35_m_waypoints_connected": 43,
+    "clearance_0_40_m_area_m2": 432.85,
+    "clearance_0_40_m_waypoints_connected": 43
+  },
+  "navigation_policy": {
+    "unknown_is_traversable": false,
+    "global_costmap_rolling_window": false,
+    "static_layer_unknown_cost_value": 255,
+    "planner_allow_unknown": false,
+    "mission_enabled": false,
+    "field_review_required": true
+  }
+}

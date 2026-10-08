@@ -1,0 +1,54 @@
+{
+  "algorithm": {
+    "timing": {
+      "lio": {
+        "count": 3275,
+        "mean_s": 0.11663642045801527,
+        "p50_s": 0.116064,
+        "p95_s": 0.14806579999999997,
+        "p99_s": 0.24399823999999998,
+        "max_s": 0.469357
+      },
+      "vio": {
+        "count": 0,
+        "mean_s": null,
+        "p50_s": null,
+        "p95_s": null,
+        "p99_s": null,
+        "max_s": null
+      }
+    },
+    "sync_lag_warning_count": 440,
+    "sync_lag_s": {
+      "count": 440,
+      "mean_s": 0.6582389340909092,
+      "p50_s": 0.6508775,
+      "p95_s": 0.8384515499999999,
+      "p99_s": 0.8761235,
+      "max_s": 0.885859
+    },
+    "timestamp_jump_warning_count": 0,
+    "timestamp_backward_warning_count": 541
+  },
+  "resources": {
+    "samples": 692,
+    "span_s": 696.2370000000001,
+    "cpu_percent_one_core_mean": 126.80504335260115,
+    "cpu_percent_one_core_p95": 160.691,
+    "rss_initial_mib": 45.96875,
+    "rss_final_mib": 1174.54296875,
+    "rss_peak_mib": 3699.98828125,
+    "swap_initial_mib": 0.0,
+    "swap_final_mib": 0.0,
+    "swap_peak_mib": 0.0
+  },
+  "tegrastats": {
+    "samples": 697,
+    "ram_peak_mib": 4614,
+    "swap_initial_mib": 0,
+    "swap_final_mib": 1,
+    "swap_peak_mib": 1,
+    "cpu_temp_peak_c": 55.5,
+    "gpu_temp_peak_c": 50.0
+  }
+}

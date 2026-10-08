@@ -1,0 +1,49 @@
+visual_pose_initializer:
+  ros__parameters:
+    # The visual database and localization PCD were generated from the same
+    # FAST-LIVO trajectory, so T_lidar_map_visual_map is identity.
+    configured: true
+    visual_pose_topic: /visual_localization/pose
+    visual_map_frame: visual_map
+    lidar_map_frame: map
+
+    map_transform_x: 0.0
+    map_transform_y: 0.0
+    map_transform_z: 0.0
+    map_transform_yaw: 0.0
+
+    stable_samples: 10
+    stable_duration_s: 4.0
+    max_sample_gap_s: 2.5
+    max_position_std_m: 0.12
+    max_yaw_std_rad: 0.12
+    max_visual_covariance_xy: 0.25
+
+    # A visual match is only a coarse seed. NDT must confirm it before the
+    # localization-ready gate can open.
+    ndt_confirmation_samples: 15
+    ndt_max_matching_error: 0.15
+    ndt_bad_samples: 5
+    sensor_max_age_s: 1.5
+    ndt_settle_s: 3.0
+    ndt_timeout_s: 30.0
+    max_ndt_position_delta_m: 0.65
+    max_ndt_yaw_delta_rad: 0.27
+    auto_initialize: false
+    odom_topic: /odom
+    initialpose_topic: /initialpose
+    ready_topic: /patrol/localization_ready
+
+    map_min_x: -13.1
+    map_max_x: 52.2
+    map_min_y: -15.1
+    map_max_y: 19.0
+    max_ready_odom_step_m: 0.50
+    max_ready_odom_speed_mps: 1.0
+    max_ready_yaw_step_rad: 0.35
+    ready_odom_max_age_s: 0.70
+    ready_visual_max_age_s: 4.0
+    max_ready_visual_position_delta_m: 0.75
+    max_ready_visual_yaw_delta_rad: 0.50
+    ready_visual_bad_samples: 3
+    supervise_visual_after_ready: false

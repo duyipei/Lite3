@@ -1,0 +1,66 @@
+mission_version: 1
+map_id: outdoor_20260921_003_area_review
+frame_id: map
+enabled: false
+review_required: true
+route_source: recovered from Matplotlib SVG vector coordinates and heading arrows;
+  not a planned path
+map_yaml_sha256: bdc4c2243749c697998047d10d9af4af71deef2cfaa6372a9da12c63262675d9
+map_image_sha256: 20c075056762c1f50019a8656e3d9adc45e26529836630d2a490375a5aa81d81
+waypoints:
+- id: wp_001
+  x: 3.4961
+  y: -0.1237
+  yaw: -0.047583
+  pause_s: 0.0
+- id: wp_002
+  x: 9.6845
+  y: -0.1941
+  yaw: -0.0
+  pause_s: 0.0
+- id: wp_003
+  x: 15.5916
+  y: -0.3347
+  yaw: -0.066568
+  pause_s: 0.0
+- id: wp_004
+  x: 19.2484
+  y: -0.405
+  yaw: -0.179854
+  pause_s: 0.0
+- id: wp_005
+  x: 19.6
+  y: 1.9859
+  yaw: 1.570796
+  pause_s: 0.0
+- id: wp_006
+  x: 19.5297
+  y: 4.5879
+  yaw: 3.054854
+  pause_s: 0.0
+- id: wp_007
+  x: 15.029
+  y: 4.6582
+  yaw: 2.999695
+  pause_s: 0.0
+- id: wp_008
+  x: 9.7548
+  y: 5.0098
+  yaw: -3.141593
+  pause_s: 0.0
+- id: wp_009
+  x: 4.34
+  y: 5.1505
+  yaw: -3.141593
+  pause_s: 0.0
+- id: wp_010
+  x: 3.0039
+  y: 2.8298
+  yaw: -1.93797
+  pause_s: 0.0
+- id: wp_011
+  x: 0.1206
+  y: 0.0169
+  yaw: -0.0
+  pause_s: 0.0
+recovery_svg_sha256: c07a1b37eaaf60a33e82c8c015855681a89020693027a4878c0f68d3cd278dcb

@@ -1,0 +1,279 @@
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+    default_bt_xml_filename: navigate_w_replanning_and_recovery.xml
+    plugin_lib_names:
+    - nav2_compute_path_to_pose_action_bt_node
+    - nav2_follow_path_action_bt_node
+    - nav2_back_up_action_bt_node
+    - nav2_spin_action_bt_node
+    - nav2_wait_action_bt_node
+    - nav2_clear_costmap_service_bt_node
+    - nav2_is_stuck_condition_bt_node
+    - nav2_goal_reached_condition_bt_node
+    - nav2_goal_updated_condition_bt_node
+    - nav2_initial_pose_received_condition_bt_node
+    - nav2_reinitialize_global_localization_service_bt_node
+    - nav2_rate_controller_bt_node
+    - nav2_distance_controller_bt_node
+    - nav2_speed_controller_bt_node
+    - nav2_recovery_node_bt_node
+    - nav2_pipeline_sequence_bt_node
+    - nav2_round_robin_node_bt_node
+    - nav2_transform_available_condition_bt_node
+    - nav2_time_expired_condition_bt_node
+    - nav2_distance_traveled_condition_bt_node
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: false
+      always_send_full_costmap: false
+      # Keep a 5 cm safety margin without extending the footprint into the
+      # mapped wall beside the indoor start pose.
+      footprint_padding: 0.05
+      footprint: '[[0.3, 0.2], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2]]'
+      global_frame: map
+      width: 8
+      height: 8
+      origin_x: 0.0
+      origin_y: 0.0
+      plugins:
+      - static_layer
+      - stvl_obstacle_layer
+      - inflation_layer
+      publish_frequency: 0.5
+      resolution: 0.1
+      robot_base_frame: base_link
+      rolling_window: true
+      track_unknown_space: true
+      transform_tolerance: 0.3
+      update_frequency: 2.0
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+        enabled: true
+        subscribe_to_updates: false
+        map_topic: /map
+        map_subscribe_transient_local: true
+        track_unknown_space: false
+        use_maximum: true
+        unknown_cost_value: 0
+        trinary_costmap: true
+        transform_tolerance: 0.3
+      stvl_obstacle_layer:
+        plugin: spatio_temporal_voxel_layer/SpatioTemporalVoxelLayer
+        observation_sources: rslidar_points
+        transform_tolerance: 0.3
+        enabled: true
+        publish_voxel_map: false
+        voxel_size: 0.15
+        combination_method: 1
+        mark_threshold: 0
+        update_footprint_enabled: true
+        track_unknown_space: false
+        decay_model: 0
+        # Survive more than one 2 Hz costmap update; consume each scan once.
+        voxel_decay: 1.0
+        mapping_mode: false
+        map_save_duration: 60.0
+        rslidar_points:
+          topic: /aligned_points
+          # Coordinates are in map, but range/FOV originate at the live LiDAR.
+          sensor_frame: rslidar
+          observation_persistence: 0.0
+          expected_update_rate: 0.5
+          data_type: PointCloud2
+          min_obstacle_height: 0.15
+          max_obstacle_height: 1.2
+          inf_is_valid: false
+          marking: true
+          clearing: false
+          min_z: 0.2
+          max_z: 3.0
+          vertical_fov_angle: 0.56
+          vertical_fov_padding: 0.0
+          horizontal_fov_angle: 6.29
+          decay_acceleration: 5.0
+          # NDT already downsamples this stream at 0.3 m. A second 0.15 m
+          # two-point filter discards valid thin obstacles; only crop height.
+          filter: passthrough
+          voxel_min_points: 0
+          clear_after_reading: true
+          enabled: true
+          model_type: 1
+          obstacle_range: 4.0
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        inflation_radius: 0.3
+        cost_scaling_factor: 10.0
+        inflate_unknown: false
+        inflate_around_unknown: false
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+      always_send_full_costmap: false
+      footprint_padding: 0.05
+      footprint: '[[0.3, 0.2], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2]]'
+      global_frame: map
+      width: 30
+      height: 30
+      origin_x: 0.0
+      origin_y: 0.0
+      plugins:
+      - static_layer
+      - inflation_layer
+      publish_frequency: 0.5
+      resolution: 0.1
+      robot_base_frame: base_link
+      rolling_window: false
+      track_unknown_space: true
+      transform_tolerance: 0.3
+      update_frequency: 1.0
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+        enabled: true
+        subscribe_to_updates: true
+        map_topic: /map
+        map_subscribe_transient_local: true
+        track_unknown_space: true
+        use_maximum: true
+        unknown_cost_value: 255
+        trinary_costmap: true
+        transform_tolerance: 0.3
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        inflation_radius: 0.3
+        cost_scaling_factor: 10.0
+        inflate_unknown: false
+        inflate_around_unknown: false
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    expected_planner_frequency: 1.0
+    planner_plugins:
+    - GridBased
+    GridBased:
+      plugin: nav2_navfn_planner/NavfnPlanner
+      # Allow NavFn to terminate on nearby free space when the exact goal cell
+      # is occupied by inflation or a transient obstacle observation.
+      tolerance: 0.4
+      use_astar: false
+      allow_unknown: false
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 5.0
+    progress_checker_plugin: progress_checker
+    goal_checker_plugin: goal_checker
+    controller_plugins:
+    - FollowPath
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    odom_topic: /odom
+    progress_checker:
+      plugin: nav2_controller::SimpleProgressChecker
+      required_movement_radius: 0.2
+      movement_time_allowance: 45.0
+    goal_checker:
+      plugin: nav2_controller::SimpleGoalChecker
+      xy_goal_tolerance: 0.35
+      # Point-and-goal patrol cares about position.  Ignoring the arbitrary
+      # RViz arrow heading prevents a second in-place turn at every target.
+      yaw_goal_tolerance: 3.14159
+      stateful: true
+    FollowPath:
+      plugin: dwb_core::DWBLocalPlanner
+      # A later RViz goal can be directly behind the robot.  Allow a slow
+      # reverse trajectory so DWB can follow that path without first sweeping
+      # the rectangular footprint through an in-place 180 degree turn.
+      min_vel_x: -0.08
+      # Lateral motion is deliberately not sampled.
+      min_vel_y: 0.0
+      max_vel_x: 0.15
+      max_vel_y: 0.0
+      max_vel_theta: 0.40
+      # Keep low-speed samples available for the final approach and narrow
+      # areas instead of rejecting every command below normal walking speed.
+      min_speed_xy: 0.03
+      max_speed_xy: 0.15
+      min_speed_theta: 0.04
+      acc_lim_x: 0.2
+      acc_lim_y: 0.1
+      acc_lim_theta: 0.25
+      decel_lim_x: -0.25
+      decel_lim_y: -0.1
+      decel_lim_theta: -0.30
+      # Sample both the limited reverse range and the normal forward range.
+      vx_samples: 11
+      vy_samples: 1
+      vtheta_samples: 31
+      # Keep the prediction horizon short enough that a distant obstacle does
+      # not invalidate an otherwise useful near-term turn or forward step.
+      sim_time: 2.5
+      discretize_by_time: false
+      linear_granularity: 0.1
+      angular_granularity: 0.1
+      critics:
+      - ObstacleFootprint
+      - Oscillation
+      - PathAlign
+      - GoalAlign
+      - PathDist
+      - GoalDist
+      # Use the standard differential-drive scoring set.  No PreferForward
+      # critic is used: a target behind the body must be reachable in reverse.
+      GoalDist.scale: 24.0
+      GoalDist.aggregation_type: last
+      PathAlign.scale: 64.0
+      PathAlign.aggregation_type: sum
+      # Keep alignment close to the body centre.  A long forward projection
+      # incorrectly penalizes an otherwise valid reverse path.
+      PathAlign.forward_point_distance: 0.10
+      GoalAlign.scale: 48.0
+      GoalAlign.aggregation_type: last
+      GoalAlign.forward_point_distance: 0.10
+      PathDist.scale: 32.0
+      PathDist.aggregation_type: sum
+      ObstacleFootprint.scale: 0.02
+      ObstacleFootprint.max_scaling_factor: 0.2
+      ObstacleFootprint.scaling_speed: 0.15
+      transform_tolerance: 0.2
+      short_circuit_trajectory_evaluation: true
+      publish_evaluation: false
+      publish_global_plan: true
+      publish_transformed_plan: true
+      publish_local_plan: true
+      publish_trajectories: false
+      publish_cost_grid_pc: false
+map_server:
+  ros__parameters:
+    use_sim_time: false
+    yaml_filename: /home/duyipei/Lite3_Projects/lite3_patrol_project/navigation/indoor_fusion_20260912_001_area_review/patrol_map.yaml
+    topic_name: map
+    frame_id: map
+recoveries_server:
+  ros__parameters:
+    use_sim_time: false
+    costmap_topic: local_costmap/costmap_raw
+    footprint_topic: local_costmap/published_footprint
+    cycle_frequency: 1.0
+    recovery_plugins:
+    - wait
+    wait:
+      plugin: nav2_recoveries/Wait
+    global_frame: map
+    robot_base_frame: base_link
+    transform_tolerance: 0.3
+    simulate_ahead_time: 2.0
+    max_rotational_vel: 0.3
+    min_rotational_vel: 0.1
+    rotational_acc_lim: 0.5
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: false
+    loop_rate: 10
+    stop_on_failure: true

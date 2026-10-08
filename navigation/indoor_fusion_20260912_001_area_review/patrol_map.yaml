@@ -1,0 +1,10 @@
+image: patrol_map_area.pgm
+mode: trinary
+resolution: 0.1
+origin:
+- -13.200000000000001
+- -14.9
+- 0.0
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25

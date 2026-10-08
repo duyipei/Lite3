@@ -1,0 +1,13 @@
+[INFO] [1791445937.718640517] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1791445937.719027321] [rviz2]: OpenGl version: 4.1 (GLSL 4.1)
+[INFO] [1791445939.265401762] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1791445952.727460774] [rviz2]: Trying to create a map of size 654 x 342 using 1 swatches
+[ERROR] [1791445953.055832522] [rviz2]: Vertex Program:rviz/glsl120/indexed_8bit_image.vert Fragment Program:rviz/glsl120/indexed_8bit_image.frag GLSL link result : 
+active samplers with a different type refer to the same texture image unit
+[INFO] [1791445958.578542783] [rviz2]: Trying to create a map of size 654 x 342 using 1 swatches
+[INFO] [1791445958.584277572] [rviz2]: Trying to create a map of size 80 x 80 using 1 swatches
+[INFO] [1791446100.693035839] [rviz2]: Setting goal pose: Frame:map, Position(8.75741, 0.129064, 0), Orientation(0, 0, 0.00867547, 0.999962) = Angle: 0.0173511
+[INFO] [1791446195.100926622] [rviz2]: Setting goal pose: Frame:map, Position(14.9143, 2.05335, 0), Orientation(0, 0, 0.404297, 0.914628) = Angle: 0.83242
+[INFO] [1791446262.367939788] [rviz2]: Setting goal pose: Frame:map, Position(0.0178323, -0.0190434, 0), Orientation(0, 0, -0.018547, 0.999828) = Angle: -0.0370961
+[INFO] [1791446442.636331946] [rviz2]: Setting goal pose: Frame:map, Position(0.502437, -0.12575, 0), Orientation(0, 0, 0.0166887, 0.999861) = Angle: 0.033379
+[INFO] [1791446466.584850590] [rviz2]: Setting goal pose: Frame:map, Position(0.924797, 0.110997, 0), Orientation(0, 0, -0.0182176, 0.999834) = Angle: -0.0364372

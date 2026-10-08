@@ -1,0 +1,4 @@
+[INFO] [1790669098.596995808] [patrol_goal_pose_bridge]: bridging isolated /patrol/goal_request to Foxy /navigate_to_pose; the first goal requires ARM and later goals run in the same explicitly armed session
+[INFO] [1790669098.896720992] [patrol_goal_pose_bridge]: Foxy /navigate_to_pose action server is ready
+[WARN] [1790669248.485642048] [patrol_goal_pose_bridge]: queued bridged goal 1; only the first goal requires ARM
+[INFO] [1790669248.529056064] [patrol_goal_pose_bridge]: path preview ready for queued goal 1 (44 poses)

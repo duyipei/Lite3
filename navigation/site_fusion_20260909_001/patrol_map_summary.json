@@ -1,0 +1,38 @@
+{
+  "pcd_points": 2732713,
+  "trajectory_samples": 4467,
+  "turn_index": 2391,
+  "waypoint_count": 43,
+  "blocked_waypoints": [],
+  "resolution_m": 0.1,
+  "bounds": {
+    "x_min": -4.2,
+    "x_max": 46.0,
+    "y_min": -4.1000000000000005,
+    "y_max": 11.5
+  },
+  "grid": {
+    "width": 503,
+    "height": 157
+  },
+  "free_cells": 7576,
+  "occupied_cells": 6224,
+  "unknown_cells": 65171,
+  "accepted_obstacle_points": 74845,
+  "parameters": {
+    "pcd": "/home/duyipei/maps/site_fusion_20260909_001_map_05x/map_voxel_10cm.pcd",
+    "trajectory_csv": "/home/duyipei/maps/site_fusion_20260909_001_map_05x/trajectory.csv",
+    "output_dir": "/home/duyipei/Lite3_Projects/lite3_patrol_project/navigation/site_fusion_20260909_001",
+    "resolution": 0.1,
+    "margin": 4.0,
+    "free_radius": 0.55,
+    "guaranteed_clear_radius": 0.35,
+    "obstacle_radius": 2.5,
+    "sensor_height": 0.47,
+    "min_obstacle_height": 0.15,
+    "max_obstacle_height": 1.2,
+    "min_points_per_cell": 4,
+    "waypoint_spacing": 2.0,
+    "chunk_points": 1000000
+  }
+}

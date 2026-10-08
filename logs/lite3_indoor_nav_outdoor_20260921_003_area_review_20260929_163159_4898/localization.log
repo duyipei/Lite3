@@ -1,0 +1,1354 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-09-29-16-32-45-917082-lite-19705
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [hdl_localization_composition-1]: process started with pid [19732]
+[hdl_localization_composition-1] [INFO] [1790670766.743401152] [patrol_localization]: status_max_correspondence_dist is: 0.500000
+[hdl_localization_composition-1] [INFO] [1790670766.744080320] [patrol_localization]: status_max_valid_point_dist is: 25.000000
+[hdl_localization_composition-1] [INFO] [1790670766.744564608] [patrol_localization]: robot_odom_frame_id is: robot_odom
+[hdl_localization_composition-1] [INFO] [1790670766.745140832] [patrol_localization]: robot_odom_child_frame_id is: leg_base_link
+[hdl_localization_composition-1] [INFO] [1790670766.745264096] [patrol_localization]: odom_child_frame_id is: base_link
+[hdl_localization_composition-1] [INFO] [1790670766.745392192] [patrol_localization]: use_imu is: 0
+[hdl_localization_composition-1] [INFO] [1790670766.745512192] [patrol_localization]: invert_acc is: 0
+[hdl_localization_composition-1] [INFO] [1790670766.746266720] [patrol_localization]: invert_gyro is: 0
+[hdl_localization_composition-1] [INFO] [1790670766.746635808] [patrol_localization]: t_diff is: 0.250000
+[hdl_localization_composition-1] [INFO] [1790670766.747089920] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [INFO] [1790670766.747212576] [patrol_localization]: use_global_localization is: 0
+[hdl_localization_composition-1] [INFO] [1790670766.747807232] [patrol_localization]: specify_init_pose is: 0
+[hdl_localization_composition-1] [INFO] [1790670766.747944096] [patrol_localization]: init_pos_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.748045632] [patrol_localization]: init_pos_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.748135104] [patrol_localization]: init_pos_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.748254656] [patrol_localization]: init_ori_w is: 1.000000
+[hdl_localization_composition-1] [INFO] [1790670766.749574464] [patrol_localization]: init_ori_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.749766272] [patrol_localization]: init_ori_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.749874848] [patrol_localization]: init_ori_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1790670766.749971744] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1790670766.750077184] [patrol_localization]: reg_method is: NDT_OMP
+[hdl_localization_composition-1] [INFO] [1790670766.750168768] [patrol_localization]: ndt_neighbor_search_method is: DIRECT1
+[hdl_localization_composition-1] [INFO] [1790670766.750256736] [patrol_localization]: ndt_neighbor_search_radius is: 3.000000
+[hdl_localization_composition-1] [INFO] [1790670766.750383392] [patrol_localization]: ndt_resolution is: 1.000000
+[hdl_localization_composition-1] Warning: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+[hdl_localization_composition-1]          at line 133 in /tmp/binarydeb/ros-foxy-tf2-0.13.14/src/buffer_core.cpp
+[hdl_localization_composition-1] [WARN] [1790670766.752846816] [patrol_localization]: Waiting for transform from rslidar to base_link
+[hdl_localization_composition-1] [INFO] [1790670767.753203584] [patrol_localization]: create registration method for localization
+[hdl_localization_composition-1] [INFO] [1790670767.753416640] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1790670767.753797888] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1790670767.753902624] [patrol_localization]: create registration method for fallback during relocalization
+[hdl_localization_composition-1] [INFO] [1790670767.753956672] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1790670767.754040800] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1790670767.754142656] [patrol_localization]: disable imu-based pose prediction; keep IMU leveling enabled
+[hdl_localization_composition-1] [WARN] [1790670767.925281472] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[hdl_localization_composition-1] [INFO] [1790670768.021661120] [patrol_localization]: globalmap_pcd is: /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/localization_map.pcd
+[hdl_localization_composition-1] [INFO] [1790670768.247592160] [patrol_localization]: convert_utm_to_local is: 0
+[hdl_localization_composition-1] [INFO] [1790670768.249805312] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [WARN] [1790670768.533611936] [patrol_localization]: received first lidar
+[hdl_localization_composition-1] [WARN] [1790670768.533763520] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1790670768.533835808] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.533919712] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670768.540529056] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.540718592] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670768.638822080] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.638992192] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670768.735830528] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.736002176] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670768.837955904] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.838113408] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670768.936006976] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670768.936180768] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.036810240] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670769.039520768] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.137944544] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670769.138139008] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.238556640] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670769.238754144] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.343182720] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670769.343398176] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.437981728] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1790670769.438191872] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1790670769.693740000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670769.740987520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670769.843006912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670769.940841504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.039530400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.140101568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.241075520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.340542624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.441871456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.642304224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.743890432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.847498656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670770.943911328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.042722944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.140625600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.240948256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.341252992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.447138528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.610081056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.671245024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.744390464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.843011904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670771.946814944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.042475168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.196018368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.356101600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.449881792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.626528832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.640343488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.742004160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.868100416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670772.949627264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.053813152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.160846560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.248343936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.342035872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.483959456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.679509728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.740807008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.849568448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670773.945408608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.045294848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.141911232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.239327680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.341432160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.493456352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.638909376] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.647237984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.746875456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.849398048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670774.942613696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.049727744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.141047264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.241410944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.339462080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.442116448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.619487840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.643311680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.742738368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.842862080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670775.946941632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.043050912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.143350144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.243891008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.342055936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.448207328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.618025568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.641192864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.742806400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.839694944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670776.940097408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.042789024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.142147488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.245203840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.345779232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.443124032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.606016544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.646015040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.742375872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670777.754332192] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790670777.845233760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670777.943394240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.043651776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.147724416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.245960352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.349553696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.444968960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.614279680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.642548608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.745286912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.847216384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670778.942833408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.046900832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.143874400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.242384192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.348305344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.445086528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.661062048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.745041664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.845308256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670779.950429664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.043642240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.139941248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.246210528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.370479104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.447828512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.609845728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.640903936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.742479232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.842543776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670780.947096896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.040785184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.143326272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.241947520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.342637536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.440779328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.609484320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.642281312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.740442240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.839674688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670781.943629824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.043452640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.143935904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.246049152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.353328704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.444176768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.606920832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.677918464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.754668256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.844156448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670782.948173792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.044806208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.143933696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.242890976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.346043104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.444086272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.649152032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.739796192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.852469568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670783.953762016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.039681376] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.145709152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.241032384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.340896448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.449339264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.626373728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.639717216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.741439424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.840301728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670784.939743488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.046184960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.143419584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.249223072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.339274688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.440920064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.603310752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.639436224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.742949632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.839520256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670785.943731968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.040038944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.140058144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.239713408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.346383904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.442788032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.607982656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.643058400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.745341344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.845357344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670786.946447232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.045007840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.145269472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.242929824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.344251968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.442158176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.603489440] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.642802080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.740698912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670787.754295616] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790670787.840667744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670787.951850080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.039281568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.147444544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.281661408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.365966976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.455777120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.657724640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.750213152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.842828480] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670788.945668032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.044614240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.143928256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.242765248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.345075520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.441259616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.633230720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.642430016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.748048512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.921461056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670789.948425856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.042726944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.144928800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.246729824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.346380896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.443193152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.612123840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.643203392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.743119968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.842539232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670790.945116320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.046150432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.145197696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.249019008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.347968960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.454215264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.670585504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.745141120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.851387104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670791.948786304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.045015840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.141303968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.241392672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.347169952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.455344864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.680999168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.752692096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.847994240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670792.947166592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.058517472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.144301632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.243721632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.348961248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.441985728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [WARN] [1790670793.702758784] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1790670793.708745504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.743877024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.842695296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670793.942411616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.040385600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.143167520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.246425216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.350319392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.446846848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.554083552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.651032288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.744566816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.843221952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670794.952516096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.040349888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.139899072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.265529344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.469150848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.664600928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.744514240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.846573824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670795.968856768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.072069888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.144880672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.243138464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.357967360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.453485408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.658696640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.754583488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.850369696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670796.948121248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.049142688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.141393600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.245058528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.343318208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.443969856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.615663616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.642667648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.741886880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670797.754313472] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790670797.842069600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670797.945949824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.042420352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.144137472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.257503936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.343091808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.458994400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.611202848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.644910784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.744922592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.845330208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670798.951217280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.048080960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.143513024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.239172224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.340819488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.452278176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.627823520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.642816224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.744010720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.842524928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670799.948236768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.076519200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.145724896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.247446176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.350270176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.447158592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.682617856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.766302528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.842752864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670800.952321952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.045535968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.142887744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.261473152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.343501952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.442745504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.607050432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.644247712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.741298592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.856129120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670801.952901632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.061606944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.154448512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.244264224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.342630208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.442189056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.690646368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.754841568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.842912448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670802.948597696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.042638464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.141621664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.297171520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.345940096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.448605408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.675837024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.761919904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.861423072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670803.943268000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.043709632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.148067392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.241853440] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.348006272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.451777440] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.630705280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.662218752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.740236224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.849952992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670804.952294496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.046897632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.144335616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.243820704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.339083616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.441410304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.603009920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.640743296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.742482944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.841286240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670805.940496160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.047311040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.142307552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.242195168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.343205632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.450322496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.607184320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.642564608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.744560736] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.839962784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670806.942482176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.040413536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.142215392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.241469216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.342080960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.447501184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.604626976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.646562080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.740599264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670807.754866144] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790670807.843995392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670807.940028480] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.040960800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.139492320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.244312160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.346055520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.443036064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.604657024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.639752992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.739428256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.839371456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670808.939940608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.044178176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.140418592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.259336128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.339386240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.445360576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.726358624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.792840928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.795856448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.855825856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670809.941864480] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.044845600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.141389024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.239778880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.343454400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.439093568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.644060704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.746208896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.855840000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670810.941463744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.048266144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.143762688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.242617408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.341356224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.448923776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.605739648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.640493920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.744465312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.848355392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670811.940383456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.042394720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.141241408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.240745184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.340882976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.446560992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.629240128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.642091136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.743898048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.840126976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670812.941075200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.043329536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.140282304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.244301888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.342681408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.440471616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.622846496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.642263424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.741754784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.842747680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670813.942388416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.042926016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.141180320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.244155552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.341759712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.441151264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.625007776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.640738880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.743731296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.842659712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670814.941847264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.039743680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.141764416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.241263392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.340797056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.445770080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.647202752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.744020544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.870684672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670815.972950400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.045736256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.142644320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.239153344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.462228000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.464359360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.635234208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.648713312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.743718624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.841510048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670816.941688896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.048459616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.140782368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.243286848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.346656608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.441888256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.615487968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.642658304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.741510304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670817.754868288] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1790670817.840426848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670817.941529376] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.039164384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.138851328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.241951168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.339991360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.441601568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.611103968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.639881504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.740281920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.839447840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670818.940884416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.041446528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.140046592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.245105856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.342296672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.442637344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.608613504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.640649664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.743744032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.841338624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670819.943413632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.040649696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.142719424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.242870752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.343020992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.442621888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.608101728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.642500544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.741922656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.839091040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670820.952750912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.042871072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.145500000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.240921280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.344494144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.441052192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.618459712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.642585408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.740883232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.842246848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670821.943724704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.043903616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.142583008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.242816960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.342748576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.446650944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.617641152] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.652818048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.746930304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.840751040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670822.944062080] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.040748384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.139362368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.240896352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.339048576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.450939296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.605543936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.646359296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.739847680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.841119008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670823.941893888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.042320416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.141925568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.240805888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.339468000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.447275680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.607635232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.641456064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.740437472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.852399648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670824.939348960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670825.041596992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670825.142170432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670825.241392352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670825.341329632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1790670825.447006752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1790670825.455810656] [patrol_localization]: initial pose received!!
+[hdl_localization_composition-1] [INFO] [1790670825.456880864] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1790670825.457018592] [patrol_localization]: manual pose anchored to current /leg_odom2 pose; stable NDT auto-reanchor pending
+[hdl_localization_composition-1] [INFO] [1790670825.958833952] [patrol_localization]: batch nearest-neighbor verified against PCL: 5156 queries
+[hdl_localization_composition-1] [INFO] [1790670825.959083840] [patrol_localization]: NDT acquisition accumulating: 1/30 fitness=0.1467 delta=0.048m
+[hdl_localization_composition-1] [INFO] [1790670826.066474816] [patrol_localization]: batch nearest-neighbor verified against PCL: 5156 queries
+[hdl_localization_composition-1] [INFO] [1790670826.067334272] [patrol_localization]: scan profile points=5156 prep=4.8 match=153.3 gate=204.7 status=107.8 odom=0.2 total=470.0 ms
+[hdl_localization_composition-1] [WARN] [1790670826.067955456] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670826.248440640] [patrol_localization]: batch nearest-neighbor verified against PCL: 5225 queries
+[hdl_localization_composition-1] [INFO] [1790670826.351177408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5225 queries
+[hdl_localization_composition-1] [INFO] [1790670826.890351104] [patrol_localization]: batch nearest-neighbor verified against PCL: 5172 queries
+[hdl_localization_composition-1] [INFO] [1790670826.994441728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5172 queries
+[hdl_localization_composition-1] [INFO] [1790670827.120529728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5065 queries
+[hdl_localization_composition-1] [INFO] [1790670827.220241856] [patrol_localization]: batch nearest-neighbor verified against PCL: 5065 queries
+[hdl_localization_composition-1] [INFO] [1790670828.003214048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5009 queries
+[hdl_localization_composition-1] [INFO] [1790670828.003466240] [patrol_localization]: NDT acquisition accumulating: 12/30 fitness=0.1498 delta=0.257m
+[hdl_localization_composition-1] [INFO] [1790670828.102674048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5009 queries
+[hdl_localization_composition-1] [INFO] [1790670828.103294880] [patrol_localization]: average pointcloud process time in 10 s is 195.250000 ms, fps is: 1.200000
+[hdl_localization_composition-1] [INFO] [1790670828.254447776] [patrol_localization]: batch nearest-neighbor verified against PCL: 5122 queries
+[hdl_localization_composition-1] [INFO] [1790670828.355598144] [patrol_localization]: batch nearest-neighbor verified against PCL: 5122 queries
+[hdl_localization_composition-1] [INFO] [1790670828.986745984] [patrol_localization]: batch nearest-neighbor verified against PCL: 5291 queries
+[hdl_localization_composition-1] [INFO] [1790670829.094286336] [patrol_localization]: batch nearest-neighbor verified against PCL: 5291 queries
+[hdl_localization_composition-1] [INFO] [1790670829.274272672] [patrol_localization]: batch nearest-neighbor verified against PCL: 4931 queries
+[hdl_localization_composition-1] [INFO] [1790670829.368581536] [patrol_localization]: batch nearest-neighbor verified against PCL: 4931 queries
+[hdl_localization_composition-1] [INFO] [1790670829.876674912] [patrol_localization]: batch nearest-neighbor verified against PCL: 5137 queries
+[hdl_localization_composition-1] [INFO] [1790670829.977776384] [patrol_localization]: batch nearest-neighbor verified against PCL: 5137 queries
+[hdl_localization_composition-1] [INFO] [1790670830.096126560] [patrol_localization]: batch nearest-neighbor verified against PCL: 5169 queries
+[hdl_localization_composition-1] [INFO] [1790670830.096368960] [patrol_localization]: NDT acquisition accumulating: 21/30 fitness=0.1443 delta=0.513m
+[hdl_localization_composition-1] [INFO] [1790670830.197705568] [patrol_localization]: batch nearest-neighbor verified against PCL: 5169 queries
+[hdl_localization_composition-1] [INFO] [1790670830.853168000] [patrol_localization]: batch nearest-neighbor verified against PCL: 5212 queries
+[hdl_localization_composition-1] [INFO] [1790670830.953806688] [patrol_localization]: batch nearest-neighbor verified against PCL: 5212 queries
+[hdl_localization_composition-1] [INFO] [1790670831.081838976] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [INFO] [1790670831.182453120] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [INFO] [1790670831.182935328] [patrol_localization]: scan profile points=5080 prep=4.4 match=30.4 gate=91.5 status=100.7 odom=0.0 total=227.0 ms
+[hdl_localization_composition-1] [WARN] [1790670831.415039968] [patrol_localization]: NDT acquisition unstable: position_span=0.291m yaw_span=1.34deg
+[hdl_localization_composition-1] [INFO] [1790670831.895285472] [patrol_localization]: batch nearest-neighbor verified against PCL: 5186 queries
+[hdl_localization_composition-1] [INFO] [1790670832.031319008] [patrol_localization]: batch nearest-neighbor verified against PCL: 5186 queries
+[hdl_localization_composition-1] [WARN] [1790670832.033820320] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670832.180278240] [patrol_localization]: batch nearest-neighbor verified against PCL: 5054 queries
+[hdl_localization_composition-1] [INFO] [1790670832.308682784] [patrol_localization]: batch nearest-neighbor verified against PCL: 5054 queries
+[hdl_localization_composition-1] [INFO] [1790670832.953054816] [patrol_localization]: batch nearest-neighbor verified against PCL: 5146 queries
+[hdl_localization_composition-1] [INFO] [1790670833.054562624] [patrol_localization]: batch nearest-neighbor verified against PCL: 5146 queries
+[hdl_localization_composition-1] [INFO] [1790670833.245632000] [patrol_localization]: batch nearest-neighbor verified against PCL: 5107 queries
+[hdl_localization_composition-1] [INFO] [1790670833.346416960] [patrol_localization]: batch nearest-neighbor verified against PCL: 5107 queries
+[hdl_localization_composition-1] [WARN] [1790670833.422729376] [patrol_localization]: NDT acquisition unstable: position_span=0.377m yaw_span=3.90deg
+[hdl_localization_composition-1] [INFO] [1790670833.976872864] [patrol_localization]: batch nearest-neighbor verified against PCL: 5089 queries
+[hdl_localization_composition-1] [INFO] [1790670834.075070400] [patrol_localization]: batch nearest-neighbor verified against PCL: 5089 queries
+[hdl_localization_composition-1] [INFO] [1790670834.190088448] [patrol_localization]: batch nearest-neighbor verified against PCL: 5058 queries
+[hdl_localization_composition-1] [INFO] [1790670834.291435328] [patrol_localization]: batch nearest-neighbor verified against PCL: 5058 queries
+[hdl_localization_composition-1] [INFO] [1790670835.185235072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5013 queries
+[hdl_localization_composition-1] [INFO] [1790670835.286115648] [patrol_localization]: batch nearest-neighbor verified against PCL: 5013 queries
+[hdl_localization_composition-1] [INFO] [1790670835.471475776] [patrol_localization]: batch nearest-neighbor verified against PCL: 5085 queries
+[hdl_localization_composition-1] [WARN] [1790670835.471770496] [patrol_localization]: NDT acquisition unstable: position_span=0.315m yaw_span=3.71deg
+[hdl_localization_composition-1] [INFO] [1790670835.572481856] [patrol_localization]: batch nearest-neighbor verified against PCL: 5085 queries
+[hdl_localization_composition-1] [INFO] [1790670835.987785824] [patrol_localization]: batch nearest-neighbor verified against PCL: 5014 queries
+[hdl_localization_composition-1] [INFO] [1790670836.091391968] [patrol_localization]: batch nearest-neighbor verified against PCL: 5014 queries
+[hdl_localization_composition-1] [INFO] [1790670836.266734432] [patrol_localization]: batch nearest-neighbor verified against PCL: 5149 queries
+[hdl_localization_composition-1] [INFO] [1790670836.369937664] [patrol_localization]: batch nearest-neighbor verified against PCL: 5149 queries
+[hdl_localization_composition-1] [INFO] [1790670836.370446400] [patrol_localization]: scan profile points=5149 prep=4.4 match=82.7 gate=87.6 status=103.3 odom=0.1 total=278.0 ms
+[hdl_localization_composition-1] [INFO] [1790670837.014182944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5064 queries
+[hdl_localization_composition-1] [INFO] [1790670837.119277344] [patrol_localization]: batch nearest-neighbor verified against PCL: 5064 queries
+[hdl_localization_composition-1] [WARN] [1790670837.120245600] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670837.352100640] [patrol_localization]: batch nearest-neighbor verified against PCL: 4958 queries
+[hdl_localization_composition-1] [INFO] [1790670837.459289760] [patrol_localization]: batch nearest-neighbor verified against PCL: 4958 queries
+[hdl_localization_composition-1] [WARN] [1790670837.568031104] [patrol_localization]: NDT acquisition unstable: position_span=0.299m yaw_span=3.35deg
+[hdl_localization_composition-1] [INFO] [1790670837.927651744] [patrol_localization]: batch nearest-neighbor verified against PCL: 4949 queries
+[hdl_localization_composition-1] [INFO] [1790670838.032574592] [patrol_localization]: batch nearest-neighbor verified against PCL: 4949 queries
+[hdl_localization_composition-1] [INFO] [1790670838.034340928] [patrol_localization]: average pointcloud process time in 10 s is 183.102041 ms, fps is: 4.900000
+[hdl_localization_composition-1] [INFO] [1790670838.153034112] [patrol_localization]: batch nearest-neighbor verified against PCL: 5079 queries
+[hdl_localization_composition-1] [INFO] [1790670838.254573088] [patrol_localization]: batch nearest-neighbor verified against PCL: 5079 queries
+[hdl_localization_composition-1] [INFO] [1790670839.021961472] [patrol_localization]: batch nearest-neighbor verified against PCL: 4870 queries
+[hdl_localization_composition-1] [INFO] [1790670839.115482912] [patrol_localization]: batch nearest-neighbor verified against PCL: 4870 queries
+[hdl_localization_composition-1] [INFO] [1790670839.336980704] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [INFO] [1790670839.439958720] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [WARN] [1790670839.593120480] [patrol_localization]: NDT acquisition unstable: position_span=0.310m yaw_span=3.32deg
+[hdl_localization_composition-1] [INFO] [1790670840.014333024] [patrol_localization]: batch nearest-neighbor verified against PCL: 4922 queries
+[hdl_localization_composition-1] [INFO] [1790670840.149853152] [patrol_localization]: batch nearest-neighbor verified against PCL: 4922 queries
+[hdl_localization_composition-1] [INFO] [1790670840.281949632] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670840.404176832] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670841.053083360] [patrol_localization]: batch nearest-neighbor verified against PCL: 5124 queries
+[hdl_localization_composition-1] [INFO] [1790670841.152967040] [patrol_localization]: batch nearest-neighbor verified against PCL: 5124 queries
+[hdl_localization_composition-1] [INFO] [1790670841.258614720] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [WARN] [1790670841.258961312] [patrol_localization]: auto-promoted stable NDT candidate as anchor: x=0.517 y=-0.042 yaw=-6.0 deg, fitness=0.0365
+[hdl_localization_composition-1] [INFO] [1790670841.337950624] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [INFO] [1790670841.483903168] [patrol_localization]: scan profile points=4936 prep=4.3 match=113.3 gate=14.8 status=12.6 odom=0.1 total=145.0 ms
+[hdl_localization_composition-1] [INFO] [1790670841.888323584] [patrol_localization]: batch nearest-neighbor verified against PCL: 4954 queries
+[hdl_localization_composition-1] [INFO] [1790670841.964846496] [patrol_localization]: batch nearest-neighbor verified against PCL: 4954 queries
+[hdl_localization_composition-1] [INFO] [1790670842.133053920] [patrol_localization]: batch nearest-neighbor verified against PCL: 5053 queries
+[hdl_localization_composition-1] [INFO] [1790670842.213702496] [patrol_localization]: batch nearest-neighbor verified against PCL: 5053 queries
+[hdl_localization_composition-1] [INFO] [1790670842.821670144] [patrol_localization]: batch nearest-neighbor verified against PCL: 4960 queries
+[hdl_localization_composition-1] [INFO] [1790670842.900705440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4960 queries
+[hdl_localization_composition-1] [WARN] [1790670842.901530688] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670843.079204480] [patrol_localization]: batch nearest-neighbor verified against PCL: 5085 queries
+[hdl_localization_composition-1] [INFO] [1790670843.158021952] [patrol_localization]: batch nearest-neighbor verified against PCL: 5085 queries
+[hdl_localization_composition-1] [INFO] [1790670844.011134688] [patrol_localization]: batch nearest-neighbor verified against PCL: 5066 queries
+[hdl_localization_composition-1] [INFO] [1790670844.090307968] [patrol_localization]: batch nearest-neighbor verified against PCL: 5066 queries
+[hdl_localization_composition-1] [INFO] [1790670844.199629792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5149 queries
+[hdl_localization_composition-1] [INFO] [1790670844.280160928] [patrol_localization]: batch nearest-neighbor verified against PCL: 5149 queries
+[hdl_localization_composition-1] [INFO] [1790670844.984228800] [patrol_localization]: batch nearest-neighbor verified against PCL: 5150 queries
+[hdl_localization_composition-1] [INFO] [1790670845.085466336] [patrol_localization]: batch nearest-neighbor verified against PCL: 5150 queries
+[hdl_localization_composition-1] [INFO] [1790670845.358965600] [patrol_localization]: batch nearest-neighbor verified against PCL: 5203 queries
+[hdl_localization_composition-1] [INFO] [1790670845.443395072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5203 queries
+[hdl_localization_composition-1] [INFO] [1790670845.887281024] [patrol_localization]: batch nearest-neighbor verified against PCL: 5184 queries
+[hdl_localization_composition-1] [INFO] [1790670845.971052800] [patrol_localization]: batch nearest-neighbor verified against PCL: 5184 queries
+[hdl_localization_composition-1] [INFO] [1790670846.195737248] [patrol_localization]: batch nearest-neighbor verified against PCL: 5060 queries
+[hdl_localization_composition-1] [INFO] [1790670846.274042816] [patrol_localization]: batch nearest-neighbor verified against PCL: 5060 queries
+[hdl_localization_composition-1] [INFO] [1790670846.500649632] [patrol_localization]: scan profile points=5190 prep=4.5 match=100.7 gate=8.1 status=8.0 odom=0.1 total=121.0 ms
+[hdl_localization_composition-1] [INFO] [1790670846.987895264] [patrol_localization]: batch nearest-neighbor verified against PCL: 5127 queries
+[hdl_localization_composition-1] [INFO] [1790670847.073256352] [patrol_localization]: batch nearest-neighbor verified against PCL: 5127 queries
+[hdl_localization_composition-1] [INFO] [1790670847.202338592] [patrol_localization]: batch nearest-neighbor verified against PCL: 5262 queries
+[hdl_localization_composition-1] [INFO] [1790670847.291735680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5262 queries
+[hdl_localization_composition-1] [INFO] [1790670848.080717024] [patrol_localization]: batch nearest-neighbor verified against PCL: 6035 queries
+[hdl_localization_composition-1] [INFO] [1790670848.184350624] [patrol_localization]: batch nearest-neighbor verified against PCL: 6035 queries
+[hdl_localization_composition-1] [INFO] [1790670848.185666080] [patrol_localization]: average pointcloud process time in 10 s is 177.519231 ms, fps is: 5.200000
+[hdl_localization_composition-1] [WARN] [1790670848.186042016] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670848.305252288] [patrol_localization]: batch nearest-neighbor verified against PCL: 4843 queries
+[hdl_localization_composition-1] [INFO] [1790670848.387965408] [patrol_localization]: batch nearest-neighbor verified against PCL: 4843 queries
+[hdl_localization_composition-1] [INFO] [1790670849.098551648] [patrol_localization]: batch nearest-neighbor verified against PCL: 5296 queries
+[hdl_localization_composition-1] [INFO] [1790670849.183675296] [patrol_localization]: batch nearest-neighbor verified against PCL: 5296 queries
+[hdl_localization_composition-1] [INFO] [1790670849.418854400] [patrol_localization]: batch nearest-neighbor verified against PCL: 5043 queries
+[hdl_localization_composition-1] [INFO] [1790670849.500286272] [patrol_localization]: batch nearest-neighbor verified against PCL: 5043 queries
+[hdl_localization_composition-1] [INFO] [1790670849.971624032] [patrol_localization]: batch nearest-neighbor verified against PCL: 5212 queries
+[hdl_localization_composition-1] [INFO] [1790670850.063785344] [patrol_localization]: batch nearest-neighbor verified against PCL: 5212 queries
+[hdl_localization_composition-1] [INFO] [1790670850.254804512] [patrol_localization]: batch nearest-neighbor verified against PCL: 4974 queries
+[hdl_localization_composition-1] [INFO] [1790670850.335866560] [patrol_localization]: batch nearest-neighbor verified against PCL: 4974 queries
+[hdl_localization_composition-1] [INFO] [1790670851.010814944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5033 queries
+[hdl_localization_composition-1] [INFO] [1790670851.092383776] [patrol_localization]: batch nearest-neighbor verified against PCL: 5033 queries
+[hdl_localization_composition-1] [INFO] [1790670851.252325760] [patrol_localization]: batch nearest-neighbor verified against PCL: 4710 queries
+[hdl_localization_composition-1] [INFO] [1790670851.327217632] [patrol_localization]: batch nearest-neighbor verified against PCL: 4710 queries
+[hdl_localization_composition-1] [INFO] [1790670851.536727136] [patrol_localization]: scan profile points=5012 prep=4.3 match=83.1 gate=8.0 status=9.4 odom=0.1 total=104.0 ms
+[hdl_localization_composition-1] [INFO] [1790670852.000373504] [patrol_localization]: batch nearest-neighbor verified against PCL: 5045 queries
+[hdl_localization_composition-1] [INFO] [1790670852.082114816] [patrol_localization]: batch nearest-neighbor verified against PCL: 5045 queries
+[hdl_localization_composition-1] [INFO] [1790670852.250740288] [patrol_localization]: batch nearest-neighbor verified against PCL: 5029 queries
+[hdl_localization_composition-1] [INFO] [1790670852.330343136] [patrol_localization]: batch nearest-neighbor verified against PCL: 5029 queries
+[hdl_localization_composition-1] [INFO] [1790670853.123003648] [patrol_localization]: batch nearest-neighbor verified against PCL: 5041 queries
+[hdl_localization_composition-1] [INFO] [1790670853.204822688] [patrol_localization]: batch nearest-neighbor verified against PCL: 5041 queries
+[hdl_localization_composition-1] [WARN] [1790670853.205651456] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670853.308506048] [patrol_localization]: batch nearest-neighbor verified against PCL: 4945 queries
+[hdl_localization_composition-1] [INFO] [1790670853.388779264] [patrol_localization]: batch nearest-neighbor verified against PCL: 4945 queries
+[hdl_localization_composition-1] [INFO] [1790670854.098612960] [patrol_localization]: batch nearest-neighbor verified against PCL: 4953 queries
+[hdl_localization_composition-1] [INFO] [1790670854.176398080] [patrol_localization]: batch nearest-neighbor verified against PCL: 4953 queries
+[hdl_localization_composition-1] [INFO] [1790670854.281122592] [patrol_localization]: batch nearest-neighbor verified against PCL: 5101 queries
+[hdl_localization_composition-1] [INFO] [1790670854.360155552] [patrol_localization]: batch nearest-neighbor verified against PCL: 5101 queries
+[hdl_localization_composition-1] [INFO] [1790670854.981505440] [patrol_localization]: batch nearest-neighbor verified against PCL: 5331 queries
+[hdl_localization_composition-1] [INFO] [1790670855.067368256] [patrol_localization]: batch nearest-neighbor verified against PCL: 5331 queries
+[hdl_localization_composition-1] [INFO] [1790670855.228417760] [patrol_localization]: batch nearest-neighbor verified against PCL: 4823 queries
+[hdl_localization_composition-1] [INFO] [1790670855.307042784] [patrol_localization]: batch nearest-neighbor verified against PCL: 4823 queries
+[hdl_localization_composition-1] [INFO] [1790670855.840989376] [patrol_localization]: batch nearest-neighbor verified against PCL: 5135 queries
+[hdl_localization_composition-1] [INFO] [1790670855.926843168] [patrol_localization]: batch nearest-neighbor verified against PCL: 5135 queries
+[hdl_localization_composition-1] [INFO] [1790670856.158852864] [patrol_localization]: batch nearest-neighbor verified against PCL: 5178 queries
+[hdl_localization_composition-1] [INFO] [1790670856.299377792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5178 queries
+[hdl_localization_composition-1] [INFO] [1790670856.671687904] [patrol_localization]: scan profile points=3622 prep=13.5 match=125.4 gate=6.6 status=7.5 odom=0.1 total=153.0 ms
+[hdl_localization_composition-1] [INFO] [1790670857.129261120] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [INFO] [1790670857.253198496] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [INFO] [1790670857.547102944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5450 queries
+[hdl_localization_composition-1] [INFO] [1790670857.668326976] [patrol_localization]: batch nearest-neighbor verified against PCL: 5450 queries
+[hdl_localization_composition-1] [INFO] [1790670857.897282656] [patrol_localization]: average pointcloud process time in 10 s is 209.906977 ms, fps is: 4.300000
+[hdl_localization_composition-1] [INFO] [1790670858.452340256] [patrol_localization]: batch nearest-neighbor verified against PCL: 4476 queries
+[hdl_localization_composition-1] [INFO] [1790670858.536461568] [patrol_localization]: batch nearest-neighbor verified against PCL: 4476 queries
+[hdl_localization_composition-1] [WARN] [1790670858.543249536] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670858.708470048] [patrol_localization]: batch nearest-neighbor verified against PCL: 4319 queries
+[hdl_localization_composition-1] [INFO] [1790670858.784273984] [patrol_localization]: batch nearest-neighbor verified against PCL: 4319 queries
+[hdl_localization_composition-1] [INFO] [1790670859.130136960] [patrol_localization]: batch nearest-neighbor verified against PCL: 4805 queries
+[hdl_localization_composition-1] [INFO] [1790670859.210912256] [patrol_localization]: batch nearest-neighbor verified against PCL: 4805 queries
+[hdl_localization_composition-1] [INFO] [1790670859.394177632] [patrol_localization]: batch nearest-neighbor verified against PCL: 5161 queries
+[hdl_localization_composition-1] [INFO] [1790670859.490403072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5161 queries
+[hdl_localization_composition-1] [INFO] [1790670860.105274848] [patrol_localization]: batch nearest-neighbor verified against PCL: 4936 queries
+[hdl_localization_composition-1] [INFO] [1790670860.197678048] [patrol_localization]: batch nearest-neighbor verified against PCL: 4936 queries
+[hdl_localization_composition-1] [INFO] [1790670860.307824064] [patrol_localization]: batch nearest-neighbor verified against PCL: 4982 queries
+[hdl_localization_composition-1] [INFO] [1790670860.384604448] [patrol_localization]: batch nearest-neighbor verified against PCL: 4982 queries
+[hdl_localization_composition-1] [INFO] [1790670860.998086880] [patrol_localization]: batch nearest-neighbor verified against PCL: 5073 queries
+[hdl_localization_composition-1] [INFO] [1790670861.076346848] [patrol_localization]: batch nearest-neighbor verified against PCL: 5073 queries
+[hdl_localization_composition-1] [INFO] [1790670861.208083168] [patrol_localization]: batch nearest-neighbor verified against PCL: 6208 queries
+[hdl_localization_composition-1] [INFO] [1790670861.302910336] [patrol_localization]: batch nearest-neighbor verified against PCL: 6208 queries
+[hdl_localization_composition-1] [INFO] [1790670862.026606176] [patrol_localization]: batch nearest-neighbor verified against PCL: 5101 queries
+[hdl_localization_composition-1] [INFO] [1790670862.220558368] [patrol_localization]: batch nearest-neighbor verified against PCL: 5101 queries
+[hdl_localization_composition-1] [INFO] [1790670862.221565536] [patrol_localization]: scan profile points=5101 prep=4.6 match=217.3 gate=146.6 status=194.5 odom=0.1 total=562.0 ms
+[hdl_localization_composition-1] [INFO] [1790670862.333998048] [patrol_localization]: batch nearest-neighbor verified against PCL: 3207 queries
+[hdl_localization_composition-1] [INFO] [1790670862.390666400] [patrol_localization]: batch nearest-neighbor verified against PCL: 3207 queries
+[hdl_localization_composition-1] [INFO] [1790670863.241885984] [patrol_localization]: batch nearest-neighbor verified against PCL: 4403 queries
+[hdl_localization_composition-1] [INFO] [1790670863.316006880] [patrol_localization]: batch nearest-neighbor verified against PCL: 4403 queries
+[hdl_localization_composition-1] [INFO] [1790670863.550434432] [patrol_localization]: batch nearest-neighbor verified against PCL: 6496 queries
+[hdl_localization_composition-1] [INFO] [1790670863.659624128] [patrol_localization]: batch nearest-neighbor verified against PCL: 6496 queries
+[hdl_localization_composition-1] [WARN] [1790670863.739399744] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670864.217782112] [patrol_localization]: batch nearest-neighbor verified against PCL: 5586 queries
+[hdl_localization_composition-1] [INFO] [1790670864.315524608] [patrol_localization]: batch nearest-neighbor verified against PCL: 5586 queries
+[hdl_localization_composition-1] [INFO] [1790670864.437735136] [patrol_localization]: batch nearest-neighbor verified against PCL: 4833 queries
+[hdl_localization_composition-1] [INFO] [1790670864.521367936] [patrol_localization]: batch nearest-neighbor verified against PCL: 4833 queries
+[hdl_localization_composition-1] [INFO] [1790670864.953747008] [patrol_localization]: batch nearest-neighbor verified against PCL: 4771 queries
+[hdl_localization_composition-1] [INFO] [1790670865.033120256] [patrol_localization]: batch nearest-neighbor verified against PCL: 4771 queries
+[hdl_localization_composition-1] [INFO] [1790670865.199315520] [patrol_localization]: batch nearest-neighbor verified against PCL: 4845 queries
+[hdl_localization_composition-1] [INFO] [1790670865.282923584] [patrol_localization]: batch nearest-neighbor verified against PCL: 4845 queries
+[hdl_localization_composition-1] [INFO] [1790670865.874489408] [patrol_localization]: batch nearest-neighbor verified against PCL: 3906 queries
+[hdl_localization_composition-1] [INFO] [1790670865.940867168] [patrol_localization]: batch nearest-neighbor verified against PCL: 3906 queries
+[hdl_localization_composition-1] [INFO] [1790670866.055893408] [patrol_localization]: batch nearest-neighbor verified against PCL: 4795 queries
+[hdl_localization_composition-1] [INFO] [1790670866.135761472] [patrol_localization]: batch nearest-neighbor verified against PCL: 4795 queries
+[hdl_localization_composition-1] [INFO] [1790670867.257733568] [patrol_localization]: batch nearest-neighbor verified against PCL: 5108 queries
+[hdl_localization_composition-1] [INFO] [1790670867.385586880] [patrol_localization]: batch nearest-neighbor verified against PCL: 5108 queries
+[hdl_localization_composition-1] [INFO] [1790670867.386218496] [patrol_localization]: scan profile points=5108 prep=5.3 match=186.1 gate=155.1 status=128.0 odom=0.1 total=474.0 ms
+[hdl_localization_composition-1] [INFO] [1790670867.643418304] [patrol_localization]: batch nearest-neighbor verified against PCL: 5164 queries
+[hdl_localization_composition-1] [INFO] [1790670867.723702496] [patrol_localization]: batch nearest-neighbor verified against PCL: 5164 queries
+[hdl_localization_composition-1] [INFO] [1790670867.850377952] [patrol_localization]: average pointcloud process time in 10 s is 224.075000 ms, fps is: 4.000000
+[hdl_localization_composition-1] [INFO] [1790670868.157320128] [patrol_localization]: batch nearest-neighbor verified against PCL: 5200 queries
+[hdl_localization_composition-1] [INFO] [1790670868.256736064] [patrol_localization]: batch nearest-neighbor verified against PCL: 5200 queries
+[hdl_localization_composition-1] [INFO] [1790670868.595307296] [patrol_localization]: batch nearest-neighbor verified against PCL: 4703 queries
+[hdl_localization_composition-1] [INFO] [1790670868.688412224] [patrol_localization]: batch nearest-neighbor verified against PCL: 4703 queries
+[hdl_localization_composition-1] [WARN] [1790670869.044642944] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670869.348454048] [patrol_localization]: batch nearest-neighbor verified against PCL: 4159 queries
+[hdl_localization_composition-1] [INFO] [1790670869.453835136] [patrol_localization]: batch nearest-neighbor verified against PCL: 4159 queries
+[hdl_localization_composition-1] [INFO] [1790670869.699458048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5373 queries
+[hdl_localization_composition-1] [INFO] [1790670869.805428448] [patrol_localization]: batch nearest-neighbor verified against PCL: 5373 queries
+[hdl_localization_composition-1] [INFO] [1790670870.315910208] [patrol_localization]: batch nearest-neighbor verified against PCL: 4684 queries
+[hdl_localization_composition-1] [INFO] [1790670870.413875488] [patrol_localization]: batch nearest-neighbor verified against PCL: 4684 queries
+[hdl_localization_composition-1] [INFO] [1790670870.682185152] [patrol_localization]: batch nearest-neighbor verified against PCL: 5405 queries
+[hdl_localization_composition-1] [INFO] [1790670870.790532384] [patrol_localization]: batch nearest-neighbor verified against PCL: 5405 queries
+[hdl_localization_composition-1] [INFO] [1790670871.136827904] [patrol_localization]: batch nearest-neighbor verified against PCL: 5003 queries
+[hdl_localization_composition-1] [INFO] [1790670871.215278848] [patrol_localization]: batch nearest-neighbor verified against PCL: 5003 queries
+[hdl_localization_composition-1] [INFO] [1790670871.380976128] [patrol_localization]: batch nearest-neighbor verified against PCL: 5035 queries
+[hdl_localization_composition-1] [INFO] [1790670871.462285600] [patrol_localization]: batch nearest-neighbor verified against PCL: 5035 queries
+[hdl_localization_composition-1] [INFO] [1790670872.018580384] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670872.103032416] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670872.222295104] [patrol_localization]: batch nearest-neighbor verified against PCL: 5056 queries
+[hdl_localization_composition-1] [INFO] [1790670872.304746720] [patrol_localization]: batch nearest-neighbor verified against PCL: 5056 queries
+[hdl_localization_composition-1] [INFO] [1790670872.499961440] [patrol_localization]: scan profile points=6131 prep=5.7 match=170.0 gate=9.1 status=9.6 odom=0.1 total=194.0 ms
+[hdl_localization_composition-1] [INFO] [1790670873.043986880] [patrol_localization]: batch nearest-neighbor verified against PCL: 4717 queries
+[hdl_localization_composition-1] [INFO] [1790670873.122607168] [patrol_localization]: batch nearest-neighbor verified against PCL: 4717 queries
+[hdl_localization_composition-1] [INFO] [1790670873.234067680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5266 queries
+[hdl_localization_composition-1] [INFO] [1790670873.317762848] [patrol_localization]: batch nearest-neighbor verified against PCL: 5266 queries
+[hdl_localization_composition-1] [INFO] [1790670874.180464384] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [INFO] [1790670874.283515360] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [WARN] [1790670874.285699840] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670874.431717408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5054 queries
+[hdl_localization_composition-1] [INFO] [1790670874.530955680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5054 queries
+[hdl_localization_composition-1] [INFO] [1790670874.939431456] [patrol_localization]: batch nearest-neighbor verified against PCL: 5469 queries
+[hdl_localization_composition-1] [INFO] [1790670875.052621728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5469 queries
+[hdl_localization_composition-1] [INFO] [1790670875.193911424] [patrol_localization]: batch nearest-neighbor verified against PCL: 5079 queries
+[hdl_localization_composition-1] [INFO] [1790670875.296623520] [patrol_localization]: batch nearest-neighbor verified against PCL: 5079 queries
+[hdl_localization_composition-1] [INFO] [1790670875.935820128] [patrol_localization]: batch nearest-neighbor verified against PCL: 5139 queries
+[hdl_localization_composition-1] [INFO] [1790670876.019408832] [patrol_localization]: batch nearest-neighbor verified against PCL: 5139 queries
+[hdl_localization_composition-1] [INFO] [1790670876.194926432] [patrol_localization]: batch nearest-neighbor verified against PCL: 5194 queries
+[hdl_localization_composition-1] [INFO] [1790670876.278437472] [patrol_localization]: batch nearest-neighbor verified against PCL: 5194 queries
+[hdl_localization_composition-1] [INFO] [1790670876.908071264] [patrol_localization]: batch nearest-neighbor verified against PCL: 4937 queries
+[hdl_localization_composition-1] [INFO] [1790670877.001613408] [patrol_localization]: batch nearest-neighbor verified against PCL: 4937 queries
+[hdl_localization_composition-1] [INFO] [1790670877.118807104] [patrol_localization]: batch nearest-neighbor verified against PCL: 5167 queries
+[hdl_localization_composition-1] [INFO] [1790670877.221941504] [patrol_localization]: batch nearest-neighbor verified against PCL: 5167 queries
+[hdl_localization_composition-1] [INFO] [1790670877.572094976] [patrol_localization]: scan profile points=5213 prep=5.6 match=187.3 gate=8.7 status=14.8 odom=0.1 total=216.0 ms
+[hdl_localization_composition-1] [INFO] [1790670878.087222592] [patrol_localization]: batch nearest-neighbor verified against PCL: 4943 queries
+[hdl_localization_composition-1] [INFO] [1790670878.188887104] [patrol_localization]: batch nearest-neighbor verified against PCL: 4943 queries
+[hdl_localization_composition-1] [INFO] [1790670878.191751712] [patrol_localization]: average pointcloud process time in 10 s is 231.121951 ms, fps is: 4.100000
+[hdl_localization_composition-1] [INFO] [1790670878.378124192] [patrol_localization]: batch nearest-neighbor verified against PCL: 4689 queries
+[hdl_localization_composition-1] [INFO] [1790670878.454114816] [patrol_localization]: batch nearest-neighbor verified against PCL: 4689 queries
+[hdl_localization_composition-1] [INFO] [1790670878.828681312] [patrol_localization]: batch nearest-neighbor verified against PCL: 5238 queries
+[hdl_localization_composition-1] [INFO] [1790670878.911457184] [patrol_localization]: batch nearest-neighbor verified against PCL: 5238 queries
+[hdl_localization_composition-1] [INFO] [1790670879.074529792] [patrol_localization]: batch nearest-neighbor verified against PCL: 4979 queries
+[hdl_localization_composition-1] [INFO] [1790670879.152514208] [patrol_localization]: batch nearest-neighbor verified against PCL: 4979 queries
+[hdl_localization_composition-1] [INFO] [1790670880.176349792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5180 queries
+[hdl_localization_composition-1] [INFO] [1790670880.263277504] [patrol_localization]: batch nearest-neighbor verified against PCL: 5180 queries
+[hdl_localization_composition-1] [WARN] [1790670880.264286176] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670880.375294048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5236 queries
+[hdl_localization_composition-1] [INFO] [1790670880.491518048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5236 queries
+[hdl_localization_composition-1] [INFO] [1790670881.273268096] [patrol_localization]: batch nearest-neighbor verified against PCL: 5273 queries
+[hdl_localization_composition-1] [INFO] [1790670881.369413376] [patrol_localization]: batch nearest-neighbor verified against PCL: 5273 queries
+[hdl_localization_composition-1] [INFO] [1790670881.484254720] [patrol_localization]: batch nearest-neighbor verified against PCL: 5297 queries
+[hdl_localization_composition-1] [INFO] [1790670881.570340960] [patrol_localization]: batch nearest-neighbor verified against PCL: 5297 queries
+[hdl_localization_composition-1] [INFO] [1790670882.052390240] [patrol_localization]: batch nearest-neighbor verified against PCL: 5267 queries
+[hdl_localization_composition-1] [INFO] [1790670882.137753408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5267 queries
+[hdl_localization_composition-1] [INFO] [1790670882.372641536] [patrol_localization]: batch nearest-neighbor verified against PCL: 5248 queries
+[hdl_localization_composition-1] [INFO] [1790670882.460128192] [patrol_localization]: batch nearest-neighbor verified against PCL: 5248 queries
+[hdl_localization_composition-1] [INFO] [1790670882.612690304] [patrol_localization]: scan profile points=5008 prep=4.2 match=20.3 gate=8.7 status=9.0 odom=0.1 total=42.0 ms
+[hdl_localization_composition-1] [INFO] [1790670882.988587392] [patrol_localization]: batch nearest-neighbor verified against PCL: 5506 queries
+[hdl_localization_composition-1] [INFO] [1790670883.075054976] [patrol_localization]: batch nearest-neighbor verified against PCL: 5506 queries
+[hdl_localization_composition-1] [INFO] [1790670883.288936672] [patrol_localization]: batch nearest-neighbor verified against PCL: 5272 queries
+[hdl_localization_composition-1] [INFO] [1790670883.481729792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5272 queries
+[hdl_localization_composition-1] [INFO] [1790670885.449873824] [patrol_localization]: batch nearest-neighbor verified against PCL: 654 queries
+[hdl_localization_composition-1] [INFO] [1790670885.639931712] [patrol_localization]: batch nearest-neighbor verified against PCL: 654 queries
+[hdl_localization_composition-1] [WARN] [1790670885.655004896] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670886.505106592] [patrol_localization]: batch nearest-neighbor verified against PCL: 1680 queries
+[hdl_localization_composition-1] [INFO] [1790670886.716129376] [patrol_localization]: batch nearest-neighbor verified against PCL: 1680 queries
+[hdl_localization_composition-1] [INFO] [1790670887.281775264] [patrol_localization]: batch nearest-neighbor verified against PCL: 3817 queries
+[hdl_localization_composition-1] [INFO] [1790670887.359590976] [patrol_localization]: batch nearest-neighbor verified against PCL: 3817 queries
+[hdl_localization_composition-1] [INFO] [1790670887.856099712] [patrol_localization]: batch nearest-neighbor verified against PCL: 6086 queries
+[hdl_localization_composition-1] [INFO] [1790670888.033945504] [patrol_localization]: batch nearest-neighbor verified against PCL: 6086 queries
+[hdl_localization_composition-1] [INFO] [1790670888.034499264] [patrol_localization]: scan profile points=6086 prep=17.4 match=236.8 gate=200.3 status=178.0 odom=0.1 total=632.0 ms
+[hdl_localization_composition-1] [INFO] [1790670888.034846368] [patrol_localization]: average pointcloud process time in 10 s is 347.500000 ms, fps is: 2.600000
+[hdl_localization_composition-1] [INFO] [1790670888.770741216] [patrol_localization]: batch nearest-neighbor verified against PCL: 3238 queries
+[hdl_localization_composition-1] [INFO] [1790670888.844905280] [patrol_localization]: batch nearest-neighbor verified against PCL: 3238 queries
+[hdl_localization_composition-1] [INFO] [1790670889.097101152] [patrol_localization]: batch nearest-neighbor verified against PCL: 4120 queries
+[hdl_localization_composition-1] [INFO] [1790670889.171492448] [patrol_localization]: batch nearest-neighbor verified against PCL: 4120 queries
+[hdl_localization_composition-1] [INFO] [1790670889.584924352] [patrol_localization]: batch nearest-neighbor verified against PCL: 4401 queries
+[hdl_localization_composition-1] [INFO] [1790670889.658568416] [patrol_localization]: batch nearest-neighbor verified against PCL: 4401 queries
+[hdl_localization_composition-1] [INFO] [1790670889.775139840] [patrol_localization]: batch nearest-neighbor verified against PCL: 4936 queries
+[hdl_localization_composition-1] [INFO] [1790670889.899044064] [patrol_localization]: batch nearest-neighbor verified against PCL: 4936 queries
+[hdl_localization_composition-1] [INFO] [1790670890.177406304] [patrol_localization]: batch nearest-neighbor verified against PCL: 3561 queries
+[hdl_localization_composition-1] [INFO] [1790670890.235355872] [patrol_localization]: batch nearest-neighbor verified against PCL: 3561 queries
+[hdl_localization_composition-1] [INFO] [1790670890.353968992] [patrol_localization]: batch nearest-neighbor verified against PCL: 5255 queries
+[hdl_localization_composition-1] [INFO] [1790670890.451116576] [patrol_localization]: batch nearest-neighbor verified against PCL: 5255 queries
+[hdl_localization_composition-1] [INFO] [1790670890.869536960] [patrol_localization]: batch nearest-neighbor verified against PCL: 5462 queries
+[hdl_localization_composition-1] [INFO] [1790670890.964161152] [patrol_localization]: batch nearest-neighbor verified against PCL: 5462 queries
+[hdl_localization_composition-1] [WARN] [1790670890.970299424] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670891.339145888] [patrol_localization]: batch nearest-neighbor verified against PCL: 5145 queries
+[hdl_localization_composition-1] [INFO] [1790670891.466538912] [patrol_localization]: batch nearest-neighbor verified against PCL: 5145 queries
+[hdl_localization_composition-1] [INFO] [1790670892.131166432] [patrol_localization]: batch nearest-neighbor verified against PCL: 5048 queries
+[hdl_localization_composition-1] [INFO] [1790670892.236766432] [patrol_localization]: batch nearest-neighbor verified against PCL: 5048 queries
+[hdl_localization_composition-1] [INFO] [1790670892.429324224] [patrol_localization]: batch nearest-neighbor verified against PCL: 5316 queries
+[hdl_localization_composition-1] [INFO] [1790670892.589661248] [patrol_localization]: batch nearest-neighbor verified against PCL: 5316 queries
+[hdl_localization_composition-1] [INFO] [1790670893.208562912] [patrol_localization]: batch nearest-neighbor verified against PCL: 5373 queries
+[hdl_localization_composition-1] [INFO] [1790670893.299489632] [patrol_localization]: batch nearest-neighbor verified against PCL: 5373 queries
+[hdl_localization_composition-1] [INFO] [1790670893.301421152] [patrol_localization]: scan profile points=5373 prep=5.8 match=290.8 gate=159.5 status=91.4 odom=1.1 total=548.0 ms
+[hdl_localization_composition-1] [INFO] [1790670893.493440288] [patrol_localization]: batch nearest-neighbor verified against PCL: 5291 queries
+[hdl_localization_composition-1] [INFO] [1790670893.601260096] [patrol_localization]: batch nearest-neighbor verified against PCL: 5291 queries
+[hdl_localization_composition-1] [INFO] [1790670894.062511872] [patrol_localization]: batch nearest-neighbor verified against PCL: 4503 queries
+[hdl_localization_composition-1] [INFO] [1790670894.135924096] [patrol_localization]: batch nearest-neighbor verified against PCL: 4503 queries
+[hdl_localization_composition-1] [INFO] [1790670894.262430752] [patrol_localization]: batch nearest-neighbor verified against PCL: 5406 queries
+[hdl_localization_composition-1] [INFO] [1790670894.350953248] [patrol_localization]: batch nearest-neighbor verified against PCL: 5406 queries
+[hdl_localization_composition-1] [INFO] [1790670895.206546272] [patrol_localization]: batch nearest-neighbor verified against PCL: 5311 queries
+[hdl_localization_composition-1] [INFO] [1790670895.296924480] [patrol_localization]: batch nearest-neighbor verified against PCL: 5311 queries
+[hdl_localization_composition-1] [INFO] [1790670895.410822432] [patrol_localization]: batch nearest-neighbor verified against PCL: 5266 queries
+[hdl_localization_composition-1] [INFO] [1790670895.532102464] [patrol_localization]: batch nearest-neighbor verified against PCL: 5266 queries
+[hdl_localization_composition-1] [INFO] [1790670896.111001440] [patrol_localization]: batch nearest-neighbor verified against PCL: 5309 queries
+[hdl_localization_composition-1] [INFO] [1790670896.201114304] [patrol_localization]: batch nearest-neighbor verified against PCL: 5309 queries
+[hdl_localization_composition-1] [WARN] [1790670896.204133088] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670896.373785440] [patrol_localization]: batch nearest-neighbor verified against PCL: 5070 queries
+[hdl_localization_composition-1] [INFO] [1790670896.466812512] [patrol_localization]: batch nearest-neighbor verified against PCL: 5070 queries
+[hdl_localization_composition-1] [INFO] [1790670896.869119776] [patrol_localization]: batch nearest-neighbor verified against PCL: 5689 queries
+[hdl_localization_composition-1] [INFO] [1790670896.961794880] [patrol_localization]: batch nearest-neighbor verified against PCL: 5689 queries
+[hdl_localization_composition-1] [INFO] [1790670897.069805888] [patrol_localization]: batch nearest-neighbor verified against PCL: 5090 queries
+[hdl_localization_composition-1] [INFO] [1790670897.154378144] [patrol_localization]: batch nearest-neighbor verified against PCL: 5090 queries
+[hdl_localization_composition-1] [INFO] [1790670898.052022784] [patrol_localization]: batch nearest-neighbor verified against PCL: 4773 queries
+[hdl_localization_composition-1] [INFO] [1790670898.130213280] [patrol_localization]: batch nearest-neighbor verified against PCL: 4773 queries
+[hdl_localization_composition-1] [INFO] [1790670898.133393856] [patrol_localization]: average pointcloud process time in 10 s is 245.216216 ms, fps is: 3.700000
+[hdl_localization_composition-1] [INFO] [1790670898.261251360] [patrol_localization]: batch nearest-neighbor verified against PCL: 6072 queries
+[hdl_localization_composition-1] [INFO] [1790670898.361400384] [patrol_localization]: batch nearest-neighbor verified against PCL: 6072 queries
+[hdl_localization_composition-1] [INFO] [1790670898.364057024] [patrol_localization]: scan profile points=6072 prep=6.8 match=25.2 gate=95.8 status=100.5 odom=1.9 total=230.0 ms
+[hdl_localization_composition-1] [INFO] [1790670898.982390368] [patrol_localization]: batch nearest-neighbor verified against PCL: 4948 queries
+[hdl_localization_composition-1] [INFO] [1790670899.066793440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4948 queries
+[hdl_localization_composition-1] [INFO] [1790670899.237526240] [patrol_localization]: batch nearest-neighbor verified against PCL: 5078 queries
+[hdl_localization_composition-1] [INFO] [1790670899.325149600] [patrol_localization]: batch nearest-neighbor verified against PCL: 5078 queries
+[hdl_localization_composition-1] [INFO] [1790670900.029817120] [patrol_localization]: batch nearest-neighbor verified against PCL: 4310 queries
+[hdl_localization_composition-1] [INFO] [1790670900.100915392] [patrol_localization]: batch nearest-neighbor verified against PCL: 4310 queries
+[hdl_localization_composition-1] [INFO] [1790670900.269155680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5027 queries
+[hdl_localization_composition-1] [INFO] [1790670900.350334592] [patrol_localization]: batch nearest-neighbor verified against PCL: 5027 queries
+[hdl_localization_composition-1] [INFO] [1790670901.055140000] [patrol_localization]: batch nearest-neighbor verified against PCL: 4883 queries
+[hdl_localization_composition-1] [INFO] [1790670901.133213696] [patrol_localization]: batch nearest-neighbor verified against PCL: 4883 queries
+[hdl_localization_composition-1] [INFO] [1790670901.243039264] [patrol_localization]: batch nearest-neighbor verified against PCL: 4990 queries
+[hdl_localization_composition-1] [INFO] [1790670901.324369568] [patrol_localization]: batch nearest-neighbor verified against PCL: 4990 queries
+[hdl_localization_composition-1] [INFO] [1790670901.931082240] [patrol_localization]: batch nearest-neighbor verified against PCL: 5221 queries
+[hdl_localization_composition-1] [INFO] [1790670902.061317472] [patrol_localization]: batch nearest-neighbor verified against PCL: 5221 queries
+[hdl_localization_composition-1] [WARN] [1790670902.064782784] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670902.204137728] [patrol_localization]: batch nearest-neighbor verified against PCL: 4938 queries
+[hdl_localization_composition-1] [INFO] [1790670902.297075648] [patrol_localization]: batch nearest-neighbor verified against PCL: 4938 queries
+[hdl_localization_composition-1] [INFO] [1790670903.098342976] [patrol_localization]: batch nearest-neighbor verified against PCL: 5861 queries
+[hdl_localization_composition-1] [INFO] [1790670903.191727072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5861 queries
+[hdl_localization_composition-1] [INFO] [1790670903.432215680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5419 queries
+[hdl_localization_composition-1] [INFO] [1790670903.530277376] [patrol_localization]: batch nearest-neighbor verified against PCL: 5419 queries
+[hdl_localization_composition-1] [INFO] [1790670903.531139936] [patrol_localization]: scan profile points=5419 prep=4.8 match=103.1 gate=131.9 status=98.6 odom=0.1 total=338.0 ms
+[hdl_localization_composition-1] [INFO] [1790670904.040113792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670904.132256896] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670904.243878720] [patrol_localization]: batch nearest-neighbor verified against PCL: 4901 queries
+[hdl_localization_composition-1] [INFO] [1790670904.327197376] [patrol_localization]: batch nearest-neighbor verified against PCL: 4901 queries
+[hdl_localization_composition-1] [INFO] [1790670904.942066144] [patrol_localization]: batch nearest-neighbor verified against PCL: 5392 queries
+[hdl_localization_composition-1] [INFO] [1790670905.028937728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5392 queries
+[hdl_localization_composition-1] [INFO] [1790670905.210584192] [patrol_localization]: batch nearest-neighbor verified against PCL: 4904 queries
+[hdl_localization_composition-1] [INFO] [1790670905.323415424] [patrol_localization]: batch nearest-neighbor verified against PCL: 4904 queries
+[hdl_localization_composition-1] [INFO] [1790670906.284487520] [patrol_localization]: batch nearest-neighbor verified against PCL: 4995 queries
+[hdl_localization_composition-1] [INFO] [1790670906.393881632] [patrol_localization]: batch nearest-neighbor verified against PCL: 4995 queries
+[hdl_localization_composition-1] [INFO] [1790670906.647264928] [patrol_localization]: batch nearest-neighbor verified against PCL: 4962 queries
+[hdl_localization_composition-1] [INFO] [1790670906.752399584] [patrol_localization]: batch nearest-neighbor verified against PCL: 4962 queries
+[hdl_localization_composition-1] [INFO] [1790670907.325287200] [patrol_localization]: batch nearest-neighbor verified against PCL: 5812 queries
+[hdl_localization_composition-1] [INFO] [1790670907.433584256] [patrol_localization]: batch nearest-neighbor verified against PCL: 5812 queries
+[hdl_localization_composition-1] [WARN] [1790670907.439355936] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670907.692315296] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [INFO] [1790670907.814077088] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [INFO] [1790670907.824025152] [patrol_localization]: average pointcloud process time in 10 s is 223.500000 ms, fps is: 4.000000
+[hdl_localization_composition-1] [INFO] [1790670908.207941728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5496 queries
+[hdl_localization_composition-1] [INFO] [1790670908.312734976] [patrol_localization]: batch nearest-neighbor verified against PCL: 5496 queries
+[hdl_localization_composition-1] [INFO] [1790670908.583882784] [patrol_localization]: batch nearest-neighbor verified against PCL: 4852 queries
+[hdl_localization_composition-1] [INFO] [1790670908.713762816] [patrol_localization]: batch nearest-neighbor verified against PCL: 4852 queries
+[hdl_localization_composition-1] [INFO] [1790670908.714286176] [patrol_localization]: scan profile points=4852 prep=5.6 match=167.0 gate=96.4 status=130.0 odom=0.1 total=399.0 ms
+[hdl_localization_composition-1] [INFO] [1790670909.240171328] [patrol_localization]: batch nearest-neighbor verified against PCL: 5520 queries
+[hdl_localization_composition-1] [INFO] [1790670909.403581824] [patrol_localization]: batch nearest-neighbor verified against PCL: 5520 queries
+[hdl_localization_composition-1] [INFO] [1790670909.666757440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4790 queries
+[hdl_localization_composition-1] [INFO] [1790670909.748736576] [patrol_localization]: batch nearest-neighbor verified against PCL: 4790 queries
+[hdl_localization_composition-1] [INFO] [1790670910.242933568] [patrol_localization]: batch nearest-neighbor verified against PCL: 4928 queries
+[hdl_localization_composition-1] [INFO] [1790670910.352249920] [patrol_localization]: batch nearest-neighbor verified against PCL: 4928 queries
+[hdl_localization_composition-1] [INFO] [1790670910.603023072] [patrol_localization]: batch nearest-neighbor verified against PCL: 4814 queries
+[hdl_localization_composition-1] [INFO] [1790670910.691265312] [patrol_localization]: batch nearest-neighbor verified against PCL: 4814 queries
+[hdl_localization_composition-1] [INFO] [1790670911.180247712] [patrol_localization]: batch nearest-neighbor verified against PCL: 4932 queries
+[hdl_localization_composition-1] [INFO] [1790670911.260535936] [patrol_localization]: batch nearest-neighbor verified against PCL: 4932 queries
+[hdl_localization_composition-1] [INFO] [1790670911.369962080] [patrol_localization]: batch nearest-neighbor verified against PCL: 4900 queries
+[hdl_localization_composition-1] [INFO] [1790670911.462294400] [patrol_localization]: batch nearest-neighbor verified against PCL: 4900 queries
+[hdl_localization_composition-1] [INFO] [1790670912.108502080] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670912.195352032] [patrol_localization]: batch nearest-neighbor verified against PCL: 5129 queries
+[hdl_localization_composition-1] [INFO] [1790670912.436924192] [patrol_localization]: batch nearest-neighbor verified against PCL: 5033 queries
+[hdl_localization_composition-1] [INFO] [1790670912.564713696] [patrol_localization]: batch nearest-neighbor verified against PCL: 5033 queries
+[hdl_localization_composition-1] [WARN] [1790670912.572578336] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670913.242269088] [patrol_localization]: batch nearest-neighbor verified against PCL: 5092 queries
+[hdl_localization_composition-1] [INFO] [1790670913.374743744] [patrol_localization]: batch nearest-neighbor verified against PCL: 5092 queries
+[hdl_localization_composition-1] [INFO] [1790670913.494373408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5097 queries
+[hdl_localization_composition-1] [INFO] [1790670913.580214592] [patrol_localization]: batch nearest-neighbor verified against PCL: 5097 queries
+[hdl_localization_composition-1] [INFO] [1790670914.019483936] [patrol_localization]: batch nearest-neighbor verified against PCL: 4258 queries
+[hdl_localization_composition-1] [INFO] [1790670914.088956736] [patrol_localization]: batch nearest-neighbor verified against PCL: 4258 queries
+[hdl_localization_composition-1] [INFO] [1790670914.089454496] [patrol_localization]: scan profile points=4258 prep=3.4 match=142.1 gate=125.8 status=69.5 odom=0.1 total=340.0 ms
+[hdl_localization_composition-1] [INFO] [1790670914.310945728] [patrol_localization]: batch nearest-neighbor verified against PCL: 4628 queries
+[hdl_localization_composition-1] [INFO] [1790670914.385709536] [patrol_localization]: batch nearest-neighbor verified against PCL: 4628 queries
+[hdl_localization_composition-1] [INFO] [1790670914.981281600] [patrol_localization]: batch nearest-neighbor verified against PCL: 4913 queries
+[hdl_localization_composition-1] [INFO] [1790670915.061716832] [patrol_localization]: batch nearest-neighbor verified against PCL: 4913 queries
+[hdl_localization_composition-1] [INFO] [1790670915.228158048] [patrol_localization]: batch nearest-neighbor verified against PCL: 4826 queries
+[hdl_localization_composition-1] [INFO] [1790670915.309815296] [patrol_localization]: batch nearest-neighbor verified against PCL: 4826 queries
+[hdl_localization_composition-1] [INFO] [1790670916.205414688] [patrol_localization]: batch nearest-neighbor verified against PCL: 5047 queries
+[hdl_localization_composition-1] [INFO] [1790670916.308993984] [patrol_localization]: batch nearest-neighbor verified against PCL: 5047 queries
+[hdl_localization_composition-1] [INFO] [1790670916.545142048] [patrol_localization]: batch nearest-neighbor verified against PCL: 5065 queries
+[hdl_localization_composition-1] [INFO] [1790670916.675084832] [patrol_localization]: batch nearest-neighbor verified against PCL: 5065 queries
+[hdl_localization_composition-1] [INFO] [1790670917.264944992] [patrol_localization]: batch nearest-neighbor verified against PCL: 5241 queries
+[hdl_localization_composition-1] [INFO] [1790670917.407324864] [patrol_localization]: batch nearest-neighbor verified against PCL: 5241 queries
+[hdl_localization_composition-1] [INFO] [1790670917.611098496] [patrol_localization]: batch nearest-neighbor verified against PCL: 5118 queries
+[hdl_localization_composition-1] [INFO] [1790670917.710343104] [patrol_localization]: batch nearest-neighbor verified against PCL: 5118 queries
+[hdl_localization_composition-1] [WARN] [1790670917.713600000] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670917.781920000] [patrol_localization]: average pointcloud process time in 10 s is 261.371429 ms, fps is: 3.500000
+[hdl_localization_composition-1] [INFO] [1790670918.165900704] [patrol_localization]: batch nearest-neighbor verified against PCL: 5316 queries
+[hdl_localization_composition-1] [INFO] [1790670918.250481408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5316 queries
+[hdl_localization_composition-1] [INFO] [1790670918.352407616] [patrol_localization]: batch nearest-neighbor verified against PCL: 4786 queries
+[hdl_localization_composition-1] [INFO] [1790670918.445834432] [patrol_localization]: batch nearest-neighbor verified against PCL: 4786 queries
+[hdl_localization_composition-1] [INFO] [1790670919.121229824] [patrol_localization]: batch nearest-neighbor verified against PCL: 3814 queries
+[hdl_localization_composition-1] [INFO] [1790670919.208865056] [patrol_localization]: batch nearest-neighbor verified against PCL: 3814 queries
+[hdl_localization_composition-1] [INFO] [1790670919.209334112] [patrol_localization]: scan profile points=3814 prep=11.1 match=178.4 gate=306.3 status=87.6 odom=0.1 total=583.0 ms
+[hdl_localization_composition-1] [INFO] [1790670919.491360640] [patrol_localization]: batch nearest-neighbor verified against PCL: 5909 queries
+[hdl_localization_composition-1] [INFO] [1790670919.614405312] [patrol_localization]: batch nearest-neighbor verified against PCL: 5909 queries
+[hdl_localization_composition-1] [INFO] [1790670920.146658944] [patrol_localization]: batch nearest-neighbor verified against PCL: 4959 queries
+[hdl_localization_composition-1] [INFO] [1790670920.279008640] [patrol_localization]: batch nearest-neighbor verified against PCL: 4959 queries
+[hdl_localization_composition-1] [INFO] [1790670920.531995328] [patrol_localization]: batch nearest-neighbor verified against PCL: 4875 queries
+[hdl_localization_composition-1] [INFO] [1790670920.635499008] [patrol_localization]: batch nearest-neighbor verified against PCL: 4875 queries
+[hdl_localization_composition-1] [INFO] [1790670921.081131168] [patrol_localization]: batch nearest-neighbor verified against PCL: 5098 queries
+[hdl_localization_composition-1] [INFO] [1790670921.166118400] [patrol_localization]: batch nearest-neighbor verified against PCL: 5098 queries
+[hdl_localization_composition-1] [INFO] [1790670921.277097280] [patrol_localization]: batch nearest-neighbor verified against PCL: 5044 queries
+[hdl_localization_composition-1] [INFO] [1790670921.359889056] [patrol_localization]: batch nearest-neighbor verified against PCL: 5044 queries
+[hdl_localization_composition-1] [INFO] [1790670921.873667040] [patrol_localization]: batch nearest-neighbor verified against PCL: 5752 queries
+[hdl_localization_composition-1] [INFO] [1790670921.992490912] [patrol_localization]: batch nearest-neighbor verified against PCL: 5752 queries
+[hdl_localization_composition-1] [INFO] [1790670922.108238720] [patrol_localization]: batch nearest-neighbor verified against PCL: 4468 queries
+[hdl_localization_composition-1] [INFO] [1790670922.182563808] [patrol_localization]: batch nearest-neighbor verified against PCL: 4468 queries
+[hdl_localization_composition-1] [INFO] [1790670922.901076704] [patrol_localization]: batch nearest-neighbor verified against PCL: 5014 queries
+[hdl_localization_composition-1] [INFO] [1790670922.984455968] [patrol_localization]: batch nearest-neighbor verified against PCL: 5014 queries
+[hdl_localization_composition-1] [WARN] [1790670922.987462784] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670923.115313888] [patrol_localization]: batch nearest-neighbor verified against PCL: 4748 queries
+[hdl_localization_composition-1] [INFO] [1790670923.196246016] [patrol_localization]: batch nearest-neighbor verified against PCL: 4748 queries
+[hdl_localization_composition-1] [INFO] [1790670924.068350752] [patrol_localization]: batch nearest-neighbor verified against PCL: 5053 queries
+[hdl_localization_composition-1] [INFO] [1790670924.169766944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5053 queries
+[hdl_localization_composition-1] [INFO] [1790670924.304467072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5360 queries
+[hdl_localization_composition-1] [INFO] [1790670924.397212192] [patrol_localization]: batch nearest-neighbor verified against PCL: 5360 queries
+[hdl_localization_composition-1] [INFO] [1790670924.397784640] [patrol_localization]: scan profile points=5360 prep=9.8 match=22.6 gate=97.3 status=92.9 odom=0.1 total=222.0 ms
+[hdl_localization_composition-1] [INFO] [1790670925.073741216] [patrol_localization]: batch nearest-neighbor verified against PCL: 5036 queries
+[hdl_localization_composition-1] [INFO] [1790670925.153891072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5036 queries
+[hdl_localization_composition-1] [INFO] [1790670925.329410880] [patrol_localization]: batch nearest-neighbor verified against PCL: 5132 queries
+[hdl_localization_composition-1] [INFO] [1790670925.447324480] [patrol_localization]: batch nearest-neighbor verified against PCL: 5132 queries
+[hdl_localization_composition-1] [INFO] [1790670926.002320480] [patrol_localization]: batch nearest-neighbor verified against PCL: 5418 queries
+[hdl_localization_composition-1] [INFO] [1790670926.102528032] [patrol_localization]: batch nearest-neighbor verified against PCL: 5418 queries
+[hdl_localization_composition-1] [INFO] [1790670926.224165504] [patrol_localization]: batch nearest-neighbor verified against PCL: 4976 queries
+[hdl_localization_composition-1] [INFO] [1790670926.313313952] [patrol_localization]: batch nearest-neighbor verified against PCL: 4976 queries
+[hdl_localization_composition-1] [INFO] [1790670927.092810976] [patrol_localization]: batch nearest-neighbor verified against PCL: 6331 queries
+[hdl_localization_composition-1] [INFO] [1790670927.272596288] [patrol_localization]: batch nearest-neighbor verified against PCL: 6331 queries
+[hdl_localization_composition-1] [INFO] [1790670927.413071776] [patrol_localization]: batch nearest-neighbor verified against PCL: 4511 queries
+[hdl_localization_composition-1] [INFO] [1790670927.512408256] [patrol_localization]: batch nearest-neighbor verified against PCL: 4511 queries
+[hdl_localization_composition-1] [INFO] [1790670927.785758720] [patrol_localization]: average pointcloud process time in 10 s is 234.743590 ms, fps is: 3.900000
+[hdl_localization_composition-1] [INFO] [1790670928.222017824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4918 queries
+[hdl_localization_composition-1] [INFO] [1790670928.325270560] [patrol_localization]: batch nearest-neighbor verified against PCL: 4918 queries
+[hdl_localization_composition-1] [WARN] [1790670928.326533984] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670928.641871744] [patrol_localization]: batch nearest-neighbor verified against PCL: 5241 queries
+[hdl_localization_composition-1] [INFO] [1790670928.751116576] [patrol_localization]: batch nearest-neighbor verified against PCL: 5241 queries
+[hdl_localization_composition-1] [INFO] [1790670929.395210464] [patrol_localization]: batch nearest-neighbor verified against PCL: 4759 queries
+[hdl_localization_composition-1] [INFO] [1790670929.478960064] [patrol_localization]: batch nearest-neighbor verified against PCL: 4759 queries
+[hdl_localization_composition-1] [INFO] [1790670929.479488960] [patrol_localization]: scan profile points=4759 prep=5.1 match=281.4 gate=133.6 status=83.8 odom=0.1 total=503.0 ms
+[hdl_localization_composition-1] [INFO] [1790670929.584961408] [patrol_localization]: batch nearest-neighbor verified against PCL: 4515 queries
+[hdl_localization_composition-1] [INFO] [1790670929.662787456] [patrol_localization]: batch nearest-neighbor verified against PCL: 4515 queries
+[hdl_localization_composition-1] [INFO] [1790670930.176095520] [patrol_localization]: batch nearest-neighbor verified against PCL: 4869 queries
+[hdl_localization_composition-1] [INFO] [1790670930.262366848] [patrol_localization]: batch nearest-neighbor verified against PCL: 4869 queries
+[hdl_localization_composition-1] [INFO] [1790670930.379397536] [patrol_localization]: batch nearest-neighbor verified against PCL: 5103 queries
+[hdl_localization_composition-1] [INFO] [1790670930.473441056] [patrol_localization]: batch nearest-neighbor verified against PCL: 5103 queries
+[hdl_localization_composition-1] [INFO] [1790670931.071737760] [patrol_localization]: batch nearest-neighbor verified against PCL: 5094 queries
+[hdl_localization_composition-1] [INFO] [1790670931.162429792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5094 queries
+[hdl_localization_composition-1] [INFO] [1790670931.349252832] [patrol_localization]: batch nearest-neighbor verified against PCL: 5015 queries
+[hdl_localization_composition-1] [INFO] [1790670931.445432288] [patrol_localization]: batch nearest-neighbor verified against PCL: 5015 queries
+[hdl_localization_composition-1] [INFO] [1790670932.112680448] [patrol_localization]: batch nearest-neighbor verified against PCL: 5185 queries
+[hdl_localization_composition-1] [INFO] [1790670932.257584608] [patrol_localization]: batch nearest-neighbor verified against PCL: 5185 queries
+[hdl_localization_composition-1] [INFO] [1790670932.358669216] [patrol_localization]: batch nearest-neighbor verified against PCL: 3774 queries
+[hdl_localization_composition-1] [INFO] [1790670932.430061312] [patrol_localization]: batch nearest-neighbor verified against PCL: 3774 queries
+[hdl_localization_composition-1] [INFO] [1790670933.240857568] [patrol_localization]: batch nearest-neighbor verified against PCL: 3510 queries
+[hdl_localization_composition-1] [INFO] [1790670933.344587776] [patrol_localization]: batch nearest-neighbor verified against PCL: 3510 queries
+[hdl_localization_composition-1] [WARN] [1790670933.346936960] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670933.553350656] [patrol_localization]: batch nearest-neighbor verified against PCL: 4458 queries
+[hdl_localization_composition-1] [INFO] [1790670933.631053440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4458 queries
+[hdl_localization_composition-1] [INFO] [1790670934.012793152] [patrol_localization]: batch nearest-neighbor verified against PCL: 5046 queries
+[hdl_localization_composition-1] [INFO] [1790670934.099821088] [patrol_localization]: batch nearest-neighbor verified against PCL: 5046 queries
+[hdl_localization_composition-1] [INFO] [1790670934.335777376] [patrol_localization]: batch nearest-neighbor verified against PCL: 4587 queries
+[hdl_localization_composition-1] [INFO] [1790670934.417007008] [patrol_localization]: batch nearest-neighbor verified against PCL: 4587 queries
+[hdl_localization_composition-1] [INFO] [1790670934.509720384] [patrol_localization]: scan profile points=4755 prep=10.7 match=41.8 gate=11.2 status=21.8 odom=0.1 total=85.0 ms
+[hdl_localization_composition-1] [INFO] [1790670935.163701824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4914 queries
+[hdl_localization_composition-1] [INFO] [1790670935.267902912] [patrol_localization]: batch nearest-neighbor verified against PCL: 4914 queries
+[hdl_localization_composition-1] [INFO] [1790670935.463618848] [patrol_localization]: batch nearest-neighbor verified against PCL: 4828 queries
+[hdl_localization_composition-1] [INFO] [1790670935.547061696] [patrol_localization]: batch nearest-neighbor verified against PCL: 4828 queries
+[hdl_localization_composition-1] [INFO] [1790670936.045529568] [patrol_localization]: batch nearest-neighbor verified against PCL: 5063 queries
+[hdl_localization_composition-1] [INFO] [1790670936.133304256] [patrol_localization]: batch nearest-neighbor verified against PCL: 5063 queries
+[hdl_localization_composition-1] [INFO] [1790670936.357362656] [patrol_localization]: batch nearest-neighbor verified against PCL: 4814 queries
+[hdl_localization_composition-1] [INFO] [1790670936.462348320] [patrol_localization]: batch nearest-neighbor verified against PCL: 4814 queries
+[hdl_localization_composition-1] [INFO] [1790670937.192399840] [patrol_localization]: batch nearest-neighbor verified against PCL: 5459 queries
+[hdl_localization_composition-1] [INFO] [1790670937.280913408] [patrol_localization]: batch nearest-neighbor verified against PCL: 5459 queries
+[hdl_localization_composition-1] [INFO] [1790670937.386845120] [patrol_localization]: batch nearest-neighbor verified against PCL: 4866 queries
+[hdl_localization_composition-1] [INFO] [1790670937.523379360] [patrol_localization]: batch nearest-neighbor verified against PCL: 4866 queries
+[hdl_localization_composition-1] [INFO] [1790670937.889098624] [patrol_localization]: average pointcloud process time in 10 s is 258.194444 ms, fps is: 3.600000
+[hdl_localization_composition-1] [INFO] [1790670938.268610816] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [INFO] [1790670938.350238688] [patrol_localization]: batch nearest-neighbor verified against PCL: 4804 queries
+[hdl_localization_composition-1] [WARN] [1790670938.351139872] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670938.474043680] [patrol_localization]: batch nearest-neighbor verified against PCL: 5116 queries
+[hdl_localization_composition-1] [INFO] [1790670938.568323776] [patrol_localization]: batch nearest-neighbor verified against PCL: 5116 queries
+[hdl_localization_composition-1] [INFO] [1790670938.943908416] [patrol_localization]: batch nearest-neighbor verified against PCL: 4895 queries
+[hdl_localization_composition-1] [INFO] [1790670939.025693280] [patrol_localization]: batch nearest-neighbor verified against PCL: 4895 queries
+[hdl_localization_composition-1] [INFO] [1790670939.212293568] [patrol_localization]: batch nearest-neighbor verified against PCL: 5271 queries
+[hdl_localization_composition-1] [INFO] [1790670939.301089728] [patrol_localization]: batch nearest-neighbor verified against PCL: 5271 queries
+[hdl_localization_composition-1] [INFO] [1790670939.672360320] [patrol_localization]: scan profile points=4827 prep=8.0 match=163.2 gate=8.0 status=8.0 odom=0.1 total=187.0 ms
+[hdl_localization_composition-1] [INFO] [1790670940.231957760] [patrol_localization]: batch nearest-neighbor verified against PCL: 5061 queries
+[hdl_localization_composition-1] [INFO] [1790670940.320639488] [patrol_localization]: batch nearest-neighbor verified against PCL: 5061 queries
+[hdl_localization_composition-1] [INFO] [1790670940.518462880] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670940.608525088] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670941.174208928] [patrol_localization]: batch nearest-neighbor verified against PCL: 4770 queries
+[hdl_localization_composition-1] [INFO] [1790670941.261195456] [patrol_localization]: batch nearest-neighbor verified against PCL: 4770 queries
+[hdl_localization_composition-1] [INFO] [1790670941.458238528] [patrol_localization]: batch nearest-neighbor verified against PCL: 4806 queries
+[hdl_localization_composition-1] [INFO] [1790670941.543098080] [patrol_localization]: batch nearest-neighbor verified against PCL: 4806 queries
+[hdl_localization_composition-1] [INFO] [1790670942.023295616] [patrol_localization]: batch nearest-neighbor verified against PCL: 4952 queries
+[hdl_localization_composition-1] [INFO] [1790670942.115690880] [patrol_localization]: batch nearest-neighbor verified against PCL: 4952 queries
+[hdl_localization_composition-1] [INFO] [1790670942.371895264] [patrol_localization]: batch nearest-neighbor verified against PCL: 5416 queries
+[hdl_localization_composition-1] [INFO] [1790670942.487808704] [patrol_localization]: batch nearest-neighbor verified against PCL: 5416 queries
+[hdl_localization_composition-1] [INFO] [1790670942.874046080] [patrol_localization]: batch nearest-neighbor verified against PCL: 4331 queries
+[hdl_localization_composition-1] [INFO] [1790670942.947331040] [patrol_localization]: batch nearest-neighbor verified against PCL: 4331 queries
+[hdl_localization_composition-1] [INFO] [1790670943.058737248] [patrol_localization]: batch nearest-neighbor verified against PCL: 4925 queries
+[hdl_localization_composition-1] [INFO] [1790670943.146633024] [patrol_localization]: batch nearest-neighbor verified against PCL: 4925 queries
+[hdl_localization_composition-1] [INFO] [1790670943.996175680] [patrol_localization]: batch nearest-neighbor verified against PCL: 4737 queries
+[hdl_localization_composition-1] [INFO] [1790670944.077164704] [patrol_localization]: batch nearest-neighbor verified against PCL: 4737 queries
+[hdl_localization_composition-1] [WARN] [1790670944.079840864] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670944.260292896] [patrol_localization]: batch nearest-neighbor verified against PCL: 4727 queries
+[hdl_localization_composition-1] [INFO] [1790670944.439761600] [patrol_localization]: batch nearest-neighbor verified against PCL: 4727 queries
+[hdl_localization_composition-1] [INFO] [1790670944.942755712] [patrol_localization]: batch nearest-neighbor verified against PCL: 5553 queries
+[hdl_localization_composition-1] [INFO] [1790670945.075994688] [patrol_localization]: batch nearest-neighbor verified against PCL: 5553 queries
+[hdl_localization_composition-1] [INFO] [1790670945.078794880] [patrol_localization]: scan profile points=5553 prep=5.2 match=175.8 gate=162.6 status=133.7 odom=2.0 total=479.0 ms
+[hdl_localization_composition-1] [INFO] [1790670945.211493152] [patrol_localization]: batch nearest-neighbor verified against PCL: 4562 queries
+[hdl_localization_composition-1] [INFO] [1790670945.299409888] [patrol_localization]: batch nearest-neighbor verified against PCL: 4562 queries
+[hdl_localization_composition-1] [INFO] [1790670946.180980384] [patrol_localization]: batch nearest-neighbor verified against PCL: 6435 queries
+[hdl_localization_composition-1] [INFO] [1790670946.289798272] [patrol_localization]: batch nearest-neighbor verified against PCL: 6435 queries
+[hdl_localization_composition-1] [INFO] [1790670946.469042528] [patrol_localization]: batch nearest-neighbor verified against PCL: 4891 queries
+[hdl_localization_composition-1] [INFO] [1790670946.555199552] [patrol_localization]: batch nearest-neighbor verified against PCL: 4891 queries
+[hdl_localization_composition-1] [INFO] [1790670947.131469280] [patrol_localization]: batch nearest-neighbor verified against PCL: 4196 queries
+[hdl_localization_composition-1] [INFO] [1790670947.236418912] [patrol_localization]: batch nearest-neighbor verified against PCL: 4196 queries
+[hdl_localization_composition-1] [INFO] [1790670947.345000288] [patrol_localization]: batch nearest-neighbor verified against PCL: 4777 queries
+[hdl_localization_composition-1] [INFO] [1790670947.465905824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4777 queries
+[hdl_localization_composition-1] [INFO] [1790670948.040948256] [patrol_localization]: batch nearest-neighbor verified against PCL: 5109 queries
+[hdl_localization_composition-1] [INFO] [1790670948.122791936] [patrol_localization]: batch nearest-neighbor verified against PCL: 5109 queries
+[hdl_localization_composition-1] [INFO] [1790670948.124957632] [patrol_localization]: average pointcloud process time in 10 s is 246.500000 ms, fps is: 3.800000
+[hdl_localization_composition-1] [INFO] [1790670948.352871392] [patrol_localization]: batch nearest-neighbor verified against PCL: 4964 queries
+[hdl_localization_composition-1] [INFO] [1790670948.433619584] [patrol_localization]: batch nearest-neighbor verified against PCL: 4964 queries
+[hdl_localization_composition-1] [INFO] [1790670948.979673216] [patrol_localization]: batch nearest-neighbor verified against PCL: 5655 queries
+[hdl_localization_composition-1] [INFO] [1790670949.074977184] [patrol_localization]: batch nearest-neighbor verified against PCL: 5655 queries
+[hdl_localization_composition-1] [INFO] [1790670949.321519712] [patrol_localization]: batch nearest-neighbor verified against PCL: 5248 queries
+[hdl_localization_composition-1] [INFO] [1790670949.410202944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5248 queries
+[hdl_localization_composition-1] [WARN] [1790670949.411079424] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670950.145274528] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670950.231520512] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670950.232128192] [patrol_localization]: scan profile points=5059 prep=5.9 match=88.2 gate=140.8 status=86.4 odom=0.1 total=321.0 ms
+[hdl_localization_composition-1] [INFO] [1790670950.408850528] [patrol_localization]: batch nearest-neighbor verified against PCL: 5329 queries
+[hdl_localization_composition-1] [INFO] [1790670950.538200288] [patrol_localization]: batch nearest-neighbor verified against PCL: 5329 queries
+[hdl_localization_composition-1] [INFO] [1790670951.176527840] [patrol_localization]: batch nearest-neighbor verified against PCL: 4495 queries
+[hdl_localization_composition-1] [INFO] [1790670951.280289664] [patrol_localization]: batch nearest-neighbor verified against PCL: 4495 queries
+[hdl_localization_composition-1] [INFO] [1790670951.517553056] [patrol_localization]: batch nearest-neighbor verified against PCL: 4995 queries
+[hdl_localization_composition-1] [INFO] [1790670951.607228032] [patrol_localization]: batch nearest-neighbor verified against PCL: 4995 queries
+[hdl_localization_composition-1] [INFO] [1790670952.046640032] [patrol_localization]: batch nearest-neighbor verified against PCL: 4444 queries
+[hdl_localization_composition-1] [INFO] [1790670952.120275232] [patrol_localization]: batch nearest-neighbor verified against PCL: 4444 queries
+[hdl_localization_composition-1] [INFO] [1790670952.336877632] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [INFO] [1790670952.433679584] [patrol_localization]: batch nearest-neighbor verified against PCL: 5080 queries
+[hdl_localization_composition-1] [INFO] [1790670953.021259616] [patrol_localization]: batch nearest-neighbor verified against PCL: 5027 queries
+[hdl_localization_composition-1] [INFO] [1790670953.113802816] [patrol_localization]: batch nearest-neighbor verified against PCL: 5027 queries
+[hdl_localization_composition-1] [INFO] [1790670953.316666304] [patrol_localization]: batch nearest-neighbor verified against PCL: 5346 queries
+[hdl_localization_composition-1] [INFO] [1790670953.405108576] [patrol_localization]: batch nearest-neighbor verified against PCL: 5346 queries
+[hdl_localization_composition-1] [INFO] [1790670953.863112416] [patrol_localization]: batch nearest-neighbor verified against PCL: 4848 queries
+[hdl_localization_composition-1] [INFO] [1790670953.950819232] [patrol_localization]: batch nearest-neighbor verified against PCL: 4848 queries
+[hdl_localization_composition-1] [INFO] [1790670954.153709280] [patrol_localization]: batch nearest-neighbor verified against PCL: 5324 queries
+[hdl_localization_composition-1] [INFO] [1790670954.278496544] [patrol_localization]: batch nearest-neighbor verified against PCL: 5324 queries
+[hdl_localization_composition-1] [INFO] [1790670954.946561312] [patrol_localization]: batch nearest-neighbor verified against PCL: 4938 queries
+[hdl_localization_composition-1] [INFO] [1790670955.028280800] [patrol_localization]: batch nearest-neighbor verified against PCL: 4938 queries
+[hdl_localization_composition-1] [WARN] [1790670955.031040512] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670955.156988256] [patrol_localization]: batch nearest-neighbor verified against PCL: 5001 queries
+[hdl_localization_composition-1] [INFO] [1790670955.241088672] [patrol_localization]: batch nearest-neighbor verified against PCL: 5001 queries
+[hdl_localization_composition-1] [INFO] [1790670955.243318496] [patrol_localization]: scan profile points=5001 prep=5.2 match=30.7 gate=90.3 status=84.4 odom=1.6 total=212.0 ms
+[hdl_localization_composition-1] [INFO] [1790670956.266108672] [patrol_localization]: batch nearest-neighbor verified against PCL: 5089 queries
+[hdl_localization_composition-1] [INFO] [1790670956.359298016] [patrol_localization]: batch nearest-neighbor verified against PCL: 5089 queries
+[hdl_localization_composition-1] [INFO] [1790670956.534759072] [patrol_localization]: batch nearest-neighbor verified against PCL: 5299 queries
+[hdl_localization_composition-1] [INFO] [1790670956.680594944] [patrol_localization]: batch nearest-neighbor verified against PCL: 5299 queries
+[hdl_localization_composition-1] [INFO] [1790670957.167885792] [patrol_localization]: batch nearest-neighbor verified against PCL: 5162 queries
+[hdl_localization_composition-1] [INFO] [1790670957.260597632] [patrol_localization]: batch nearest-neighbor verified against PCL: 5162 queries
+[hdl_localization_composition-1] [INFO] [1790670957.391879968] [patrol_localization]: batch nearest-neighbor verified against PCL: 4912 queries
+[hdl_localization_composition-1] [INFO] [1790670957.553046848] [patrol_localization]: batch nearest-neighbor verified against PCL: 4912 queries
+[hdl_localization_composition-1] [INFO] [1790670958.075536960] [patrol_localization]: batch nearest-neighbor verified against PCL: 5895 queries
+[hdl_localization_composition-1] [INFO] [1790670958.199281248] [patrol_localization]: batch nearest-neighbor verified against PCL: 5895 queries
+[hdl_localization_composition-1] [INFO] [1790670958.200232928] [patrol_localization]: average pointcloud process time in 10 s is 241.105263 ms, fps is: 3.800000
+[hdl_localization_composition-1] [INFO] [1790670958.496829344] [patrol_localization]: batch nearest-neighbor verified against PCL: 5095 queries
+[hdl_localization_composition-1] [INFO] [1790670958.604640704] [patrol_localization]: batch nearest-neighbor verified against PCL: 5095 queries
+[hdl_localization_composition-1] [INFO] [1790670959.294270176] [patrol_localization]: batch nearest-neighbor verified against PCL: 5283 queries
+[hdl_localization_composition-1] [INFO] [1790670959.402986016] [patrol_localization]: batch nearest-neighbor verified against PCL: 5283 queries
+[hdl_localization_composition-1] [INFO] [1790670959.542648320] [patrol_localization]: batch nearest-neighbor verified against PCL: 4739 queries
+[hdl_localization_composition-1] [INFO] [1790670959.699401184] [patrol_localization]: batch nearest-neighbor verified against PCL: 4739 queries
+[hdl_localization_composition-1] [INFO] [1790670960.162662720] [patrol_localization]: batch nearest-neighbor verified against PCL: 4737 queries
+[hdl_localization_composition-1] [INFO] [1790670960.259184480] [patrol_localization]: batch nearest-neighbor verified against PCL: 4737 queries
+[hdl_localization_composition-1] [INFO] [1790670960.261802784] [patrol_localization]: scan profile points=4737 prep=5.1 match=144.0 gate=143.2 status=96.5 odom=0.1 total=388.0 ms
+[hdl_localization_composition-1] [WARN] [1790670960.267235680] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670960.373916608] [patrol_localization]: batch nearest-neighbor verified against PCL: 4896 queries
+[hdl_localization_composition-1] [INFO] [1790670960.461694272] [patrol_localization]: batch nearest-neighbor verified against PCL: 4896 queries
+[hdl_localization_composition-1] [INFO] [1790670961.127847968] [patrol_localization]: batch nearest-neighbor verified against PCL: 4724 queries
+[hdl_localization_composition-1] [INFO] [1790670961.203213792] [patrol_localization]: batch nearest-neighbor verified against PCL: 4724 queries
+[hdl_localization_composition-1] [INFO] [1790670961.312535104] [patrol_localization]: batch nearest-neighbor verified against PCL: 5113 queries
+[hdl_localization_composition-1] [INFO] [1790670961.395384384] [patrol_localization]: batch nearest-neighbor verified against PCL: 5113 queries
+[hdl_localization_composition-1] [INFO] [1790670962.134711392] [patrol_localization]: batch nearest-neighbor verified against PCL: 4854 queries
+[hdl_localization_composition-1] [INFO] [1790670962.215151616] [patrol_localization]: batch nearest-neighbor verified against PCL: 4854 queries
+[hdl_localization_composition-1] [INFO] [1790670962.318923328] [patrol_localization]: batch nearest-neighbor verified against PCL: 4860 queries
+[hdl_localization_composition-1] [INFO] [1790670962.398942272] [patrol_localization]: batch nearest-neighbor verified against PCL: 4860 queries
+[hdl_localization_composition-1] [INFO] [1790670962.939110272] [patrol_localization]: batch nearest-neighbor verified against PCL: 4632 queries
+[hdl_localization_composition-1] [INFO] [1790670963.012123904] [patrol_localization]: batch nearest-neighbor verified against PCL: 4632 queries
+[hdl_localization_composition-1] [INFO] [1790670963.175873600] [patrol_localization]: batch nearest-neighbor verified against PCL: 4559 queries
+[hdl_localization_composition-1] [INFO] [1790670963.248749696] [patrol_localization]: batch nearest-neighbor verified against PCL: 4559 queries
+[hdl_localization_composition-1] [INFO] [1790670964.149661280] [patrol_localization]: batch nearest-neighbor verified against PCL: 5094 queries
+[hdl_localization_composition-1] [INFO] [1790670964.248667552] [patrol_localization]: batch nearest-neighbor verified against PCL: 5094 queries
+[hdl_localization_composition-1] [INFO] [1790670964.449312224] [patrol_localization]: batch nearest-neighbor verified against PCL: 4866 queries
+[hdl_localization_composition-1] [INFO] [1790670964.556685184] [patrol_localization]: batch nearest-neighbor verified against PCL: 4866 queries
+[hdl_localization_composition-1] [INFO] [1790670965.207600512] [patrol_localization]: batch nearest-neighbor verified against PCL: 5040 queries
+[hdl_localization_composition-1] [INFO] [1790670965.296464608] [patrol_localization]: batch nearest-neighbor verified against PCL: 5040 queries
+[hdl_localization_composition-1] [INFO] [1790670965.296980608] [patrol_localization]: scan profile points=5040 prep=5.5 match=204.8 gate=180.4 status=89.0 odom=0.1 total=479.0 ms
+[hdl_localization_composition-1] [WARN] [1790670965.297439392] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670965.485202368] [patrol_localization]: batch nearest-neighbor verified against PCL: 5086 queries
+[hdl_localization_composition-1] [INFO] [1790670965.568219296] [patrol_localization]: batch nearest-neighbor verified against PCL: 5086 queries
+[hdl_localization_composition-1] [INFO] [1790670965.965602496] [patrol_localization]: batch nearest-neighbor verified against PCL: 6246 queries
+[hdl_localization_composition-1] [INFO] [1790670966.070506784] [patrol_localization]: batch nearest-neighbor verified against PCL: 6246 queries
+[hdl_localization_composition-1] [INFO] [1790670966.295715968] [patrol_localization]: batch nearest-neighbor verified against PCL: 5015 queries
+[hdl_localization_composition-1] [INFO] [1790670966.376325024] [patrol_localization]: batch nearest-neighbor verified against PCL: 5015 queries
+[hdl_localization_composition-1] [INFO] [1790670967.088145824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4679 queries
+[hdl_localization_composition-1] [INFO] [1790670967.164209504] [patrol_localization]: batch nearest-neighbor verified against PCL: 4679 queries
+[hdl_localization_composition-1] [INFO] [1790670967.279977440] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670967.360018720] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670968.001860064] [patrol_localization]: batch nearest-neighbor verified against PCL: 4346 queries
+[hdl_localization_composition-1] [INFO] [1790670968.186617760] [patrol_localization]: batch nearest-neighbor verified against PCL: 4346 queries
+[hdl_localization_composition-1] [INFO] [1790670968.187888960] [patrol_localization]: average pointcloud process time in 10 s is 216.619048 ms, fps is: 4.200000
+[hdl_localization_composition-1] [INFO] [1790670968.356493216] [patrol_localization]: batch nearest-neighbor verified against PCL: 4484 queries
+[hdl_localization_composition-1] [INFO] [1790670968.431503232] [patrol_localization]: batch nearest-neighbor verified against PCL: 4484 queries
+[hdl_localization_composition-1] [INFO] [1790670968.962068096] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670969.088513696] [patrol_localization]: batch nearest-neighbor verified against PCL: 5034 queries
+[hdl_localization_composition-1] [INFO] [1790670969.241503328] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670969.349670336] [patrol_localization]: batch nearest-neighbor verified against PCL: 5059 queries
+[hdl_localization_composition-1] [INFO] [1790670970.105423776] [patrol_localization]: batch nearest-neighbor verified against PCL: 4957 queries
+[hdl_localization_composition-1] [INFO] [1790670970.188061344] [patrol_localization]: batch nearest-neighbor verified against PCL: 4957 queries
+[hdl_localization_composition-1] [INFO] [1790670970.296167008] [patrol_localization]: batch nearest-neighbor verified against PCL: 4807 queries
+[hdl_localization_composition-1] [INFO] [1790670970.496394400] [patrol_localization]: batch nearest-neighbor verified against PCL: 4807 queries
+[hdl_localization_composition-1] [INFO] [1790670970.497011648] [patrol_localization]: scan profile points=4807 prep=6.0 match=22.0 gate=79.5 status=200.3 odom=0.1 total=307.0 ms
+[hdl_localization_composition-1] [WARN] [1790670970.497373920] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670971.030144384] [patrol_localization]: batch nearest-neighbor verified against PCL: 3456 queries
+[hdl_localization_composition-1] [INFO] [1790670971.122432224] [patrol_localization]: batch nearest-neighbor verified against PCL: 3456 queries
+[hdl_localization_composition-1] [INFO] [1790670971.197597248] [patrol_localization]: batch nearest-neighbor verified against PCL: 1226 queries
+[hdl_localization_composition-1] [INFO] [1790670971.237274112] [patrol_localization]: batch nearest-neighbor verified against PCL: 1226 queries
+[hdl_localization_composition-1] [INFO] [1790670972.104695712] [patrol_localization]: batch nearest-neighbor verified against PCL: 4982 queries
+[hdl_localization_composition-1] [INFO] [1790670972.186629376] [patrol_localization]: batch nearest-neighbor verified against PCL: 4982 queries
+[hdl_localization_composition-1] [INFO] [1790670972.289257984] [patrol_localization]: batch nearest-neighbor verified against PCL: 4471 queries
+[hdl_localization_composition-1] [INFO] [1790670972.366089920] [patrol_localization]: batch nearest-neighbor verified against PCL: 4471 queries
+[hdl_localization_composition-1] [INFO] [1790670972.856517088] [patrol_localization]: batch nearest-neighbor verified against PCL: 3749 queries
+[hdl_localization_composition-1] [INFO] [1790670972.919361184] [patrol_localization]: batch nearest-neighbor verified against PCL: 3749 queries
+[hdl_localization_composition-1] [INFO] [1790670973.033801120] [patrol_localization]: batch nearest-neighbor verified against PCL: 4881 queries
+[hdl_localization_composition-1] [INFO] [1790670973.116535200] [patrol_localization]: batch nearest-neighbor verified against PCL: 4881 queries
+[hdl_localization_composition-1] [INFO] [1790670974.103789824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4732 queries
+[hdl_localization_composition-1] [INFO] [1790670974.208765472] [patrol_localization]: batch nearest-neighbor verified against PCL: 4732 queries
+[hdl_localization_composition-1] [INFO] [1790670974.427179712] [patrol_localization]: batch nearest-neighbor verified against PCL: 4405 queries
+[hdl_localization_composition-1] [INFO] [1790670974.538648032] [patrol_localization]: batch nearest-neighbor verified against PCL: 4405 queries
+[hdl_localization_composition-1] [INFO] [1790670974.959082144] [patrol_localization]: batch nearest-neighbor verified against PCL: 3826 queries
+[hdl_localization_composition-1] [INFO] [1790670975.040152288] [patrol_localization]: batch nearest-neighbor verified against PCL: 3826 queries
+[hdl_localization_composition-1] [INFO] [1790670975.268927552] [patrol_localization]: batch nearest-neighbor verified against PCL: 4828 queries
+[hdl_localization_composition-1] [INFO] [1790670975.384231552] [patrol_localization]: batch nearest-neighbor verified against PCL: 4828 queries
+[hdl_localization_composition-1] [INFO] [1790670975.507484608] [patrol_localization]: scan profile points=4827 prep=5.7 match=30.2 gate=8.5 status=12.9 odom=0.1 total=57.0 ms
+[hdl_localization_composition-1] [INFO] [1790670975.959363008] [patrol_localization]: batch nearest-neighbor verified against PCL: 4733 queries
+[hdl_localization_composition-1] [INFO] [1790670976.038957440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4733 queries
+[hdl_localization_composition-1] [WARN] [1790670976.040011008] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670976.217768768] [patrol_localization]: batch nearest-neighbor verified against PCL: 4729 queries
+[hdl_localization_composition-1] [INFO] [1790670976.297234400] [patrol_localization]: batch nearest-neighbor verified against PCL: 4729 queries
+[hdl_localization_composition-1] [INFO] [1790670977.029522816] [patrol_localization]: batch nearest-neighbor verified against PCL: 4908 queries
+[hdl_localization_composition-1] [INFO] [1790670977.135980288] [patrol_localization]: batch nearest-neighbor verified against PCL: 4908 queries
+[hdl_localization_composition-1] [INFO] [1790670977.373565856] [patrol_localization]: batch nearest-neighbor verified against PCL: 4945 queries
+[hdl_localization_composition-1] [INFO] [1790670977.490414688] [patrol_localization]: batch nearest-neighbor verified against PCL: 4945 queries
+[hdl_localization_composition-1] [INFO] [1790670977.804222080] [patrol_localization]: average pointcloud process time in 10 s is 203.348837 ms, fps is: 4.300000
+[hdl_localization_composition-1] [INFO] [1790670978.099145856] [patrol_localization]: batch nearest-neighbor verified against PCL: 4899 queries
+[hdl_localization_composition-1] [INFO] [1790670978.191838464] [patrol_localization]: batch nearest-neighbor verified against PCL: 4899 queries
+[hdl_localization_composition-1] [INFO] [1790670978.346155808] [patrol_localization]: batch nearest-neighbor verified against PCL: 4661 queries
+[hdl_localization_composition-1] [INFO] [1790670978.427357984] [patrol_localization]: batch nearest-neighbor verified against PCL: 4661 queries
+[hdl_localization_composition-1] [INFO] [1790670979.048918496] [patrol_localization]: batch nearest-neighbor verified against PCL: 4981 queries
+[hdl_localization_composition-1] [INFO] [1790670979.141110720] [patrol_localization]: batch nearest-neighbor verified against PCL: 4981 queries
+[hdl_localization_composition-1] [INFO] [1790670979.331094400] [patrol_localization]: batch nearest-neighbor verified against PCL: 5223 queries
+[hdl_localization_composition-1] [INFO] [1790670979.415170336] [patrol_localization]: batch nearest-neighbor verified against PCL: 5223 queries
+[hdl_localization_composition-1] [INFO] [1790670980.284352896] [patrol_localization]: batch nearest-neighbor verified against PCL: 4674 queries
+[hdl_localization_composition-1] [INFO] [1790670980.382969216] [patrol_localization]: batch nearest-neighbor verified against PCL: 4674 queries
+[hdl_localization_composition-1] [INFO] [1790670980.614040128] [patrol_localization]: batch nearest-neighbor verified against PCL: 4889 queries
+[hdl_localization_composition-1] [INFO] [1790670980.697983328] [patrol_localization]: batch nearest-neighbor verified against PCL: 4889 queries
+[hdl_localization_composition-1] [INFO] [1790670980.699534272] [patrol_localization]: scan profile points=4889 prep=5.5 match=138.4 gate=85.7 status=84.0 odom=1.1 total=314.0 ms
+[hdl_localization_composition-1] [INFO] [1790670981.102141632] [patrol_localization]: batch nearest-neighbor verified against PCL: 4627 queries
+[hdl_localization_composition-1] [INFO] [1790670981.174907840] [patrol_localization]: batch nearest-neighbor verified against PCL: 4627 queries
+[hdl_localization_composition-1] [WARN] [1790670981.176568320] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670981.302361824] [patrol_localization]: batch nearest-neighbor verified against PCL: 4796 queries
+[hdl_localization_composition-1] [INFO] [1790670981.395294816] [patrol_localization]: batch nearest-neighbor verified against PCL: 4796 queries
+[hdl_localization_composition-1] [INFO] [1790670981.819802496] [patrol_localization]: batch nearest-neighbor verified against PCL: 4927 queries
+[hdl_localization_composition-1] [INFO] [1790670981.915845728] [patrol_localization]: batch nearest-neighbor verified against PCL: 4927 queries
+[hdl_localization_composition-1] [INFO] [1790670982.113875552] [patrol_localization]: batch nearest-neighbor verified against PCL: 4819 queries
+[hdl_localization_composition-1] [INFO] [1790670982.397037376] [patrol_localization]: batch nearest-neighbor verified against PCL: 4819 queries
+[hdl_localization_composition-1] [INFO] [1790670983.002507136] [patrol_localization]: batch nearest-neighbor verified against PCL: 5052 queries
+[hdl_localization_composition-1] [INFO] [1790670983.099246208] [patrol_localization]: batch nearest-neighbor verified against PCL: 5052 queries
+[hdl_localization_composition-1] [INFO] [1790670983.271658176] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [INFO] [1790670983.360792768] [patrol_localization]: batch nearest-neighbor verified against PCL: 4984 queries
+[hdl_localization_composition-1] [INFO] [1790670984.283751616] [patrol_localization]: batch nearest-neighbor verified against PCL: 5024 queries
+[hdl_localization_composition-1] [INFO] [1790670984.400847008] [patrol_localization]: batch nearest-neighbor verified against PCL: 5024 queries
+[hdl_localization_composition-1] [INFO] [1790670984.572644576] [patrol_localization]: batch nearest-neighbor verified against PCL: 5100 queries
+[hdl_localization_composition-1] [INFO] [1790670984.653991872] [patrol_localization]: batch nearest-neighbor verified against PCL: 5100 queries
+[hdl_localization_composition-1] [INFO] [1790670985.092972608] [patrol_localization]: batch nearest-neighbor verified against PCL: 4764 queries
+[hdl_localization_composition-1] [INFO] [1790670985.188497536] [patrol_localization]: batch nearest-neighbor verified against PCL: 4764 queries
+[hdl_localization_composition-1] [INFO] [1790670985.348803392] [patrol_localization]: batch nearest-neighbor verified against PCL: 2959 queries
+[hdl_localization_composition-1] [INFO] [1790670985.456185920] [patrol_localization]: batch nearest-neighbor verified against PCL: 2959 queries
+[hdl_localization_composition-1] [INFO] [1790670986.114823264] [patrol_localization]: batch nearest-neighbor verified against PCL: 4257 queries
+[hdl_localization_composition-1] [INFO] [1790670986.269572288] [patrol_localization]: batch nearest-neighbor verified against PCL: 4257 queries
+[hdl_localization_composition-1] [INFO] [1790670986.279762336] [patrol_localization]: scan profile points=4257 prep=5.6 match=323.9 gate=156.8 status=157.7 odom=6.8 total=650.0 ms
+[hdl_localization_composition-1] [WARN] [1790670986.280359168] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1790670986.417562208] [patrol_localization]: batch nearest-neighbor verified against PCL: 4878 queries
+[hdl_localization_composition-1] [INFO] [1790670986.598383424] [patrol_localization]: batch nearest-neighbor verified against PCL: 4878 queries
+[hdl_localization_composition-1] [INFO] [1790670987.262596032] [patrol_localization]: batch nearest-neighbor verified against PCL: 5726 queries
+[hdl_localization_composition-1] [INFO] [1790670987.382998368] [patrol_localization]: batch nearest-neighbor verified against PCL: 5726 queries
+[hdl_localization_composition-1] [INFO] [1790670987.647966144] [patrol_localization]: batch nearest-neighbor verified against PCL: 3382 queries
+[hdl_localization_composition-1] [INFO] [1790670987.908898304] [patrol_localization]: batch nearest-neighbor verified against PCL: 4932 queries
+[hdl_localization_composition-1] [INFO] [1790670987.914830624] [patrol_localization]: average pointcloud process time in 10 s is 241.052632 ms, fps is: 3.800000
+[hdl_localization_composition-1] [INFO] [1790670988.329591616] [patrol_localization]: batch nearest-neighbor verified against PCL: 2511 queries
+[hdl_localization_composition-1] [INFO] [1790670988.416930336] [patrol_localization]: batch nearest-neighbor verified against PCL: 3266 queries
+[hdl_localization_composition-1] [INFO] [1790670988.603103744] [patrol_localization]: batch nearest-neighbor verified against PCL: 3739 queries
+[hdl_localization_composition-1] [INFO] [1790670989.113461440] [patrol_localization]: batch nearest-neighbor verified against PCL: 4203 queries
+[hdl_localization_composition-1] [INFO] [1790670989.396681344] [patrol_localization]: batch nearest-neighbor verified against PCL: 5238 queries
+[hdl_localization_composition-1] [INFO] [1790670989.965832704] [patrol_localization]: batch nearest-neighbor verified against PCL: 3637 queries
+[hdl_localization_composition-1] [INFO] [1790670990.232446016] [rclcpp]: signal_handler(signal_value=2)
+[hdl_localization_composition-1] [INFO] [1790670990.362536288] [patrol_localization]: batch nearest-neighbor verified against PCL: 3675 queries
+[INFO] [hdl_localization_composition-1]: process has finished cleanly [pid 19732]
