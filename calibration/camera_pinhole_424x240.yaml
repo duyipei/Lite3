@@ -1,0 +1,22 @@
+# Lite3 D435i color calibration, frozen for Round 2C.
+# source: CAMERA_INFO
+# topic: /camera/color/camera_info
+# evidence: 8943/8943 identical CameraInfo messages in Round 2B formal bag,
+#           reconfirmed from the live publisher after reboot.
+/**:
+  ros__parameters:
+    camera:
+      model: Pinhole
+      width: 424
+      height: 240
+      scale: 1.0
+      fx: 301.9205017089844
+      fy: 301.5201110839844
+      cx: 213.30615234375
+      cy: 129.1182098388672
+      distortion_model: plumb_bob
+      d0: 0.0
+      d1: 0.0
+      d2: 0.0
+      d3: 0.0
+      d4: 0.0

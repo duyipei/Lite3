@@ -1,0 +1,37 @@
+project: lite3_patrol_project
+round: 2C
+generated_at_dev_vm: "2026-09-03"
+fast_livo2:
+  repository: https://github.com/DeepRoboticsLab/fast-livo2-deep-robotics.git
+  branch: soft-sync
+  commit: 4acad5e66cad431de5c9f2e8f6b67d767a5d1a96
+camera_intrinsics:
+  status: PASS
+  file: camera_pinhole_424x240.yaml
+  source: CAMERA_INFO
+  topic: /camera/color/camera_info
+  profile: "424x240@30"
+lidar_camera_extrinsic:
+  status: NEED_MORE_CALIBRATION_DATA
+  file: lidar_camera_extrinsic.yaml
+  required_action: collect_three_FAST-Calib_target_scenes
+lidar_imu:
+  status: PASS_PROVISIONAL_FACTORY_GEOMETRY
+  source: Livox_Mid-360_User_Manual_EN_2024
+  axes: aligned
+  imu_origin_in_lidar_m: [0.011, 0.02329, -0.04412]
+  fast_livo2_lidar_to_imu:
+    extrinsic_R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+    extrinsic_T: [-0.011, -0.02329, 0.04412]
+offset_time:
+  status: PASS
+  classification: EXPECTED_PACKET_BOUNDARY_PATTERN_SAFE_FOR_FAST_LIVO2
+  evidence: ../results/round2c_offset_time_analysis.json
+camera_lidar_temporal_offset:
+  status: NEED_VERIFY
+  provisional_img_time_offset_s: 0.0
+  warning: do_not_replace_with_arrival_offset_from_static_data
+full_livo_config:
+  file: ../config/lite3_mid360_d435i.yaml
+  runnable: false
+  blocked_by: lidar_camera_extrinsic

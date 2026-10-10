@@ -1,0 +1,18 @@
+# This file intentionally contains no numeric transform yet.
+calibration:
+  status: NEED_MORE_CALIBRATION_DATA
+  reason: >-
+    Round 2B formal images contain only a fixed indoor scene and no FAST-Calib
+    four-hole/four-marker target. A LiDAR-camera transform cannot be identified
+    safely from those data.
+  method: hku-mars/FAST-Calib
+  repository: https://github.com/hku-mars/FAST-Calib.git
+  commit: 1018ecfdf9deda51b91a8a11bd11972a0b159008
+  transform_name: T_cam_lidar
+  direction: lidar_to_camera
+  equation: p_camera = Rcl * p_lidar + Pcl
+  rotation_convention: active_3x3_row_major
+  translation_unit: metre
+  Rcl: []
+  Pcl: []
+  validation: NOT_RUN
