@@ -1,0 +1,4 @@
+.vscode
+build
+# Keep the Jetson's selected ROS 2 package manifest in this reproduction snapshot.
+__pycache__
