@@ -210,6 +210,34 @@ class Tests(unittest.TestCase):
         self.mission['waypoints'][1].update(x=1.,y=0.,yaw=0.)
         runner.execute(self.mission,10)
         self.assertEqual(len(BUS.goals),2)
+    def test_turn_watchdog_cancels_and_disarms_no_rearm(self):
+        import math
+        original = ActionClient.send_goal_async
+        def pending_goal(client, goal):
+            if client.name == '/compute_path_to_pose':
+                return original(client, goal)
+            BUS.goals.append(goal)
+            result = PendingFuture()
+            handle = NS(accepted=True, canceled=False, get_result_async=lambda: result)
+            def cancel():
+                handle.canceled = True
+                return Future(NS())
+            handle.cancel_goal_async = cancel
+            BUS.handles.append(handle)
+            return Future(handle)
+        def motion():
+            BUS.emit('/odom', NS(pose=NS(pose=NS(
+                position=NS(x=0., y=0.), orientation=NS(x=0., y=0., z=math.sin(-math.pi/4), w=math.cos(-math.pi/4)))),
+                twist=NS(twist=NS(angular=NS(z=0.)))))
+            BUS.emit('/cmd_vel_corrected', NS(linear=NS(x=0.), angular=NS(z=-.0266667)))
+        BUS.timers.append([BUS.now, .1, motion])
+        with patch.object(ActionClient, 'send_goal_async', pending_goal), patch('builtins.print'):
+            with self.assertRaisesRegex(RuntimeError, 'turn_no_progress'):
+                runner.execute(self.mission, 40)
+        self.assertEqual(len(BUS.goals), 1)
+        self.assertTrue(BUS.handles[0].canceled)
+        self.assertEqual(BUS.arm_calls.count(True), 1)
+        self.assertFalse(BUS.armed)
     def test_turn_config_and_launcher_preflight(self):
         import yaml
         path=ROOT/'navigation/outdoor_20260921_003_area_review/nav2_safe.yaml'

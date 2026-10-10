@@ -1,0 +1,19 @@
+# Runtime output and machine-specific build products; keep maps and visual DBs.
+/bags/
+/logs/
+**/build/
+**/install/
+**/install_merged/
+**/log/
+**/deps_install/
+**/build_livox_sdk2/
+**/__pycache__/
+*.pyc
+**/.ssh/
+.env
+.env.*
+*.pem
+id_rsa*
+id_ed25519*
+/LITE3_VISUAL_SEARCH_STRATEGY=startup_then_global
+fast_livo2_ws/fast-livo2-deep-robotics/src/FAST-LIVO2/Log/

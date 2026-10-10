@@ -56,6 +56,48 @@ LITE3_VISUAL_MAP_ID=outdoor_20260921_003 \
 
 `start` 完成后速度门仍为 DISARMED，不会自动让机器狗运动。
 
+## 5. 多点巡航与转向诊断（2026-10-09）
+
+在项目根目录执行 `bash scripts/patrol_route.sh check` 可以离线校验任务。
+导航终端达到 `NAVIGATION READY` 且速度门为 DISARMED 后，在另一个终端执行
+`bash scripts/patrol_route.sh run`；现场保护就绪后输入 ARM，授权本次 11 点巡航。
+运行中不要在 RViz 另发目标；失败后不会自动重试或重新解锁。
+
+10 月 8 日 16:57 日志显示前 4 点到达，第 5 点的目标方位误差起初为 +82.8 度，
+门后角速度却主要为 -0.0267 rad/s，航向从 -8.7 度降至约 -149 度。
+这与更早“第 1 点轮廓碰到地图障碍”的失败不同，也不支持直接反转底盘角速度符号。
+尾部日志截断，不能从该日志断言最后是否已确认停止。
+
+本次离线修正：
+
+- 当前室外 `nav2_safe.yaml` 和参数生成器统一采用 PathAlign/PathDist 的 `last`
+  聚合，避免距离采样模式下 `sum` 对采样点多的转向轨迹额外罚分。
+- `min_speed_xy=0.03`、`min_speed_theta=0.10` 联合过滤微小平移且微小旋转的
+  候选；仍允许零平移的正常纯旋转，不在速度门后强行增大角速度。
+- PathAlign/GoalAlign 前视点由 0.10 m 调为 0.325 m，改善 0.10 m 栅格中的方向区分。
+- 多点执行器在低平移速度、明显朝向误差下，若连续 15 秒既未接近目标 0.15 m，
+  也未改善朝向误差 0.10 rad，则走原有停止/取消/锁定流程。
+  该保护可能中止有意绕远的转向，不会代替 Nav2 规划或强制走直线。
+- 运动日志增加原始 Nav2 速度、门后速度及样本时效。保留碰撞检查、定位门限、
+  最大线速度 0.15 m/s、最大角速度 0.40 rad/s 以及任务原始坐标/航向。
+
+这是待实机验收的参数修正，不是整条路线成功的证明。历史日志没有候选轨迹评分，
+尚不能排除转弯现场代价地图对方向选择的影响。参数须结束旧导航会话后重新 start
+才会部署并生效；只重启 `patrol_route.sh` 不会更新正在运行的 Nav2 参数。
+
+离线回归命令（不会连接或驱动机器狗）：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_turning.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_route.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_route_prompt.py
+```
+
+机制核对来源：[Foxy 速度采样器](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_plugins/src/xy_theta_iterator.cpp)、
+[轨迹采样](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_plugins/src/standard_traj_generator.cpp)、
+[栅格评分](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_critics/src/map_grid.cpp)。
+原厂分支的实际表现仍须在 Jetson 验证。
+
 ## 共享采集后端
 
 以下文件由两个建图入口间接调用，不是冗余文件：

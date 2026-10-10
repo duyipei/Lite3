@@ -61,6 +61,41 @@ def classify_event(data, token, index):
     return 'pending'
 
 
+class TurnProgressWatchdog:
+    """Stop a stalled low-translation turn; never synthesize/correct velocity.
+
+    Bearing is not a substitute for Nav2's obstacle-aware path. This conservative
+    watchdog may stop an intentional long detour turn; it must never force the
+    shorter turn or disable footprint checks to continue a mission.
+    """
+    def __init__(self, timeout=15.0):
+        self.timeout = timeout
+        self.anchor = None
+
+    def update(self, now, pose, command, target):
+        x, y, yaw = pose[:3]
+        distance = math.hypot(target['x']-x, target['y']-y)
+        phase = 'final_yaw' if distance <= .35 else 'path_bearing'
+        desired = target['yaw'] if phase == 'final_yaw' else math.atan2(target['y']-y, target['x']-x)
+        error = abs(math.atan2(math.sin(desired-yaw), math.cos(desired-yaw)))
+        # Near a positional tolerance boundary the bearing becomes ill-defined.
+        # Ignore that transition band; final yaw is enforced by RotateToGoal.
+        active = (phase == 'final_yaw' and error > .25) or (distance > .6 and error > math.radians(30))
+        if not active or abs(command[0]) > .031:
+            self.anchor = None
+            return None
+        if self.anchor is None or self.anchor[3] != phase:
+            self.anchor = (now, distance, error, phase)
+        since, initial_distance, initial_error, _ = self.anchor
+        if initial_distance-distance >= .15 or initial_error-error >= .10:
+            self.anchor = (now, distance, error, phase)
+        elif now-since >= self.timeout:
+            return ('turn_no_progress:{} for {:.0f}s; distance={:.2f}m heading_error={:.1f}deg; '
+                    'inspect local path/costmap, do not auto-rearm').format(
+                        phase, now-since, distance, math.degrees(error))
+        return None
+
+
 def execute(mission, goal_timeout):
     import rclpy
     from rclpy.node import Node
@@ -84,6 +119,9 @@ def execute(mission, goal_timeout):
             self.closing = False
             self.pose_sample = None
             self.velocity_sample = None
+            self.raw_velocity_sample = None
+            self.pose_time = self.velocity_time = self.raw_velocity_time = 0.0
+            self.turn_watchdog = TurnProgressWatchdog()
             self.target = None
             self.heartbeat_pub = self.create_publisher(String, '/patrol/mission_heartbeat', 10)
             self.goal_pub = self.create_publisher(String, '/patrol/mission_goal', 10)
@@ -96,6 +134,7 @@ def execute(mission, goal_timeout):
             self.create_timer(.2, self.heartbeat)
             self.create_subscription(Odometry, '/odom', self.on_odom, 10)
             self.create_subscription(Twist, '/cmd_vel_corrected', self.on_velocity, 10)
+            self.create_subscription(Twist, '/patrol/cmd_vel_raw', self.on_raw_velocity, 10)
             self.create_timer(1.0, self.report_motion)
 
         def on_odom(self, msg):
@@ -103,9 +142,15 @@ def execute(mission, goal_timeout):
             q = p.orientation
             yaw = math.atan2(2*(q.w*q.z+q.x*q.y), 1-2*(q.y*q.y+q.z*q.z))
             self.pose_sample = (p.position.x, p.position.y, yaw, msg.twist.twist.angular.z)
+            self.pose_time = time.monotonic()
 
         def on_velocity(self, msg):
             self.velocity_sample = (msg.linear.x, msg.angular.z)
+            self.velocity_time = time.monotonic()
+
+        def on_raw_velocity(self, msg):
+            self.raw_velocity_sample = (msg.linear.x, msg.angular.z)
+            self.raw_velocity_time = time.monotonic()
 
         def report_motion(self):
             if not self.token or self.closing or self.pose_sample is None or self.target is None:
@@ -113,8 +158,15 @@ def execute(mission, goal_timeout):
             x, y, yaw, measured_w = self.pose_sample
             bearing = math.atan2(self.target['y']-y, self.target['x']-x)
             error = math.atan2(math.sin(bearing-yaw), math.cos(bearing-yaw))
-            print('[MOTION] wp={} xy=({:.3f},{:.3f}) yaw_deg={:.1f} bearing_error_deg={:.1f} target_yaw_deg={:.1f} odom_w={:.3f} cmd_v_w={}'.format(
-                self.index,x,y,math.degrees(yaw),math.degrees(error),math.degrees(self.target['yaw']),measured_w,self.velocity_sample),flush=True)
+            now = time.monotonic()
+            raw = self.raw_velocity_sample if now-self.raw_velocity_time <= 1.5 else 'STALE_OR_MISSING'
+            print('[MOTION] wp={} xy=({:.3f},{:.3f}) yaw_deg={:.1f} bearing_error_deg={:.1f} target_yaw_deg={:.1f} odom_w={:.3f} cmd_v_w={} raw_v_w={} pose_age_s={:.2f} cmd_age_s={:.2f}'.format(
+                self.index,x,y,math.degrees(yaw),math.degrees(error),math.degrees(self.target['yaw']),measured_w,self.velocity_sample,raw,now-self.pose_time,now-self.velocity_time),flush=True)
+            if self.armed and self.result is not True:
+                if now-self.pose_time > 1.5 or self.velocity_sample is None or now-self.velocity_time > 1.5:
+                    self.failure = self.failure or 'motion telemetry stale during active goal'
+                else:
+                    self.failure = self.failure or self.turn_watchdog.update(now, self.pose_sample, self.velocity_sample, self.target)
 
         def on_ready(self, msg):
             self.ready, self.ready_time = msg.data, time.monotonic()
@@ -198,6 +250,7 @@ def execute(mission, goal_timeout):
                 self.check()
                 self.index, self.event, self.result = index, '', None
                 self.target = point
+                self.turn_watchdog = TurnProgressWatchdog()
                 message = String()
                 message.data = json.dumps(dict(token=self.token, index=index,
                                               x=point['x'], y=point['y'], yaw=point['yaw']))

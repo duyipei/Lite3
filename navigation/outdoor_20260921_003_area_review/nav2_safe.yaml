@@ -182,9 +182,11 @@ controller_server:
       max_vel_x: 0.15
       max_vel_y: 0.0
       max_vel_theta: 0.4
-      min_speed_xy: 0.0
+      # DWB rejects a sample only when BOTH translation and rotation are small.
+      # Positive min_speed_xy still permits pure rotation at >= min_speed_theta.
+      min_speed_xy: 0.03
       max_speed_xy: 0.15
-      min_speed_theta: 0.04
+      min_speed_theta: 0.10
       acc_lim_x: 0.2
       acc_lim_y: 0.1
       acc_lim_theta: 0.50
@@ -215,13 +217,15 @@ controller_server:
       GoalDist.scale: 24.0
       GoalDist.aggregation_type: last
       PathAlign.scale: 64.0
-      PathAlign.aggregation_type: sum
-      PathAlign.forward_point_distance: 0.1
+      # Distance-based sampling has more poses at higher speeds: summing costs
+      # penalizes useful turns simply for having more samples. Score endpoints.
+      PathAlign.aggregation_type: last
+      PathAlign.forward_point_distance: 0.325
       GoalAlign.scale: 48.0
       GoalAlign.aggregation_type: last
-      GoalAlign.forward_point_distance: 0.1
+      GoalAlign.forward_point_distance: 0.325
       PathDist.scale: 32.0
-      PathDist.aggregation_type: sum
+      PathDist.aggregation_type: last
       ObstacleFootprint.scale: 0.02
       ObstacleFootprint.max_scaling_factor: 0.2
       ObstacleFootprint.scaling_speed: 0.15

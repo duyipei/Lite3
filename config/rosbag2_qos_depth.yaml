@@ -1,0 +1,29 @@
+/fast_livo2/livox/lidar:
+  history: keep_last
+  depth: 50
+  reliability: reliable
+  durability: volatile
+
+/fast_livo2/livox/imu:
+  history: keep_last
+  depth: 2000
+  reliability: reliable
+  durability: volatile
+
+/camera/color/image_raw:
+  history: keep_last
+  depth: 100
+  reliability: reliable
+  durability: volatile
+
+/camera/color/camera_info:
+  history: keep_last
+  depth: 100
+  reliability: reliable
+  durability: volatile
+
+/fast_livo2/time_probe:
+  history: keep_last
+  depth: 100
+  reliability: reliable
+  durability: volatile
