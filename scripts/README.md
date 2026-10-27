@@ -1,23 +1,28 @@
 # scripts 目录说明
 
-此目录只保留四条正式工作流的入口和直接依赖。现场优先使用入口脚本，不要单独运行
-后端辅助脚本。
+此目录保留建图、地图生成、导航、多点巡航入口及直接依赖。现场优先使用入口脚本，
+不要单独运行后端辅助脚本。离线测试已移至 `../tests/`，手动时钟维护工具移至
+`../tools/sync_jetson_time.py`。整理记录见 `../docs/2026-10-13_项目文件整理.md`。
+
+常用入口：统一建图 `mapping_start.sh`，
+导航 `navigation_start.sh`，多点巡航 `patrol_route.sh`，预览 `camera_view.sh`。
+旧名称 `indoor_nav_start.sh`、`round3a_capture.sh`、`round3a_live_video.py` 仅保留兼容转发，
+分别对应 `navigation_start.sh`、`mapping_capture.sh`、`camera_preview.py`，不是重复实现。
+Jetson 后端的 `round3a_*` 名称涉及部署路径与进程识别，暂时保留，不应手动删除。
 
 `docs/` 中按日期保存的旧实验记录可能仍提到已经删除的专项诊断或冒烟测试脚本；这些
 记录用于追溯历史，不代表当前入口。
 
-## 1. 室外建图
+## 1. 统一建图采集
 
-入口：`outdoor_lidar_visual_mapping.sh`
+入口：`mapping_start.sh`
 
-它调用共享采集入口 `round3a_capture.sh`，在 Jetson 同步记录 Mid360、IMU、RGB、Depth
+它调用共享采集入口 `mapping_capture.sh`，在 Jetson 同步记录 Mid360、IMU、RGB、Depth
 和时间探针。移动只使用官方遥控器。
 
-## 2. 室内建图
-
-入口：`indoor_lidar_visual_mapping.sh`
-
-采集后端与室外相同，但默认生成 `indoor_YYYYMMDD_HHMMSS` 编号。
+室内外共用此入口，默认生成 `mapping_YYYYMMDD_HHMMSS` 编号。
+原室内、室外两个入口已删除，不保留转发；共享采集和 Jetson 后端仍是必要依赖。
+支持 start、camera2-start、video、status、stop、abort、install、verify。
 
 ## 3. 地图生成
 
@@ -37,8 +42,8 @@
 
 ## 4. 导航启动
 
-入口：`indoor_nav_start.sh`。虽然保留了历史文件名，但通过显式 MAP_ID 同时支持室内和
-室外地图。
+入口：`navigation_start.sh`。通过显式 MAP_ID 同时支持室内和室外地图；默认地图及
+视觉库选择行为保持原样，室外运行务必显式指定地图和视觉库。
 
 其直接依赖是：
 
@@ -51,7 +56,7 @@
 
 ```bash
 LITE3_VISUAL_MAP_ID=outdoor_20260921_003 \
-./indoor_nav_start.sh start outdoor_20260921_003_area_review
+./navigation_start.sh start outdoor_20260921_003_area_review
 ```
 
 `start` 完成后速度门仍为 DISARMED，不会自动让机器狗运动。
@@ -88,9 +93,9 @@ LITE3_VISUAL_MAP_ID=outdoor_20260921_003 \
 离线回归命令（不会连接或驱动机器狗）：
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_turning.py
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_route.py
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_route_prompt.py
+PYTHONDONTWRITEBYTECODE=1 python3 tests/test_patrol_turning.py
+PYTHONDONTWRITEBYTECODE=1 python3 tests/test_patrol_route.py
+PYTHONDONTWRITEBYTECODE=1 python3 tests/test_patrol_route_prompt.py
 ```
 
 机制核对来源：[Foxy 速度采样器](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_plugins/src/xy_theta_iterator.cpp)、
@@ -98,12 +103,38 @@ PYTHONDONTWRITEBYTECODE=1 python3 scripts/test_patrol_route_prompt.py
 [栅格评分](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_critics/src/map_grid.cpp)。
 原厂分支的实际表现仍须在 Jetson 验证。
 
-## 共享采集后端
+## 6. 终点转向修正与共享采集后端
 
-以下文件由两个建图入口间接调用，不是冗余文件：
+### 2026-10-12：第 11 点终点转向修正（待实机验证）
 
-- `round3a_capture.sh`
+15:57 巡航前 10 点成功；第 11 点位置曾进入 0.35 m 容差，但最终朝向未达
+0 rad。Nav2 反复报 `No valid trajectories out of 336`，约 85 秒后中止，
+不是执行器 120 秒超时，也不是转向无进展保护触发。
+
+当前室外配置与配置生成器已同步修改：
+
+- `FollowPath.xy_goal_tolerance=0.20`：靠近到 0.20 m 后进入最终转向，
+  相对于验收位置容差预留 0.15 m 余量。这不是消除真实位移/定位漂移的保证。
+- `goal_checker.stateful=false`：位置与朝向必须同时满足，验收仍为 0.35 m / 0.20 rad。
+- `GoalAlign.scale=0`：取消机头朝向目标位置的偏好，避免与最终指定朝向竞争。
+  这是整个室外控制器的评分配置变更，需同时回归中间点；不是仅对 wp11 动态切换。
+  保留 PathAlign、PathDist、GoalDist、RotateToGoal、Oscillation 和 ObstacleFootprint。
+- `debug_trajectory_details=true`：下次无有效轨迹时保留评分项拒绝原因。
+- 预检查允许转向半径小于验收半径；旧的严格相等检查已同步修正。
+
+第 11 点的位置与 0° 朝向、限速、地图、原厂运动链路均未改动。
+参数修正针对已确认的评分机制和日志现象；历史数据不足以确定每次候选轨迹
+被拒绝的具体评分项，不能将离线参数测试当作实机恢复成功。
+必须在旧任务停止、DISARMED 后退出旧导航会话并重新 start；只重启巡航执行器
+不会更新运行中的 Nav2 参数。需要重测第 11 点及完整路线。
+
+机制来源：[Foxy DWB setPlan 会重置评分器状态](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_core/src/dwb_local_planner.cpp)、
+[GoalAlign 的机头目标位置评分](https://github.com/ros-navigation/navigation2/blob/foxy-devel/nav2_dwb_controller/dwb_critics/src/goal_align.cpp)。
+
+以下文件由统一建图入口间接调用，不是冗余文件：
+
+- `mapping_capture.sh`
 - `round3a_capture_backend.sh`
-- `round3a_live_video.py`
+- `camera_preview.py`
 - `mid360_isolated.launch.py`
 - `time_probe.py`

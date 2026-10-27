@@ -174,7 +174,8 @@ controller_server:
       plugin: nav2_controller::SimpleGoalChecker
       xy_goal_tolerance: 0.35
       yaw_goal_tolerance: 0.20
-      stateful: true
+      # Success must satisfy position AND heading at the same instant.
+      stateful: false
     FollowPath:
       plugin: dwb_core::DWBLocalPlanner
       min_vel_x: 0.0
@@ -208,20 +209,26 @@ controller_server:
       - GoalAlign
       - PathDist
       - GoalDist
-      # Match goal_checker: arrive in position, then finish the requested yaw.
-      xy_goal_tolerance: 0.35
+      # Start the terminal turn inside the acceptance radius, leaving 0.15 m
+      # for stepping/localization variation; do not loosen final acceptance.
+      xy_goal_tolerance: 0.20
       trans_stopped_velocity: 0.03
       RotateToGoal.scale: 32.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
-      GoalDist.scale: 24.0
+      # Near the path endpoint, advancing the body can move the forward
+      # alignment point beyond the path. Goal progress must outweigh that
+      # one-cell alignment penalty; otherwise pure turns can win indefinitely.
+      GoalDist.scale: 48.0
       GoalDist.aggregation_type: last
-      PathAlign.scale: 64.0
+      PathAlign.scale: 32.0
       # Distance-based sampling has more poses at higher speeds: summing costs
       # penalizes useful turns simply for having more samples. Score endpoints.
       PathAlign.aggregation_type: last
       PathAlign.forward_point_distance: 0.325
-      GoalAlign.scale: 48.0
+      # Nose-to-position attraction competes with the requested terminal yaw.
+      # PathAlign/PathDist/GoalDist remain active for obstacle-aware tracking.
+      GoalAlign.scale: 0.0
       GoalAlign.aggregation_type: last
       GoalAlign.forward_point_distance: 0.325
       PathDist.scale: 32.0
@@ -232,6 +239,7 @@ controller_server:
       transform_tolerance: 0.2
       short_circuit_trajectory_evaluation: true
       publish_evaluation: true
+      debug_trajectory_details: true
       publish_global_plan: true
       publish_transformed_plan: true
       publish_local_plan: true

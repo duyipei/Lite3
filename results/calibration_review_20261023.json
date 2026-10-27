@@ -1,0 +1,145 @@
+{
+  "status": "GEOMETRY_ONLY_NOT_VALIDATED",
+  "runnable": false,
+  "convention": "T_A_B maps B coordinates to A; translations in metres",
+  "camera_source": "calibration/camera_pinhole_424x240.yaml; historical CameraInfo, not live verification",
+  "camera": {
+    "model": "Pinhole",
+    "width": 424,
+    "height": 240,
+    "scale": 1.0,
+    "fx": 301.9205017089844,
+    "fy": 301.5201110839844,
+    "cx": 213.30615234375,
+    "cy": 129.1182098388672,
+    "d0": 0.0,
+    "d1": 0.0,
+    "d2": 0.0,
+    "d3": 0.0
+  },
+  "driver_config_checked": "/home/duyipei/Lite3_Projects/lite3_patrol_project/config/mid360_jetson_103.json",
+  "factory_mount_sources": [
+    "logs/MID360_factory_config_20261022.json",
+    "scripts/voa_camera_tf.py"
+  ],
+  "T_base_lidar": [
+    [
+      0.9510565162951535,
+      0.0,
+      0.3090169943749474,
+      0.187
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      -0.3090169943749474,
+      0.0,
+      0.9510565162951535,
+      0.4
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_base_color_optical_approximate": [
+    [
+      0.0,
+      -0.342024042672289,
+      0.9396912015306434,
+      0.25489
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      -0.9396912015306434,
+      -0.342024042672289,
+      0.07249
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_imu_color_optical_approximate": [
+    [
+      0.0,
+      -0.03490364377550959,
+      0.9993906821915004,
+      0.154773382719017
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0,
+      -0.02329
+    ],
+    [
+      0.0,
+      -0.9993906821915004,
+      -0.03490364377550965,
+      -0.24638135590371063
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "candidate_extrin_calib": {
+    "extrinsic_R": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "extrinsic_T": [
+      -0.011,
+      -0.02329,
+      0.04412
+    ],
+    "Rcl": [
+      0.0,
+      -1.0,
+      0.0,
+      -0.03490364377550964,
+      0.0,
+      -0.9993906821915002,
+      0.9993906821915002,
+      0.0,
+      -0.034903643775509585
+    ],
+    "Pcl": [
+      0.0,
+      -0.28453825315627934,
+      -0.1758119298875167
+    ]
+  },
+  "blockers": [
+    "Read live camera_link -> camera_color_optical_frame TF; zero optical translation here is an assumption.",
+    "Validate LiDAR-camera projection across scenes and estimate/verify temporal alignment.",
+    "Verify live image profile and CameraInfo against saved calibration.",
+    "Verify input point coordinates: this report assumes raw LiDAR, not factory-transformed body points."
+  ],
+  "upstream": "https://github.com/DeepRoboticsLab/fast-livo2-deep-robotics",
+  "upstream_review_commit": "f6762c9afc69efbf1b9f170e90c16cf6b7058cb8"
+}

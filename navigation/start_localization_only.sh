@@ -10,6 +10,10 @@ if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
   DEFAULT_DOWNSAMPLE_RESOLUTION=0.5
 fi
 DOWNSAMPLE_RESOLUTION=${LITE3_DOWNSAMPLE_RESOLUTION:-$DEFAULT_DOWNSAMPLE_RESOLUTION}
+GLOBALMAP_DOWNSAMPLE_RESOLUTION=$DOWNSAMPLE_RESOLUTION
+if [[ "$MAP_ID" == indoor_fusion_20260912_001_area_review ]]; then
+  GLOBALMAP_DOWNSAMPLE_RESOLUTION=0.1
+fi
 MAP_DIR=$PROJECT/navigation/$MAP_ID
 source "$PROJECT/navigation/patrol_env.sh"
 
@@ -77,13 +81,13 @@ sleep 5
 # the pipe immediately after one message, so the check does not consume the
 # full timeout when the sensor is healthy.
 lidar_sample=$(timeout 45s ros2 topic echo /rslidar_points \
-  sensor_msgs/msg/PointCloud2 --no-arr 2>&1 | head -n 1 || true)
+  sensor_msgs/msg/PointCloud2 --no-arr 2>/dev/null | head -n 1 || true)
 if [[ "$lidar_sample" != "header:" ]]; then
   echo "refusing to start localization: /rslidar_points has no live data" >&2
   exit 1
 fi
 imu_sample=$(timeout 20s ros2 topic echo /imu/data \
-  sensor_msgs/msg/Imu --no-arr 2>&1 | head -n 1 || true)
+  sensor_msgs/msg/Imu --no-arr 2>/dev/null | head -n 1 || true)
 if [[ "$imu_sample" != "header:" ]]; then
   echo "refusing to start localization: /imu/data has no live data" >&2
   exit 1
@@ -108,6 +112,7 @@ setsid env OMP_NUM_THREADS=1 OMP_WAIT_POLICY=PASSIVE GOMP_SPINCOUNT=0 \
   start_localization:=True start_navigation:=False \
   specify_init_pose:=False use_imu:=False convert_utm_to_local:=False \
   ndt_resolution:="$NDT_RESOLUTION" \
+  globalmap_downsample_resolution:="$GLOBALMAP_DOWNSAMPLE_RESOLUTION" \
   downsample_resolution:="$DOWNSAMPLE_RESOLUTION" &
 localization_pid=$!
 wait "$localization_pid"

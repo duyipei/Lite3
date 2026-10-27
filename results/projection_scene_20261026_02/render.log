@@ -1,0 +1,356 @@
+{
+  "status": "STATIC_SCENE_DIAGNOSTIC_NOT_FULL_CALIBRATION_ACCEPTANCE",
+  "samples": [
+    {
+      "index": 0,
+      "lidar_points": 19968,
+      "depth_points": 3278,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 22,
+          "median_abs_depth_error_m": 1.6671972274780273,
+          "median_signed_depth_error_m": -1.6671972274780273,
+          "p90_abs_depth_error_m": 2.7531555414199826,
+          "fraction_within_0_10m": 0.2727272727272727,
+          "fraction_within_0_20m": 0.2727272727272727,
+          "projected_pixels": 583
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 54,
+          "median_abs_depth_error_m": 1.655468463897705,
+          "median_signed_depth_error_m": -1.065330147743225,
+          "p90_abs_depth_error_m": 3.597896099090576,
+          "fraction_within_0_10m": 0.09259259259259259,
+          "fraction_within_0_20m": 0.16666666666666666,
+          "projected_pixels": 923
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 15,
+          "median_abs_depth_error_m": 2.4065515995025635,
+          "median_signed_depth_error_m": -2.4065515995025635,
+          "p90_abs_depth_error_m": 3.7701447963714596,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.0,
+          "projected_pixels": 574
+        }
+      }
+    },
+    {
+      "index": 1,
+      "lidar_points": 20064,
+      "depth_points": 3335,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 20,
+          "median_abs_depth_error_m": 1.9301968812942505,
+          "median_signed_depth_error_m": -1.9301968812942505,
+          "p90_abs_depth_error_m": 2.748168444633484,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.0,
+          "projected_pixels": 536
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 52,
+          "median_abs_depth_error_m": 1.6914095878601074,
+          "median_signed_depth_error_m": -0.06761026382446289,
+          "p90_abs_depth_error_m": 3.5237597227096553,
+          "fraction_within_0_10m": 0.11538461538461539,
+          "fraction_within_0_20m": 0.15384615384615385,
+          "projected_pixels": 825
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 20,
+          "median_abs_depth_error_m": 1.8270976543426514,
+          "median_signed_depth_error_m": -1.8270976543426514,
+          "p90_abs_depth_error_m": 3.114108872413636,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.35,
+          "projected_pixels": 578
+        }
+      }
+    },
+    {
+      "index": 2,
+      "lidar_points": 21216,
+      "depth_points": 3324,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 30,
+          "median_abs_depth_error_m": 1.4577622413635254,
+          "median_signed_depth_error_m": -1.4577622413635254,
+          "p90_abs_depth_error_m": 2.7199995040893556,
+          "fraction_within_0_10m": 0.26666666666666666,
+          "fraction_within_0_20m": 0.26666666666666666,
+          "projected_pixels": 516
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 41,
+          "median_abs_depth_error_m": 1.105437994003296,
+          "median_signed_depth_error_m": 0.008973836898803711,
+          "p90_abs_depth_error_m": 3.60036563873291,
+          "fraction_within_0_10m": 0.12195121951219512,
+          "fraction_within_0_20m": 0.24390243902439024,
+          "projected_pixels": 838
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 21,
+          "median_abs_depth_error_m": 1.8990730047225952,
+          "median_signed_depth_error_m": -1.8990730047225952,
+          "p90_abs_depth_error_m": 2.8310844898223877,
+          "fraction_within_0_10m": 0.047619047619047616,
+          "fraction_within_0_20m": 0.19047619047619047,
+          "projected_pixels": 573
+        }
+      }
+    },
+    {
+      "index": 3,
+      "lidar_points": 20064,
+      "depth_points": 3258,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 36,
+          "median_abs_depth_error_m": 1.9151761531829834,
+          "median_signed_depth_error_m": -1.9151761531829834,
+          "p90_abs_depth_error_m": 2.854673385620117,
+          "fraction_within_0_10m": 0.1111111111111111,
+          "fraction_within_0_20m": 0.1388888888888889,
+          "projected_pixels": 686
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 29,
+          "median_abs_depth_error_m": 1.907647967338562,
+          "median_signed_depth_error_m": -0.49385905265808105,
+          "p90_abs_depth_error_m": 2.9685548782348627,
+          "fraction_within_0_10m": 0.034482758620689655,
+          "fraction_within_0_20m": 0.13793103448275862,
+          "projected_pixels": 960
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 23,
+          "median_abs_depth_error_m": 2.1808319091796875,
+          "median_signed_depth_error_m": -2.1808319091796875,
+          "p90_abs_depth_error_m": 3.7668962478637704,
+          "fraction_within_0_10m": 0.043478260869565216,
+          "fraction_within_0_20m": 0.30434782608695654,
+          "projected_pixels": 702
+        }
+      }
+    },
+    {
+      "index": 4,
+      "lidar_points": 20352,
+      "depth_points": 3296,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 24,
+          "median_abs_depth_error_m": 1.4811304807662964,
+          "median_signed_depth_error_m": -1.4811304807662964,
+          "p90_abs_depth_error_m": 2.3511523723602297,
+          "fraction_within_0_10m": 0.125,
+          "fraction_within_0_20m": 0.3333333333333333,
+          "projected_pixels": 641
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 33,
+          "median_abs_depth_error_m": 1.3245097398757935,
+          "median_signed_depth_error_m": -0.5138301849365234,
+          "p90_abs_depth_error_m": 2.4508937835693363,
+          "fraction_within_0_10m": 0.09090909090909091,
+          "fraction_within_0_20m": 0.12121212121212122,
+          "projected_pixels": 918
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 28,
+          "median_abs_depth_error_m": 1.6605110168457031,
+          "median_signed_depth_error_m": -1.6605110168457031,
+          "p90_abs_depth_error_m": 2.829041290283203,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.10714285714285714,
+          "projected_pixels": 676
+        }
+      }
+    },
+    {
+      "index": 5,
+      "lidar_points": 19872,
+      "depth_points": 3340,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 29,
+          "median_abs_depth_error_m": 1.7296473979949951,
+          "median_signed_depth_error_m": -1.7296473979949951,
+          "p90_abs_depth_error_m": 2.7152873992919924,
+          "fraction_within_0_10m": 0.034482758620689655,
+          "fraction_within_0_20m": 0.06896551724137931,
+          "projected_pixels": 490
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 57,
+          "median_abs_depth_error_m": 1.2864375114440918,
+          "median_signed_depth_error_m": -0.21374726295471191,
+          "p90_abs_depth_error_m": 3.518734550476074,
+          "fraction_within_0_10m": 0.10526315789473684,
+          "fraction_within_0_20m": 0.15789473684210525,
+          "projected_pixels": 784
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 13,
+          "median_abs_depth_error_m": 2.3655920028686523,
+          "median_signed_depth_error_m": -2.3655920028686523,
+          "p90_abs_depth_error_m": 3.5076778411865237,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.15384615384615385,
+          "projected_pixels": 525
+        }
+      }
+    },
+    {
+      "index": 6,
+      "lidar_points": 19968,
+      "depth_points": 3222,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 15,
+          "median_abs_depth_error_m": 1.6684017181396484,
+          "median_signed_depth_error_m": -1.567124366760254,
+          "p90_abs_depth_error_m": 2.559890604019165,
+          "fraction_within_0_10m": 0.06666666666666667,
+          "fraction_within_0_20m": 0.06666666666666667,
+          "projected_pixels": 578
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 36,
+          "median_abs_depth_error_m": 1.076794981956482,
+          "median_signed_depth_error_m": -0.31986117362976074,
+          "p90_abs_depth_error_m": 2.8474864959716797,
+          "fraction_within_0_10m": 0.08333333333333333,
+          "fraction_within_0_20m": 0.1111111111111111,
+          "projected_pixels": 895
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 16,
+          "median_abs_depth_error_m": 1.9338805675506592,
+          "median_signed_depth_error_m": -1.9338805675506592,
+          "p90_abs_depth_error_m": 2.8321404457092285,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.0625,
+          "projected_pixels": 595
+        }
+      }
+    },
+    {
+      "index": 7,
+      "lidar_points": 19968,
+      "depth_points": 3360,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 25,
+          "median_abs_depth_error_m": 1.5088818073272705,
+          "median_signed_depth_error_m": -1.5088818073272705,
+          "p90_abs_depth_error_m": 2.719301795959473,
+          "fraction_within_0_10m": 0.2,
+          "fraction_within_0_20m": 0.2,
+          "projected_pixels": 530
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 41,
+          "median_abs_depth_error_m": 1.7737387418746948,
+          "median_signed_depth_error_m": -1.1590659618377686,
+          "p90_abs_depth_error_m": 3.554813861846924,
+          "fraction_within_0_10m": 0.14634146341463414,
+          "fraction_within_0_20m": 0.21951219512195122,
+          "projected_pixels": 846
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 19,
+          "median_abs_depth_error_m": 1.6055982112884521,
+          "median_signed_depth_error_m": -1.6055982112884521,
+          "p90_abs_depth_error_m": 2.848773097991943,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.2631578947368421,
+          "projected_pixels": 583
+        }
+      }
+    },
+    {
+      "index": 8,
+      "lidar_points": 19392,
+      "depth_points": 3298,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 21,
+          "median_abs_depth_error_m": 1.8011674880981445,
+          "median_signed_depth_error_m": -1.8011674880981445,
+          "p90_abs_depth_error_m": 2.6595075130462646,
+          "fraction_within_0_10m": 0.14285714285714285,
+          "fraction_within_0_20m": 0.14285714285714285,
+          "projected_pixels": 522
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 41,
+          "median_abs_depth_error_m": 1.0311923027038574,
+          "median_signed_depth_error_m": -0.25675225257873535,
+          "p90_abs_depth_error_m": 2.3798277378082275,
+          "fraction_within_0_10m": 0.17073170731707318,
+          "fraction_within_0_20m": 0.2926829268292683,
+          "projected_pixels": 842
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 23,
+          "median_abs_depth_error_m": 1.9923416376113892,
+          "median_signed_depth_error_m": -1.9923416376113892,
+          "p90_abs_depth_error_m": 2.8373462200164794,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.2608695652173913,
+          "projected_pixels": 564
+        }
+      }
+    },
+    {
+      "index": 9,
+      "lidar_points": 20064,
+      "depth_points": 3302,
+      "comparisons": {
+        "factory_body_points": {
+          "overlap_pixels": 23,
+          "median_abs_depth_error_m": 1.702472448348999,
+          "median_signed_depth_error_m": -1.702472448348999,
+          "p90_abs_depth_error_m": 2.799886417388916,
+          "fraction_within_0_10m": 0.17391304347826086,
+          "fraction_within_0_20m": 0.30434782608695654,
+          "projected_pixels": 617
+        },
+        "double_factory_mount_negative_control": {
+          "overlap_pixels": 45,
+          "median_abs_depth_error_m": 1.3304612636566162,
+          "median_signed_depth_error_m": 0.07081902027130127,
+          "p90_abs_depth_error_m": 3.53011908531189,
+          "fraction_within_0_10m": 0.2222222222222222,
+          "fraction_within_0_20m": 0.28888888888888886,
+          "projected_pixels": 907
+        },
+        "inverse_factory_mount_negative_control": {
+          "overlap_pixels": 24,
+          "median_abs_depth_error_m": 1.662837266921997,
+          "median_signed_depth_error_m": -1.662837266921997,
+          "p90_abs_depth_error_m": 3.0387616634368895,
+          "fraction_within_0_10m": 0.0,
+          "fraction_within_0_20m": 0.20833333333333334,
+          "projected_pixels": 649
+        }
+      }
+    }
+  ],
+  "odometry_motion": {
+    "samples": 4186,
+    "max_position_distance_from_first_m": 0.0,
+    "max_quaternion_angle_from_first_deg": 0.02574109986266223
+  },
+  "limitations": [
+    "Arrival-paired frames: timing calibration not verified.",
+    "No manually identified 2D/3D landmark correspondences: depth residual is NOT pixel reprojection error.",
+    "Depth sensor errors, sparse coverage and occlusions affect residuals.",
+    "Factory-body input interpretation follows inspected vendor launch/config; not inferred from frame_id alone."
+  ]
+}

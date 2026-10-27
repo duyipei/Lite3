@@ -1,5 +1,54 @@
 # 第二台摄像头连接及视觉重定位迁移记录
 
+## 2026-10-12：从虚拟机启动 LRCP 新地图采集
+
+2026-10-13 起统一入口支持交互选择：运行
+`bash scripts/mapping_start.sh start`，输入 1 使用 D435i，输入 2 选择 LRCP
+预采集；回车默认1，q取消。未输入就关闭标准输入会取消，不会自动启动。
+`video` 同样可以交互选择。命令行最后的相机编号优先，其次是环境变量
+`LITE3_MAPPING_CAMERA`，两者均未指定才显示菜单。新批次默认按时间命名。
+选择2仍需按下面流程在另一终端运行 `camera2-start`，且仍保留相机1数据；
+并不是独立使用广角相机替换 RGB-D 建图算法。stop/status 不需要再次选择。
+
+LRCP 实际连接在运动主机 192.168.1.120，Jetson 192.168.1.103 接收网络视频。
+以下命令只采集，不启动导航、不发送速度、不停止运动主机的原厂服务。
+先结束旧导航/采集会话，保持机器狗静止。相机1仍是必需输入，不要拔掉 D435i。
+
+虚拟机终端1（自动同步两个相机桥接文件到 Jetson，运行期间保持打开）：
+
+```bash
+cd /home/duyipei/Lite3_Projects/lite3_patrol_project
+bash scripts/mapping_start.sh camera2-start
+```
+
+看到 `RTSP connected` 后，在虚拟机终端2录制一个新批次：
+
+```bash
+cd /home/duyipei/Lite3_Projects/lite3_patrol_project
+bash scripts/mapping_start.sh start outdoor_cam2_$(date +%Y%m%d_%H%M%S) 2
+```
+
+记录终端输出的 RUN_ID。只有出现 GO 后才用原厂遥控器缓慢采集，尽量覆盖有建筑、
+门窗、标志等特征的视角，结束时回到起点并静止。脚本保留原有传感器录包检查。
+可在另一终端预览：`bash scripts/mapping_start.sh video 2`。
+
+停止并保存（先不要关闭终端1）：
+
+```bash
+bash scripts/mapping_start.sh stop
+```
+
+待停止验证完成，再在终端1按 Ctrl+C 关闭桥接。数据在 Jetson 的
+`/home/ysc/lite3_patrol_project/bags/<RUN_ID>/`，旧地图不覆盖。
+如提示桥接已运行，复用原桥接，不要重复启动。首次启动后端可能提示时钟同步，
+只在没有导航等运行任务、机器狗静止时处理；不要在录制中调整时钟。
+
+**这不是完整的 LRCP 视觉地图生成。** 保存的是雷达/IMU、D435i，以及 LRCP JPEG
+图像；LRCP 时间戳是网络接收时刻，不能视为曝光同步。标定前采集只作预采集，
+不保证以后可用于视觉重定位。正式采集建议先完成内参/畸变、雷达外参及延迟验证，
+再实现雷达关联或多视图三角化的三维视觉特征库。当前 RGB-D 构建器继续拒绝相机2
+批次，不冒用相机1的深度、内参和外参。桥接修改通过离线检查不代表实机验收。
+
 ## 固定编号和查看入口
 
 - 相机1 = RealSense D435i，ROS2 彩色话题 /camera/color/image_raw。
@@ -41,9 +90,9 @@
 在虚拟机项目目录运行：
 
 ```bash
-bash scripts/outdoor_lidar_visual_mapping.sh start outdoor_cam2_001 2
+bash scripts/mapping_start.sh start outdoor_cam2_001 2
 # 或室内：
-bash scripts/indoor_lidar_visual_mapping.sh start indoor_cam2_001 2
+bash scripts/mapping_start.sh start indoor_cam2_001 2
 ```
 
 相机编号省略默认1，也支持环境变量 LITE3_MAPPING_CAMERA=2。相机2模式保留原 D435i、雷达、IMU，额外记录 /front_camera/image_raw/compressed（JPEG质量90）以及存在时的 /front_camera/camera_info。必须先在 Jetson 启动更新后的 start_front_camera.sh；目前已运行。录包的 camera_selection.yaml 保存选择，stop/verify 无需重复指定相机编号。video 2 选择相机2预览。

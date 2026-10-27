@@ -1,0 +1,10 @@
+{
+  "records": 811,
+  "observed_gate_states": {
+    "missing": 284,
+    "DISARMED:startup_disarmed": 95,
+    "DISARMED:voa_costmap_not_ready_or_stale": 3,
+    "DISARMED:operator_disarmed": 429
+  },
+  "nonzero_output_snapshots": 0
+}

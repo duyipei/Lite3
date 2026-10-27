@@ -1,0 +1,144 @@
+{
+  "status": "LIVE_EVIDENCE_NOT_PROJECTION_VALIDATED",
+  "runnable": false,
+  "camera_info_topic": "/camera/color/camera_info",
+  "image_topic": "/camera/color/image_raw",
+  "camera_info_count": 600,
+  "image_count": 599,
+  "camera_info_changed": false,
+  "camera_info": {
+    "width": 424,
+    "height": 240,
+    "frame_id": "camera_color_optical_frame",
+    "k": [
+      301.9205017089844,
+      0.0,
+      213.30615234375,
+      0.0,
+      301.5201110839844,
+      129.1182098388672,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "d": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "distortion_model": "plumb_bob"
+  },
+  "image": {
+    "width": 424,
+    "height": 240,
+    "frame_id": "camera_color_optical_frame",
+    "encoding": "rgb8"
+  },
+  "tf_frames": {
+    "camera_depth_frame": {
+      "parent": "camera_link",
+      "broadcaster": "default_authority",
+      "rate": 10000.0,
+      "most_recent_transform": 0.0,
+      "oldest_transform": 0.0,
+      "buffer_length": 0.0
+    },
+    "camera_depth_optical_frame": {
+      "parent": "camera_depth_frame",
+      "broadcaster": "default_authority",
+      "rate": 10000.0,
+      "most_recent_transform": 0.0,
+      "oldest_transform": 0.0,
+      "buffer_length": 0.0
+    },
+    "camera_color_frame": {
+      "parent": "camera_link",
+      "broadcaster": "default_authority",
+      "rate": 10000.0,
+      "most_recent_transform": 0.0,
+      "oldest_transform": 0.0,
+      "buffer_length": 0.0
+    },
+    "camera_color_optical_frame": {
+      "parent": "camera_color_frame",
+      "broadcaster": "default_authority",
+      "rate": 10000.0,
+      "most_recent_transform": 0.0,
+      "oldest_transform": 0.0,
+      "buffer_length": 0.0
+    }
+  },
+  "saved_intrinsics_match": true,
+  "T_camera_link_color_optical_live": [
+    [
+      0.005210181406215986,
+      -0.005411795361592919,
+      0.9999717828422346,
+      -0.00025711642228998244
+    ],
+    [
+      -0.9999400910947223,
+      0.009598228157504773,
+      0.005261961394168013,
+      0.014777261763811111
+    ],
+    [
+      -0.009626433981051785,
+      -0.9999392914008327,
+      -0.005361462636977787,
+      7.344056939473376e-05
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "candidate_Rcl": [
+    0.004871009127395823,
+    -0.9999400910947236,
+    -0.009802422739203762,
+    -0.04031002268249275,
+    0.00959822815750414,
+    -0.9991411192056778,
+    0.9991753476449559,
+    0.005261961394168753,
+    -0.040260854696200755
+  ],
+  "candidate_Pcl": [
+    0.011123322311047646,
+    -0.2836393119313364,
+    -0.17715276465249125
+  ],
+  "T_imu_color_optical_candidate": [
+    [
+      0.004871009127396572,
+      -0.04031002268249337,
+      0.9991753476449553,
+      0.15451898630581481
+    ],
+    [
+      -0.9999400910947223,
+      0.009598228157504775,
+      0.005261961394168013,
+      -0.008512738236188888
+    ],
+    [
+      -0.009802422739203133,
+      -0.9991411192056768,
+      -0.04026085469620009,
+      -0.24629898578295034
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "candidate_basis": "Saved factory body mounts plus live RealSense optical TF; raw LiDAR input assumed; projection and timing not validated",
+  "capture_complete": true
+}

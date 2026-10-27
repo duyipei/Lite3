@@ -29,7 +29,7 @@
 ### 1. 启动 Mid360 和 NDT（终端 1）
 
 ```bash
-ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103 \
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171 \
   'export LITE3_PATROL_MAP_ID=indoor_fusion_20260912_001_area_review
    export LITE3_NDT_RESOLUTION=1.0
    export LITE3_DOWNSAMPLE_RESOLUTION=0.3
@@ -43,7 +43,7 @@ ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103 \
 自动判断“起点或中途重启”：
 
 ```bash
-ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103 \
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171 \
   'export LITE3_PATROL_MAP_ID=indoor_fusion_20260912_001
    export LITE3_VISUAL_SEARCH_STRATEGY=startup_then_global
    exec bash /home/ysc/lite3_patrol_project/navigation/start_visual_localizer.sh'
@@ -64,7 +64,7 @@ export LITE3_VISUAL_SEARCH_STRATEGY=global
 ### 3. 启动视觉初始位姿守卫（终端 3）
 
 ```bash
-ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103 \
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171 \
   'export LITE3_PATROL_MAP_ID=indoor_fusion_20260912_001_area_review
    exec bash /home/ysc/lite3_patrol_project/navigation/start_visual_initialization.sh'
 ```
@@ -126,7 +126,7 @@ ros2 topic info /cmd_vel_corrected
 按 `Ctrl+C` 依次退出终端 3、终端 2、终端 1。随后确认：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103 \
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171 \
   'source /home/ysc/lite3_patrol_project/navigation/patrol_env.sh
    ros2 topic info /cmd_vel
    ros2 topic info /cmd_vel_corrected'

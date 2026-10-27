@@ -9,7 +9,7 @@
 - 雷达/导航地图：`outdoor_20260921_003_area_review`。
 - 视觉地图：`outdoor_20260921_003`。
 - 相机：原有相机1；本说明不涉及相机2。
-- Jetson：`ysc@192.168.1.103`，使用项目现有 SSH 密钥连接。
+- Jetson：`ysc@10.119.1.171`，使用项目现有 SSH 密钥连接。
 - 已验证：起点外观候选 → NDT 雷达确认 → 路径规划 → 实际运动 → Nav2 返回成功。
 - 尚不能保证任意地点视觉重定位成功；优先在原建图起点附近、相近朝向初始化。
 - 此次成功不是视觉 PnP 成功：使用的是起点外观候选加 NDT 确认。
@@ -36,14 +36,14 @@ cd /home/duyipei/Lite3_Projects/lite3_patrol_project
 
 LITE3_VISUAL_MAP_ID=outdoor_20260921_003 \
 LITE3_VISUAL_SEARCH_STRATEGY=startup_then_global \
-bash scripts/indoor_nav_start.sh start outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh start outdoor_20260921_003_area_review
 ```
 
 说明：
 
-- 脚本虽然叫 `indoor_nav_start.sh`，但以上命令明确选择的是已验证的室外地图。
+- 脚本虽然叫 `navigation_start.sh`，但以上命令明确选择的是已验证的室外地图。
 - 必须填写室外地图和视觉库，不能直接使用脚本的默认室内配置。
-- 脚本会同步运行脚本和配置，检查相机、启动定位与 RViz，再检查完整 Nav2 负载下定位连续稳定 30 秒。
+- 脚本会同步运行脚本和配置，检查相机、启动定位与 RViz，再检查完整 Nav2 负载下定位连续稳定 10 秒。
 - 脚本不会自动解锁运动。
 - 保持终端 A 打开；不要重复启动第二套导航。
 
@@ -62,7 +62,7 @@ NAVIGATION READY（默认不会运动）
 
 ```bash
 cd /home/duyipei/Lite3_Projects/lite3_patrol_project
-bash scripts/indoor_nav_start.sh status outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh status outdoor_20260921_003_area_review
 ```
 
 确认实时定位就绪、速度门锁定后，使用现有 RViz。若状态命令提示只能查看历史日志，不能把历史日志当作解锁依据。
@@ -151,13 +151,13 @@ cd /home/duyipei/Lite3_Projects/lite3_patrol_project
 ### 查看状态
 
 ```bash
-bash scripts/indoor_nav_start.sh status outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh status outdoor_20260921_003_area_review
 ```
 
 ### 解锁已在 RViz 设置的目标
 
 ```bash
-bash scripts/indoor_nav_start.sh arm outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh arm outdoor_20260921_003_area_review
 ```
 
 按提示输入一次 `ARM` 确认。这是终端 A 交互解锁的替代方式，不必两边重复执行。检查服务响应是否成功，不能仅凭命令退出就判断已解锁。
@@ -165,13 +165,13 @@ bash scripts/indoor_nav_start.sh arm outdoor_20260921_003_area_review
 ### 锁定、停止当前运动
 
 ```bash
-bash scripts/indoor_nav_start.sh disarm outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh disarm outdoor_20260921_003_area_review
 ```
 
 ### 停止整套导航
 
 ```bash
-bash scripts/indoor_nav_start.sh stop outdoor_20260921_003_area_review
+bash scripts/navigation_start.sh stop outdoor_20260921_003_area_review
 ```
 
 优先在终端 A 用 `QUIT` 正常退出；终端 A 不可用时可用上述 `stop`。需要重新启动时，先确认旧会话已结束，不要叠加运行。

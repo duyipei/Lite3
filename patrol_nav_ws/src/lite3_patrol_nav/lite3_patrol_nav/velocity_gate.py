@@ -5,12 +5,13 @@ import math
 import time
 
 import rclpy
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, TwistStamped
 from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
-from std_msgs.msg import Bool, Empty, String
+from std_msgs.msg import Bool, Empty, Header, String
 from std_srvs.srv import SetBool, Trigger
+from .voa_protocol import VoaExchange, braking_correction
 
 
 def clamp(value, limit):
@@ -36,12 +37,33 @@ class VelocityGate(Node):
         # Independent of sensor timeout: tolerate two missed 5 Hz commands,
         # then send zero while the bounded Nav2 recovery window runs.
         self.declare_parameter("command_timeout_s", 0.5)
-        self.declare_parameter("nav_command_start_grace_s", 10.0)
-        self.declare_parameter("nav_command_recovery_timeout_s", 8.0)
+        # One bounded ZERO-speed waiting policy for initial planning and
+        # subsequent recovery. The launcher derives it from the actual BT.
+        self.declare_parameter("nav_command_wait_timeout_s", 60.0)
+        wait_timeout = float(self.get_parameter("nav_command_wait_timeout_s").value)
+        if not math.isfinite(wait_timeout) or wait_timeout <= float(self.get_parameter("command_timeout_s").value):
+            raise ValueError('command wait must be finite and longer than command freshness')
         self.declare_parameter("max_pose_jump_m", 0.50)
         self.declare_parameter("max_yaw_jump_rad", 0.35)
         self.declare_parameter("output_topic", "/cmd_vel_corrected")
         self.declare_parameter("require_localization_ready", True)
+        self.declare_parameter("use_vendor_voa", False)
+        self.use_vendor_voa = bool(self.get_parameter("use_vendor_voa").value)
+        self.declare_parameter('require_voa_costmap', False)
+        self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
+        if self.require_voa_costmap and not self.use_vendor_voa:
+            raise ValueError('VOA costmap monitoring requires VOA')
+        self.last_voa_costmap_time = 0.0
+        if self.require_voa_costmap:
+            self.create_subscription(Header, '/patrol/voa/costmap_heartbeat',
+                                     self.voa_costmap_callback, 1)
+        self.voa = VoaExchange()
+        self.voa_seen = False
+        if self.use_vendor_voa:
+            voa_qos = QoSProfile(depth=1)
+            voa_qos.reliability = ReliabilityPolicy.BEST_EFFORT
+            self.voa_input = self.create_publisher(TwistStamped, '/patrol/voa/input', voa_qos)
+            self.create_subscription(TwistStamped, '/patrol/voa/corrected', self.voa_callback, voa_qos)
 
         self.armed = False
         self.fault = "startup_disarmed"
@@ -97,6 +119,16 @@ class VelocityGate(Node):
     def lidar_callback(self, _message):
         self.last_lidar_time = self.now_monotonic()
 
+    def voa_callback(self, message):
+        v = message.twist
+        if any(value != 0.0 for value in (v.linear.z, v.angular.x, v.angular.y)):
+            self.voa.reset()
+            return
+        if self.voa.accept(message.header.frame_id, (v.linear.x, v.linear.y, v.angular.z),
+                           self.now_monotonic()) and not self.voa_seen:
+            self.voa_seen = True
+            self.get_logger().info('[VOA] correlated sensor-valid response received; output remains gated')
+
     def localization_ready_callback(self, message):
         self.last_ready_time = self.now_monotonic()
         was_ready = self.localization_ready
@@ -110,6 +142,8 @@ class VelocityGate(Node):
     def goal_active_callback(self, message):
         was_active = self.goal_active
         self.goal_active = bool(message.data)
+        if self.goal_active != was_active:
+            self.voa.reset()
         if self.goal_active and not was_active:
             self.goal_started_time = self.now_monotonic()
             # A command retained from the previous goal must never move the
@@ -156,8 +190,34 @@ class VelocityGate(Node):
         self.armed = False
         self.fault = reason
 
+    def voa_costmap_callback(self, message):
+        stamp = message.stamp.sec + message.stamp.nanosec / 1e9
+        age = self.now_monotonic() - stamp
+        if (message.frame_id != 'map' or message.stamp.sec < 0 or
+                not 0 <= message.stamp.nanosec < 1000000000 or
+                not -.05 <= age <= .5 or stamp <= self.last_voa_costmap_time):
+            return
+        if self.last_voa_costmap_time == 0:
+            self.get_logger().info('[VOA_COSTMAP] fresh obstacle projection received')
+        self.last_voa_costmap_time = stamp
+
     def sensor_health(self):
         now = self.now_monotonic()
+        if self.require_voa_costmap:
+            if (self.last_voa_costmap_time <= 0 or
+                    not -.05 <= now - self.last_voa_costmap_time <= .5):
+                return False, 'voa_costmap_not_ready_or_stale'
+            if (self.count_publishers('/patrol/voa/costmap_heartbeat') != 1 or
+                    self.count_publishers('/patrol/voa/costmap_obstacles') != 1):
+                return False, 'voa_costmap_publisher_conflict'
+        if self.use_vendor_voa:
+            if not self.voa.healthy(now):
+                return False, 'vendor_voa_not_ready_or_stale'
+            if (self.count_publishers('/cmd_vel') != 0 or
+                    self.count_publishers(self.get_parameter('output_topic').value) != 1 or
+                    self.count_publishers('/patrol/voa/corrected') != 1 or
+                    self.count_publishers('/patrol/voa/input') != 1):
+                return False, 'vendor_voa_command_publisher_conflict'
         timeout = self.get_parameter("freshness_timeout_s").value
         if self.get_parameter("require_localization_ready").value:
             if not self.localization_ready:
@@ -180,6 +240,7 @@ class VelocityGate(Node):
     def arm_callback(self, request, response):
         if not request.data:
             self.armed = False
+            self.voa.reset()
             self.fault = "operator_disarmed"
             response.success = True
             response.message = self.fault
@@ -201,6 +262,7 @@ class VelocityGate(Node):
             response.message = "cannot arm: active_goal_has_no_fresh_command"
         else:
             self.armed = True
+            self.voa.reset()
             self.armed_time = self.now_monotonic()
             self.fault = ""
             response.success = True
@@ -241,21 +303,29 @@ class VelocityGate(Node):
             command.angular.z = clamp(self.last_raw.angular.z, self.get_parameter("max_angular_z").value)
         elif self.armed and not raw_fresh:
             now = self.now_monotonic()
-            since_goal = now - self.goal_started_time
-            since_raw = now - self.last_raw_time
-            start_grace = self.get_parameter("nav_command_start_grace_s").value
-            recovery_timeout = self.get_parameter(
-                "nav_command_recovery_timeout_s"
-            ).value
-            if since_goal <= start_grace or (
-                self.goal_active and since_raw <= recovery_timeout
-            ):
-                # Nav2 emits no command while initially planning and while its
-                # behavior tree clears costmaps or waits. Keep output at zero
-                # without treating this bounded recovery pause as a fault.
+            waiting_age = now - max(self.goal_started_time, self.last_raw_time)
+            if self.goal_active and waiting_age <= self.get_parameter("nav_command_wait_timeout_s").value:
+                # Never extend the lifetime of an old velocity command. Keep
+                # publishing ZERO while Nav2 waits/replans within this budget.
                 waiting_for_nav_command = True
             else:
                 self.trip("nav_command_timeout")
+        voa_braking = False
+        if self.use_vendor_voa:
+            original = (command.linear.x, command.linear.y, command.angular.z)
+            request = TwistStamped()
+            request.header.stamp = self.get_clock().now().to_msg()
+            # frame_id is an opaque request token, not a TF frame, on this
+            # private protocol. A previous session/request cannot be replayed.
+            request.header.frame_id = self.voa.issue(original, self.now_monotonic())
+            request.twist = command
+            self.voa_input.publish(request)
+            corrected = braking_correction(
+                original, self.voa.corrected(original, self.now_monotonic()))
+            voa_braking = original != (0., 0., 0.) and corrected != original
+            command = Twist()
+            if self.armed and self.goal_active and healthy and raw_fresh:
+                command.linear.x, command.linear.y, command.angular.z = corrected
         self.publisher.publish(command)
         self.publish_count += 1
         if self.publish_count == 1:
@@ -268,6 +338,8 @@ class VelocityGate(Node):
             state.data = "ARMED:IDLE_READY_FOR_GOAL"
         elif self.armed and waiting_for_nav_command:
             state.data = "ARMED:WAITING_NAV_COMMAND"
+        elif self.armed and voa_braking:
+            state.data = "ARMED:VOA_BRAKING_OR_WAITING"
         elif self.armed:
             state.data = "ARMED"
         else:

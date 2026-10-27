@@ -1,0 +1,12 @@
+{
+  "robot": "ysc@10.119.1.171",
+  "map": "outdoor_20260921_003_area_review",
+  "mode": "stationary DISARMED",
+  "source_sha256": "527126fd076ef99fa7c6c9a812a529e636aff2e49329439dd176734cb217f30d",
+  "binary_sha256": "f9644b51e4d9bb359788eea0d931f043099021821995b752490413b24757b6cb",
+  "voa_bridge_sha256": "48cb7d2e7ffc158296ee195c1c240a29aded887e22b9bb8d32ca5f851bd3899d",
+  "backup_on_jetson": "/home/ysc/lite3_patrol_project/logs/projection_geometry_fix_20261027",
+  "navigation_log": "logs/lite3_indoor_nav_outdoor_20260921_003_area_review_20261027_162730_4482",
+  "voa_launcher_sha256": "62ce5d3c6a4536f4c2f16ea210bf7694c38a305ad060ccb5457481ed8432d72f",
+  "navigation_log_final": "logs/lite3_indoor_nav_outdoor_20260921_003_area_review_20261027_163753_5053"
+}

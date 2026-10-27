@@ -34,4 +34,4 @@ fi
 export ROS_DOMAIN_ID=${LITE3_ROS_DOMAIN_ID:-0}
 export ROS_LOCALHOST_ONLY=0
 export RMW_IMPLEMENTATION=${LITE3_VIEW_RMW:-rmw_cyclonedds_cpp}
-exec python3 "$PROJECT/scripts/round3a_live_video.py" --camera "$camera"
+exec python3 "$PROJECT/scripts/camera_preview.py" --camera "$camera"

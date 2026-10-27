@@ -15,20 +15,35 @@ visual_pose_initializer:
     map_transform_z: 0.0
     map_transform_yaw: 0.0
 
-    stable_samples: 10
-    stable_duration_s: 4.0
-    max_sample_gap_s: 2.5
+    # Preserve the calibrated factory driver: pitch=18deg, t=(.187,0,.400)m.
+    # Visual database "base" poses were built directly from FAST-LIVO IMU
+    # trajectory poses. NDT registers the factory cloud after an additional
+    # nominal base->footprint z=.34751m transform (hdl_localization_app.hpp).
+    # T_IMU_registration = T_IMU_lidar * inverse(T_footprint_base*T_base_lidar),
+    # with T_IMU_lidar translation=(-.011,-.02329,.04412), rotation=identity.
+    # This is a reference-frame conversion, not a replacement sensor calibration.
+    ndt_seed_reference_xyz: [0.04214572, -0.02329, -0.72459043]
+    ndt_seed_reference_rpy: [0.0, -0.3141592653589793, 0.0]
+
+    stable_samples: 4
+    stable_duration_s: 2.0
+    # Allow a bounded slow inference plus one processing interval.
+    max_sample_gap_s: 6.0
+    # Delayed initial results require continuous stationary leg odometry.
+    initial_visual_max_age_s: 5.0
     max_position_std_m: 0.12
     max_yaw_std_rad: 0.12
     max_visual_covariance_xy: 0.25
 
-    ndt_confirmation_samples: 15
+    ndt_confirmation_samples: 3
     # Count real accepted NDT scans paired with odometry, not seed predictions.
     ndt_max_matching_error: 0.15
     ndt_bad_samples: 5
     sensor_max_age_s: 1.5
-    ndt_settle_s: 3.0
-    ndt_timeout_s: 30.0
+    ndt_settle_s: 0.0
+    # NDT internally confirms 15 stable scans, then this guard checks three
+    # distinct accepted scans paired with odometry; no extra settle delay.
+    ndt_timeout_s: 90.0
     # Coarse visual start recognition anchors the NDT search; the stabilized
     # NDT solution may correct placement error within this one-time window.
     # The latest verified cold start converged 0.652 m from the visual seed.
@@ -49,6 +64,8 @@ visual_pose_initializer:
     max_ready_odom_speed_mps: 1.0
     max_ready_yaw_step_rad: 0.35
     ready_odom_max_age_s: 0.70
+    # Bounded startup hold before first ARM; never publish ready with stale data.
+    startup_timing_grace_s: 3.0
     ready_visual_max_age_s: 4.0
     max_ready_visual_position_delta_m: 0.75
     max_ready_visual_yaw_delta_rad: 0.50
@@ -57,3 +74,6 @@ visual_pose_initializer:
     # Once NDT confirms it, NDT+leg odometry guard the moving robot; the fixed
     # start-area visual prior must not revoke readiness after departure.
     supervise_visual_after_ready: false
+    # A stationary robot must not accumulate map drift after initial READY.
+    # Real leg motion resets this comparison; this is not a fixed patrol anchor.
+    stationary_drift_guard_enabled: true

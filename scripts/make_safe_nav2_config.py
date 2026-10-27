@@ -38,6 +38,7 @@ def main():
     controller["goal_checker"]["xy_goal_tolerance"] = 0.35
     # Patrol arrows are meaningful headings, especially before a corner.
     controller["goal_checker"]["yaw_goal_tolerance"] = 0.20
+    controller["goal_checker"]["stateful"] = False
     follow = controller["FollowPath"]
     follow.update({
         # Turn and move forward; do not traverse the next leg backwards.
@@ -69,19 +70,22 @@ def main():
             "PathDist",
             "GoalDist",
         ],
-        "xy_goal_tolerance": 0.35,
+        # Terminal turn starts deeper inside the unchanged 0.35 m acceptance.
+        "xy_goal_tolerance": 0.20,
         "trans_stopped_velocity": 0.03,
         "RotateToGoal.scale": 32.0,
         "RotateToGoal.slowing_factor": 5.0,
         "RotateToGoal.lookahead_time": -1.0,
-        "GoalDist.scale": 24.0,
+        "GoalDist.scale": 48.0,
         "GoalDist.aggregation_type": "last",
-        "PathAlign.scale": 64.0,
+        "PathAlign.scale": 32.0,
         # Do not inherit sum aggregation from the vendor configuration: with
         # distance sampling it rewards tiny velocities/fewer trajectory poses.
         "PathAlign.aggregation_type": "last",
         "PathAlign.forward_point_distance": 0.325,
-        "GoalAlign.scale": 48.0,
+        # Do not attract the nose back toward the positional goal while the
+        # final yaw critic requests a different heading (e.g. wp11's 0 deg).
+        "GoalAlign.scale": 0.0,
         "GoalAlign.aggregation_type": "last",
         "GoalAlign.forward_point_distance": 0.325,
         "PathDist.scale": 32.0,
@@ -90,6 +94,7 @@ def main():
         "ObstacleFootprint.max_scaling_factor": 0.2,
         "ObstacleFootprint.scaling_speed": 0.15,
         "publish_evaluation": True,
+        "debug_trajectory_details": True,
         "publish_trajectories": False,
         "publish_cost_grid_pc": False,
     })

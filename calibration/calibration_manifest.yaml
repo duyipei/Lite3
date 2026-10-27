@@ -35,3 +35,20 @@ full_livo_config:
   file: ../config/lite3_mid360_d435i.yaml
   runnable: false
   blocked_by: lidar_camera_extrinsic
+offline_geometry_review:
+  date: "2026-10-23"
+  script: ../scripts/audit_fast_livo_calibration.py
+  documentation: ../docs/2026-10-23_FAST-LIVO2标定审计.md
+  status: GEOMETRY_ONLY_NOT_VALIDATED
+  upstream_review_commit: f6762c9afc69efbf1b9f170e90c16cf6b7058cb8
+  note: Historical device intrinsics retained; approximate optical transform is not accepted calibration.
+live_geometry_review:
+  date: "2026-10-26"
+  host: lite
+  connection: wired_192.168.1.103
+  script: ../scripts/capture_calibration_evidence.py
+  evidence: ../results/calibration_live_20261026.json
+  camera_info_match: true
+  optical_tf_captured: true
+  status: LIVE_EVIDENCE_NOT_PROJECTION_VALIDATED
+  production_extrinsics_updated: false

@@ -1,0 +1,97 @@
+[
+  {
+    "frame": "frame_01.npz",
+    "count": 19,
+    "nearest_pcd_distance_percentiles": [
+      0.03725878410041332,
+      0.09113671630620956,
+      0.11399615854024887
+    ],
+    "live_minus_nearest_pcd_z_percentiles": [
+      -0.06786725521087647,
+      0.011502325534820557,
+      0.10723589360713957
+    ],
+    "nearest_pcd_minus_ground_raster_percentiles": [
+      0.0016988277435302736,
+      0.09403368830680847,
+      0.18159712702035902
+    ]
+  },
+  {
+    "frame": "frame_02.npz",
+    "count": 10,
+    "nearest_pcd_distance_percentiles": [
+      0.04574991222470999,
+      0.09716866910457611,
+      0.11670872867107392
+    ],
+    "live_minus_nearest_pcd_z_percentiles": [
+      -0.06751081049442292,
+      0.030809849500656128,
+      0.10475142300128937
+    ],
+    "nearest_pcd_minus_ground_raster_percentiles": [
+      -0.008324071764945984,
+      0.07159194350242615,
+      0.19573274850845335
+    ]
+  },
+  {
+    "frame": "frame_03.npz",
+    "count": 21,
+    "nearest_pcd_distance_percentiles": [
+      0.055149808526039124,
+      0.09273167699575424,
+      0.1170259639620781
+    ],
+    "live_minus_nearest_pcd_z_percentiles": [
+      -0.07588827610015869,
+      0.02899777889251709,
+      0.1041979193687439
+    ],
+    "nearest_pcd_minus_ground_raster_percentiles": [
+      -0.0037732720375061035,
+      0.08639949560165405,
+      0.19833528995513916
+    ]
+  },
+  {
+    "frame": "frame_04.npz",
+    "count": 21,
+    "nearest_pcd_distance_percentiles": [
+      0.046439412981271744,
+      0.0758076012134552,
+      0.11032842844724655
+    ],
+    "live_minus_nearest_pcd_z_percentiles": [
+      -0.05987757444381714,
+      -0.0011554956436157227,
+      0.10021054744720459
+    ],
+    "nearest_pcd_minus_ground_raster_percentiles": [
+      0.005254030227661133,
+      0.11895990371704102,
+      0.16711562871932983
+    ]
+  },
+  {
+    "frame": "frame_05.npz",
+    "count": 21,
+    "nearest_pcd_distance_percentiles": [
+      0.058780256658792496,
+      0.09028960019350052,
+      0.12069568783044815
+    ],
+    "live_minus_nearest_pcd_z_percentiles": [
+      -0.07381927967071533,
+      -0.023861318826675415,
+      0.10471975803375244
+    ],
+    "nearest_pcd_minus_ground_raster_percentiles": [
+      0.00470966100692749,
+      0.12546052038669586,
+      0.1834113597869873
+    ]
+  }
+]

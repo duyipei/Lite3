@@ -1,0 +1,12 @@
+{
+  "stage": "before_rigid_inverse_and_thread_limit",
+  "pid": 22210,
+  "process_cpu_percent": 91.2,
+  "thread_cpu_percent": {
+    "main": 28.0,
+    "blas_worker_22398": 23.4,
+    "blas_worker_22399": 22.9,
+    "blas_worker_22400": 22.7
+  },
+  "note": "ps lifetime CPU percentages, process/thread queries sampled at different moments; single core = 100 percent"
+}

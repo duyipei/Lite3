@@ -15,7 +15,7 @@ MAP_ID=${RUN_ID}_area_review
 从本地 Ubuntu 登录 Jetson：
 
 ```bash
-ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 ```
 
 在 Jetson 终端执行：
@@ -113,7 +113,7 @@ map_views/map_side_xz.png
 
 ```bash
 RUN_ID=indoor_fusion_20260912_001
-ROBOT=ysc@192.168.1.103
+ROBOT=ysc@10.119.1.171
 REMOTE_PROJECT=/home/ysc/lite3_patrol_project
 LOCAL_MAP=/home/duyipei/maps/${RUN_ID}_map_05x
 LOCAL_BAG=/home/duyipei/Transfer/lite3_bags/$RUN_ID
@@ -239,7 +239,7 @@ cd /home/duyipei/Lite3_Projects/lite3_patrol_project
 RUN_ID=indoor_fusion_20260912_001
 MAP_ID=${RUN_ID}_area_review
 NAV_DIR=$PWD/navigation/$MAP_ID
-ROBOT=ysc@192.168.1.103
+ROBOT=ysc@10.119.1.171
 REMOTE_NAV=/home/ysc/lite3_patrol_project/navigation/$MAP_ID
 
 ssh -i ~/.ssh/id_ed25519_cyberdog "$ROBOT" "mkdir -p '$REMOTE_NAV'"

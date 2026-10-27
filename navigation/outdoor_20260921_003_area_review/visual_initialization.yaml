@@ -12,21 +12,26 @@ visual_pose_initializer:
     map_transform_z: 0.0
     map_transform_yaw: 0.0
 
-    stable_samples: 10
-    stable_duration_s: 4.0
-    max_sample_gap_s: 2.5
+    stable_samples: 4
+    stable_duration_s: 2.0
+    # Allow a bounded slow inference plus one processing interval.
+    max_sample_gap_s: 6.0
+    # Delayed initial results require continuous stationary leg odometry.
+    initial_visual_max_age_s: 5.0
     max_position_std_m: 0.12
     max_yaw_std_rad: 0.12
     max_visual_covariance_xy: 0.25
 
     # A visual match is only a coarse seed. NDT must confirm it before the
     # localization-ready gate can open.
-    ndt_confirmation_samples: 15
+    ndt_confirmation_samples: 3
     ndt_max_matching_error: 0.15
     ndt_bad_samples: 5
     sensor_max_age_s: 1.5
-    ndt_settle_s: 3.0
-    ndt_timeout_s: 30.0
+    ndt_settle_s: 0.0
+    # NDT internally confirms 15 stable scans. This guard then checks three
+    # distinct accepted scans paired with odometry; no extra settle delay.
+    ndt_timeout_s: 90.0
     max_ndt_position_delta_m: 0.65
     max_ndt_yaw_delta_rad: 0.27
     auto_initialize: false
@@ -42,6 +47,9 @@ visual_pose_initializer:
     max_ready_odom_speed_mps: 1.0
     max_ready_yaw_step_rad: 0.35
     ready_odom_max_age_s: 0.70
+    # Before first ARM, withhold readiness through <=3 s startup timing gaps
+    # instead of discarding a valid visual/NDT seed. Motion keeps the 0.70 s limit.
+    startup_timing_grace_s: 3.0
     ready_visual_max_age_s: 4.0
     max_ready_visual_position_delta_m: 0.75
     max_ready_visual_yaw_delta_rad: 0.50

@@ -1,0 +1,340 @@
+{
+  "metadata": {
+    "voa_obstacles": {
+      "frame": "map",
+      "count": 494
+    },
+    "grid": {
+      "frame": "robot_foot_print",
+      "res": 0.05,
+      "lx": 6.0,
+      "ly": 4.0,
+      "center": [
+        0.0,
+        0.0
+      ],
+      "start": [
+        0,
+        0
+      ],
+      "dims": [
+        {
+          "label": "column_index",
+          "size": 80,
+          "stride": 9600
+        },
+        {
+          "label": "row_index",
+          "size": 120,
+          "stride": 120
+        }
+      ]
+    },
+    "aligned": {
+      "frame": "map",
+      "count": 3259
+    },
+    "global": {
+      "res": 0.10000000149011612,
+      "origin": [
+        -13.100000000000001,
+        -15.100000000000001
+      ],
+      "shape": [
+        342,
+        654
+      ],
+      "goal1": {
+        "index": [
+          165,
+          149
+        ],
+        "cost": 99
+      },
+      "start": {
+        "index": [
+          134,
+          148
+        ],
+        "cost": 59
+      }
+    },
+    "local": {
+      "res": 0.10000000149011612,
+      "origin": [
+        -3.6000000007450583,
+        -4.200000000745058
+      ],
+      "shape": [
+        80,
+        80
+      ],
+      "goal1": {
+        "index": [
+          70,
+          40
+        ],
+        "cost": 99
+      },
+      "start": {
+        "index": [
+          39,
+          39
+        ],
+        "cost": 59
+      }
+    },
+    "lidar_obstacles": {
+      "frame": "map",
+      "count": 2841
+    }
+  },
+  "tf_errors": {
+    "Lookup would require extrapolation into the future.  Requested time 792.222577 but the latest data is at time 791.763811, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.426624 but the latest data is at time 792.059276, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.510654 but the latest data is at time 792.059276, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.631242 but the latest data is at time 792.258274, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.771662 but the latest data is at time 792.258274, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.803145 but the latest data is at time 792.462810, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.852628 but the latest data is at time 792.462810, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 792.951319 but the latest data is at time 792.758578, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.155214 but the latest data is at time 792.862608, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.195822 but the latest data is at time 793.063608, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.365308 but the latest data is at time 793.260902, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.471236 but the latest data is at time 793.362133, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.545616 but the latest data is at time 793.362133, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.596408 but the latest data is at time 793.464562, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.827817 but the latest data is at time 793.464562, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 793.873417 but the latest data is at time 793.558307, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.060146 but the latest data is at time 793.759108, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.154081 but the latest data is at time 794.065455, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.273479 but the latest data is at time 794.159363, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.344676 but the latest data is at time 794.259338, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.456469 but the latest data is at time 794.364076, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.574870 but the latest data is at time 794.364076, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.709760 but the latest data is at time 794.458640, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.815173 but the latest data is at time 794.458640, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 794.931260 but the latest data is at time 794.458640, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.022114 but the latest data is at time 794.664187, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.120552 but the latest data is at time 794.958183, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.273165 but the latest data is at time 795.063579, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.366137 but the latest data is at time 795.259295, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.471546 but the latest data is at time 795.259295, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.581509 but the latest data is at time 795.372882, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.614336 but the latest data is at time 795.372882, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.803185 but the latest data is at time 795.459046, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.864738 but the latest data is at time 795.659306, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 795.973423 but the latest data is at time 795.659306, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.074679 but the latest data is at time 796.058488, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.224136 but the latest data is at time 796.058488, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.330641 but the latest data is at time 796.164555, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.438048 but the latest data is at time 796.164555, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.476079 but the latest data is at time 796.164555, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.578066 but the latest data is at time 796.266414, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.710227 but the latest data is at time 796.458765, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.857520 but the latest data is at time 796.659120, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 796.959730 but the latest data is at time 796.659120, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.071567 but the latest data is at time 796.792434, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.153941 but the latest data is at time 797.058301, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.239405 but the latest data is at time 797.160773, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.391772 but the latest data is at time 797.259396, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.447295 but the latest data is at time 797.358086, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.611138 but the latest data is at time 797.358086, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.697723 but the latest data is at time 797.459066, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.806074 but the latest data is at time 797.459066, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.931366 but the latest data is at time 797.459066, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 797.998228 but the latest data is at time 797.668422, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.117617 but the latest data is at time 797.959448, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.209511 but the latest data is at time 798.058471, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.389229 but the latest data is at time 798.261609, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.504770 but the latest data is at time 798.261609, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.504770 but the latest data is at time 798.371425, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.678567 but the latest data is at time 798.559260, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.793274 but the latest data is at time 798.666548, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 798.863538 but the latest data is at time 798.768595, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.028455 but the latest data is at time 798.865736, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.145938 but the latest data is at time 798.958233, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.145938 but the latest data is at time 799.058572, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.380859 but the latest data is at time 799.162122, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.484587 but the latest data is at time 799.162122, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.567154 but the latest data is at time 799.162122, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.682981 but the latest data is at time 799.264334, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.774622 but the latest data is at time 799.660636, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 799.882088 but the latest data is at time 799.660636, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.002917 but the latest data is at time 799.963116, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.149839 but the latest data is at time 799.963116, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.230560 but the latest data is at time 800.063384, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.382117 but the latest data is at time 800.063384, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.467252 but the latest data is at time 800.162326, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.554304 but the latest data is at time 800.372440, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.691771 but the latest data is at time 800.559894, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.794068 but the latest data is at time 800.559894, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 800.886380 but the latest data is at time 800.658713, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.011818 but the latest data is at time 800.860215, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.109036 but the latest data is at time 800.959821, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.181944 but the latest data is at time 801.062527, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.306635 but the latest data is at time 801.165049, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.401790 but the latest data is at time 801.266103, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.543353 but the latest data is at time 801.266103, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.593318 but the latest data is at time 801.266103, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.694917 but the latest data is at time 801.358931, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 801.813212 but the latest data is at time 801.766715, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.071498 but the latest data is at time 801.965080, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.211204 but the latest data is at time 802.065139, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.325314 but the latest data is at time 802.065139, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.426028 but the latest data is at time 802.258212, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.525243 but the latest data is at time 802.369078, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.591667 but the latest data is at time 802.458169, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.700530 but the latest data is at time 802.458169, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.797729 but the latest data is at time 802.560722, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 802.966027 but the latest data is at time 802.758004, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.036324 but the latest data is at time 802.861699, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.070437 but the latest data is at time 802.958022, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.261390 but the latest data is at time 802.958022, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.358962 but the latest data is at time 803.058260, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.431309 but the latest data is at time 803.358072, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.593205 but the latest data is at time 803.462594, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.693997 but the latest data is at time 803.559104, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.792826 but the latest data is at time 803.559104, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 803.931682 but the latest data is at time 803.673322, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.028113 but the latest data is at time 803.673322, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.126311 but the latest data is at time 803.865938, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.193174 but the latest data is at time 804.066535, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.326336 but the latest data is at time 804.258699, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.460806 but the latest data is at time 804.258699, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.560600 but the latest data is at time 804.358093, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.693648 but the latest data is at time 804.458295, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.794764 but the latest data is at time 804.458295, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 804.794764 but the latest data is at time 804.558521, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.093841 but the latest data is at time 804.958408, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.168247 but the latest data is at time 805.072475, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.168247 but the latest data is at time 805.158165, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.429026 but the latest data is at time 805.158165, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.558065 but the latest data is at time 805.268281, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.658852 but the latest data is at time 805.268281, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.757970 but the latest data is at time 805.463994, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.858381 but the latest data is at time 805.463994, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 805.955870 but the latest data is at time 805.664970, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.064102 but the latest data is at time 805.664970, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.112951 but the latest data is at time 806.061064, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.229665 but the latest data is at time 806.158592, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.496456 but the latest data is at time 806.463030, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.594754 but the latest data is at time 806.561730, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.666500 but the latest data is at time 806.561730, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.798093 but the latest data is at time 806.561730, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.833503 but the latest data is at time 806.660956, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 806.999121 but the latest data is at time 806.868882, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.149350 but the latest data is at time 806.960756, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.241264 but the latest data is at time 806.960756, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.308339 but the latest data is at time 807.058283, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.402924 but the latest data is at time 807.058283, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.571307 but the latest data is at time 807.258403, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.631352 but the latest data is at time 807.258403, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.728732 but the latest data is at time 807.458837, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.833567 but the latest data is at time 807.664525, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 807.930049 but the latest data is at time 807.858197, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.205897 but the latest data is at time 808.059681, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.295638 but the latest data is at time 808.158506, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.395606 but the latest data is at time 808.158506, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.499419 but the latest data is at time 808.258797, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.597618 but the latest data is at time 808.558603, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.773420 but the latest data is at time 808.558603, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.773420 but the latest data is at time 808.659794, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 808.976653 but the latest data is at time 808.765169, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.077364 but the latest data is at time 808.961524, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.229445 but the latest data is at time 809.166316, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.364467 but the latest data is at time 809.166316, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.466894 but the latest data is at time 809.260387, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.531480 but the latest data is at time 809.358368, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.674305 but the latest data is at time 809.358368, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.762105 but the latest data is at time 809.458707, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.856537 but the latest data is at time 809.660884, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 809.952760 but the latest data is at time 809.660884, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.197771 but the latest data is at time 810.158573, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.330458 but the latest data is at time 810.158573, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.431491 but the latest data is at time 810.260338, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.497326 but the latest data is at time 810.365516, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.631145 but the latest data is at time 810.458619, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.736505 but the latest data is at time 810.458619, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.800206 but the latest data is at time 810.558134, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 810.897804 but the latest data is at time 810.762965, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.041187 but the latest data is at time 810.762965, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.102499 but the latest data is at time 810.762965, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.264908 but the latest data is at time 811.165082, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.364783 but the latest data is at time 811.165082, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.469398 but the latest data is at time 811.358202, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.598264 but the latest data is at time 811.358202, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.701703 but the latest data is at time 811.358202, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.732614 but the latest data is at time 811.458974, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.883782 but the latest data is at time 811.458974, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 811.990978 but the latest data is at time 811.758517, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.119494 but the latest data is at time 811.958300, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.154089 but the latest data is at time 812.059133, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.356162 but the latest data is at time 812.059133, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.445009 but the latest data is at time 812.360099, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.592467 but the latest data is at time 812.458282, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.712436 but the latest data is at time 812.561278, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.814470 but the latest data is at time 812.662122, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 812.915053 but the latest data is at time 812.662122, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.008898 but the latest data is at time 812.760582, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.173255 but the latest data is at time 812.958172, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.203047 but the latest data is at time 813.168223, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.368269 but the latest data is at time 813.264135, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.507337 but the latest data is at time 813.264135, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.567761 but the latest data is at time 813.360511, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.701343 but the latest data is at time 813.558696, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.772648 but the latest data is at time 813.658494, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 813.871645 but the latest data is at time 813.658494, when looking up transform from frame [base_link] to frame [map]": 1,
+    "Lookup would require extrapolation into the future.  Requested time 814.026775 but the latest data is at time 813.960511, when looking up transform from frame [base_link] to frame [map]": 1
+  },
+  "timing": {
+    "tf": {
+      "count": 155,
+      "age_percentiles": [
+        0.0592994239999598,
+        0.18972723199999564,
+        0.3674456000000075,
+        0.8918012479999788
+      ],
+      "max_arrival_gap": 0.35787705600000663,
+      "source_step_percentiles": [
+        0.08569062399999439,
+        0.1038619679999897,
+        0.29206551199995373,
+        0.5975088640000195
+      ]
+    },
+    "heartbeat": {
+      "count": 132,
+      "age_percentiles": [
+        0.1203562639999518,
+        0.28594945200006805,
+        0.4604862663999483,
+        0.5579007600000523
+      ],
+      "max_arrival_gap": 0.45514793600000303,
+      "source_step_percentiles": [
+        0.03644299999996292,
+        0.14695400000005066,
+        0.3359850000000506,
+        0.4887499999999818
+      ]
+    },
+    "grid": {
+      "count": 475,
+      "age_percentiles": [
+        0.024055807999957324,
+        0.04665403999990758,
+        0.0771880496000221,
+        0.1558940720000237
+      ],
+      "max_arrival_gap": 0.24689987199997177,
+      "source_step_percentiles": [
+        0.021469000000024607,
+        0.03477800000001707,
+        0.10184029999997504,
+        0.23258899999996174
+      ]
+    }
+  }
+}

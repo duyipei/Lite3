@@ -130,7 +130,7 @@ cd /home/duyipei/Lite3_Projects/lite3_patrol_project/scripts
 从本地登录 Jetson：
 
 ```bash
-ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 ```
 
 在 Jetson 中执行：
@@ -252,7 +252,7 @@ step_m.max
 
 ```bash
 RUN_ID=site_fusion_20260909_001
-ROBOT=ysc@192.168.1.103
+ROBOT=ysc@10.119.1.171
 REMOTE_OUT=/home/ysc/lite3_patrol_project/results/round3a_lio_motion/${RUN_ID}_map_05x_pcd
 LOCAL_OUT=/home/duyipei/maps/${RUN_ID}_map_05x
 

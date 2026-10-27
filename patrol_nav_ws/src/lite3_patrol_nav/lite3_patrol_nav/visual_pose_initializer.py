@@ -14,6 +14,8 @@ from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import Bool, Empty, String
 from std_srvs.srv import Trigger
 
+from .localization_consistency import StationaryDriftGuard, registration_seed
+
 
 def yaw_from_quaternion(q):
     return math.atan2(2.0 * (q.w * q.z + q.x * q.y), 1.0 - 2.0 * (q.y * q.y + q.z * q.z))
@@ -38,6 +40,11 @@ class VisualPoseInitializer(Node):
         self.declare_parameter("map_transform_y", 0.0)
         self.declare_parameter("map_transform_z", 0.0)
         self.declare_parameter("map_transform_yaw", 0.0)
+        self.declare_parameter("ndt_seed_reference_xyz", [0.0, 0.0, 0.0])
+        self.declare_parameter("ndt_seed_reference_rpy", [0.0, 0.0, 0.0])
+        self.seed_reference_xyz = list(self.get_parameter("ndt_seed_reference_xyz").value)
+        self.seed_reference_rpy = list(self.get_parameter("ndt_seed_reference_rpy").value)
+        registration_seed((0., 0., 0., 0.), self.seed_reference_xyz, self.seed_reference_rpy)
         self.declare_parameter("stable_samples", 10)
         self.declare_parameter("stable_duration_s", 0.8)
         self.declare_parameter("max_sample_gap_s", 0.75)
@@ -61,6 +68,7 @@ class VisualPoseInitializer(Node):
         self.declare_parameter("max_ready_odom_speed_mps", 1.0)
         self.declare_parameter("max_ready_yaw_step_rad", 0.35)
         self.declare_parameter("ready_odom_max_age_s", 0.70)
+        self.declare_parameter("startup_timing_grace_s", 0.0)
         self.declare_parameter("ready_visual_max_age_s", 2.0)
         self.declare_parameter("max_ready_visual_position_delta_m", 0.75)
         self.declare_parameter("max_ready_visual_yaw_delta_rad", 0.50)
@@ -69,6 +77,13 @@ class VisualPoseInitializer(Node):
         self.declare_parameter("ndt_max_matching_error", 0.15)
         self.declare_parameter("ndt_bad_samples", 5)
         self.declare_parameter("sensor_max_age_s", 1.5)
+        # Only the initial visual result gets an inference allowance. LiDAR,
+        # leg odometry and READY supervision retain their existing deadlines.
+        self.declare_parameter("initial_visual_max_age_s", 1.5)
+        self.declare_parameter("delayed_visual_max_motion_m", 0.05)
+        self.declare_parameter("delayed_visual_max_yaw_rad", math.radians(3.0))
+        self.declare_parameter("delayed_visual_max_leg_gap_s", 0.5)
+        self.declare_parameter("stationary_drift_guard_enabled", False)
 
         ready_qos = QoSProfile(depth=1)
         ready_qos.reliability = ReliabilityPolicy.RELIABLE
@@ -111,8 +126,12 @@ class VisualPoseInitializer(Node):
         self.last_odom_pose = None
         self.ready_visual_bad_count = 0
         self.armed = False
+        self.has_been_armed = False
         self.last_leg_time = 0.0
         self.last_leg_stamp = 0
+        self.latest_leg_pose = None
+        self.visual_leg_history = deque(maxlen=2000)
+        self.stationary_guard = StationaryDriftGuard()
         self.last_status_time = 0.0
         self.last_status_stamp = 0
         self.last_visual_stamp = 0
@@ -146,6 +165,9 @@ class VisualPoseInitializer(Node):
         self.state = state
 
     def reset(self, state="IDLE"):
+        self.has_been_armed = False
+        self.stationary_guard.reset()
+        self.visual_leg_history.clear()
         self.samples.clear()
         self.requested = False
         self.candidate = None
@@ -168,6 +190,7 @@ class VisualPoseInitializer(Node):
         self.set_state(state)
 
     def revoke_ready(self, reason):
+        self.stationary_guard.reset()
         self.samples.clear()
         self.requested = False
         self.candidate = None
@@ -238,6 +261,18 @@ class VisualPoseInitializer(Node):
 
     def armed_callback(self, message):
         self.armed = bool(message.data)
+        self.has_been_armed = self.has_been_armed or self.armed
+
+    def timing_fault(self, reason, age):
+        """Before the first ARM only, hold readiness through a bounded load spike.
+
+        Never report ready with stale data, never reset the pose, and never
+        recover a latched motion/geometry fault automatically.
+        """
+        grace = float(self.get_parameter("startup_timing_grace_s").value)
+        self.set_ready(False)
+        if self.armed or self.has_been_armed or not math.isfinite(grace) or grace <= 0 or age > grace:
+            self.revoke_ready(reason)
 
     def leg_callback(self, message):
         stamp = self.stamp_ns(message)
@@ -245,6 +280,43 @@ class VisualPoseInitializer(Node):
                 and stamp > self.last_leg_stamp):
             self.last_leg_stamp = stamp
             self.last_leg_time = self.now_monotonic()
+            pose = message.pose.pose
+            self.latest_leg_pose = (pose.position.x, pose.position.y,
+                                    yaw_from_quaternion(pose.orientation))
+            self.visual_leg_history.append((stamp / 1e9, self.latest_leg_pose))
+            keep_s = max(2.0, float(self.get_parameter("initial_visual_max_age_s").value) + 1.0)
+            while (len(self.visual_leg_history) > 1
+                   and self.visual_leg_history[1][0] < stamp / 1e9 - keep_s):
+                self.visual_leg_history.popleft()
+
+    def initial_visual_timing_reason(self, message):
+        """A delayed seed is usable only with continuous stationary leg evidence."""
+        stamp = self.stamp_ns(message) / 1e9
+        now = self.get_clock().now().nanoseconds / 1e9
+        age = now - stamp
+        if stamp <= 0 or age < -0.5 or age > float(self.get_parameter("initial_visual_max_age_s").value):
+            return "visual_stamp_out_of_window"
+        if age <= float(self.get_parameter("sensor_max_age_s").value):
+            return None
+        if self.armed or self.has_been_armed:
+            return "delayed_visual_after_arm"
+        gap = float(self.get_parameter("delayed_visual_max_leg_gap_s").value)
+        history = list(self.visual_leg_history)
+        before = [i for i, (t, _) in enumerate(history) if t <= stamp]
+        if not before:
+            return "delayed_visual_missing_leg_history"
+        history = history[before[-1]:]
+        if (stamp - history[0][0] > gap or not 0.0 <= now - history[-1][0] <= gap
+                or self.now_monotonic() - self.last_leg_time > gap
+                or any(b[0] - a[0] > gap for a, b in zip(history, history[1:]))):
+            return "delayed_visual_leg_gap"
+        origin = history[0][1]
+        distance = max(math.hypot(p[0] - origin[0], p[1] - origin[1]) for _, p in history)
+        yaw = max(abs(angle_delta(p[2], origin[2])) for _, p in history)
+        if (distance > float(self.get_parameter("delayed_visual_max_motion_m").value)
+                or yaw > float(self.get_parameter("delayed_visual_max_yaw_rad").value)):
+            return "delayed_visual_robot_moved"
+        return None
 
     def status_callback(self, message):
         stamp = self.stamp_ns(message)
@@ -257,7 +329,7 @@ class VisualPoseInitializer(Node):
         if now - self.last_status_time > float(self.get_parameter("sensor_max_age_s").value):
             self.ndt_good_count = 0
             if self.state.startswith("READY"):
-                self.revoke_ready("ndt_status_stale")
+                self.timing_fault("ndt_status_stale", now - self.last_status_time)
         self.last_status_stamp = stamp
         self.last_status_time = now
         # A heartbeat represents an actual new processed scan, never a timer.
@@ -287,8 +359,20 @@ class VisualPoseInitializer(Node):
             return
         if ready and not bool(self.get_parameter("supervise_visual_after_ready").value):
             return
-        if not self.valid_pose(message) or not self.fresh_stamp(message):
+        if not ready and self.candidate is not None:
+            return  # NDT owns confirmation once the one-shot seed is sent.
+        if not self.valid_pose(message):
             return
+        if ready:
+            if not self.fresh_stamp(message):
+                return
+        else:
+            reason = self.initial_visual_timing_reason(message)
+            if reason:
+                self.samples.clear()
+                self.sample_covariance_xy = self.sample_covariance_yaw = 0.0
+                self.set_state("REJECTED:" + reason)
+                return
         stamp = self.stamp_ns(message)
         if stamp <= self.last_visual_stamp:
             return
@@ -324,6 +408,9 @@ class VisualPoseInitializer(Node):
         if ready:
             if self.last_odom_pose is None:
                 return
+            (nav_x, nav_y, _, nav_yaw), _ = registration_seed(
+                (nav_x, nav_y, pose.position.z, nav_yaw),
+                self.seed_reference_xyz, self.seed_reference_rpy)
             position_delta = math.hypot(
                 nav_x - self.last_odom_pose[0], nav_y - self.last_odom_pose[1]
             )
@@ -357,7 +444,7 @@ class VisualPoseInitializer(Node):
         self.sample_covariance_xy = max(self.sample_covariance_xy, cov[0], cov[7])
         self.sample_covariance_yaw = max(self.sample_covariance_yaw, cov[35])
         self.samples.append(
-            (now, pose.position.x, pose.position.y, pose.position.z, yaw_from_quaternion(pose.orientation))
+            (stamp / 1e9, pose.position.x, pose.position.y, pose.position.z, yaw_from_quaternion(pose.orientation))
         )
         required = int(self.get_parameter("stable_samples").value)
         if len(self.samples) < required:
@@ -397,6 +484,9 @@ class VisualPoseInitializer(Node):
         nav_y = ty + s * mean_x + c * mean_y
         nav_z = tz + mean_z
         nav_yaw = mean_yaw + transform_yaw
+        (nav_x, nav_y, nav_z, nav_yaw), seed_quaternion = registration_seed(
+            (nav_x, nav_y, nav_z, nav_yaw),
+            self.seed_reference_xyz, self.seed_reference_rpy)
         self.candidate = (nav_x, nav_y, nav_z, nav_yaw)
         self.candidate_time = now
         self.ndt_good_count = 0
@@ -407,8 +497,8 @@ class VisualPoseInitializer(Node):
         initial.pose.pose.position.x = nav_x
         initial.pose.pose.position.y = nav_y
         initial.pose.pose.position.z = nav_z
-        initial.pose.pose.orientation.z = math.sin(nav_yaw / 2.0)
-        initial.pose.pose.orientation.w = math.cos(nav_yaw / 2.0)
+        (initial.pose.pose.orientation.x, initial.pose.pose.orientation.y,
+         initial.pose.pose.orientation.z, initial.pose.pose.orientation.w) = seed_quaternion
         initial.pose.covariance[0] = max(position_std ** 2, self.sample_covariance_xy, 0.01)
         initial.pose.covariance[7] = initial.pose.covariance[0]
         initial.pose.covariance[14] = 0.04
@@ -494,6 +584,14 @@ class VisualPoseInitializer(Node):
                 ):
                     self.revoke_ready("odom_yaw_step_{:.3f}rad".format(yaw_jump))
                     return
+            if bool(self.get_parameter("stationary_drift_guard_enabled").value):
+                if self.latest_leg_pose is None or now-self.last_leg_time > .25:
+                    self.stationary_guard.reset()
+                else:
+                    reason = self.stationary_guard.observe(current, self.latest_leg_pose)
+                    if reason:
+                        self.revoke_ready(reason)
+                        return
             self.last_odom_pose = current
             self.last_odom_time = now
             self.last_odom_stamp_s = stamp_s
@@ -552,6 +650,9 @@ class VisualPoseInitializer(Node):
                 "WAITING_NDT:delta={:.3f}m,{:.3f}rad".format(position_delta, yaw_delta)
             )
         if self.ndt_good_count >= int(self.get_parameter("ndt_confirmation_samples").value):
+            self.stationary_guard.reset()
+            if self.latest_leg_pose is not None:
+                self.stationary_guard.observe(current, self.latest_leg_pose)
             self.requested = False
             self.last_odom_pose = current
             self.last_odom_time = now
@@ -565,16 +666,20 @@ class VisualPoseInitializer(Node):
             )
 
     def timer_callback(self):
+        timing_pending = False
         if self.state.startswith("READY"):
             now = self.now_monotonic()
             if now - self.last_status_time > float(self.get_parameter("sensor_max_age_s").value):
-                self.revoke_ready("ndt_status_stale")
+                timing_pending = True
+                self.timing_fault("ndt_status_stale", now - self.last_status_time)
             elif now - self.last_leg_time > float(self.get_parameter("sensor_max_age_s").value):
-                self.revoke_ready("leg_odometry_stale")
+                timing_pending = True
+                self.timing_fault("leg_odometry_stale", now - self.last_leg_time)
             elif now - self.last_odom_time > float(
                 self.get_parameter("ready_odom_max_age_s").value
             ):
-                self.revoke_ready("odometry_stale")
+                timing_pending = True
+                self.timing_fault("odometry_stale", now - self.last_odom_time)
             elif bool(self.get_parameter("supervise_visual_after_ready").value) and now - self.last_visual_time > float(
                 self.get_parameter("ready_visual_max_age_s").value
             ):
@@ -584,10 +689,11 @@ class VisualPoseInitializer(Node):
                 self.get_parameter("ndt_timeout_s").value
             ):
                 self.reset("FAILED:ndt_confirmation_timeout")
-        ready = self.state.startswith("READY")
+        ready = self.state.startswith("READY") and not timing_pending
         self.set_ready(ready)
         message = String()
-        message.data = self.state
+        message.data = ('WAITING_STARTUP_TIMING:' + self.state if timing_pending
+                        and self.state.startswith('READY') else self.state)
         self.state_publisher.publish(message)
 
 

@@ -13,7 +13,7 @@ FILE=$PROJECT/navigation/$MAP_ID/$MISSION
 python3 "$RUNNER" "$FILE"
 [[ "$ACTION" == run ]] || exit 0
 echo '即将执行一次多点巡航；默认每个目标超时 120 秒，失败停止，结束锁定。'
-echo '先在另一终端运行新版 indoor_nav_start.sh 并等待 NAVIGATION READY，保持 DISARMED。'
+echo '先在另一终端运行 navigation_start.sh 并等待 NAVIGATION READY，保持 DISARMED。'
 echo '本次 ARM 确认授权执行草稿，不修改 enabled/review_required；不增加人工路径复核。'
 echo '运行期间不要在 RViz 点选新目标；现场持遥控器准备急停。'
 while true; do
@@ -31,7 +31,7 @@ while true; do
   echo '[WAIT] 尚未确认执行。请输入 ARM 后回车，或输入 N 取消；不会自动解锁。'
 done
 echo '[CONFIRMED] 已收到本次巡航授权，开始连接 Jetson。'
-ROBOT=${ROBOT:-ysc@192.168.1.103}
+ROBOT=${ROBOT:-${LITE3_ROBOT_USER:-ysc}@${LITE3_ROBOT_HOST:-10.119.1.171}}
 KEY=${SSH_KEY:-/home/duyipei/.ssh/id_ed25519_cyberdog}
 REMOTE=/home/ysc/lite3_patrol_project
 SSH=(ssh -o BatchMode=yes -o ConnectTimeout=8 -o ServerAliveInterval=3 -o ServerAliveCountMax=2 -i "$KEY")

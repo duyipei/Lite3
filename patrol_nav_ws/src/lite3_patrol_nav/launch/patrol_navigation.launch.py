@@ -13,6 +13,7 @@ def generate_launch_description():
     map_yaml = LaunchConfiguration("map_yaml")
     globalmap_pcd = LaunchConfiguration("globalmap_pcd")
     params_file = LaunchConfiguration("params_file")
+    default_bt_xml_filename = LaunchConfiguration("default_bt_xml_filename")
     lidar_topic = LaunchConfiguration("lidar_topic")
     imu_topic = LaunchConfiguration("imu_topic")
     start_localization = LaunchConfiguration("start_localization")
@@ -22,6 +23,7 @@ def generate_launch_description():
     convert_utm_to_local = LaunchConfiguration("convert_utm_to_local")
     ndt_resolution = LaunchConfiguration("ndt_resolution")
     downsample_resolution = LaunchConfiguration("downsample_resolution")
+    globalmap_downsample_resolution = LaunchConfiguration("globalmap_downsample_resolution")
 
     localization = Node(
         condition=IfCondition(start_localization),
@@ -45,16 +47,17 @@ def generate_launch_description():
             "ndt_neighbor_search_radius": 3.0,
             "ndt_resolution": ndt_resolution,
             "downsample_resolution": downsample_resolution,
+            "globalmap_downsample_resolution": globalmap_downsample_resolution,
             # Manual placement in RViz is the absolute map anchor.  NDT may
             # refine it locally but must never jump to another similar room.
             "manual_pose_translation_gate": 0.50,
             "manual_pose_yaw_gate": 0.20943951,
             # During the isolated initialization phase, keep publishing the
             # coarse seed until a bounded NDT candidate remains stable for
-            # 30 scans. Then promote that candidate exactly once as the new
+            # 15 scans. Then promote that candidate exactly once as the new
             # map/leg-odometry anchor. Runtime divergence gates stay strict.
             "auto_reanchor_enabled": True,
-            "auto_reanchor_samples": 30,
+            "auto_reanchor_samples": 15,
             "auto_reanchor_position_span": 0.20,
             "auto_reanchor_yaw_span": 0.04363323,
             "auto_reanchor_max_translation": 0.75,
@@ -64,6 +67,8 @@ def generate_launch_description():
             # After acquisition, leg odometry supplies continuous motion and
             # NDT updates the map anchor only in small bounded increments.
             "ndt_fusion_gain": 0.05,
+            # Full XYZ/quaternion correction: keep ground geometry aligned.
+            # The legacy yaw-step name now bounds total rotation per scan.
             "ndt_fusion_max_translation_step": 0.01,
             "ndt_fusion_max_yaw_step": 0.003490659,
             "specify_init_pose": specify_init_pose,
@@ -85,6 +90,8 @@ def generate_launch_description():
             "map": map_yaml,
             "use_sim_time": "False",
             "params_file": params_file,
+            # Foxy bringup rewrites this YAML parameter from its launch arg.
+            "default_bt_xml_filename": default_bt_xml_filename,
             "autostart": "True",
             "map_subscribe_transient_local": "True",
         }.items(),
@@ -102,6 +109,9 @@ def generate_launch_description():
         DeclareLaunchArgument("map_yaml"),
         DeclareLaunchArgument("globalmap_pcd"),
         DeclareLaunchArgument("params_file"),
+        DeclareLaunchArgument("default_bt_xml_filename", default_value=os.path.join(
+            get_package_share_directory("nav2_bt_navigator"), "behavior_trees",
+            "navigate_w_replanning_and_recovery.xml")),
         DeclareLaunchArgument("lidar_topic", default_value="/rslidar_points"),
         DeclareLaunchArgument("imu_topic", default_value="/imu/data"),
         DeclareLaunchArgument("start_localization", default_value="True"),
@@ -111,6 +121,7 @@ def generate_launch_description():
         DeclareLaunchArgument("convert_utm_to_local", default_value="False"),
         DeclareLaunchArgument("ndt_resolution", default_value="1.0"),
         DeclareLaunchArgument("downsample_resolution", default_value="0.3"),
+        DeclareLaunchArgument("globalmap_downsample_resolution", default_value=downsample_resolution),
         localization,
         isolated_navigation,
     ])

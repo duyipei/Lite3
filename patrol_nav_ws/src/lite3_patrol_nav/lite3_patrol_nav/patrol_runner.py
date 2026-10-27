@@ -81,7 +81,9 @@ class TurnProgressWatchdog:
         # Near a positional tolerance boundary the bearing becomes ill-defined.
         # Ignore that transition band; final yaw is enforced by RotateToGoal.
         active = (phase == 'final_yaw' and error > .25) or (distance > .6 and error > math.radians(30))
-        if not active or abs(command[0]) > .031:
+        # Waiting for a planner or VOA braking produces zero output. It is not
+        # a stalled turn; only time intervals with an actual turn command count.
+        if not active or abs(command[0]) > .031 or abs(command[1]) < .01:
             self.anchor = None
             return None
         if self.anchor is None or self.anchor[3] != phase:

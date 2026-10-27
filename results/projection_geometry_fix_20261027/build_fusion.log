@@ -1,0 +1,29 @@
+[  4%] Built target hdl_localization__cpp
+[ 16%] Built target hdl_localization__rosidl_typesupport_cpp
+[ 28%] Built target hdl_localization__rosidl_generator_c
+[ 40%] Built target hdl_localization__rosidl_typesupport_introspection_c
+[ 52%] Built target hdl_localization__rosidl_typesupport_c
+[ 64%] Built target hdl_localization__rosidl_typesupport_fastrtps_cpp
+[ 76%] Built target hdl_localization__rosidl_typesupport_fastrtps_c
+[ 88%] Built target hdl_localization__rosidl_typesupport_introspection_cpp
+[ 88%] Built target hdl_localization
+Scanning dependencies of target hdl_localization_composition
+[ 92%] Building CXX object CMakeFiles/hdl_localization_composition.dir/apps/hdl_localization_composition.cpp.o
+In file included from /home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/hdl_localization_composition.cpp:2:
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘bool hdl_localization::HdlLocalizationApp::GetClosestImuData(const rclcpp::Time&, sensor_msgs::msg::Imu_<std::allocator<void> >::SharedPtr&)’:
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp:696:26: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::deque<std::shared_ptr<sensor_msgs::msg::Imu_<std::allocator<void> > > >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  696 |         for(int i = 0; i < imu_data_buffer_.size(); i++){
+      |                        ~~^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘bool hdl_localization::HdlLocalizationApp::Relocalize(std::shared_ptr<rmw_request_id_t>, std::shared_ptr<std_srvs::srv::Empty_Request_<std::allocator<void> > >, std::shared_ptr<std_srvs::srv::Empty_Response_<std::allocator<void> > >)’:
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp:1025:56: warning: unused parameter ‘req’ [-Wunused-parameter]
+ 1025 |         std::shared_ptr<std_srvs::srv::Empty::Request> req,
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp:1026:57: warning: unused parameter ‘res’ [-Wunused-parameter]
+ 1026 |         std::shared_ptr<std_srvs::srv::Empty::Response> res)
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘void hdl_localization::HdlLocalizationApp::TimerCallback()’:
+/home/ysc/lite_cog_ros2/nav/src/hdl_localization/apps/./hdl_localization_app.hpp:1307:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::deque<double>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1307 |             for(int i=0; i<ms_deque_.size(); i++){
+      |                          ~^~~~~~~~~~~~~~~~~
+[ 96%] Linking CXX executable hdl_localization_composition
+[100%] Built target hdl_localization_composition

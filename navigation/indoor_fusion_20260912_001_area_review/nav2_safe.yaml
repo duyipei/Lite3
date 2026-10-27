@@ -181,10 +181,10 @@ controller_server:
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
       xy_goal_tolerance: 0.35
-      # Point-and-goal patrol cares about position.  Ignoring the arbitrary
-      # RViz arrow heading prevents a second in-place turn at every target.
-      yaw_goal_tolerance: 3.14159
-      stateful: true
+      # The RViz arrow is the required final body heading (about 5.7 degrees).
+      # Position and heading must both be valid when reporting success.
+      yaw_goal_tolerance: 0.10
+      stateful: false
     FollowPath:
       plugin: dwb_core::DWBLocalPlanner
       # A later RViz goal can be directly behind the robot.  Allow a slow
@@ -200,13 +200,15 @@ controller_server:
       # areas instead of rejecting every command below normal walking speed.
       min_speed_xy: 0.03
       max_speed_xy: 0.15
-      min_speed_theta: 0.04
+      # Exclude tiny turns that make little progress.  The angular ramp permits
+      # a valid pure-turn sample from rest at the 5 Hz controller frequency.
+      min_speed_theta: 0.10
       acc_lim_x: 0.2
       acc_lim_y: 0.1
-      acc_lim_theta: 0.25
+      acc_lim_theta: 0.50
       decel_lim_x: -0.25
       decel_lim_y: -0.1
-      decel_lim_theta: -0.30
+      decel_lim_theta: -0.50
       # Sample both the limited reverse range and the normal forward range.
       vx_samples: 11
       vy_samples: 1
@@ -220,24 +222,36 @@ controller_server:
       critics:
       - ObstacleFootprint
       - Oscillation
+      - RotateToGoal
       - PathAlign
       - GoalAlign
       - PathDist
       - GoalDist
       # Use the standard differential-drive scoring set.  No PreferForward
       # critic is used: a target behind the body must be reachable in reverse.
+      # Begin the terminal turn inside the 0.35 m acceptance radius, leaving
+      # room for stepping/localization variation while checking final position.
+      xy_goal_tolerance: 0.20
+      trans_stopped_velocity: 0.03
+      RotateToGoal.scale: 32.0
+      RotateToGoal.slowing_factor: 5.0
+      RotateToGoal.lookahead_time: -1.0
       GoalDist.scale: 24.0
       GoalDist.aggregation_type: last
       PathAlign.scale: 64.0
-      PathAlign.aggregation_type: sum
-      # Keep alignment close to the body centre.  A long forward projection
-      # incorrectly penalizes an otherwise valid reverse path.
+      PathAlign.aggregation_type: last
+      # Keep the short projection used for reverse-capable indoor tracking.
+      # Endpoint aggregation avoids a sample-count penalty during final turns.
       PathAlign.forward_point_distance: 0.10
-      GoalAlign.scale: 48.0
+      # Drawing the nose toward the goal position competes with an arbitrary
+      # requested final heading, particularly after a reverse approach.
+      GoalAlign.scale: 0.0
       GoalAlign.aggregation_type: last
       GoalAlign.forward_point_distance: 0.10
       PathDist.scale: 32.0
-      PathDist.aggregation_type: sum
+      # Score the endpoint so rotating trajectories are not penalized merely
+      # for containing more angular samples.
+      PathDist.aggregation_type: last
       ObstacleFootprint.scale: 0.02
       ObstacleFootprint.max_scaling_factor: 0.2
       ObstacleFootprint.scaling_speed: 0.15

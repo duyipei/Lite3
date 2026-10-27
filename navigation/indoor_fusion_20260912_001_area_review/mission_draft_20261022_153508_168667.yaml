@@ -1,0 +1,29 @@
+mission_version: 1
+map_id: indoor_fusion_20260912_001_area_review
+frame_id: map
+enabled: false
+review_required: true
+route_source: offline manual selection; segments are NOT planned paths
+map_yaml_sha256: f15d8e2415fc28c5332fd5bad03f3244e1b01f6220f54d2c30a341f109ad3b6f
+map_image_sha256: 2f7b5929e15517a4058f0eac0d8725f2d129f16e24a3c68fe4cd62142a07e248
+waypoints:
+- id: wp_001
+  x: 0.414
+  y: 1.6221
+  yaw: 1.396124
+  pause_s: 0.0
+- id: wp_002
+  x: 0.65
+  y: 0.5599
+  yaw: -1.570796
+  pause_s: 0.0
+- id: wp_003
+  x: 0.65
+  y: -1.5053
+  yaw: 2.003204
+  pause_s: 0.0
+- id: wp_004
+  x: 0.1189
+  y: -0.0301
+  yaw: 0.179853
+  pause_s: 0.0

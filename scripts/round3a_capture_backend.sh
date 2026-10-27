@@ -371,7 +371,7 @@ base_preflight() {
     die "Depth-to-color extrinsics publisher not found"
   if [[ "$MAPPING_CAMERA" == 2 ]]; then
     [[ $(publisher_count /front_camera/image_raw/compressed) -ge 1 ]] || \
-      die 'Camera2 bridge missing/outdated. Start updated navigation/start_front_camera.sh on Jetson first.'
+      die 'Camera2 bridge missing/outdated. Run bash scripts/mapping_start.sh camera2-start in another VM terminal first.'
     log 'Camera2 acquisition selected: compressed RGB plus original D435i/LiDAR. NOT a calibrated camera2 visual map.'
   fi
   log "base preflight PASS"

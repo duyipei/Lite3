@@ -1,6 +1,8 @@
 # Runtime output and machine-specific build products; keep maps and visual DBs.
 /bags/
 /logs/
+# Private complete Jetson snapshots, including raw recordings and local builds.
+/archives/
 **/build/
 **/install/
 **/install_merged/
@@ -9,6 +11,10 @@
 **/build_livox_sdk2/
 **/__pycache__/
 *.pyc
+# Private factory VOA copy is generated on Jetson; license is not redistributable.
+/voa_overlay_ws/
+# Optional downloaded visual-matching dependencies; model weights live in ~/.cache.
+/tools/pnp_lab/
 **/.ssh/
 .env
 .env.*

@@ -73,7 +73,7 @@ DISARM，并结束由它启动的导航会话。
 另开一个本地桌面终端：
 
 ```bash
-ssh -Y -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -Y -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 source /home/ysc/lite3_patrol_project/navigation/patrol_env.sh
 rviz2 -d /home/ysc/lite_cog_ros2/nav/src/dr_nav2/rviz/dr_nav2.rviz
 ```

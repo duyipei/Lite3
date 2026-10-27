@@ -73,7 +73,23 @@ if [[ "$preflight" != *"NAV_PREFLIGHT_OK"* ]]; then
   exit 1
 fi
 
+PARAMS_FILE=$MAP_DIR/nav2_safe.yaml
+BT_ARGS=()
+DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
+[[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || exit 1
+GROUND_ARGS=()
+if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+  PARAMS_FILE=$MAP_DIR/nav2_dynamic.yaml
+  if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+    GROUND_ARGS=(--ground-relative)
+    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
+  fi
+  python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+    "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}"
+  BT_ARGS=("default_bt_xml_filename:=$PROJECT/navigation/navigate_dynamic_obstacles.xml")
+fi
 nav_pid=
+ground_pid=
 cleanup() {
   if [[ -n "${nav_pid:-}" ]]; then
     kill -INT -- "-$nav_pid" 2>/dev/null || true
@@ -84,13 +100,40 @@ cleanup() {
     kill -TERM -- "-$nav_pid" 2>/dev/null || true
     wait "$nav_pid" 2>/dev/null || true
   fi
+  if [[ -n "${ground_pid:-}" ]]; then
+    kill -INT -- "-$ground_pid" 2>/dev/null || true
+    sleep .2
+    kill -TERM -- "-$ground_pid" 2>/dev/null || true
+    wait "$ground_pid" 2>/dev/null || true
+  fi
 }
 trap cleanup EXIT INT TERM HUP
 
-setsid ros2 launch lite3_patrol_nav patrol_navigation.launch.py \
+if (( ${#GROUND_ARGS[@]} )); then
+  setsid env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" &
+  ground_pid=$!
+fi
+
+# Keep localization and the velocity gate at normal priority while the Nav2
+# processes load plugins/maps. Inherit bounded math thread pools into Nav2.
+setsid nice -n 5 env OMP_NUM_THREADS=1 OMP_WAIT_POLICY=PASSIVE GOMP_SPINCOUNT=0 \
+  OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  ros2 launch lite3_patrol_nav patrol_navigation.launch.py \
   map_yaml:="$MAP_DIR/patrol_map.yaml" \
   globalmap_pcd:="$MAP_DIR/localization_map.pcd" \
-  params_file:="$MAP_DIR/nav2_safe.yaml" \
+  params_file:="$PARAMS_FILE" \
+  "${BT_ARGS[@]}" \
   start_localization:=False start_navigation:=True &
 nav_pid=$!
+if [[ -n "$ground_pid" ]]; then
+  # A failed filter must not leave Nav2 running on expired obstacle evidence.
+  while kill -0 "$nav_pid" 2>/dev/null; do
+    if ! kill -0 "$ground_pid" 2>/dev/null; then
+      echo 'ground obstacle filter exited; stopping Nav2' >&2
+      exit 1
+    fi
+    sleep 1
+  done
+fi
 wait "$nav_pid"

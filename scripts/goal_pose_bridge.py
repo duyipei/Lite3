@@ -434,11 +434,20 @@ class GoalPoseBridge(Node):
 
     def path_result_callback(self, serial, future):
         try:
-            path = future.result().result.path
+            result = future.result()
+            path = result.result.path
         except Exception as error:
             self.get_logger().warn("path preview failed: {}".format(error))
             return
         if serial != self.request_serial:
+            return
+        # Foxy still supplies an empty Path on an aborted planner result.
+        # Do not label that as PATH_READY; the active Nav2 tree may replan.
+        if result.status != 4 or not path.poses:  # GoalStatus.STATUS_SUCCEEDED
+            if self.pending_serial == serial:
+                self.publish_state("QUEUED:GOAL_{}:PREVIEW_NO_PATH".format(serial))
+            self.get_logger().warn("no valid path preview for goal {} (status={}, poses={})".format(
+                serial, result.status, len(path.poses)))
             return
         self.preview_path_publisher.publish(path)
         if self.pending_serial == serial:

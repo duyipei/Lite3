@@ -50,7 +50,7 @@ RViz Goal
 在本地电脑打开终端：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 ```
 
 在 Jetson 中执行：
@@ -115,7 +115,7 @@ timeout 30s ros2 topic hz /camera/depth/image_rect_raw
 重新打开一个 SSH 终端：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 export LITE3_PATROL_MAP_ID=site_fusion_20260909_001_area_v4_review
 bash /home/ysc/lite3_patrol_project/navigation/start_localization_only.sh
 ```
@@ -137,7 +137,7 @@ ros2 node list | grep patrol_localization
 ## 5. 终端 2：启动视觉全局定位
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 export LITE3_PATROL_MAP_ID=site_fusion_20260909_001_area_v4_review
 bash /home/ysc/lite3_patrol_project/navigation/start_visual_localizer.sh
 ```
@@ -178,7 +178,7 @@ POSE:kf=123,inliers=48,x=12.34,y=1.56,yaw=0.15
 启动守卫节点：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 export LITE3_PATROL_MAP_ID=site_fusion_20260909_001_area_v4_review
 bash /home/ysc/lite3_patrol_project/navigation/start_visual_initialization.sh
 ```
@@ -240,7 +240,7 @@ ros2 service call /patrol/reset_visual_initialization std_srvs/srv/Trigger '{}'
 只有第 6 节全部通过才执行：
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 export LITE3_PATROL_MAP_ID=site_fusion_20260909_001_area_v4_review
 bash /home/ysc/lite3_patrol_project/navigation/start_nav_isolated.sh
 ```
@@ -272,7 +272,7 @@ ros2 node list | grep -E 'map_server|planner_server|controller_server|bt_navigat
 桌面终端中 `echo $DISPLAY` 非空，然后执行：
 
 ```bash
-ssh -Y -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -Y -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 source /home/ysc/lite3_patrol_project/navigation/patrol_env.sh
 rviz2 -d /home/ysc/lite_cog_ros2/nav/src/dr_nav2/rviz/dr_nav2.rviz
 ```
@@ -338,7 +338,7 @@ ros2 topic info /cmd_vel_corrected
 ## 10. 终端 6：启动保持 DISARMED 的速度门禁
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_cyberdog ysc@192.168.1.103
+ssh -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
 bash /home/ysc/lite3_patrol_project/navigation/start_gate_disarmed.sh
 ```
 
