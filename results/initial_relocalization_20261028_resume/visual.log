@@ -1,0 +1,26 @@
+1793023282.221461 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793023283.813605192] [rgbd_visual_localizer]: loaded 107 visual keyframes; startup references=9; strategy=startup_then_global
+[INFO] [1793023284.716672552] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=5,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.34s,input_age=0.13s,inference=0.22s
+[INFO] [1793023290.556566024] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=4,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.81s,input_age=0.76s,inference=0.06s
+[INFO] [1793023296.500096840] [rgbd_visual_localizer]: ERROR:image_timeout
+[WARN] [1793023302.497070216] [rgbd_visual_localizer]: no confirmed start-area match; switching to global keyframe search
+[INFO] [1793023303.095277096] [rgbd_visual_localizer]: loading local LoFTR recovery matcher
+[INFO] [1793023350.125919112] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023355.497085416] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023360.497379272] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023365.499195688] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023370.497421064] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023375.503712488] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023381.500129320] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023387.500599944] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023392.499430600] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023397.561313736] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023403.497621416] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023409.497388648] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023414.497318536] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023419.501106088] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023425.497080136] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023431.497912584] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023437.497508840] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793023442.499949320] [rgbd_visual_localizer]: ERROR:image_timeout
+[WARN] [1793023445.742485288] [rgbd_visual_localizer]: visual frame processing took 2.25s in global mode

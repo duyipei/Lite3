@@ -1,0 +1,9 @@
+[INFO] stationary relocalization test uses production localization parameters
+1793020638.327035 [0] visual_pos: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793020639.154599400] [visual_pose_initializer]: visual initializer ready; velocity remains independently gated
+[INFO] [1793020666.869577288] [visual_pose_initializer]: COLLECTING_VISUAL_POSES
+[INFO] [1793020700.909331944] [visual_pose_initializer]: COLLECTING:1/4
+[INFO] [1793020701.742207816] [visual_pose_initializer]: COLLECTING:2/4
+[INFO] [1793020703.758061640] [visual_pose_initializer]: COLLECTING:3/4
+[INFO] [1793020704.751311080] [visual_pose_initializer]: WAITING_NDT:x=0.002,y=-0.001,yaw=0.000
+[INFO] [1793020794.840410344] [visual_pose_initializer]: FAILED:ndt_confirmation_timeout

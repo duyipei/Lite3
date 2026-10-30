@@ -1,0 +1,8 @@
+{
+  "lidar": {
+    "error": "no dominant near-horizontal floor plane"
+  },
+  "depth": {
+    "error": "no dominant near-horizontal floor plane"
+  }
+}

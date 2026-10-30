@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "build_id": "audit_repairs_20261028_transactional_scan_queue",
+  "static_accepted": false,
+  "files": {
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_cpp.so": "348c7d699353fe94a840f9f89d336708c0a5944fd8bc28f35fdb2d7bf61c56de",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_c.so": "23ede7bed7c948eba3705224a3afc316434d620bbaf44aed0d23352dcddc19d4",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_fastrtps_c.so": "4c49ba2527a2274fe20c7715712f356c677f9d108de4265d8c51607c4cbaccaf",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_generator_c.so": "33975a9c6a6d5875c0b1c58431dbf2be45a0cafaeaf2e17930062abd1c31d879",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_introspection_cpp.so": "ce413948773e8f24d0f01fbc9706730bc799bbbaf0ea5a776f13c6086c692e03",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_fastrtps_cpp.so": "68fcbf703d594b25fa4f6ef8d80e587d8d372c904696ce5a62d67ff79183a3a3",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__rosidl_typesupport_introspection_c.so": "9f7830413ac6932bb2e363a6cc87c43cdbd0644899d452fbf091f3703c5cf069",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/libhdl_localization__python.so": "1a625a89332d14cbbf6d5fcec625420c6482a2ca42d264be0ea8d83b41e6d19f",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/hdl_localization/hdl_localization_composition": "376051cf10f5d845d8a0ec2a4f1cee390ec20d4c944ec909b9353681181453ed",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/python3.8/site-packages/hdl_localization/hdl_localization_s__rosidl_typesupport_fastrtps_c.cpython-38-aarch64-linux-gnu.so": "e94ba931dbdf39c708be2e621478a63b3c97ff859ed5ab8aca524c7f69723ffe",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/python3.8/site-packages/hdl_localization/hdl_localization_s__rosidl_typesupport_introspection_c.cpython-38-aarch64-linux-gnu.so": "a51f6da584e6fefe58cfd9c8cc4ec9295d3e74bea632e4e4babd0a9d9960a958",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/install/hdl_localization/lib/python3.8/site-packages/hdl_localization/hdl_localization_s__rosidl_typesupport_c.cpython-38-aarch64-linux-gnu.so": "6ed65a7d041de67d0879789031375eba46fb6e6cb716582858893c66d3feb3ec",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/hdl_localization_app.hpp": "7d089d5f9703ed523a9daa76bff3f1ccabe24e10bfe5e7813684d582c2476028",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/src/hdl_localization/pose_estimator.cpp": "ab79417ee35515a98f0503599d92aec29c854059b42921cc117c4cc1ab16ffcc",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/include/hdl_localization/quaternion_state.hpp": "f71c54745026aa5e7824d56c9e683463b8fbb2e1b1192fabbf9702944e6e9cf9",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/include/hdl_localization/odom_system.hpp": "fb30ad93f063f4e880969d37b89a3ed73db09461caa1528f1e7b5a7559e73185",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/include/hdl_localization/pose_system.hpp": "4928e50d4a76669e99e0e51d137ff10649fc4272af488c311cd67df0e0f82798",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/include/hdl_localization/pose_estimator.hpp": "c123644bcc11a3da69feac9c0132c03a707011793de6c06a155605abc631f299",
+    "/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/include/hdl_localization/delta_estimater.hpp": "7bddd135e749676156692611648cee46bd0113a85404d2106d7b5500cc68ca1f"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "scope": "live stationary, coarse origin seed; attempted later analytical seed not acknowledged so excluded as a separate treatment",
+  "n": 42,
+  "reasons": {
+    "translation_limit": 3,
+    "low_overlap": 39
+  },
+  "icp_ms": [
+    2995.45,
+    3743.549999999999
+  ],
+  "ndt_ms": [
+    84.35,
+    127.85499999999998
+  ],
+  "motion": "none; command publishers zero",
+  "height_result": "no accepted P, no valid H metric"
+}

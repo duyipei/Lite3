@@ -1,0 +1,20 @@
+--- results/ground_repair_20261028/before/start_localization_only.sh	2026-10-28 10:31:09.129251164 +0800
++++ navigation/start_localization_only.sh	2026-10-28 10:33:02.434323381 +0800
+@@ -5,6 +5,9 @@
+ PROJECT=/home/ysc/lite3_patrol_project
+ MAP_ID=${LITE3_PATROL_MAP_ID:-site_fusion_20260909_001}
+ NDT_RESOLUTION=${LITE3_NDT_RESOLUTION:-1.0}
++# Experimental full-scene refinement: require explicit static-test selection.
++FINE_REGISTRATION=${LITE3_NDT_FINE_REFINE:-false}
++[[ "$FINE_REGISTRATION" == true || "$FINE_REGISTRATION" == false ]] || exit 1
+ DEFAULT_DOWNSAMPLE_RESOLUTION=0.3
+ if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+   DEFAULT_DOWNSAMPLE_RESOLUTION=0.5
+@@ -112,6 +115,7 @@
+   start_localization:=True start_navigation:=False \
+   specify_init_pose:=False use_imu:=False convert_utm_to_local:=False \
+   ndt_resolution:="$NDT_RESOLUTION" \
++  fine_registration_enabled:="$FINE_REGISTRATION" \
+   globalmap_downsample_resolution:="$GLOBALMAP_DOWNSAMPLE_RESOLUTION" \
+   downsample_resolution:="$DOWNSAMPLE_RESOLUTION" &
+ localization_pid=$!

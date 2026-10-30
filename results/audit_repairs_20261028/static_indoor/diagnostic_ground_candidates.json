@@ -1,0 +1,51 @@
+[
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 19584,
+    "roi_points": 15263,
+    "seed_cells": 251
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 20064,
+    "roi_points": 15327,
+    "seed_cells": 274
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 16512,
+    "roi_points": 12481,
+    "seed_cells": 258
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 19968,
+    "roi_points": 15411,
+    "seed_cells": 267
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 20640,
+    "roi_points": 15904,
+    "seed_cells": 266
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 19776,
+    "roi_points": 15269,
+    "seed_cells": 261
+  },
+  {
+    "valid": false,
+    "reason": "plane_refinement_invalid",
+    "input": 19776,
+    "roi_points": 15376,
+    "seed_cells": 268
+  }
+]

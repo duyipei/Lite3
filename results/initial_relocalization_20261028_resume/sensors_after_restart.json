@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "rgb": 362,
+    "depth": 361,
+    "imu": 2404
+  },
+  "last": {
+    "rgb": {
+      "age": -1793020459.1309412,
+      "frame": "camera_color_optical_frame"
+    },
+    "depth": {
+      "age": 0.01426683999989109,
+      "frame": "camera_depth_optical_frame"
+    },
+    "imu": {
+      "age": 0.0012238720000823378,
+      "frame": "base_link"
+    }
+  },
+  "velocity_publishers": {
+    "/cmd_vel": 0,
+    "/cmd_vel_corrected": 0,
+    "/patrol/cmd_vel_raw": 0
+  }
+}

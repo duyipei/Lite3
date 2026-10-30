@@ -1,0 +1,582 @@
+.............................F.......................................... [ 77%]
+.....................                                                    [100%]
+=================================== FAILURES ===================================
+______ DwbCollisionTests.test_blocked_detour_removed_unknown_and_boundary ______
+
+self = <test_dwb_collision_native.DwbCollisionTests testMethod=test_blocked_detour_removed_unknown_and_boundary>
+
+    def test_blocked_detour_removed_unknown_and_boundary(self):
+        prefix=Path('/opt/ros/galactic')
+        if not (prefix/'lib/libdwb_critics.so').exists(): self.skipTest('native DWB unavailable')
+        with tempfile.TemporaryDirectory() as d:
+            source=Path(d)/'critic.cpp';source.write_text(CODE);binary=source.with_suffix('')
+            command=['g++','-std=c++14',str(source),'-o',str(binary),'-I'+str(prefix/'include'),
+                     '-L'+str(prefix/'lib'),'-Wl,-rpath,'+str(prefix/'lib'),
+                     '-Wl,-rpath-link,'+str(prefix/'lib'),'-ldwb_critics','-ldwb_core',
+                     '-lnav2_costmap_2d_core','-lrclcpp','-lrcutils']
+            result=subprocess.run(command,capture_output=True,text=True)
+>           self.assertEqual(result.returncode,0,result.stderr)
+E           AssertionError: 1 != 0 : In file included from /opt/ros/galactic/include/rclcpp/subscription_base.hpp:29,
+E                            from /opt/ros/galactic/include/rclcpp/callback_group.hpp:26,
+E                            from /opt/ros/galactic/include/rclcpp/any_executable.hpp:20,
+E                            from /opt/ros/galactic/include/rclcpp/memory_strategy.hpp:25,
+E                            from /opt/ros/galactic/include/rclcpp/memory_strategies.hpp:18,
+E                            from /opt/ros/galactic/include/rclcpp/executor_options.hpp:20,
+E                            from /opt/ros/galactic/include/rclcpp/executor.hpp:36,
+E                            from /opt/ros/galactic/include/rclcpp/executors/multi_threaded_executor.hpp:26,
+E                            from /opt/ros/galactic/include/rclcpp/executors.hpp:21,
+E                            from /opt/ros/galactic/include/rclcpp/rclcpp.hpp:156,
+E                            from /opt/ros/galactic/include/dwb_core/trajectory_critic.hpp:43,
+E                            from /opt/ros/galactic/include/dwb_critics/base_obstacle.hpp:42,
+E                            from /opt/ros/galactic/include/dwb_critics/obstacle_footprint.hpp:39,
+E                            from /tmp/tmpx9ry0o18/critic.cpp:2:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:34:1: warning: inline variables are only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E              34 | inline constexpr bool always_false_v = false;
+E                 | ^~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:81:29: error: ‘variant’ in namespace ‘std’ does not name a template type
+E              81 |   using variant_type = std::variant<
+E                 |                             ^~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:81:24: note: ‘std::variant’ is only available from C++17 onwards
+E              81 |   using variant_type = std::variant<
+E                 |                        ^~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘rclcpp::AnySubscriptionCallback<MessageT, AllocatorT> rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::set(CallbackT)’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:180:8: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             180 |     if constexpr (is_deprecated) {
+E                 |        ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘void rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::dispatch(std::shared_ptr<_Tp>, const rclcpp::MessageInfo&)’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:238:10: error: ‘visit’ is not a member of ‘std’
+E             238 |     std::visit(
+E                 |          ^~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:238:10: note: ‘std::visit’ is only available from C++17 onwards
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In lambda function:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:242:12: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             242 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |            ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:242:28: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             242 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                            ^~~~~~~~~
+E                 |                            is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:242:39: error: expected primary-expression before ‘,’ token
+E             242 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:242:57: error: expected primary-expression before ‘>’ token
+E             242 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:242:58: error: expected primary-expression before ‘)’ token
+E             242 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                          ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:244:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             244 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:244:35: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             244 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                   ^~~~~~~~~
+E                 |                                   is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:244:46: error: expected primary-expression before ‘,’ token
+E             244 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:244:72: error: expected primary-expression before ‘>’ token
+E             244 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                        ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:244:73: error: expected primary-expression before ‘)’ token
+E             244 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:246:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             246 |         } else if constexpr (std::is_same_v<T, UniquePtrCallback>) {
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:246:35: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             246 |         } else if constexpr (std::is_same_v<T, UniquePtrCallback>) {
+E                 |                                   ^~~~~~~~~
+E                 |                                   is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:246:46: error: expected primary-expression before ‘,’ token
+E             246 |         } else if constexpr (std::is_same_v<T, UniquePtrCallback>) {
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:246:65: error: expected primary-expression before ‘>’ token
+E             246 |         } else if constexpr (std::is_same_v<T, UniquePtrCallback>) {
+E                 |                                                                 ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:246:66: error: expected primary-expression before ‘)’ token
+E             246 |         } else if constexpr (std::is_same_v<T, UniquePtrCallback>) {
+E                 |                                                                  ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:248:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             248 |         } else if constexpr (std::is_same_v<T, UniquePtrWithInfoCallback>) {
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:248:35: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             248 |         } else if constexpr (std::is_same_v<T, UniquePtrWithInfoCallback>) {
+E                 |                                   ^~~~~~~~~
+E                 |                                   is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:248:46: error: expected primary-expression before ‘,’ token
+E             248 |         } else if constexpr (std::is_same_v<T, UniquePtrWithInfoCallback>) {
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:248:73: error: expected primary-expression before ‘>’ token
+E             248 |         } else if constexpr (std::is_same_v<T, UniquePtrWithInfoCallback>) {
+E                 |                                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:248:74: error: expected primary-expression before ‘)’ token
+E             248 |         } else if constexpr (std::is_same_v<T, UniquePtrWithInfoCallback>) {
+E                 |                                                                          ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:250:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             250 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:251:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             251 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:251:27: error: expected primary-expression before ‘,’ token
+E             251 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:251:51: error: expected primary-expression before ‘>’ token
+E             251 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:251:52: error: expected primary-expression before ‘||’ token
+E             251 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                    ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:252:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             252 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:252:27: error: expected primary-expression before ‘,’ token
+E             252 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:252:59: error: expected primary-expression before ‘>’ token
+E             252 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:252:60: error: expected primary-expression before ‘||’ token
+E             252 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                                                            ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:253:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             253 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:253:27: error: expected primary-expression before ‘,’ token
+E             253 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:253:46: error: expected primary-expression before ‘>’ token
+E             253 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:253:47: error: expected primary-expression before ‘)’ token
+E             253 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                               ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:256:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             256 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:257:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             257 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:257:27: error: expected primary-expression before ‘,’ token
+E             257 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:257:59: error: expected primary-expression before ‘>’ token
+E             257 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:257:60: error: expected primary-expression before ‘||’ token
+E             257 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                            ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:258:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             258 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:258:27: error: expected primary-expression before ‘,’ token
+E             258 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:258:67: error: expected primary-expression before ‘>’ token
+E             258 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:258:68: error: expected primary-expression before ‘||’ token
+E             258 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                                                                    ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:259:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             259 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:259:27: error: expected primary-expression before ‘,’ token
+E             259 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:259:54: error: expected primary-expression before ‘>’ token
+E             259 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                      ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:259:55: error: expected primary-expression before ‘)’ token
+E             259 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘void rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::dispatch_intra_process(std::shared_ptr<const _Tp>, const rclcpp::MessageInfo&)’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:283:10: error: ‘visit’ is not a member of ‘std’
+E             283 |     std::visit(
+E                 |          ^~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:283:10: note: ‘std::visit’ is only available from C++17 onwards
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In lambda function:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:287:12: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             287 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |            ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:287:28: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             287 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                            ^~~~~~~~~
+E                 |                            is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:287:39: error: expected primary-expression before ‘,’ token
+E             287 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:287:57: error: expected primary-expression before ‘>’ token
+E             287 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:287:58: error: expected primary-expression before ‘)’ token
+E             287 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                          ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:289:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             289 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:289:35: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             289 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                   ^~~~~~~~~
+E                 |                                   is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:289:46: error: expected primary-expression before ‘,’ token
+E             289 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:289:72: error: expected primary-expression before ‘>’ token
+E             289 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                        ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:289:73: error: expected primary-expression before ‘)’ token
+E             289 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:291:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             291 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:292:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             292 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:292:27: error: expected primary-expression before ‘,’ token
+E             292 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:292:46: error: expected primary-expression before ‘>’ token
+E             292 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:292:47: error: expected primary-expression before ‘||’ token
+E             292 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                                               ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:293:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             293 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:293:27: error: expected primary-expression before ‘,’ token
+E             293 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:293:46: error: expected primary-expression before ‘>’ token
+E             293 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:293:47: error: expected primary-expression before ‘)’ token
+E             293 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                               ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:296:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             296 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:297:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             297 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:297:27: error: expected primary-expression before ‘,’ token
+E             297 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:297:54: error: expected primary-expression before ‘>’ token
+E             297 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                                                      ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:297:55: error: expected primary-expression before ‘||’ token
+E             297 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                                                       ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:298:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             298 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:298:27: error: expected primary-expression before ‘,’ token
+E             298 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:298:54: error: expected primary-expression before ‘>’ token
+E             298 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                      ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:298:55: error: expected primary-expression before ‘)’ token
+E             298 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:301:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             301 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:302:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             302 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:302:27: error: expected primary-expression before ‘,’ token
+E             302 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:302:51: error: expected primary-expression before ‘>’ token
+E             302 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:302:52: error: expected primary-expression before ‘||’ token
+E             302 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                    ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:303:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             303 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:303:27: error: expected primary-expression before ‘,’ token
+E             303 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:303:59: error: expected primary-expression before ‘>’ token
+E             303 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>)
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:303:60: error: expected primary-expression before ‘)’ token
+E             303 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>)
+E                 |                                                            ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:306:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             306 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:307:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             307 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:307:27: error: expected primary-expression before ‘,’ token
+E             307 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:307:59: error: expected primary-expression before ‘>’ token
+E             307 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:307:60: error: expected primary-expression before ‘||’ token
+E             307 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                            ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:308:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             308 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:308:27: error: expected primary-expression before ‘,’ token
+E             308 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:308:67: error: expected primary-expression before ‘>’ token
+E             308 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>)
+E                 |                                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:308:68: error: expected primary-expression before ‘)’ token
+E             308 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>)
+E                 |                                                                    ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘void rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::dispatch_intra_process(std::unique_ptr<MessageT, typename rclcpp::detail::MessageDeleterHelper<MessageT, AllocatorT>::MessageDeleter>, const rclcpp::MessageInfo&)’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:332:10: error: ‘visit’ is not a member of ‘std’
+E             332 |     std::visit(
+E                 |          ^~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:332:10: note: ‘std::visit’ is only available from C++17 onwards
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In lambda function:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:336:12: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             336 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |            ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:336:28: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             336 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                            ^~~~~~~~~
+E                 |                            is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:336:39: error: expected primary-expression before ‘,’ token
+E             336 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:336:57: error: expected primary-expression before ‘>’ token
+E             336 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:336:58: error: expected primary-expression before ‘)’ token
+E             336 |         if constexpr (std::is_same_v<T, ConstRefCallback>) {
+E                 |                                                          ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:338:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             338 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:338:35: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             338 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                   ^~~~~~~~~
+E                 |                                   is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:338:46: error: expected primary-expression before ‘,’ token
+E             338 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:338:72: error: expected primary-expression before ‘>’ token
+E             338 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                        ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:338:73: error: expected primary-expression before ‘)’ token
+E             338 |         } else if constexpr (std::is_same_v<T, ConstRefWithInfoCallback>) {
+E                 |                                                                         ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:340:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             340 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:341:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             341 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:341:27: error: expected primary-expression before ‘,’ token
+E             341 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:341:46: error: expected primary-expression before ‘>’ token
+E             341 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:341:47: error: expected primary-expression before ‘||’ token
+E             341 |           std::is_same_v<T, UniquePtrCallback>||
+E                 |                                               ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:342:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             342 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:342:27: error: expected primary-expression before ‘,’ token
+E             342 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:342:51: error: expected primary-expression before ‘>’ token
+E             342 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:342:52: error: expected primary-expression before ‘||’ token
+E             342 |           std::is_same_v<T, SharedConstPtrCallback>||
+E                 |                                                    ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:343:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             343 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:343:27: error: expected primary-expression before ‘,’ token
+E             343 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:343:59: error: expected primary-expression before ‘>’ token
+E             343 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:343:60: error: expected primary-expression before ‘||’ token
+E             343 |           std::is_same_v<T, ConstRefSharedConstPtrCallback>||
+E                 |                                                            ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:344:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             344 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:344:27: error: expected primary-expression before ‘,’ token
+E             344 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:344:46: error: expected primary-expression before ‘>’ token
+E             344 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                              ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:344:47: error: expected primary-expression before ‘)’ token
+E             344 |           std::is_same_v<T, SharedPtrCallback>)
+E                 |                                               ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:347:19: warning: ‘if constexpr’ only available with ‘-std=c++17’ or ‘-std=gnu++17’
+E             347 |         } else if constexpr (  // NOLINT[readability/braces]
+E                 |                   ^~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:348:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             348 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:348:27: error: expected primary-expression before ‘,’ token
+E             348 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:348:54: error: expected primary-expression before ‘>’ token
+E             348 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                                                      ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:348:55: error: expected primary-expression before ‘||’ token
+E             348 |           std::is_same_v<T, UniquePtrWithInfoCallback>||
+E                 |                                                       ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:349:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             349 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:349:27: error: expected primary-expression before ‘,’ token
+E             349 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:349:59: error: expected primary-expression before ‘>’ token
+E             349 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:349:60: error: expected primary-expression before ‘||’ token
+E             349 |           std::is_same_v<T, SharedConstPtrWithInfoCallback>||
+E                 |                                                            ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:350:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             350 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:350:27: error: expected primary-expression before ‘,’ token
+E             350 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:350:67: error: expected primary-expression before ‘>’ token
+E             350 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                                                                   ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:350:68: error: expected primary-expression before ‘||’ token
+E             350 |           std::is_same_v<T, ConstRefSharedConstPtrWithInfoCallback>||
+E                 |                                                                    ^~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:351:16: error: ‘is_same_v’ is not a member of ‘std’; did you mean ‘is_same’?
+E             351 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                ^~~~~~~~~
+E                 |                is_same
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:351:27: error: expected primary-expression before ‘,’ token
+E             351 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                           ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:351:54: error: expected primary-expression before ‘>’ token
+E             351 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                      ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:351:55: error: expected primary-expression before ‘)’ token
+E             351 |           std::is_same_v<T, SharedPtrWithInfoCallback>)
+E                 |                                                       ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘constexpr bool rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::use_take_shared_method() const’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:366:12: error: ‘holds_alternative’ is not a member of ‘std’
+E             366 |       std::holds_alternative<SharedConstPtrCallback>(callback_variant_) ||
+E                 |            ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:366:52: error: expected primary-expression before ‘>’ token
+E             366 |       std::holds_alternative<SharedConstPtrCallback>(callback_variant_) ||
+E                 |                                                    ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:367:12: error: ‘holds_alternative’ is not a member of ‘std’
+E             367 |       std::holds_alternative<SharedConstPtrWithInfoCallback>(callback_variant_) ||
+E                 |            ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:367:60: error: expected primary-expression before ‘>’ token
+E             367 |       std::holds_alternative<SharedConstPtrWithInfoCallback>(callback_variant_) ||
+E                 |                                                            ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:368:12: error: ‘holds_alternative’ is not a member of ‘std’
+E             368 |       std::holds_alternative<ConstRefSharedConstPtrCallback>(callback_variant_) ||
+E                 |            ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:368:60: error: expected primary-expression before ‘>’ token
+E             368 |       std::holds_alternative<ConstRefSharedConstPtrCallback>(callback_variant_) ||
+E                 |                                                            ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:369:12: error: ‘holds_alternative’ is not a member of ‘std’
+E             369 |       std::holds_alternative<ConstRefSharedConstPtrWithInfoCallback>(callback_variant_);
+E                 |            ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:369:68: error: expected primary-expression before ‘>’ token
+E             369 |       std::holds_alternative<ConstRefSharedConstPtrWithInfoCallback>(callback_variant_);
+E                 |                                                                    ^
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In member function ‘void rclcpp::AnySubscriptionCallback<MessageT, AllocatorT>::register_callback_for_tracing()’:
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:376:10: error: ‘visit’ is not a member of ‘std’
+E             376 |     std::visit(
+E                 |          ^~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:376:10: note: ‘std::visit’ is only available from C++17 onwards
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In instantiation of ‘class rclcpp::AnySubscriptionCallback<rcl_interfaces::msg::ParameterEvent_<std::allocator<void> >, std::allocator<void> >’:
+E           /opt/ros/galactic/include/rclcpp/subscription.hpp:355:57:   required from ‘class rclcpp::Subscription<rcl_interfaces::msg::ParameterEvent_<std::allocator<void> > >’
+E           /opt/ros/galactic/include/rclcpp/parameter_client.hpp:208:69:   required from here
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:387:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<rcl_interfaces::msg::ParameterEvent_<std::allocator<void> >, std::allocator<void> >’
+E             387 |   get_variant()
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:393:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<rcl_interfaces::msg::ParameterEvent_<std::allocator<void> >, std::allocator<void> >’
+E             393 |   get_variant() const
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:403:34: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<rcl_interfaces::msg::ParameterEvent_<std::allocator<void> >, std::allocator<void> >’
+E             403 |   typename HelperT::variant_type callback_variant_;
+E                 |                                  ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In instantiation of ‘class rclcpp::AnySubscriptionCallback<bond::msg::Status_<std::allocator<void> >, std::allocator<void> >’:
+E           /opt/ros/galactic/include/rclcpp/subscription.hpp:355:57:   required from ‘class rclcpp::Subscription<bond::msg::Status_<std::allocator<void> > >’
+E           /opt/ros/galactic/include/bondcpp/bond.hpp:203:42:   required from here
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:387:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<bond::msg::Status_<std::allocator<void> >, std::allocator<void> >’
+E             387 |   get_variant()
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:393:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<bond::msg::Status_<std::allocator<void> >, std::allocator<void> >’
+E             393 |   get_variant() const
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:403:34: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<bond::msg::Status_<std::allocator<void> >, std::allocator<void> >’
+E             403 |   typename HelperT::variant_type callback_variant_;
+E                 |                                  ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In instantiation of ‘class rclcpp::AnySubscriptionCallback<tf2_msgs::msg::TFMessage_<std::allocator<void> >, std::allocator<void> >’:
+E           /opt/ros/galactic/include/rclcpp/subscription.hpp:355:57:   required from ‘class rclcpp::Subscription<tf2_msgs::msg::TFMessage_<std::allocator<void> > >’
+E           /opt/ros/galactic/include/tf2_ros/transform_listener.h:160:49:   required from here
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:387:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<tf2_msgs::msg::TFMessage_<std::allocator<void> >, std::allocator<void> >’
+E             387 |   get_variant()
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:393:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<tf2_msgs::msg::TFMessage_<std::allocator<void> >, std::allocator<void> >’
+E             393 |   get_variant() const
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:403:34: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<tf2_msgs::msg::TFMessage_<std::allocator<void> >, std::allocator<void> >’
+E             403 |   typename HelperT::variant_type callback_variant_;
+E                 |                                  ^~~~~~~~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp: In instantiation of ‘class rclcpp::AnySubscriptionCallback<geometry_msgs::msg::Polygon_<std::allocator<void> >, std::allocator<void> >’:
+E           /opt/ros/galactic/include/rclcpp/subscription.hpp:355:57:   required from ‘class rclcpp::Subscription<geometry_msgs::msg::Polygon_<std::allocator<void> > >’
+E           /opt/ros/galactic/include/nav2_costmap_2d/costmap_2d_ros.hpp:313:52:   required from here
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:387:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<geometry_msgs::msg::Polygon_<std::allocator<void> >, std::allocator<void> >’
+E             387 |   get_variant()
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:393:3: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<geometry_msgs::msg::Polygon_<std::allocator<void> >, std::allocator<void> >’
+E             393 |   get_variant() const
+E                 |   ^~~~~~~~~~~
+E           /opt/ros/galactic/include/rclcpp/any_subscription_callback.hpp:403:34: error: no type named ‘variant_type’ in ‘struct rclcpp::detail::AnySubscriptionCallbackHelper<geometry_msgs::msg::Polygon_<std::allocator<void> >, std::allocator<void> >’
+E             403 |   typename HelperT::variant_type callback_variant_;
+E                 |                                  ^~~~~~~~~~~~~~~~~
+
+tests/test_dwb_collision_native.py:58: AssertionError
+1 failed, 92 passed in 25.51 seconds

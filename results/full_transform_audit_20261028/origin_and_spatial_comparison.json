@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "origin_nominal_foot_height_range_m": [
+      0.7422376593995815,
+      0.7422963435096313
+    ],
+    "origin_above_map_ground_range_m": [
+      0.48916043650313124,
+      0.49605289194093755
+    ],
+    "local_linear_trend": {
+      "live_z_ax_by_c": [
+        0.36716468953022563,
+        -0.02896424243048018,
+        -0.4262160088820734
+      ],
+      "grid_z_ax_by_c": [
+        0.2844395283425663,
+        -0.01548713730675555,
+        -0.4222337148487013
+      ],
+      "angle_between_fitted_normals_deg": 4.340111951561899,
+      "live_abs_residual_p95_m": 0.016513852735040833,
+      "grid_abs_residual_p95_m": 0.03182846271950618,
+      "limitation": "Approximate fitted trends over repeated selected observations; saved ground raster need not be planar and floor labels are hypotheses. This angle is not independently identified sensor or NDT attitude error."
+    }
+  },
+  "candidate": {
+    "origin_nominal_foot_height_range_m": [
+      0.503650913635468,
+      0.5037585123732495
+    ],
+    "origin_above_map_ground_range_m": [
+      0.5012949603779989,
+      0.5017253586515962
+    ],
+    "local_linear_trend": {
+      "live_z_ax_by_c": [
+        0.3509868260972384,
+        -0.028029587065302897,
+        -0.42425684910260775
+      ],
+      "grid_z_ax_by_c": [
+        0.25507657588910826,
+        -0.015373186001205075,
+        -0.3790749122384709
+      ],
+      "angle_between_fitted_normals_deg": 5.072949537209527,
+      "live_abs_residual_p95_m": 0.012704539558839115,
+      "grid_abs_residual_p95_m": 0.042168394958321545,
+      "limitation": "Approximate fitted trends over repeated selected observations; saved ground raster need not be planar and floor labels are hypotheses. This angle is not independently identified sensor or NDT attitude error."
+    }
+  }
+}

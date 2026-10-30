@@ -20,10 +20,13 @@ VISUAL_BACKEND=${LITE3_VISUAL_BACKEND:-orb}
 VISUAL_SEARCH_STRATEGY=${LITE3_VISUAL_SEARCH_STRATEGY:-startup_then_global}
 VISUAL_WAIT_TIMEOUT_S=${LITE3_VISUAL_WAIT_TIMEOUT_S:-240}
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
+GROUND_MODE=${LITE3_GROUND_MODE:-map}
+LOCALIZATION_RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-vendor}
 USE_VENDOR_VOA=${LITE3_USE_VENDOR_VOA:-$DYNAMIC_OBSTACLES}
 RVIZ_SSH_BRIDGE=${LITE3_RVIZ_SSH_BRIDGE:-1}
 RVIZ_LOCALHOST_ONLY=$RVIZ_SSH_BRIDGE
 NDT_RESOLUTION=${NDT_RESOLUTION:-1.0}
+FINE_REGISTRATION=${LITE3_NDT_FINE_REFINE:-false}
 DEFAULT_DOWNSAMPLE_RESOLUTION=0.3
 # Field-verified outdoor map: 0.3 m overloaded the Jetson scan matcher.
 if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
@@ -85,6 +88,8 @@ EOF
 
 validate_inputs() {
   [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || die 'LITE3_DYNAMIC_OBSTACLES must be 0 or 1'
+  [[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || die 'LITE3_GROUND_MODE must be map or local'
+  [[ "$LOCALIZATION_RUNTIME" == vendor || "$LOCALIZATION_RUNTIME" == audited ]] || die 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited'
   if [[ "$DYNAMIC_OBSTACLES" == 1 && "$USE_VENDOR_VOA" != 1 ]]; then
     die '动态避障模式需要 VOA；不能关闭近距离速度检查'
   fi
@@ -106,6 +111,10 @@ validate_inputs() {
     die "LITE3_VISUAL_WAIT_TIMEOUT_S 必须为整数秒"
   (( VISUAL_WAIT_TIMEOUT_S >= 30 && VISUAL_WAIT_TIMEOUT_S <= 300 )) || \
     die "LITE3_VISUAL_WAIT_TIMEOUT_S 必须为 30~300 秒"
+  [[ "$FINE_REGISTRATION" == true || "$FINE_REGISTRATION" == false ]] || die "LITE3_NDT_FINE_REFINE 必须为 true/false"
+  if [[ "$FINE_REGISTRATION" == true && "$ACTION" != relocalize ]]; then
+    die '精配准尚未通过实机与低矮障碍验收，只允许 relocalize 静止测试'
+  fi
   [[ "$NDT_RESOLUTION" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
     die "NDT_RESOLUTION 必须为正数"
   [[ "$DOWNSAMPLE_RESOLUTION" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
@@ -132,6 +141,11 @@ deploy_runtime() {
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$SCRIPT_DIR/make_dynamic_nav2_config.py" \
     "$SCRIPT_DIR/costmap_ground_filter.py" \
+    "$SCRIPT_DIR/local_ground_model.py" \
+    "$SCRIPT_DIR/local_ground_detector.py" \
+    "$SCRIPT_DIR/local_ground_costmap_bridge.py" \
+    "$SCRIPT_DIR/capture_ground_reference.py" \
+    "$SCRIPT_DIR/check_localization_runtime.py" \
     "$SCRIPT_DIR/navigation_recovery_budget.py" \
     "$SCRIPT_DIR/voa_camera_tf.py" \
     "$SCRIPT_DIR/voa_costmap_bridge.py" \
@@ -158,6 +172,7 @@ deploy_runtime() {
     "$PROJECT_DIR/navigation/start_visual_localizer.sh" \
     "$PROJECT_DIR/navigation/start_visual_initialization.sh" \
     "$PROJECT_DIR/navigation/start_nav_isolated.sh" \
+    "$PROJECT_DIR/navigation/start_local_ground.sh" \
     "$PROJECT_DIR/navigation/start_gate_disarmed.sh" \
     "$PROJECT_DIR/navigation/start_vendor_voa.sh" \
     "$PROJECT_DIR/navigation/navigate_dynamic_obstacles.xml" \
@@ -168,8 +183,8 @@ deploy_runtime() {
     "$local_map_dir/visual_initialization.yaml" \
     "${map_summaries[@]}" \
     "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
-  if [[ "$DYNAMIC_OBSTACLES" == 1 && "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
-    [[ -r "$local_map_dir/traversability_evidence.npz" ]] || die '缺少室外地面高度证据'
+  if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+    [[ -r "$local_map_dir/traversability_evidence.npz" ]] || die '缺少当前地图的地面高度证据'
     scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
       "$local_map_dir/traversability_evidence.npz" "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
   fi
@@ -224,11 +239,8 @@ fi
 if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
   python3 "$PROJECT/scripts/navigation_recovery_budget.py" \
     "$PROJECT/navigation/navigate_dynamic_obstacles.xml" >/dev/null || bad '动态恢复等待预算无效'
-  GROUND_ARGS=()
-  if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
-    GROUND_ARGS=(--ground-relative)
-    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败'
-  fi
+  GROUND_ARGS=(--ground-relative)
+  python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败' 
   python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
     "$MAP_DIR/nav2_dynamic.yaml" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}" || bad '动态避障配置生成失败'
 fi
@@ -1152,7 +1164,7 @@ start_session() {
 
   title "启动 Mid360、IMU 和修正后的 NDT"
   "${SSH_BG[@]}" \
-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
+    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_NDT_FINE_REFINE='$FINE_REGISTRATION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' LITE3_LOCALIZATION_RUNTIME='$LOCALIZATION_RUNTIME' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
     >"$LOG_DIR/localization.log" 2>&1 &
   LOCALIZATION_SSH_PID=$!
   sleep 2
@@ -1226,7 +1238,7 @@ start_session() {
   title "切换到完整隔离 Nav2"
   stop_map_display
   "${SSH_BG[@]}" \
-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' bash '$REMOTE_PROJECT/navigation/start_nav_isolated.sh'" \
+    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_GROUND_MODE='$GROUND_MODE' bash '$REMOTE_PROJECT/navigation/start_nav_isolated.sh'" \
     >"$LOG_DIR/nav2.log" 2>&1 &
   NAV_SSH_PID=$!
   sleep 2

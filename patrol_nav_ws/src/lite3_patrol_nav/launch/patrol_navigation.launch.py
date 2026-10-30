@@ -22,6 +22,7 @@ def generate_launch_description():
     use_imu = LaunchConfiguration("use_imu")
     convert_utm_to_local = LaunchConfiguration("convert_utm_to_local")
     ndt_resolution = LaunchConfiguration("ndt_resolution")
+    fine_registration_enabled = LaunchConfiguration("fine_registration_enabled")
     downsample_resolution = LaunchConfiguration("downsample_resolution")
     globalmap_downsample_resolution = LaunchConfiguration("globalmap_downsample_resolution")
 
@@ -46,6 +47,7 @@ def generate_launch_description():
             "ndt_neighbor_search_method": "DIRECT1",
             "ndt_neighbor_search_radius": 3.0,
             "ndt_resolution": ndt_resolution,
+            "fine_registration_enabled": fine_registration_enabled,
             "downsample_resolution": downsample_resolution,
             "globalmap_downsample_resolution": globalmap_downsample_resolution,
             # Manual placement in RViz is the absolute map anchor.  NDT may
@@ -120,6 +122,7 @@ def generate_launch_description():
         DeclareLaunchArgument("use_imu", default_value="False"),
         DeclareLaunchArgument("convert_utm_to_local", default_value="False"),
         DeclareLaunchArgument("ndt_resolution", default_value="1.0"),
+        DeclareLaunchArgument("fine_registration_enabled", default_value="false"),
         DeclareLaunchArgument("downsample_resolution", default_value="0.3"),
         DeclareLaunchArgument("globalmap_downsample_resolution", default_value=downsample_resolution),
         localization,

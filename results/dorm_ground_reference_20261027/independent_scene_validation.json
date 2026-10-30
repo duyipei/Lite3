@@ -1,0 +1,529 @@
+{
+  "note": "Independent earlier static scene, project to raw depth image; depth difference is optical Z, not floor height. Arrival pairing, no hardware synchronization claim.",
+  "samples": [
+    {
+      "file": "points_00.npz",
+      "before_all": {
+        "count": 816,
+        "signed_median_m": -0.030311658321946933,
+        "absolute_median_m": 0.07431896136014238,
+        "absolute_p90_m": 0.6753658883378497
+      },
+      "before_floor": {
+        "count": 300,
+        "signed_median_m": -0.2334457821710385,
+        "absolute_median_m": 0.2380110880554932,
+        "absolute_p90_m": 1.148218127316332
+      },
+      "before_nonfloor": {
+        "count": 516,
+        "signed_median_m": -0.007881429038570253,
+        "absolute_median_m": 0.04576917691122373,
+        "absolute_p90_m": 0.3133101927125693
+      },
+      "candidate_all": {
+        "count": 978,
+        "signed_median_m": 0.004760616249244398,
+        "absolute_median_m": 0.03654985782312625,
+        "absolute_p90_m": 0.1324585977794213
+      },
+      "candidate_floor": {
+        "count": 218,
+        "signed_median_m": -0.0009971757166326034,
+        "absolute_median_m": 0.058731509159096196,
+        "absolute_p90_m": 0.1320697365131249
+      },
+      "candidate_nonfloor": {
+        "count": 760,
+        "signed_median_m": 0.005431570213446091,
+        "absolute_median_m": 0.029766052323675907,
+        "absolute_p90_m": 0.13285637485404833
+      },
+      "same_lidar_points_before_all": {
+        "count": 546,
+        "signed_median_m": -0.01643985369334966,
+        "absolute_median_m": 0.04473588150161434,
+        "absolute_p90_m": 0.38497721063759627
+      },
+      "same_lidar_points_before_floor": {
+        "count": 140,
+        "signed_median_m": -0.10053838773295498,
+        "absolute_median_m": 0.10616561209211817,
+        "absolute_p90_m": 0.9845928530778952
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 406,
+        "signed_median_m": -0.00875180100808226,
+        "absolute_median_m": 0.03865488413327478,
+        "absolute_p90_m": 0.3052103136268324
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 546,
+        "signed_median_m": 0.0010312558305982655,
+        "absolute_median_m": 0.029695167986571347,
+        "absolute_p90_m": 0.1280583516474596
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 140,
+        "signed_median_m": 0.018139429310041755,
+        "absolute_median_m": 0.07088567914869248,
+        "absolute_p90_m": 0.13244212851343073
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 406,
+        "signed_median_m": -0.0009267121320996052,
+        "absolute_median_m": 0.02295357932951969,
+        "absolute_p90_m": 0.11705576784449079
+      }
+    },
+    {
+      "file": "points_01.npz",
+      "before_all": {
+        "count": 1060,
+        "signed_median_m": -0.035737725235126194,
+        "absolute_median_m": 0.07753097659505781,
+        "absolute_p90_m": 0.8898742181071315
+      },
+      "before_floor": {
+        "count": 422,
+        "signed_median_m": -0.3439278871920999,
+        "absolute_median_m": 0.3439278871920999,
+        "absolute_p90_m": 1.1440735544595446
+      },
+      "before_nonfloor": {
+        "count": 638,
+        "signed_median_m": -0.0020536637430867977,
+        "absolute_median_m": 0.03883926237813773,
+        "absolute_p90_m": 0.315614103110609
+      },
+      "candidate_all": {
+        "count": 1257,
+        "signed_median_m": -0.0015766169023656573,
+        "absolute_median_m": 0.037877956976825944,
+        "absolute_p90_m": 0.12252736988785062
+      },
+      "candidate_floor": {
+        "count": 327,
+        "signed_median_m": -0.00040387624200266536,
+        "absolute_median_m": 0.05634726249209043,
+        "absolute_p90_m": 0.12571021004520072
+      },
+      "candidate_nonfloor": {
+        "count": 930,
+        "signed_median_m": -0.001675027045944244,
+        "absolute_median_m": 0.03206622208795329,
+        "absolute_p90_m": 0.12102914309084865
+      },
+      "same_lidar_points_before_all": {
+        "count": 709,
+        "signed_median_m": -0.01901875956538901,
+        "absolute_median_m": 0.043376161864604024,
+        "absolute_p90_m": 0.43568918763086
+      },
+      "same_lidar_points_before_floor": {
+        "count": 216,
+        "signed_median_m": -0.09129261940201827,
+        "absolute_median_m": 0.1038618868245712,
+        "absolute_p90_m": 1.1426190053906131
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 493,
+        "signed_median_m": -0.005828501432629585,
+        "absolute_median_m": 0.030871838537194884,
+        "absolute_p90_m": 0.29589501022748926
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 709,
+        "signed_median_m": -0.001185565751082862,
+        "absolute_median_m": 0.03740443464099208,
+        "absolute_p90_m": 0.1202503194087017
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 216,
+        "signed_median_m": 0.015606703188751292,
+        "absolute_median_m": 0.06902172683260344,
+        "absolute_p90_m": 0.12202359539450047
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 493,
+        "signed_median_m": -0.0028129562047298773,
+        "absolute_median_m": 0.02542363943016479,
+        "absolute_p90_m": 0.11836054386858397
+      }
+    },
+    {
+      "file": "points_02.npz",
+      "before_all": {
+        "count": 1068,
+        "signed_median_m": -0.04247426467727755,
+        "absolute_median_m": 0.0878979195594074,
+        "absolute_p90_m": 0.9024052267185736
+      },
+      "before_floor": {
+        "count": 456,
+        "signed_median_m": -0.31933278374762164,
+        "absolute_median_m": 0.31933278374762164,
+        "absolute_p90_m": 1.1764242366856414
+      },
+      "before_nonfloor": {
+        "count": 612,
+        "signed_median_m": 0.001624392575298117,
+        "absolute_median_m": 0.04249772947557706,
+        "absolute_p90_m": 0.3314115377668389
+      },
+      "candidate_all": {
+        "count": 1178,
+        "signed_median_m": 0.0008540822649842905,
+        "absolute_median_m": 0.036713196878577437,
+        "absolute_p90_m": 0.11332511251352226
+      },
+      "candidate_floor": {
+        "count": 334,
+        "signed_median_m": 0.011338048064879591,
+        "absolute_median_m": 0.06135424173689863,
+        "absolute_p90_m": 0.12425008913078842
+      },
+      "candidate_nonfloor": {
+        "count": 844,
+        "signed_median_m": -2.8500493516214753e-05,
+        "absolute_median_m": 0.02810111637269741,
+        "absolute_p90_m": 0.10802131731971099
+      },
+      "same_lidar_points_before_all": {
+        "count": 695,
+        "signed_median_m": -0.01571040724579964,
+        "absolute_median_m": 0.044663416741836715,
+        "absolute_p90_m": 0.353179500944241
+      },
+      "same_lidar_points_before_floor": {
+        "count": 216,
+        "signed_median_m": -0.1173084227906358,
+        "absolute_median_m": 0.1173084227906358,
+        "absolute_p90_m": 0.8164783518924037
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 479,
+        "signed_median_m": 0.001029315838257272,
+        "absolute_median_m": 0.03307730141528875,
+        "absolute_p90_m": 0.2382238783707107
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 695,
+        "signed_median_m": 0.0026809868537636117,
+        "absolute_median_m": 0.035833439510053466,
+        "absolute_p90_m": 0.11074756139505146
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 216,
+        "signed_median_m": 0.03182495391346696,
+        "absolute_median_m": 0.0680263921455233,
+        "absolute_p90_m": 0.11579328558180912
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 479,
+        "signed_median_m": 0.00022499444302104266,
+        "absolute_median_m": 0.024174779449765982,
+        "absolute_p90_m": 0.10591420403822144
+      }
+    },
+    {
+      "file": "points_03.npz",
+      "before_all": {
+        "count": 1073,
+        "signed_median_m": -0.03232468256768173,
+        "absolute_median_m": 0.08532086362839664,
+        "absolute_p90_m": 0.931737091399215
+      },
+      "before_floor": {
+        "count": 427,
+        "signed_median_m": -0.38953930928048974,
+        "absolute_median_m": 0.38991232963759925,
+        "absolute_p90_m": 1.177922028886785
+      },
+      "before_nonfloor": {
+        "count": 646,
+        "signed_median_m": 0.0007170978068925526,
+        "absolute_median_m": 0.043952439456125925,
+        "absolute_p90_m": 0.28420525116339324
+      },
+      "candidate_all": {
+        "count": 1260,
+        "signed_median_m": -0.0029636092625299204,
+        "absolute_median_m": 0.03528729006314457,
+        "absolute_p90_m": 0.11655308354390728
+      },
+      "candidate_floor": {
+        "count": 314,
+        "signed_median_m": 0.0011683140450917673,
+        "absolute_median_m": 0.057608290819467944,
+        "absolute_p90_m": 0.11899440994648534
+      },
+      "candidate_nonfloor": {
+        "count": 946,
+        "signed_median_m": -0.0036939215399635073,
+        "absolute_median_m": 0.030967900094477252,
+        "absolute_p90_m": 0.1136082259470359
+      },
+      "same_lidar_points_before_all": {
+        "count": 698,
+        "signed_median_m": -0.013611153827396527,
+        "absolute_median_m": 0.046682542792873205,
+        "absolute_p90_m": 0.4205984010567057
+      },
+      "same_lidar_points_before_floor": {
+        "count": 196,
+        "signed_median_m": -0.07110313226088683,
+        "absolute_median_m": 0.0809799030071291,
+        "absolute_p90_m": 1.0809530693447782
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 502,
+        "signed_median_m": -0.002854208119140389,
+        "absolute_median_m": 0.03740049867081985,
+        "absolute_p90_m": 0.28301304082270523
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 698,
+        "signed_median_m": -0.002075976293352544,
+        "absolute_median_m": 0.03647369591319238,
+        "absolute_p90_m": 0.10915737854230206
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 196,
+        "signed_median_m": 0.01849110433187562,
+        "absolute_median_m": 0.06799012099524004,
+        "absolute_p90_m": 0.11251683404271062
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 502,
+        "signed_median_m": -0.004424102545611097,
+        "absolute_median_m": 0.028756708653759233,
+        "absolute_p90_m": 0.10864858080534542
+      }
+    },
+    {
+      "file": "points_04.npz",
+      "before_all": {
+        "count": 1005,
+        "signed_median_m": -0.0373015205466678,
+        "absolute_median_m": 0.08463468975467325,
+        "absolute_p90_m": 0.920756722275252
+      },
+      "before_floor": {
+        "count": 420,
+        "signed_median_m": -0.3406459066949048,
+        "absolute_median_m": 0.3406459066949048,
+        "absolute_p90_m": 1.182189002860566
+      },
+      "before_nonfloor": {
+        "count": 585,
+        "signed_median_m": -0.0015432804938331213,
+        "absolute_median_m": 0.03899279704035874,
+        "absolute_p90_m": 0.37647708361854365
+      },
+      "candidate_all": {
+        "count": 1151,
+        "signed_median_m": -0.003589128052238433,
+        "absolute_median_m": 0.03645528267596365,
+        "absolute_p90_m": 0.12233367778127446
+      },
+      "candidate_floor": {
+        "count": 315,
+        "signed_median_m": -0.004881810136624365,
+        "absolute_median_m": 0.058566964736214144,
+        "absolute_p90_m": 0.13720635834645858
+      },
+      "candidate_nonfloor": {
+        "count": 836,
+        "signed_median_m": -0.0032752631696829626,
+        "absolute_median_m": 0.029775836748784146,
+        "absolute_p90_m": 0.11498989953884242
+      },
+      "same_lidar_points_before_all": {
+        "count": 665,
+        "signed_median_m": -0.01644964066599286,
+        "absolute_median_m": 0.04568199713663512,
+        "absolute_p90_m": 0.4269400396259905
+      },
+      "same_lidar_points_before_floor": {
+        "count": 198,
+        "signed_median_m": -0.09286980295637781,
+        "absolute_median_m": 0.09633002171466742,
+        "absolute_p90_m": 0.7226685686747748
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 467,
+        "signed_median_m": -0.0015432804938331213,
+        "absolute_median_m": 0.0373015205466678,
+        "absolute_p90_m": 0.3477623479564982
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 665,
+        "signed_median_m": -0.004689797957517783,
+        "absolute_median_m": 0.034922135613496774,
+        "absolute_p90_m": 0.1128688269862965
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 198,
+        "signed_median_m": 0.00021081980429926706,
+        "absolute_median_m": 0.06861311045890817,
+        "absolute_p90_m": 0.12272768953116639
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 467,
+        "signed_median_m": -0.0050070752473907465,
+        "absolute_median_m": 0.027624752997161384,
+        "absolute_p90_m": 0.10135897317707171
+      }
+    },
+    {
+      "file": "points_05.npz",
+      "before_all": {
+        "count": 1429,
+        "signed_median_m": -0.044439745051131796,
+        "absolute_median_m": 0.08689265079791952,
+        "absolute_p90_m": 0.9423712380928708
+      },
+      "before_floor": {
+        "count": 573,
+        "signed_median_m": -0.4028656104146606,
+        "absolute_median_m": 0.4050306171022511,
+        "absolute_p90_m": 1.2126109860509264
+      },
+      "before_nonfloor": {
+        "count": 856,
+        "signed_median_m": -0.006477632242616771,
+        "absolute_median_m": 0.044820250614868384,
+        "absolute_p90_m": 0.3398677279594243
+      },
+      "candidate_all": {
+        "count": 1620,
+        "signed_median_m": -0.0027964529263048155,
+        "absolute_median_m": 0.036290037856165025,
+        "absolute_p90_m": 0.12419247465565608
+      },
+      "candidate_floor": {
+        "count": 440,
+        "signed_median_m": -0.01156389695586435,
+        "absolute_median_m": 0.054465999418291666,
+        "absolute_p90_m": 0.13133497096235894
+      },
+      "candidate_nonfloor": {
+        "count": 1180,
+        "signed_median_m": -0.0009539538507375434,
+        "absolute_median_m": 0.030214812040233352,
+        "absolute_p90_m": 0.12163455885375121
+      },
+      "same_lidar_points_before_all": {
+        "count": 923,
+        "signed_median_m": -0.021878169624545807,
+        "absolute_median_m": 0.0486310927448943,
+        "absolute_p90_m": 0.4729052827501352
+      },
+      "same_lidar_points_before_floor": {
+        "count": 247,
+        "signed_median_m": -0.14011087087081364,
+        "absolute_median_m": 0.14011087087081364,
+        "absolute_p90_m": 1.3186306739230962
+      },
+      "same_lidar_points_before_nonfloor": {
+        "count": 676,
+        "signed_median_m": -0.009369212198793053,
+        "absolute_median_m": 0.038083227033588685,
+        "absolute_p90_m": 0.3342417582602817
+      },
+      "same_lidar_points_candidate_all": {
+        "count": 923,
+        "signed_median_m": -0.004935956892378357,
+        "absolute_median_m": 0.03312123812781742,
+        "absolute_p90_m": 0.1185095523031182
+      },
+      "same_lidar_points_candidate_floor": {
+        "count": 247,
+        "signed_median_m": -0.01676931924483105,
+        "absolute_median_m": 0.06436627795362337,
+        "absolute_p90_m": 0.13019637590977592
+      },
+      "same_lidar_points_candidate_nonfloor": {
+        "count": 676,
+        "signed_median_m": -0.0037068785211605837,
+        "absolute_median_m": 0.024826855554954452,
+        "absolute_p90_m": 0.11395963187631608
+      }
+    }
+  ],
+  "aggregate": {
+    "before_all": {
+      "count": 6451,
+      "signed_median_m": -0.03772115464453085,
+      "absolute_median_m": 0.08356820741378512,
+      "absolute_p90_m": 0.8961184313031758
+    },
+    "before_floor": {
+      "count": 2598,
+      "signed_median_m": -0.3442794349576258,
+      "absolute_median_m": 0.3454127496594257,
+      "absolute_p90_m": 1.1820855083518638
+    },
+    "before_nonfloor": {
+      "count": 3853,
+      "signed_median_m": -0.002385496129719389,
+      "absolute_median_m": 0.042775683242779916,
+      "absolute_p90_m": 0.3342283349408771
+    },
+    "candidate_all": {
+      "count": 7444,
+      "signed_median_m": -0.001231351240656986,
+      "absolute_median_m": 0.03661781184884216,
+      "absolute_p90_m": 0.1220814208386025
+    },
+    "candidate_floor": {
+      "count": 1948,
+      "signed_median_m": -0.002130461412201079,
+      "absolute_median_m": 0.0576489189610111,
+      "absolute_p90_m": 0.12822056851395747
+    },
+    "candidate_nonfloor": {
+      "count": 5496,
+      "signed_median_m": -0.00101319342852213,
+      "absolute_median_m": 0.03012516273702448,
+      "absolute_p90_m": 0.1192933488779061
+    },
+    "same_lidar_points_before_all": {
+      "count": 4236,
+      "signed_median_m": -0.017574373839559287,
+      "absolute_median_m": 0.04583189351821926,
+      "absolute_p90_m": 0.42122655086754557
+    },
+    "same_lidar_points_before_floor": {
+      "count": 1213,
+      "signed_median_m": -0.10389425725139989,
+      "absolute_median_m": 0.10812600581210519,
+      "absolute_p90_m": 1.1338711057115773
+    },
+    "same_lidar_points_before_nonfloor": {
+      "count": 3023,
+      "signed_median_m": -0.005073237824154031,
+      "absolute_median_m": 0.03604920863767225,
+      "absolute_p90_m": 0.31825037356298613
+    },
+    "same_lidar_points_candidate_all": {
+      "count": 4236,
+      "signed_median_m": -0.0016738137525196262,
+      "absolute_median_m": 0.03505208067127763,
+      "absolute_p90_m": 0.11623870000182446
+    },
+    "same_lidar_points_candidate_floor": {
+      "count": 1213,
+      "signed_median_m": 0.01340378030525402,
+      "absolute_median_m": 0.06810037011446002,
+      "absolute_p90_m": 0.12272805749066176
+    },
+    "same_lidar_points_candidate_nonfloor": {
+      "count": 3023,
+      "signed_median_m": -0.0029575436535846933,
+      "absolute_median_m": 0.025703965173635268,
+      "absolute_p90_m": 0.11026363395969849
+    }
+  }
+}

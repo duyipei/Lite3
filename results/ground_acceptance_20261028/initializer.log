@@ -1,0 +1,15 @@
+[INFO] stationary relocalization test uses production localization parameters
+1793020878.648394 [0] visual_pos: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793020879.198539080] [visual_pose_initializer]: visual initializer ready; velocity remains independently gated
+[INFO] [1793020934.347565672] [visual_pose_initializer]: COLLECTING_VISUAL_POSES
+[INFO] [1793021005.896322536] [visual_pose_initializer]: COLLECTING:1/4
+[INFO] [1793021006.859618984] [visual_pose_initializer]: COLLECTING:2/4
+[INFO] [1793021007.684135112] [visual_pose_initializer]: COLLECTING:3/4
+[INFO] [1793021008.868929640] [visual_pose_initializer]: WAITING_NDT:x=0.101,y=-0.044,yaw=-0.013
+[INFO] [1793021009.071939944] [visual_pose_initializer]: WAITING_NDT:matching_or_leg_odometry_not_ready
+[INFO] [1793021010.543044008] [visual_pose_initializer]: WAITING_NDT:accepted_scans=1/3
+[INFO] [1793021010.646549320] [visual_pose_initializer]: WAITING_NDT:accepted_scans=2/3
+[INFO] [1793021010.827625032] [visual_pose_initializer]: WAITING_NDT:accepted_scans=3/3
+[INFO] [1793021010.833205352] [visual_pose_initializer]: READY:visual_plus_ndt_confirmed_0.064m_0.019rad
+[INFO] [1793021017.920295784] [visual_pose_initializer]: FAILED:stationary_map_drift_0.204m_0.041rad
+[ERROR] [1793021017.923920360] [visual_pose_initializer]: localization readiness revoked: stationary_map_drift_0.204m_0.041rad

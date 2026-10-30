@@ -23,6 +23,7 @@ class LegOdomTfBridge(Node):
         self.last_message = time.monotonic()
         self.latest_message = None
         self.last_published_stamp = None
+        self.last_source_stamp = 0.0
         source_qos = QoSProfile(depth=1)
         source_qos.reliability = ReliabilityPolicy.BEST_EFFORT
         source_qos.durability = DurabilityPolicy.VOLATILE
@@ -51,6 +52,14 @@ class LegOdomTfBridge(Node):
         if not all(math.isfinite(value) for value in values):
             self.get_logger().error("discarding non-finite /leg_odom2 pose")
             return
+        stamp=message.header.stamp.sec + message.header.stamp.nanosec/1e9
+        q=pose.orientation
+        if (not 0 <= message.header.stamp.nanosec < 1000000000
+                or stamp <= self.last_source_stamp
+                or not -.05 <= time.monotonic()-stamp <= .5
+                or abs(q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w-1.) > .01):
+            return
+        self.last_source_stamp=stamp
 
         self.latest_message = message
         self.last_message = time.monotonic()
@@ -58,6 +67,9 @@ class LegOdomTfBridge(Node):
     def publish_latest(self):
         message = self.latest_message
         if message is None:
+            return
+        source_time=message.header.stamp.sec + message.header.stamp.nanosec/1e9
+        if not -.05 <= time.monotonic()-source_time <= .5:
             return
         # /leg_odom2 and the LiDAR use the controller/sensor time domain.  NDT
         # queries this TF at the LiDAR stamp, so the TF must retain the source

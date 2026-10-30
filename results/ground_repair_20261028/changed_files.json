@@ -1,0 +1,15 @@
+{
+  "vendor_patch/hdl_localization_app.hpp": "518e3e9e49fb54217f84c4b28695392fb940bae9bc794e7880ab64cc06f0f099",
+  "scripts/costmap_ground_filter.py": "671b68966d62ec22a8cd2e8f765f3792724dfbbce32165cd27df3ca6859d6703",
+  "scripts/navigation_start.sh": "cbfaba0cb144d53664946f1aeb8ed7c4cc3ba5627629c49da2804f6da28b6178",
+  "navigation/start_nav_isolated.sh": "6d966843c68b695aabb461b45804bfe64746b00eca3526cf8426bd11ecc807b1",
+  "navigation/start_gate_disarmed.sh": "11f900d44a4109dc89fe5f81bc65d9ecb10305166b084847ea4c8df26127f68f",
+  "navigation/start_localization_only.sh": "1eb12b386ec968a32f8cf10805de20a6183823c4d012373a6f50332269be6c11",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py": "df25f121f96112cc7a21ac9f176bb5727c73c1acd545df900f36a41656bdd08c",
+  "patrol_nav_ws/src/lite3_patrol_nav/launch/patrol_navigation.launch.py": "e35e603fd5c2b7ebb1a2b9fd5fe77664f7fde4c17e8ab2696976a54072f0c050",
+  "tests/test_ground_registration_native.py": "1287c55166af0e4f666a5f06afeb17a821006b55ced8bc04e7db702cad9c2f1a",
+  "tests/test_lidar_projection_safety.py": "4748c4a64f742c2fed25b12d9a4b4f128db6d11992d4bc9c7657d6993bfed3b0",
+  "tests/test_dwb_collision_native.py": "ed7c8029500096d6bcbebdee4b7540bc1343af9aeef3622a16b200b8f56ba24b",
+  "tests/test_dynamic_navigation.py": "3844f4d1311f0d224d235e5b56f76a89e784b08b4f06594f9edfb53ae25ae2f5",
+  "docs/2026-10-22_动态避障与VOA接入.md": "2fdc437b579fd0f78e20bcff911e1c0839e5d186635c9f9cb1038dfb3992b2d0"
+}

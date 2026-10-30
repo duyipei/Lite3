@@ -1,0 +1,21 @@
+{
+  "counts": {
+    "depth": 258,
+    "imu": 2325
+  },
+  "last": {
+    "depth": {
+      "age": 0.03648395199979859,
+      "frame": "camera_depth_optical_frame"
+    },
+    "imu": {
+      "age": 0.00589388800017332,
+      "frame": "base_link"
+    }
+  },
+  "velocity_publishers": {
+    "/cmd_vel": 0,
+    "/cmd_vel_corrected": 0,
+    "/patrol/cmd_vel_raw": 0
+  }
+}

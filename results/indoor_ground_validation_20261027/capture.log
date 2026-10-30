@@ -1,0 +1,4 @@
+1793022870.782381 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+{"samples": 18, "counts": {"lidar": 244, "depth": 829, "imu": 5054, "leg": 4998}, "errors": [], "output": "/tmp/indoor_ground_validation_20261027"}
+1793022903.136564 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+Saved 4 samples to /tmp/indoor_ground_scene_20261027

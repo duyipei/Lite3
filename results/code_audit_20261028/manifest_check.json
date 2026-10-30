@@ -1,0 +1,32 @@
+{
+  "vendor_patch/hdl_localization_app.hpp": {
+    "recorded": "bc4ee1107479059e894362fc559e51fdca3bc42e72005cfe03d5b31741e51c01",
+    "actual": "e56ca13e7756c9d42a4acf39a64a05a3d4511dcf826b26fd6c2110e2a2548ff7",
+    "matches": false
+  },
+  "vendor_patch/hdl_localization/src/hdl_localization/pose_estimator.cpp": {
+    "recorded": "c4db09bc101e352f40ebba03dcff1ae9213c727680a6728367bd3a34c17b4fb9",
+    "actual": "c4db09bc101e352f40ebba03dcff1ae9213c727680a6728367bd3a34c17b4fb9",
+    "matches": true
+  },
+  "scripts/voa_costmap_bridge.py": {
+    "recorded": "48cb7d2e7ffc158296ee195c1c240a29aded887e22b9bb8d32ca5f851bd3899d",
+    "actual": "3acd8aa0581534d22dab0d709a5d95cb0cfbadc7bc6841adf11b9a5e2e0958dd",
+    "matches": false
+  },
+  "scripts/local_ground_model.py": {
+    "recorded": null,
+    "actual": "a7d3ecf3d0e67db856d75b26231035b6c818f542430ee58502aabf0b88beb6f1",
+    "matches": false
+  },
+  "scripts/local_ground_detector.py": {
+    "recorded": null,
+    "actual": "25d1997ab83ed4c9d4c16aaba93266f92d4ab3549e5cf8014d869ce73f8dce92",
+    "matches": false
+  },
+  "scripts/local_ground_costmap_bridge.py": {
+    "recorded": null,
+    "actual": "65ea8feb308850b0b6bb0d78046afa71ad26ecba566576c6d93847b7a94c53db",
+    "matches": false
+  }
+}

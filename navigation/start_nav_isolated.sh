@@ -76,14 +76,20 @@ fi
 PARAMS_FILE=$MAP_DIR/nav2_safe.yaml
 BT_ARGS=()
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
+GROUND_MODE=${LITE3_GROUND_MODE:-map}
+[[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || exit 1
 [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || exit 1
 GROUND_ARGS=()
 if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
   PARAMS_FILE=$MAP_DIR/nav2_dynamic.yaml
-  if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
-    GROUND_ARGS=(--ground-relative)
+  # Every reviewed dynamic map needs metric ground-relative classification.
+  # Map Z=0 is a mapping reference, not a physical ground plane (indoors too).
+  # Missing/mismatched evidence fails here instead of reverting to absolute Z.
+  GROUND_ARGS=(--ground-relative)
+  if [[ "$GROUND_MODE" == map ]]; then
     python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
   fi
+  echo "[INFO] dynamic LiDAR classification mode: $GROUND_MODE"
   python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
     "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}"
   BT_ARGS=("default_bt_xml_filename:=$PROJECT/navigation/navigate_dynamic_obstacles.xml")
@@ -110,8 +116,12 @@ cleanup() {
 trap cleanup EXIT INT TERM HUP
 
 if (( ${#GROUND_ARGS[@]} )); then
-  setsid env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
-    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" &
+  if [[ "$GROUND_MODE" == local ]]; then
+    setsid bash "$PROJECT/navigation/start_local_ground.sh" &
+  else
+    setsid env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+      python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" &
+  fi
   ground_pid=$!
 fi
 

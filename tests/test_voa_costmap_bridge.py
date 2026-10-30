@@ -208,8 +208,16 @@ class RuntimeTests(unittest.TestCase):
     def test_malformed_grid_cannot_emit_a_health_signal(self):
         msg = grid(); msg.header.frame_id = 'camera_link'
         self.bridge.receive(msg)
-        with self.assertRaises(ValueError): self.bridge.publish()
+        self.bridge.publish()  # malformed input is rejected without killing the bridge
         self.assertFalse(self.outputs[M.HEARTBEAT])
+
+    def test_unknown_cell_blocks_planner_as_it_blocks_voa(self):
+        data=np.zeros((4,6));data[0,0]=np.nan
+        self.bridge.receive(grid(data));self.bridge.publish()
+        out=self.outputs[M.TOPIC][-1]
+        self.assertEqual(out.width,1)
+        xyz=np.frombuffer(out.data,dtype='<f4').reshape(-1,3)
+        np.testing.assert_allclose(xyz,[[1.15,.25,.5]],atol=1e-7)
 
     def test_real_obstacle_xyz_serialization(self):
         a = np.zeros((4, 6)); a[0, 0] = .5

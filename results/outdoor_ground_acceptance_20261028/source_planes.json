@@ -1,0 +1,38 @@
+{
+  "lidar": {
+    "plane": [
+      0.060971358401150914,
+      0.004865343192191146,
+      0.9981276581130996,
+      -0.2829141537960516
+    ],
+    "stats": {
+      "cells": 2736,
+      "inlier_cells": 2396,
+      "span_xy_m": [
+        1.0999122858047485,
+        1.9985145926475525
+      ],
+      "inlier_abs_residual_p95_m": 0.006206377573305541
+    },
+    "scope": "source footprint hypothesis only, not map ground height"
+  },
+  "depth": {
+    "plane": [
+      0.00927982264778178,
+      0.001309112976197388,
+      0.9999560845931392,
+      -0.006492103889453796
+    ],
+    "stats": {
+      "cells": 1993,
+      "inlier_cells": 1710,
+      "span_xy_m": [
+        1.3836536705493927,
+        1.9966588616371155
+      ],
+      "inlier_abs_residual_p95_m": 0.008657629154257643
+    },
+    "scope": "source footprint hypothesis only, not map ground height"
+  }
+}

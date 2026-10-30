@@ -1,0 +1,55 @@
+--- results/ground_repair_20261028/before/navigation_start.sh	2026-10-28 10:35:29.848145776 +0800
++++ scripts/navigation_start.sh	2026-10-28 10:39:56.880326849 +0800
+@@ -24,6 +24,7 @@
+ RVIZ_SSH_BRIDGE=${LITE3_RVIZ_SSH_BRIDGE:-1}
+ RVIZ_LOCALHOST_ONLY=$RVIZ_SSH_BRIDGE
+ NDT_RESOLUTION=${NDT_RESOLUTION:-1.0}
++FINE_REGISTRATION=${LITE3_NDT_FINE_REFINE:-false}
+ DEFAULT_DOWNSAMPLE_RESOLUTION=0.3
+ # Field-verified outdoor map: 0.3 m overloaded the Jetson scan matcher.
+ if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+@@ -106,6 +107,10 @@
+     die "LITE3_VISUAL_WAIT_TIMEOUT_S 必须为整数秒"
+   (( VISUAL_WAIT_TIMEOUT_S >= 30 && VISUAL_WAIT_TIMEOUT_S <= 300 )) || \
+     die "LITE3_VISUAL_WAIT_TIMEOUT_S 必须为 30~300 秒"
++  [[ "$FINE_REGISTRATION" == true || "$FINE_REGISTRATION" == false ]] || die "LITE3_NDT_FINE_REFINE 必须为 true/false"
++  if [[ "$FINE_REGISTRATION" == true && "$ACTION" != relocalize ]]; then
++    die '精配准尚未通过实机与低矮障碍验收，只允许 relocalize 静止测试'
++  fi
+   [[ "$NDT_RESOLUTION" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
+     die "NDT_RESOLUTION 必须为正数"
+   [[ "$DOWNSAMPLE_RESOLUTION" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
+@@ -168,8 +173,8 @@
+     "$local_map_dir/visual_initialization.yaml" \
+     "${map_summaries[@]}" \
+     "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
+-  if [[ "$DYNAMIC_OBSTACLES" == 1 && "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+-    [[ -r "$local_map_dir/traversability_evidence.npz" ]] || die '缺少室外地面高度证据'
++  if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
++    [[ -r "$local_map_dir/traversability_evidence.npz" ]] || die '缺少当前地图的地面高度证据'
+     scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
+       "$local_map_dir/traversability_evidence.npz" "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
+   fi
+@@ -224,11 +229,8 @@
+ if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+   python3 "$PROJECT/scripts/navigation_recovery_budget.py" \
+     "$PROJECT/navigation/navigate_dynamic_obstacles.xml" >/dev/null || bad '动态恢复等待预算无效'
+-  GROUND_ARGS=()
+-  if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+-    GROUND_ARGS=(--ground-relative)
+-    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败'
+-  fi
++  GROUND_ARGS=(--ground-relative)
++  python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败' 
+   python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+     "$MAP_DIR/nav2_dynamic.yaml" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}" || bad '动态避障配置生成失败'
+ fi
+@@ -1152,7 +1154,7 @@
+ 
+   title "启动 Mid360、IMU 和修正后的 NDT"
+   "${SSH_BG[@]}" \
+-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
++    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_NDT_FINE_REFINE='$FINE_REGISTRATION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
+     >"$LOG_DIR/localization.log" 2>&1 &
+   LOCALIZATION_SSH_PID=$!
+   sleep 2

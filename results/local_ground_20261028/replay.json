@@ -1,0 +1,2657 @@
+{
+  "scope": "fixed physical height prior; no map/NDT pose used; saved source-plane hypotheses and synthetic raised returns, not real object validation",
+  "rows": [
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19968,
+      "roi_points": 4047,
+      "seed_cells": 230,
+      "plane": [
+        0.06542281421238998,
+        0.0019625900469371765,
+        0.9978557028051895,
+        -0.2888193193897176
+      ],
+      "laser_height": 0.46567262832770495,
+      "ground_cells": 330,
+      "trusted_points": 1461,
+      "kept": 2600,
+      "fit_p95": 0.008491635655302067,
+      "duration_s": 0.03889782199985348,
+      "group": "raw",
+      "file": "frame_000.npz",
+      "floor_hypotheses": 640,
+      "trusted_floor": 640,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0013395573000748906,
+        "median": 0.001950293185410981,
+        "p95": 0.006874125550670172,
+        "abs_p95": 0.007975299323542342,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 80,
+          "valid": true,
+          "retained": 30,
+          "known_height": 80
+        },
+        {
+          "height": 0.151,
+          "n": 80,
+          "valid": true,
+          "retained": 50,
+          "known_height": 80
+        },
+        {
+          "height": 0.16,
+          "n": 80,
+          "valid": true,
+          "retained": 78,
+          "known_height": 80
+        },
+        {
+          "height": 0.2,
+          "n": 80,
+          "valid": true,
+          "retained": 80,
+          "known_height": 80
+        },
+        {
+          "height": 0.5,
+          "n": 80,
+          "valid": true,
+          "retained": 80,
+          "known_height": 80
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4214,
+      "seed_cells": 242,
+      "plane": [
+        0.06234970650752959,
+        0.0010506612162450024,
+        0.9980538112794488,
+        -0.2839277735333786
+      ],
+      "laser_height": 0.47005398679003907,
+      "ground_cells": 337,
+      "trusted_points": 1519,
+      "kept": 2710,
+      "fit_p95": 0.009778426534788297,
+      "duration_s": 0.033764289000828285,
+      "group": "raw",
+      "file": "frame_001.npz",
+      "floor_hypotheses": 718,
+      "trusted_floor": 718,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000714580281332199,
+        "median": 0.0011215899367785537,
+        "p95": 0.007020326328044501,
+        "abs_p95": 0.008331819744087096,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 90,
+          "valid": true,
+          "retained": 38,
+          "known_height": 90
+        },
+        {
+          "height": 0.151,
+          "n": 90,
+          "valid": true,
+          "retained": 61,
+          "known_height": 90
+        },
+        {
+          "height": 0.16,
+          "n": 90,
+          "valid": true,
+          "retained": 87,
+          "known_height": 90
+        },
+        {
+          "height": 0.2,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        },
+        {
+          "height": 0.5,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19296,
+      "roi_points": 4114,
+      "seed_cells": 235,
+      "plane": [
+        0.0666247132344186,
+        0.0024784487249046583,
+        0.9977750271871657,
+        -0.29132540157616504
+      ],
+      "laser_height": 0.46335998420815594,
+      "ground_cells": 327,
+      "trusted_points": 1366,
+      "kept": 2755,
+      "fit_p95": 0.008447053208908331,
+      "duration_s": 0.03129565699964587,
+      "group": "raw",
+      "file": "frame_002.npz",
+      "floor_hypotheses": 581,
+      "trusted_floor": 581,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0006877878834138777,
+        "median": 0.0013661718885502622,
+        "p95": 0.005641474362105521,
+        "abs_p95": 0.007181003606302104,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 73,
+          "valid": true,
+          "retained": 53,
+          "known_height": 73
+        },
+        {
+          "height": 0.151,
+          "n": 73,
+          "valid": true,
+          "retained": 64,
+          "known_height": 73
+        },
+        {
+          "height": 0.16,
+          "n": 73,
+          "valid": true,
+          "retained": 73,
+          "known_height": 73
+        },
+        {
+          "height": 0.2,
+          "n": 73,
+          "valid": true,
+          "retained": 73,
+          "known_height": 73
+        },
+        {
+          "height": 0.5,
+          "n": 73,
+          "valid": true,
+          "retained": 73,
+          "known_height": 73
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4583,
+      "seed_cells": 224,
+      "plane": [
+        0.06496303180269737,
+        0.00304705832409341,
+        0.9978830191633542,
+        -0.2881542119029886
+      ],
+      "laser_height": 0.4662286154886584,
+      "ground_cells": 346,
+      "trusted_points": 1612,
+      "kept": 2991,
+      "fit_p95": 0.008325515911628216,
+      "duration_s": 0.04430659700119577,
+      "group": "raw",
+      "file": "frame_003.npz",
+      "floor_hypotheses": 714,
+      "trusted_floor": 714,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0004785038013198519,
+        "median": 0.0012079689765892203,
+        "p95": 0.006414603364006625,
+        "abs_p95": 0.008072030185295839,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 90,
+          "valid": true,
+          "retained": 55,
+          "known_height": 90
+        },
+        {
+          "height": 0.151,
+          "n": 90,
+          "valid": true,
+          "retained": 66,
+          "known_height": 90
+        },
+        {
+          "height": 0.16,
+          "n": 90,
+          "valid": true,
+          "retained": 88,
+          "known_height": 90
+        },
+        {
+          "height": 0.2,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        },
+        {
+          "height": 0.5,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 21024,
+      "roi_points": 4566,
+      "seed_cells": 239,
+      "plane": [
+        0.0631367086880419,
+        0.0015872334753180353,
+        0.9980036255975909,
+        -0.2850475761950293
+      ],
+      "laser_height": 0.4690509459978774,
+      "ground_cells": 388,
+      "trusted_points": 1655,
+      "kept": 2925,
+      "fit_p95": 0.010651780141258846,
+      "duration_s": 0.05124629700003425,
+      "group": "raw",
+      "file": "frame_004.npz",
+      "floor_hypotheses": 684,
+      "trusted_floor": 684,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008265074642148083,
+        "median": 0.0014001346295221511,
+        "p95": 0.006895053502864982,
+        "abs_p95": 0.008184944285819968,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 86,
+          "valid": true,
+          "retained": 35,
+          "known_height": 86
+        },
+        {
+          "height": 0.151,
+          "n": 86,
+          "valid": true,
+          "retained": 51,
+          "known_height": 86
+        },
+        {
+          "height": 0.16,
+          "n": 86,
+          "valid": true,
+          "retained": 85,
+          "known_height": 86
+        },
+        {
+          "height": 0.2,
+          "n": 86,
+          "valid": true,
+          "retained": 86,
+          "known_height": 86
+        },
+        {
+          "height": 0.5,
+          "n": 86,
+          "valid": true,
+          "retained": 86,
+          "known_height": 86
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 21312,
+      "roi_points": 4319,
+      "seed_cells": 214,
+      "plane": [
+        0.0666142186358158,
+        0.002535519081587112,
+        0.9977755844970987,
+        -0.29200823142953675
+      ],
+      "laser_height": 0.4627212738590026,
+      "ground_cells": 317,
+      "trusted_points": 1426,
+      "kept": 2899,
+      "fit_p95": 0.006934435062162337,
+      "duration_s": 0.03130768400114903,
+      "group": "raw",
+      "file": "frame_005.npz",
+      "floor_hypotheses": 566,
+      "trusted_floor": 566,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000890998264502905,
+        "median": 0.0014229917967876304,
+        "p95": 0.005917789711029429,
+        "abs_p95": 0.006856813493241762,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 71,
+          "valid": true,
+          "retained": 36,
+          "known_height": 71
+        },
+        {
+          "height": 0.151,
+          "n": 71,
+          "valid": true,
+          "retained": 45,
+          "known_height": 71
+        },
+        {
+          "height": 0.16,
+          "n": 71,
+          "valid": true,
+          "retained": 71,
+          "known_height": 71
+        },
+        {
+          "height": 0.2,
+          "n": 71,
+          "valid": true,
+          "retained": 71,
+          "known_height": 71
+        },
+        {
+          "height": 0.5,
+          "n": 71,
+          "valid": true,
+          "retained": 71,
+          "known_height": 71
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19680,
+      "roi_points": 4132,
+      "seed_cells": 223,
+      "plane": [
+        0.0651064137922222,
+        0.0026574905949512603,
+        0.9978747880505119,
+        -0.28911877200914976
+      ],
+      "laser_height": 0.4653315344495547,
+      "ground_cells": 319,
+      "trusted_points": 1397,
+      "kept": 2751,
+      "fit_p95": 0.007964069863465838,
+      "duration_s": 0.06664644599914027,
+      "group": "raw",
+      "file": "frame_006.npz",
+      "floor_hypotheses": 595,
+      "trusted_floor": 595,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007352690133851398,
+        "median": 0.001464701371955628,
+        "p95": 0.0057565338728926205,
+        "abs_p95": 0.007078820817457613,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 75,
+          "valid": true,
+          "retained": 41,
+          "known_height": 75
+        },
+        {
+          "height": 0.151,
+          "n": 75,
+          "valid": true,
+          "retained": 48,
+          "known_height": 75
+        },
+        {
+          "height": 0.16,
+          "n": 75,
+          "valid": true,
+          "retained": 74,
+          "known_height": 75
+        },
+        {
+          "height": 0.2,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        },
+        {
+          "height": 0.5,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 21024,
+      "roi_points": 4483,
+      "seed_cells": 229,
+      "plane": [
+        0.06351520809538189,
+        0.0017442526756550891,
+        0.9979793464411998,
+        -0.28673540541066
+      ],
+      "laser_height": 0.46749095687619957,
+      "ground_cells": 358,
+      "trusted_points": 1621,
+      "kept": 2880,
+      "fit_p95": 0.009826336182650275,
+      "duration_s": 0.033652153999355505,
+      "group": "raw",
+      "file": "frame_007.npz",
+      "floor_hypotheses": 727,
+      "trusted_floor": 727,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0005415174384650456,
+        "median": 0.0009205156854789248,
+        "p95": 0.0064394969198339645,
+        "abs_p95": 0.00806188076671254,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 91,
+          "valid": true,
+          "retained": 47,
+          "known_height": 91
+        },
+        {
+          "height": 0.151,
+          "n": 91,
+          "valid": true,
+          "retained": 63,
+          "known_height": 91
+        },
+        {
+          "height": 0.16,
+          "n": 91,
+          "valid": true,
+          "retained": 90,
+          "known_height": 91
+        },
+        {
+          "height": 0.2,
+          "n": 91,
+          "valid": true,
+          "retained": 91,
+          "known_height": 91
+        },
+        {
+          "height": 0.5,
+          "n": 91,
+          "valid": true,
+          "retained": 91,
+          "known_height": 91
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4371,
+      "seed_cells": 237,
+      "plane": [
+        0.06454397035185365,
+        0.0017311418131854342,
+        0.997913362491575,
+        -0.2881271325060024
+      ],
+      "laser_height": 0.4662828619892659,
+      "ground_cells": 342,
+      "trusted_points": 1480,
+      "kept": 2898,
+      "fit_p95": 0.008867995651575564,
+      "duration_s": 0.031138011001530685,
+      "group": "raw",
+      "file": "frame_009.npz",
+      "floor_hypotheses": 652,
+      "trusted_floor": 652,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0014435446363078638,
+        "median": 0.0019089568429579793,
+        "p95": 0.007061066418471741,
+        "abs_p95": 0.007581373205533594,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 82,
+          "valid": true,
+          "retained": 53,
+          "known_height": 82
+        },
+        {
+          "height": 0.151,
+          "n": 82,
+          "valid": true,
+          "retained": 66,
+          "known_height": 82
+        },
+        {
+          "height": 0.16,
+          "n": 82,
+          "valid": true,
+          "retained": 82,
+          "known_height": 82
+        },
+        {
+          "height": 0.2,
+          "n": 82,
+          "valid": true,
+          "retained": 82,
+          "known_height": 82
+        },
+        {
+          "height": 0.5,
+          "n": 82,
+          "valid": true,
+          "retained": 82,
+          "known_height": 82
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19680,
+      "roi_points": 4260,
+      "seed_cells": 237,
+      "plane": [
+        0.06250428195257846,
+        0.0016623337814309844,
+        0.9980433113768119,
+        -0.28466368062056857
+      ],
+      "laser_height": 0.46940245115635126,
+      "ground_cells": 339,
+      "trusted_points": 1530,
+      "kept": 2754,
+      "fit_p95": 0.011172121546118413,
+      "duration_s": 0.05281568799910019,
+      "group": "raw",
+      "file": "frame_010.npz",
+      "floor_hypotheses": 694,
+      "trusted_floor": 694,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008401570558282212,
+        "median": 0.0013691168440214834,
+        "p95": 0.007131624299594481,
+        "abs_p95": 0.00844494374312108,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 87,
+          "valid": true,
+          "retained": 44,
+          "known_height": 87
+        },
+        {
+          "height": 0.151,
+          "n": 87,
+          "valid": true,
+          "retained": 52,
+          "known_height": 87
+        },
+        {
+          "height": 0.16,
+          "n": 87,
+          "valid": true,
+          "retained": 86,
+          "known_height": 87
+        },
+        {
+          "height": 0.2,
+          "n": 87,
+          "valid": true,
+          "retained": 87,
+          "known_height": 87
+        },
+        {
+          "height": 0.5,
+          "n": 87,
+          "valid": true,
+          "retained": 87,
+          "known_height": 87
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 17088,
+      "roi_points": 4214,
+      "seed_cells": 232,
+      "plane": [
+        0.06625947270231745,
+        0.0017925216605090208,
+        0.9978008163673286,
+        -0.291494131062335
+      ],
+      "laser_height": 0.4631656279645166,
+      "ground_cells": 324,
+      "trusted_points": 1348,
+      "kept": 2873,
+      "fit_p95": 0.008357734270715012,
+      "duration_s": 0.054991351998978644,
+      "group": "dense_diagnostics",
+      "file": "frame_00.npz",
+      "floor_hypotheses": 583,
+      "trusted_floor": 583,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007132851118769845,
+        "median": 0.0013494441733282604,
+        "p95": 0.005931333973830115,
+        "abs_p95": 0.007403726535483158,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 73,
+          "valid": true,
+          "retained": 45,
+          "known_height": 73
+        },
+        {
+          "height": 0.151,
+          "n": 73,
+          "valid": true,
+          "retained": 54,
+          "known_height": 73
+        },
+        {
+          "height": 0.16,
+          "n": 73,
+          "valid": true,
+          "retained": 72,
+          "known_height": 73
+        },
+        {
+          "height": 0.2,
+          "n": 73,
+          "valid": true,
+          "retained": 73,
+          "known_height": 73
+        },
+        {
+          "height": 0.5,
+          "n": 73,
+          "valid": true,
+          "retained": 73,
+          "known_height": 73
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 15936,
+      "roi_points": 3972,
+      "seed_cells": 229,
+      "plane": [
+        0.06582677943265998,
+        0.0030077603584217696,
+        0.9978265322625723,
+        -0.29048434420259284
+      ],
+      "laser_height": 0.4640865804925189,
+      "ground_cells": 322,
+      "trusted_points": 1361,
+      "kept": 2619,
+      "fit_p95": 0.008383929375879402,
+      "duration_s": 0.05096946400044544,
+      "group": "dense_diagnostics",
+      "file": "frame_01.npz",
+      "floor_hypotheses": 587,
+      "trusted_floor": 587,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007897343707428422,
+        "median": 0.0013468671186842541,
+        "p95": 0.006000659564088365,
+        "abs_p95": 0.0072175206847488824,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 74,
+          "valid": true,
+          "retained": 54,
+          "known_height": 74
+        },
+        {
+          "height": 0.151,
+          "n": 74,
+          "valid": true,
+          "retained": 68,
+          "known_height": 74
+        },
+        {
+          "height": 0.16,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        },
+        {
+          "height": 0.2,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        },
+        {
+          "height": 0.5,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20448,
+      "roi_points": 4392,
+      "seed_cells": 224,
+      "plane": [
+        0.06598370821997318,
+        0.0025867134282562543,
+        0.9978173475958321,
+        -0.29168980126187016
+      ],
+      "laser_height": 0.4629580753307821,
+      "ground_cells": 308,
+      "trusted_points": 1313,
+      "kept": 3089,
+      "fit_p95": 0.008186458247436267,
+      "duration_s": 0.0664892669992696,
+      "group": "dense_diagnostics",
+      "file": "frame_02.npz",
+      "floor_hypotheses": 615,
+      "trusted_floor": 615,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0004998287901229015,
+        "median": 0.0011600380305551911,
+        "p95": 0.005330985262375742,
+        "abs_p95": 0.007290708878792402,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 77,
+          "valid": true,
+          "retained": 38,
+          "known_height": 77
+        },
+        {
+          "height": 0.151,
+          "n": 77,
+          "valid": true,
+          "retained": 54,
+          "known_height": 77
+        },
+        {
+          "height": 0.16,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.2,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.5,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4296,
+      "seed_cells": 223,
+      "plane": [
+        0.06485708528867011,
+        0.0027538467801836927,
+        0.997890762967455,
+        -0.28926833851562567
+      ],
+      "laser_height": 0.4651874269987759,
+      "ground_cells": 316,
+      "trusted_points": 1329,
+      "kept": 2977,
+      "fit_p95": 0.008296755586504223,
+      "duration_s": 0.03690405499946792,
+      "group": "dense_diagnostics",
+      "file": "frame_03.npz",
+      "floor_hypotheses": 599,
+      "trusted_floor": 599,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008009601842969011,
+        "median": 0.0017253059199754033,
+        "p95": 0.005760713345919197,
+        "abs_p95": 0.007382661978428456,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 75,
+          "valid": true,
+          "retained": 58,
+          "known_height": 75
+        },
+        {
+          "height": 0.151,
+          "n": 75,
+          "valid": true,
+          "retained": 67,
+          "known_height": 75
+        },
+        {
+          "height": 0.16,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        },
+        {
+          "height": 0.2,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        },
+        {
+          "height": 0.5,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19680,
+      "roi_points": 4232,
+      "seed_cells": 212,
+      "plane": [
+        0.06418076066477627,
+        0.002925653767954575,
+        0.9979340010794907,
+        -0.2873263285917209
+      ],
+      "laser_height": 0.46690359428585454,
+      "ground_cells": 308,
+      "trusted_points": 1353,
+      "kept": 2889,
+      "fit_p95": 0.010216834878801364,
+      "duration_s": 0.029647758001374314,
+      "group": "dense_diagnostics",
+      "file": "frame_04.npz",
+      "floor_hypotheses": 612,
+      "trusted_floor": 612,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.00029631316519520374,
+        "median": 0.0009667624339979057,
+        "p95": 0.006459517622629909,
+        "abs_p95": 0.008664898945905773,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 77,
+          "valid": true,
+          "retained": 45,
+          "known_height": 77
+        },
+        {
+          "height": 0.151,
+          "n": 77,
+          "valid": true,
+          "retained": 58,
+          "known_height": 77
+        },
+        {
+          "height": 0.16,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.2,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.5,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4360,
+      "seed_cells": 237,
+      "plane": [
+        0.06459611191710979,
+        0.0021329420970925134,
+        0.9979092107417402,
+        -0.2871110339382047
+      ],
+      "laser_height": 0.46716092929146935,
+      "ground_cells": 342,
+      "trusted_points": 1412,
+      "kept": 2957,
+      "fit_p95": 0.009556737261387005,
+      "duration_s": 0.03155525899819622,
+      "group": "dense_diagnostics",
+      "file": "frame_05.npz",
+      "floor_hypotheses": 617,
+      "trusted_floor": 617,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008819277640581257,
+        "median": 0.0015167985224944394,
+        "p95": 0.00688492776781479,
+        "abs_p95": 0.00884406590175304,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 78,
+          "valid": true,
+          "retained": 40,
+          "known_height": 78
+        },
+        {
+          "height": 0.151,
+          "n": 78,
+          "valid": true,
+          "retained": 54,
+          "known_height": 78
+        },
+        {
+          "height": 0.16,
+          "n": 78,
+          "valid": true,
+          "retained": 75,
+          "known_height": 78
+        },
+        {
+          "height": 0.2,
+          "n": 78,
+          "valid": true,
+          "retained": 78,
+          "known_height": 78
+        },
+        {
+          "height": 0.5,
+          "n": 78,
+          "valid": true,
+          "retained": 78,
+          "known_height": 78
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 24960,
+      "roi_points": 5746,
+      "seed_cells": 251,
+      "plane": [
+        0.0668933673131205,
+        0.0019799079047993703,
+        0.9977581657767579,
+        -0.291736146777178
+      ],
+      "laser_height": 0.46298289760073424,
+      "ground_cells": 388,
+      "trusted_points": 2120,
+      "kept": 3642,
+      "fit_p95": 0.007517066766892447,
+      "duration_s": 0.041265489999204874,
+      "group": "dense_diagnostics",
+      "file": "frame_06.npz",
+      "floor_hypotheses": 902,
+      "trusted_floor": 902,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0009572675780115236,
+        "median": 0.0016384544771742386,
+        "p95": 0.005989759622133122,
+        "abs_p95": 0.007264607978969701,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 113,
+          "valid": true,
+          "retained": 53,
+          "known_height": 113
+        },
+        {
+          "height": 0.151,
+          "n": 113,
+          "valid": true,
+          "retained": 77,
+          "known_height": 113
+        },
+        {
+          "height": 0.16,
+          "n": 113,
+          "valid": true,
+          "retained": 112,
+          "known_height": 113
+        },
+        {
+          "height": 0.2,
+          "n": 113,
+          "valid": true,
+          "retained": 113,
+          "known_height": 113
+        },
+        {
+          "height": 0.5,
+          "n": 113,
+          "valid": true,
+          "retained": 113,
+          "known_height": 113
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20352,
+      "roi_points": 4532,
+      "seed_cells": 225,
+      "plane": [
+        0.06329772619818434,
+        0.0016050241213151767,
+        0.9979933976513621,
+        -0.28597246893182865
+      ],
+      "laser_height": 0.46815972648726834,
+      "ground_cells": 380,
+      "trusted_points": 1695,
+      "kept": 2847,
+      "fit_p95": 0.010715350710943967,
+      "duration_s": 0.0564310950012441,
+      "group": "dense_diagnostics",
+      "file": "frame_07.npz",
+      "floor_hypotheses": 726,
+      "trusted_floor": 726,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000658049349094392,
+        "median": 0.001125108910977157,
+        "p95": 0.0068154178529838735,
+        "abs_p95": 0.0085514092228835,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 91,
+          "valid": true,
+          "retained": 50,
+          "known_height": 91
+        },
+        {
+          "height": 0.151,
+          "n": 91,
+          "valid": true,
+          "retained": 67,
+          "known_height": 91
+        },
+        {
+          "height": 0.16,
+          "n": 91,
+          "valid": true,
+          "retained": 90,
+          "known_height": 91
+        },
+        {
+          "height": 0.2,
+          "n": 91,
+          "valid": true,
+          "retained": 91,
+          "known_height": 91
+        },
+        {
+          "height": 0.5,
+          "n": 91,
+          "valid": true,
+          "retained": 91,
+          "known_height": 91
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19680,
+      "roi_points": 4199,
+      "seed_cells": 229,
+      "plane": [
+        0.06687038787858655,
+        0.0023127128556009735,
+        0.9977589902297123,
+        -0.29127862669217597
+      ],
+      "laser_height": 0.46336512995752727,
+      "ground_cells": 313,
+      "trusted_points": 1322,
+      "kept": 2880,
+      "fit_p95": 0.008242917458637523,
+      "duration_s": 0.0320176299992454,
+      "group": "dense_diagnostics",
+      "file": "frame_08.npz",
+      "floor_hypotheses": 586,
+      "trusted_floor": 586,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.00069515028162868,
+        "median": 0.0013785360410598908,
+        "p95": 0.005600779245853629,
+        "abs_p95": 0.0070521981230770745,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 74,
+          "valid": true,
+          "retained": 36,
+          "known_height": 74
+        },
+        {
+          "height": 0.151,
+          "n": 74,
+          "valid": true,
+          "retained": 43,
+          "known_height": 74
+        },
+        {
+          "height": 0.16,
+          "n": 74,
+          "valid": true,
+          "retained": 71,
+          "known_height": 74
+        },
+        {
+          "height": 0.2,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        },
+        {
+          "height": 0.5,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 23136,
+      "roi_points": 4576,
+      "seed_cells": 214,
+      "plane": [
+        0.06479603815241498,
+        0.0020985827783843516,
+        0.9978963219643978,
+        -0.2878547653264927
+      ],
+      "laser_height": 0.466516746698885,
+      "ground_cells": 322,
+      "trusted_points": 1400,
+      "kept": 3192,
+      "fit_p95": 0.008971912484251873,
+      "duration_s": 0.059559233000982204,
+      "group": "dense_diagnostics",
+      "file": "frame_09.npz",
+      "floor_hypotheses": 609,
+      "trusted_floor": 609,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0014921858442127581,
+        "median": 0.002119585893421237,
+        "p95": 0.006685350536133037,
+        "abs_p95": 0.008165965890795827,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 77,
+          "valid": true,
+          "retained": 54,
+          "known_height": 77
+        },
+        {
+          "height": 0.151,
+          "n": 77,
+          "valid": true,
+          "retained": 66,
+          "known_height": 77
+        },
+        {
+          "height": 0.16,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.2,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.5,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4292,
+      "seed_cells": 239,
+      "plane": [
+        0.06450600547758921,
+        0.0022686164777455317,
+        0.997914740164009,
+        -0.28782182573747855
+      ],
+      "laser_height": 0.4665019557957199,
+      "ground_cells": 334,
+      "trusted_points": 1408,
+      "kept": 2890,
+      "fit_p95": 0.009918143084042926,
+      "duration_s": 0.049007800000254065,
+      "group": "dense_diagnostics",
+      "file": "frame_10.npz",
+      "floor_hypotheses": 614,
+      "trusted_floor": 614,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0006972948369679168,
+        "median": 0.0014772123437816853,
+        "p95": 0.0064503126078069364,
+        "abs_p95": 0.008309405093566317,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 77,
+          "valid": true,
+          "retained": 46,
+          "known_height": 77
+        },
+        {
+          "height": 0.151,
+          "n": 77,
+          "valid": true,
+          "retained": 59,
+          "known_height": 77
+        },
+        {
+          "height": 0.16,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.2,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        },
+        {
+          "height": 0.5,
+          "n": 77,
+          "valid": true,
+          "retained": 77,
+          "known_height": 77
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19776,
+      "roi_points": 4316,
+      "seed_cells": 219,
+      "plane": [
+        0.06638379870605621,
+        0.002831701336662086,
+        0.9977901446380868,
+        -0.2907309716084926
+      ],
+      "laser_height": 0.46384478867908496,
+      "ground_cells": 319,
+      "trusted_points": 1348,
+      "kept": 2974,
+      "fit_p95": 0.007931561541551464,
+      "duration_s": 0.05773032599972794,
+      "group": "dense_diagnostics",
+      "file": "frame_11.npz",
+      "floor_hypotheses": 589,
+      "trusted_floor": 589,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0006827121183106404,
+        "median": 0.0015481618279376847,
+        "p95": 0.005682853195941289,
+        "abs_p95": 0.007394764280014475,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 74,
+          "valid": true,
+          "retained": 38,
+          "known_height": 74
+        },
+        {
+          "height": 0.151,
+          "n": 74,
+          "valid": true,
+          "retained": 51,
+          "known_height": 74
+        },
+        {
+          "height": 0.16,
+          "n": 74,
+          "valid": true,
+          "retained": 73,
+          "known_height": 74
+        },
+        {
+          "height": 0.2,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        },
+        {
+          "height": 0.5,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4362,
+      "seed_cells": 227,
+      "plane": [
+        0.0646715641664309,
+        0.0018537217668285824,
+        0.9979048814911563,
+        -0.28791855397101207
+      ],
+      "laser_height": 0.46641176736539486,
+      "ground_cells": 326,
+      "trusted_points": 1396,
+      "kept": 2980,
+      "fit_p95": 0.008511888371554106,
+      "duration_s": 0.056658501000129036,
+      "group": "dense_diagnostics",
+      "file": "frame_12.npz",
+      "floor_hypotheses": 601,
+      "trusted_floor": 601,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0011710289844211754,
+        "median": 0.001842878455004277,
+        "p95": 0.006483263769551312,
+        "abs_p95": 0.007802358205210833,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 76,
+          "valid": true,
+          "retained": 34,
+          "known_height": 76
+        },
+        {
+          "height": 0.151,
+          "n": 76,
+          "valid": true,
+          "retained": 47,
+          "known_height": 76
+        },
+        {
+          "height": 0.16,
+          "n": 76,
+          "valid": true,
+          "retained": 74,
+          "known_height": 76
+        },
+        {
+          "height": 0.2,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        },
+        {
+          "height": 0.5,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19584,
+      "roi_points": 4380,
+      "seed_cells": 248,
+      "plane": [
+        0.06403663888771725,
+        0.0015875530999716059,
+        0.997946285405742,
+        -0.2868107604145774
+      ],
+      "laser_height": 0.4674092410206376,
+      "ground_cells": 342,
+      "trusted_points": 1450,
+      "kept": 2941,
+      "fit_p95": 0.009494736849801925,
+      "duration_s": 0.029827045000274666,
+      "group": "dense_diagnostics",
+      "file": "frame_13.npz",
+      "floor_hypotheses": 645,
+      "trusted_floor": 645,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.00055385710516723,
+        "median": 0.00136906385580883,
+        "p95": 0.006561257435492891,
+        "abs_p95": 0.008160146461166364,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 81,
+          "valid": true,
+          "retained": 41,
+          "known_height": 81
+        },
+        {
+          "height": 0.151,
+          "n": 81,
+          "valid": true,
+          "retained": 56,
+          "known_height": 81
+        },
+        {
+          "height": 0.16,
+          "n": 81,
+          "valid": true,
+          "retained": 79,
+          "known_height": 81
+        },
+        {
+          "height": 0.2,
+          "n": 81,
+          "valid": true,
+          "retained": 81,
+          "known_height": 81
+        },
+        {
+          "height": 0.5,
+          "n": 81,
+          "valid": true,
+          "retained": 81,
+          "known_height": 81
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19872,
+      "roi_points": 4909,
+      "seed_cells": 246,
+      "plane": [
+        0.0642483091986166,
+        0.0018784584563210777,
+        0.9979321751296263,
+        -0.28661991583524116
+      ],
+      "laser_height": 0.4675772509396516,
+      "ground_cells": 357,
+      "trusted_points": 1607,
+      "kept": 3310,
+      "fit_p95": 0.008991232376725488,
+      "duration_s": 0.03392372600137605,
+      "group": "dense_diagnostics",
+      "file": "frame_14.npz",
+      "floor_hypotheses": 732,
+      "trusted_floor": 732,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007136209757447853,
+        "median": 0.0014631205133106878,
+        "p95": 0.006720383150346206,
+        "abs_p95": 0.008117849872845305,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 92,
+          "valid": true,
+          "retained": 43,
+          "known_height": 92
+        },
+        {
+          "height": 0.151,
+          "n": 92,
+          "valid": true,
+          "retained": 61,
+          "known_height": 92
+        },
+        {
+          "height": 0.16,
+          "n": 92,
+          "valid": true,
+          "retained": 90,
+          "known_height": 92
+        },
+        {
+          "height": 0.2,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        },
+        {
+          "height": 0.5,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4621,
+      "seed_cells": 236,
+      "plane": [
+        0.0656609029862806,
+        0.002192585111578514,
+        0.99783958549937,
+        -0.2902769553127602
+      ],
+      "laser_height": 0.4642749535036038,
+      "ground_cells": 314,
+      "trusted_points": 1334,
+      "kept": 3297,
+      "fit_p95": 0.008797861945956748,
+      "duration_s": 0.03184365500055719,
+      "group": "dense_diagnostics",
+      "file": "frame_15.npz",
+      "floor_hypotheses": 607,
+      "trusted_floor": 607,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007025263695711331,
+        "median": 0.001508157784656124,
+        "p95": 0.005712650647522045,
+        "abs_p95": 0.007315025149835255,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 76,
+          "valid": true,
+          "retained": 51,
+          "known_height": 76
+        },
+        {
+          "height": 0.151,
+          "n": 76,
+          "valid": true,
+          "retained": 62,
+          "known_height": 76
+        },
+        {
+          "height": 0.16,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        },
+        {
+          "height": 0.2,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        },
+        {
+          "height": 0.5,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4464,
+      "seed_cells": 240,
+      "plane": [
+        0.065719096094192,
+        0.002356762715461022,
+        0.9978353802497011,
+        -0.2906028106314278
+      ],
+      "laser_height": 0.4639655442833851,
+      "ground_cells": 300,
+      "trusted_points": 1250,
+      "kept": 3219,
+      "fit_p95": 0.0077905897726125075,
+      "duration_s": 0.031481076001000474,
+      "group": "dense_diagnostics",
+      "file": "frame_16.npz",
+      "floor_hypotheses": 557,
+      "trusted_floor": 557,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0010588680141658882,
+        "median": 0.0016031899186637888,
+        "p95": 0.006013493569323271,
+        "abs_p95": 0.007085502713061839,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 70,
+          "valid": true,
+          "retained": 45,
+          "known_height": 70
+        },
+        {
+          "height": 0.151,
+          "n": 70,
+          "valid": true,
+          "retained": 55,
+          "known_height": 70
+        },
+        {
+          "height": 0.16,
+          "n": 70,
+          "valid": true,
+          "retained": 69,
+          "known_height": 70
+        },
+        {
+          "height": 0.2,
+          "n": 70,
+          "valid": true,
+          "retained": 70,
+          "known_height": 70
+        },
+        {
+          "height": 0.5,
+          "n": 70,
+          "valid": true,
+          "retained": 70,
+          "known_height": 70
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19776,
+      "roi_points": 4650,
+      "seed_cells": 244,
+      "plane": [
+        0.06368328881611074,
+        0.0025463198445840746,
+        0.9979669107644867,
+        -0.28640567320396476
+      ],
+      "laser_height": 0.46776120732625426,
+      "ground_cells": 355,
+      "trusted_points": 1574,
+      "kept": 3086,
+      "fit_p95": 0.01019132104059264,
+      "duration_s": 0.03654744899904472,
+      "group": "dense_diagnostics",
+      "file": "frame_17.npz",
+      "floor_hypotheses": 732,
+      "trusted_floor": 732,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000531612305543735,
+        "median": 0.001112793978941779,
+        "p95": 0.006414110647803422,
+        "abs_p95": 0.008410017483436805,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 92,
+          "valid": true,
+          "retained": 59,
+          "known_height": 92
+        },
+        {
+          "height": 0.151,
+          "n": 92,
+          "valid": true,
+          "retained": 73,
+          "known_height": 92
+        },
+        {
+          "height": 0.16,
+          "n": 92,
+          "valid": true,
+          "retained": 90,
+          "known_height": 92
+        },
+        {
+          "height": 0.2,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        },
+        {
+          "height": 0.5,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4849,
+      "seed_cells": 255,
+      "plane": [
+        0.06322322975361862,
+        0.002138520291284994,
+        0.997997119209512,
+        -0.2848596029931493
+      ],
+      "laser_height": 0.4691920766519978,
+      "ground_cells": 336,
+      "trusted_points": 1538,
+      "kept": 3325,
+      "fit_p95": 0.01061486528474069,
+      "duration_s": 0.03564853299940296,
+      "group": "dense_diagnostics",
+      "file": "frame_18.npz",
+      "floor_hypotheses": 732,
+      "trusted_floor": 732,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007172339442045757,
+        "median": 0.0012240816498331301,
+        "p95": 0.007157302587221437,
+        "abs_p95": 0.00856097902962447,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 92,
+          "valid": true,
+          "retained": 47,
+          "known_height": 92
+        },
+        {
+          "height": 0.151,
+          "n": 92,
+          "valid": true,
+          "retained": 70,
+          "known_height": 92
+        },
+        {
+          "height": 0.16,
+          "n": 92,
+          "valid": true,
+          "retained": 91,
+          "known_height": 92
+        },
+        {
+          "height": 0.2,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        },
+        {
+          "height": 0.5,
+          "n": 92,
+          "valid": true,
+          "retained": 92,
+          "known_height": 92
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19872,
+      "roi_points": 5078,
+      "seed_cells": 233,
+      "plane": [
+        0.06429147457346916,
+        0.002396584251317696,
+        0.997928285339731,
+        -0.2867818178525664
+      ],
+      "laser_height": 0.46739450281537104,
+      "ground_cells": 345,
+      "trusted_points": 1773,
+      "kept": 3543,
+      "fit_p95": 0.010317452806858123,
+      "duration_s": 0.0516912120001507,
+      "group": "rejected_live_holdout",
+      "file": "frame_00.npz",
+      "floor_hypotheses": 663,
+      "trusted_floor": 663,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0004254279488569987,
+        "median": 0.0011041689533078042,
+        "p95": 0.006469032576476796,
+        "abs_p95": 0.008193330231940087,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 83,
+          "valid": true,
+          "retained": 59,
+          "known_height": 83
+        },
+        {
+          "height": 0.151,
+          "n": 83,
+          "valid": true,
+          "retained": 67,
+          "known_height": 83
+        },
+        {
+          "height": 0.16,
+          "n": 83,
+          "valid": true,
+          "retained": 82,
+          "known_height": 83
+        },
+        {
+          "height": 0.2,
+          "n": 83,
+          "valid": true,
+          "retained": 83,
+          "known_height": 83
+        },
+        {
+          "height": 0.5,
+          "n": 83,
+          "valid": true,
+          "retained": 83,
+          "known_height": 83
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19872,
+      "roi_points": 4591,
+      "seed_cells": 244,
+      "plane": [
+        0.06433719801760968,
+        0.0019700822030880583,
+        0.9979262716891245,
+        -0.2869642920269066
+      ],
+      "laser_height": 0.46729858695347354,
+      "ground_cells": 352,
+      "trusted_points": 1637,
+      "kept": 3105,
+      "fit_p95": 0.009734915480557686,
+      "duration_s": 0.05360020300031465,
+      "group": "rejected_live_holdout",
+      "file": "frame_01.npz",
+      "floor_hypotheses": 631,
+      "trusted_floor": 631,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008325988793929098,
+        "median": 0.0015307942369765517,
+        "p95": 0.0068991428794778886,
+        "abs_p95": 0.008064745221949195,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 79,
+          "valid": true,
+          "retained": 40,
+          "known_height": 79
+        },
+        {
+          "height": 0.151,
+          "n": 79,
+          "valid": true,
+          "retained": 52,
+          "known_height": 79
+        },
+        {
+          "height": 0.16,
+          "n": 79,
+          "valid": true,
+          "retained": 79,
+          "known_height": 79
+        },
+        {
+          "height": 0.2,
+          "n": 79,
+          "valid": true,
+          "retained": 79,
+          "known_height": 79
+        },
+        {
+          "height": 0.5,
+          "n": 79,
+          "valid": true,
+          "retained": 79,
+          "known_height": 79
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20160,
+      "roi_points": 4640,
+      "seed_cells": 243,
+      "plane": [
+        0.06601271857539938,
+        0.0024375160678892158,
+        0.997815804395633,
+        -0.2906605117577547
+      ],
+      "laser_height": 0.463913126908468,
+      "ground_cells": 322,
+      "trusted_points": 1337,
+      "kept": 3308,
+      "fit_p95": 0.008872148016684478,
+      "duration_s": 0.03265975100111973,
+      "group": "rejected_live_holdout",
+      "file": "frame_02.npz",
+      "floor_hypotheses": 589,
+      "trusted_floor": 589,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008634248838596673,
+        "median": 0.0016034853685757682,
+        "p95": 0.005861876783103022,
+        "abs_p95": 0.007341518471765477,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 74,
+          "valid": true,
+          "retained": 49,
+          "known_height": 74
+        },
+        {
+          "height": 0.151,
+          "n": 74,
+          "valid": true,
+          "retained": 64,
+          "known_height": 74
+        },
+        {
+          "height": 0.16,
+          "n": 74,
+          "valid": true,
+          "retained": 73,
+          "known_height": 74
+        },
+        {
+          "height": 0.2,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        },
+        {
+          "height": 0.5,
+          "n": 74,
+          "valid": true,
+          "retained": 74,
+          "known_height": 74
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 17280,
+      "roi_points": 3448,
+      "seed_cells": 189,
+      "plane": [
+        0.06421334593228256,
+        0.0021773851622011453,
+        0.997933818045083,
+        -0.28674685112254544
+      ],
+      "laser_height": 0.46751214031429106,
+      "ground_cells": 243,
+      "trusted_points": 793,
+      "kept": 2659,
+      "fit_p95": 0.008213049773599069,
+      "duration_s": 0.02350905999992392,
+      "group": "rejected_live_holdout",
+      "file": "frame_03.npz",
+      "floor_hypotheses": 379,
+      "trusted_floor": 379,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0013373659327945346,
+        "median": 0.0017139433596080951,
+        "p95": 0.006898002585821614,
+        "abs_p95": 0.007554105414285726,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 48,
+          "valid": true,
+          "retained": 22,
+          "known_height": 48
+        },
+        {
+          "height": 0.151,
+          "n": 48,
+          "valid": true,
+          "retained": 26,
+          "known_height": 48
+        },
+        {
+          "height": 0.16,
+          "n": 48,
+          "valid": true,
+          "retained": 47,
+          "known_height": 48
+        },
+        {
+          "height": 0.2,
+          "n": 48,
+          "valid": true,
+          "retained": 48,
+          "known_height": 48
+        },
+        {
+          "height": 0.5,
+          "n": 48,
+          "valid": true,
+          "retained": 48,
+          "known_height": 48
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4257,
+      "seed_cells": 221,
+      "plane": [
+        0.06466625473275962,
+        0.0022421841553369806,
+        0.9979044283442434,
+        -0.2881786016200732
+      ],
+      "laser_height": 0.46614122310246403,
+      "ground_cells": 332,
+      "trusted_points": 1354,
+      "kept": 2914,
+      "fit_p95": 0.009408723331160967,
+      "duration_s": 0.03490431200043531,
+      "group": "rejected_live_holdout",
+      "file": "frame_04.npz",
+      "floor_hypotheses": 561,
+      "trusted_floor": 561,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000854596190387223,
+        "median": 0.0017187600397183238,
+        "p95": 0.006096067886551434,
+        "abs_p95": 0.007857370748087584,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 71,
+          "valid": true,
+          "retained": 45,
+          "known_height": 71
+        },
+        {
+          "height": 0.151,
+          "n": 71,
+          "valid": true,
+          "retained": 54,
+          "known_height": 71
+        },
+        {
+          "height": 0.16,
+          "n": 71,
+          "valid": true,
+          "retained": 70,
+          "known_height": 71
+        },
+        {
+          "height": 0.2,
+          "n": 71,
+          "valid": true,
+          "retained": 71,
+          "known_height": 71
+        },
+        {
+          "height": 0.5,
+          "n": 71,
+          "valid": true,
+          "retained": 71,
+          "known_height": 71
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19776,
+      "roi_points": 4249,
+      "seed_cells": 214,
+      "plane": [
+        0.0661072040184024,
+        0.0020787675848488313,
+        0.9978103608913859,
+        -0.29055456472857405
+      ],
+      "laser_height": 0.4640285076328164,
+      "ground_cells": 321,
+      "trusted_points": 1402,
+      "kept": 2861,
+      "fit_p95": 0.007757951435617745,
+      "duration_s": 0.03068552699915017,
+      "group": "rejected_live_holdout",
+      "file": "frame_05.npz",
+      "floor_hypotheses": 602,
+      "trusted_floor": 602,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0009537518304921503,
+        "median": 0.0016464670449394718,
+        "p95": 0.005910606128529332,
+        "abs_p95": 0.007583075483895153,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 76,
+          "valid": true,
+          "retained": 55,
+          "known_height": 76
+        },
+        {
+          "height": 0.151,
+          "n": 76,
+          "valid": true,
+          "retained": 63,
+          "known_height": 76
+        },
+        {
+          "height": 0.16,
+          "n": 76,
+          "valid": true,
+          "retained": 75,
+          "known_height": 76
+        },
+        {
+          "height": 0.2,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        },
+        {
+          "height": 0.5,
+          "n": 76,
+          "valid": true,
+          "retained": 76,
+          "known_height": 76
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20064,
+      "roi_points": 4922,
+      "seed_cells": 232,
+      "plane": [
+        0.06499602579559698,
+        0.0015976907477879623,
+        0.9978842437953676,
+        -0.2879980013533041
+      ],
+      "laser_height": 0.46635994385409946,
+      "ground_cells": 335,
+      "trusted_points": 1576,
+      "kept": 3354,
+      "fit_p95": 0.008924086346323003,
+      "duration_s": 0.035103205000268645,
+      "group": "rejected_live_holdout",
+      "file": "frame_06.npz",
+      "floor_hypotheses": 702,
+      "trusted_floor": 702,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0008929206461458559,
+        "median": 0.0015147239296015324,
+        "p95": 0.006851067089399128,
+        "abs_p95": 0.00805484171510454,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 88,
+          "valid": true,
+          "retained": 52,
+          "known_height": 88
+        },
+        {
+          "height": 0.151,
+          "n": 88,
+          "valid": true,
+          "retained": 61,
+          "known_height": 88
+        },
+        {
+          "height": 0.16,
+          "n": 88,
+          "valid": true,
+          "retained": 88,
+          "known_height": 88
+        },
+        {
+          "height": 0.2,
+          "n": 88,
+          "valid": true,
+          "retained": 88,
+          "known_height": 88
+        },
+        {
+          "height": 0.5,
+          "n": 88,
+          "valid": true,
+          "retained": 88,
+          "known_height": 88
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 19776,
+      "roi_points": 4780,
+      "seed_cells": 250,
+      "plane": [
+        0.06372820714838745,
+        0.0018403438231635039,
+        0.9979655949722237,
+        -0.2865331158896213
+      ],
+      "laser_height": 0.4676600913321203,
+      "ground_cells": 372,
+      "trusted_points": 1638,
+      "kept": 3161,
+      "fit_p95": 0.009450655520694358,
+      "duration_s": 0.03478564900069614,
+      "group": "rejected_live_holdout",
+      "file": "frame_07.npz",
+      "floor_hypotheses": 737,
+      "trusted_floor": 737,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0007413793955027139,
+        "median": 0.0010928153183945373,
+        "p95": 0.006752151897635441,
+        "abs_p95": 0.008272341285176784,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 93,
+          "valid": true,
+          "retained": 46,
+          "known_height": 93
+        },
+        {
+          "height": 0.151,
+          "n": 93,
+          "valid": true,
+          "retained": 69,
+          "known_height": 93
+        },
+        {
+          "height": 0.16,
+          "n": 93,
+          "valid": true,
+          "retained": 93,
+          "known_height": 93
+        },
+        {
+          "height": 0.2,
+          "n": 93,
+          "valid": true,
+          "retained": 93,
+          "known_height": 93
+        },
+        {
+          "height": 0.5,
+          "n": 93,
+          "valid": true,
+          "retained": 93,
+          "known_height": 93
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20160,
+      "roi_points": 4511,
+      "seed_cells": 227,
+      "plane": [
+        0.06634320462728484,
+        0.0027827673256552443,
+        0.9977929822391984,
+        -0.2916364031229988
+      ],
+      "laser_height": 0.463024288582142,
+      "ground_cells": 307,
+      "trusted_points": 1348,
+      "kept": 3167,
+      "fit_p95": 0.008385009596714862,
+      "duration_s": 0.03543486999842571,
+      "group": "rejected_live_holdout",
+      "file": "frame_08.npz",
+      "floor_hypotheses": 596,
+      "trusted_floor": 596,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.000590025529402462,
+        "median": 0.0012129256433934799,
+        "p95": 0.005835980129833646,
+        "abs_p95": 0.007543435240411157,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 75,
+          "valid": true,
+          "retained": 29,
+          "known_height": 75
+        },
+        {
+          "height": 0.151,
+          "n": 75,
+          "valid": true,
+          "retained": 46,
+          "known_height": 75
+        },
+        {
+          "height": 0.16,
+          "n": 75,
+          "valid": true,
+          "retained": 72,
+          "known_height": 75
+        },
+        {
+          "height": 0.2,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        },
+        {
+          "height": 0.5,
+          "n": 75,
+          "valid": true,
+          "retained": 75,
+          "known_height": 75
+        }
+      ]
+    },
+    {
+      "valid": true,
+      "reason": "valid_local_plane",
+      "input": 20256,
+      "roi_points": 4755,
+      "seed_cells": 241,
+      "plane": [
+        0.06546682816529342,
+        0.002476821034661285,
+        0.9978516722276604,
+        -0.29080818117348745
+      ],
+      "laser_height": 0.46377450106087004,
+      "ground_cells": 334,
+      "trusted_points": 1530,
+      "kept": 3231,
+      "fit_p95": 0.008047020035185638,
+      "duration_s": 0.03380663100142556,
+      "group": "rejected_live_holdout",
+      "file": "frame_09.npz",
+      "floor_hypotheses": 719,
+      "trusted_floor": 719,
+      "unknown_floor": 0,
+      "height_metrics": {
+        "mean": 0.0009440886685404166,
+        "median": 0.001846089247442211,
+        "p95": 0.0057511258502383885,
+        "abs_p95": 0.0070551985959736606,
+        "above_15_fraction": 0.0
+      },
+      "synthetic_obstacles": [
+        {
+          "height": 0.149,
+          "n": 90,
+          "valid": true,
+          "retained": 53,
+          "known_height": 90
+        },
+        {
+          "height": 0.151,
+          "n": 90,
+          "valid": true,
+          "retained": 65,
+          "known_height": 90
+        },
+        {
+          "height": 0.16,
+          "n": 90,
+          "valid": true,
+          "retained": 89,
+          "known_height": 90
+        },
+        {
+          "height": 0.2,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        },
+        {
+          "height": 0.5,
+          "n": 90,
+          "valid": true,
+          "retained": 90,
+          "known_height": 90
+        }
+      ]
+    }
+  ]
+}

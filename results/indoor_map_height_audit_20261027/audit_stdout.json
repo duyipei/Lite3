@@ -1,0 +1,124 @@
+{
+  "scope": "OFFLINE_SAVED_MAP_AUDIT_NO_PRODUCTION_CHANGES",
+  "map_id": "indoor_fusion_20260912_001_area_review",
+  "saved_ground_height_prior_m": 0.47,
+  "map_origin_note": "LIO body trajectory starts near zero; map Z zero is not defined as floor. No external ground height is supplied to the LIO map builder.",
+  "historical_provenance_limit": "Existing scripts/config and saved products; no immutable config snapshot or complete source bag for this run was located locally. Jetson SSH timed out during this audit.",
+  "reproduction_max_error_m": 0.0,
+  "height_prior_46_vs_47_max_change_m": 0.0,
+  "height_prior_46_vs_47_changed_cells": 0,
+  "method_limits": [
+    "Uses the previous low-return floor-plane hypothesis, not independently surveyed floor labels.",
+    "Live and historical observations are not simultaneous or point-wise correspondences.",
+    "PCD reference uses same-cell returns within 15cm of the existing ground grid; selection can retain other low surfaces.",
+    "Repeated scan samples are correlated. Individual medians cannot be added as a numerical decomposition."
+  ],
+  "baseline": {
+    "unique_cells": 142,
+    "rejected_frames": [],
+    "accepted_frame_count": 6,
+    "live_minus_grid": {
+      "n": 955,
+      "mean_m": 0.10270635573780933,
+      "p05_median_p95_m": [
+        0.044940993383760196,
+        0.10666370196436015,
+        0.15436441552434083
+      ]
+    },
+    "saved_ground_mean_minus_grid": {
+      "n": 955,
+      "mean_m": 0.020873817724068478,
+      "p05_median_p95_m": [
+        -0.024496501311659813,
+        0.014570549130439758,
+        0.07419759407639503
+      ]
+    },
+    "live_minus_saved_ground_mean": {
+      "n": 955,
+      "mean_m": 0.08183253801374085,
+      "p05_median_p95_m": [
+        0.019903689318634343,
+        0.07958961185319668,
+        0.15186022416239917
+      ]
+    },
+    "same_cell_pcd_median_minus_grid": {
+      "n": 955,
+      "mean_m": 0.02433408079703069,
+      "p05_median_p95_m": [
+        -0.020582137629389763,
+        0.026124790543690324,
+        0.07177561894059181
+      ]
+    },
+    "live_minus_same_cell_pcd_median": {
+      "n": 955,
+      "mean_m": 0.07837227494077863,
+      "p05_median_p95_m": [
+        0.027878803585115023,
+        0.06852877588010498,
+        0.15342161749258884
+      ]
+    }
+  },
+  "candidate": {
+    "unique_cells": 91,
+    "rejected_frames": [
+      {
+        "file": "frame_00.npz",
+        "reason": "imu_stamp_gap",
+        "imu_delta_s": 0.20054790400035927
+      }
+    ],
+    "accepted_frame_count": 5,
+    "live_minus_grid": {
+      "n": 526,
+      "mean_m": 0.09687677737338653,
+      "p05_median_p95_m": [
+        0.04924736140723379,
+        0.09544742047121071,
+        0.14040170873067534
+      ]
+    },
+    "saved_ground_mean_minus_grid": {
+      "n": 526,
+      "mean_m": 0.027310216182554248,
+      "p05_median_p95_m": [
+        -0.0279076904989779,
+        0.028683992568403482,
+        0.07991898618638515
+      ]
+    },
+    "live_minus_saved_ground_mean": {
+      "n": 526,
+      "mean_m": 0.06956656119083228,
+      "p05_median_p95_m": [
+        -0.001450608688539981,
+        0.07200701569624862,
+        0.13417047146884387
+      ]
+    },
+    "same_cell_pcd_median_minus_grid": {
+      "n": 526,
+      "mean_m": 0.026587879243099466,
+      "p05_median_p95_m": [
+        -0.05052514042472467,
+        0.037730258889496326,
+        0.06799366045743227
+      ]
+    },
+    "live_minus_same_cell_pcd_median": {
+      "n": 526,
+      "mean_m": 0.07028889813028706,
+      "p05_median_p95_m": [
+        0.0033225957414491913,
+        0.06619363304435405,
+        0.13618174407534758
+      ]
+    }
+  },
+  "deployed_local_pcd_identical_to_mapping_product": true,
+  "verdict": "47cm height prior is not the source of the 9.6cm residual. Ground grid has local differences from historical returns, but a live-vs-historical discrepancy remains; neither full candidate correctness nor a globally erroneous map height is established."
+}

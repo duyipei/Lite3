@@ -1,0 +1,38 @@
+1793020659.871824 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793020661.844282376] [rgbd_visual_localizer]: loaded 107 visual keyframes; startup references=9; strategy=startup_then_global
+[INFO] [1793020662.668263912] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020667.670568008] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020673.671284424] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020679.669787624] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020685.668105960] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020690.669505224] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020696.668660360] [rgbd_visual_localizer]: WAITING_FOR_IMAGE
+[INFO] [1793020701.741056328] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=3,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.39s,input_age=0.32s,inference=0.07s
+[INFO] [1793020707.708864680] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=3,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.15s,input_age=0.12s,inference=0.04s
+[WARN] [1793020710.668308008] [rgbd_visual_localizer]: no confirmed start-area match; switching to global keyframe search
+[INFO] [1793020711.420703048] [rgbd_visual_localizer]: loading local LoFTR recovery matcher
+[INFO] [1793020804.539602216] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020809.670255624] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020814.670487976] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020819.670739080] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020825.667875240] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020830.668514024] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020835.675152968] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020841.683845192] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020846.669980072] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020852.669952872] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020858.669776200] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020863.668998664] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020871.022110888] [rgbd_visual_localizer]: POSE:mode=global,source=learned_pnp,kf=4,inliers=86,x=0.41,y=-0.20,yaw=-0.04,query_age=2.46s,input_age=0.12s,inference=2.35s
+[WARN] [1793020871.029573352] [rgbd_visual_localizer]: visual frame processing took 2.36s in global mode
+[INFO] [1793020876.670409288] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020882.670370024] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020887.668564168] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020892.670768072] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020898.669495656] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020903.670397864] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020909.670466856] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020914.668815016] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020920.668341256] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020925.668041128] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020930.670890856] [rgbd_visual_localizer]: ERROR:image_timeout

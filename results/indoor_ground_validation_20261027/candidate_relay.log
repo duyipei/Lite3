@@ -1,0 +1,4 @@
+1793023464.310078 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793023472.507047080] [floor_candidate_sensor_only]: first corrected cloud; original source stamp preserved; diagnostic topic only
+[WARN] [1793023489.902664424] [floor_candidate_sensor_only]: New subscription discovered on this topic, requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+published 493

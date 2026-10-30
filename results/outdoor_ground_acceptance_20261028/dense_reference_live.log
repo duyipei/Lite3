@@ -1,0 +1,812 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-10-26-21-52-47-900902-lite-11208
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [hdl_localization_composition-1]: process started with pid [11217]
+[hdl_localization_composition-1] 1793022768.592307 [0] hdl_locali: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[hdl_localization_composition-1] [INFO] [1793022768.682119336] [patrol_localization]: status_max_correspondence_dist is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022768.683170600] [patrol_localization]: status_max_valid_point_dist is: 25.000000
+[hdl_localization_composition-1] [INFO] [1793022768.683952232] [patrol_localization]: robot_odom_frame_id is: robot_odom
+[hdl_localization_composition-1] [INFO] [1793022768.684720936] [patrol_localization]: robot_odom_child_frame_id is: leg_base_link
+[hdl_localization_composition-1] [INFO] [1793022768.685407784] [patrol_localization]: odom_child_frame_id is: base_link
+[hdl_localization_composition-1] [INFO] [1793022768.686057640] [patrol_localization]: use_imu is: 0
+[hdl_localization_composition-1] [INFO] [1793022768.686742440] [patrol_localization]: invert_acc is: 0
+[hdl_localization_composition-1] [INFO] [1793022768.687561544] [patrol_localization]: invert_gyro is: 0
+[hdl_localization_composition-1] [INFO] [1793022768.688358184] [patrol_localization]: t_diff is: 0.250000
+[hdl_localization_composition-1] [INFO] [1793022768.689004872] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022768.689728520] [patrol_localization]: use_global_localization is: 0
+[hdl_localization_composition-1] [INFO] [1793022768.690328232] [patrol_localization]: specify_init_pose is: 0
+[hdl_localization_composition-1] [INFO] [1793022768.691031016] [patrol_localization]: init_pos_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.691684040] [patrol_localization]: init_pos_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.692329480] [patrol_localization]: init_pos_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.693016200] [patrol_localization]: init_ori_w is: 1.000000
+[hdl_localization_composition-1] [INFO] [1793022768.693488776] [patrol_localization]: init_ori_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.693888680] [patrol_localization]: init_ori_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.694341224] [patrol_localization]: init_ori_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793022768.694827368] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793022768.695341320] [patrol_localization]: reg_method is: NDT_OMP
+[hdl_localization_composition-1] [INFO] [1793022768.695747752] [patrol_localization]: ndt_neighbor_search_method is: DIRECT1
+[hdl_localization_composition-1] [INFO] [1793022768.696136328] [patrol_localization]: ndt_neighbor_search_radius is: 3.000000
+[hdl_localization_composition-1] [INFO] [1793022768.698146984] [patrol_localization]: ndt_resolution is: 1.000000
+[hdl_localization_composition-1] [INFO] [1793022768.705806472] [patrol_localization]: create registration method for localization
+[hdl_localization_composition-1] [INFO] [1793022768.705954792] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793022768.706316936] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793022768.706405416] [patrol_localization]: create registration method for fallback during relocalization
+[hdl_localization_composition-1] [INFO] [1793022768.706472872] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793022768.706594632] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793022768.706735592] [patrol_localization]: disable imu-based pose prediction; keep IMU leveling enabled
+[hdl_localization_composition-1] [WARN] [1793022768.756646472] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[hdl_localization_composition-1] [INFO] [1793022768.787571432] [patrol_localization]: globalmap_pcd is: /home/ysc/lite3_patrol_project/navigation/outdoor_20260921_003_area_review/localization_map.pcd
+[hdl_localization_composition-1] [INFO] [1793022769.032912520] [patrol_localization]: convert_utm_to_local is: 0
+[hdl_localization_composition-1] [INFO] [1793022769.034636264] [patrol_localization]: downsample_resolution is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022769.035364776] [patrol_localization]: globalmap_downsample_resolution is: 0.100000
+[hdl_localization_composition-1] [pcl::VoxelGrid::applyFilter] Leaf size is too small for the input dataset. Integer indices would overflow.[INFO] [1793022769.247652136] [patrol_localization]: reference map points: 2600231 -> 2600231
+[hdl_localization_composition-1] [WARN] [1793022769.260901256] [patrol_localization]: received first lidar
+[hdl_localization_composition-1] [WARN] [1793022769.261084584] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1793022769.261162888] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.261226664] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.341838120] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.342092136] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.442711080] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.443127464] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.541316168] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.543237640] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.642345256] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.642523720] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.836605960] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.836815048] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022769.837951464] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022769.838088840] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022770.040014088] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022770.040244712] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022770.239072616] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022770.239675048] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022770.240792328] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022770.240955752] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022770.253896744] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793022770.254047496] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793022773.298879400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022773.571212968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022773.660290664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022773.741644328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022773.840612136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022773.942219528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.043258504] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.149431048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.242186024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.348330728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.443374696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.540609192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.639746568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.744353800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.841758984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022774.941245960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.041903880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.141707656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.239898856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.347207432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.442263304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.542074024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.744180104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.753461352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.841724040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022775.940916776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.042211144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.143539944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.241265256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.340523592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.452919208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.546040456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.642434088] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.747786536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.842750952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022776.943265864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.048224776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.144238632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.250420200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.345672456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.449843304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.544212200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.653964232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.752409928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.841150024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022777.944021064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.047827560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.141817288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.249046120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.346710920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.546249320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.553048648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.639770184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022778.707229192] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1793022778.741082760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.842832712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022778.943906600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.143720808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.151194920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.241437704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.342429928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.442856520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.543834984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.645314248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.845495336] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022779.851660008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.056835944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.147763304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.246350568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.347497032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.452804840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.543141128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.660331272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.745038856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.844630728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022780.947237928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.040940840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.146257704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.242042728] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.340929896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.444689640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.542639112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.649776552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.743687944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.841247592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022781.942479016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.146256712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.153500264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.244700200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.448971912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.549618856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.646176424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022782.744740520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [WARN] [1793022783.139485384] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1793022783.144376168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.149890984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.162285224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.239640360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.347413256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.443321640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.546430184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.749692232] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.757059560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.844146664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022783.949282344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.040549544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.141899752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.242521256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.443851752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.450821416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.646063592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.748187688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.846231784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022784.939854088] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.042428904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.142727496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.243555304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.346346760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.440004008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.541632168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.647284584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.838770472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.844791048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022785.939786632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.143824168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.149702632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.243778952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.342744424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.441296456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.541196744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.651565928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.753934632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.843685384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022786.940140584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.044262088] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.254444808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.261663592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.346009352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.441476936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.541009288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.747100264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.752855592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.841813672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022787.942081800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.042497800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.143758408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.243294856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.345531560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.441445704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.543306952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.641043048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022788.706871848] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1793022788.743944040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022788.844069992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.063867240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.269151112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.282107816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.339732392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.569591464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.593094472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.760835400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.970215336] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022789.983142664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.157050056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.252974120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.499491912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.543240648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.657467432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022790.752192872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [WARN] [1793022791.048943432] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1793022791.054269704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.075470600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.081432296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.145185000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.253327400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.346142472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.592965416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.662374280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.743995624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.954045928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022791.961818824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.160572136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.247905608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.451715880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.542451848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.640361224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.743467784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.845384904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022792.945821064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.041060616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.144912040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.447430312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.453486824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.542203656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.643648936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.749419240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.841197992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022793.945838280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.046356072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.145534824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.243738952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.377751144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.445029928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.644759240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.741156808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.850862856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022794.941378984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.046637256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.146756648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.248312424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.385695336] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.446336360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.545079944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.744905544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.753875624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022795.849912872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.039979528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.045759720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.142450568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.242861896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.343194696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.443993096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.639917736] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.647601608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.741892264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.841473128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022796.945883400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.045696520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.243584264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.351665128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.445884008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.540903560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.652661960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.848629960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022797.948523560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.048943720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.148727272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.245394632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.382593736] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.442399272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.542039752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.642817096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022798.706888616] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1793022798.744565640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022798.845460296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.046537672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.145409000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.242411592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.400216584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.545478056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.552971048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.644942536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.742318920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.840710952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022799.941645896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.044534024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.249138952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.389017032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.444251560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.540575400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.644486120] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.747131432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.842425288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022800.942473864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.042545000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.140575560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.240009416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.386578024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.443928968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.540790568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.644774600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.745199944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.843484008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022801.941201896] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.041187048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.247447752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.403314440] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.447312360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.544341288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.640866312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.742140840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.858559592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022802.942805960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.040074888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.239361064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.245286824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.395687176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.446668936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.540557672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.642032968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.741135112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.844251112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022803.940180360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.042551464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.142200520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.242828904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.393735560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.448527912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.541586664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.641137704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.740848584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.840194312] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022804.941553032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.155553160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.246460904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.388806280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.441049672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [WARN] [1793022805.737820104] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1793022805.742802088] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.749704296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.842203528] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022805.942147240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.044870664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.145484424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.244798824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.342865544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.440850888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.645213704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.651892264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.744411752] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.850344712] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022806.940934536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.150111144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.156785608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.243374216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.381470952] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.443150344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.543414920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.751527656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.842777448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022807.942117576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.042409704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.144011720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.240073032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.379491272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.442698920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.548799624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.645081512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022808.706914184] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1793022808.740672264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.840811944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022808.941317448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.144159464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.150471816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.240695496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.385367976] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.440599368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.539189096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.655817320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.744149352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022809.846356808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.046504424] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.139653000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.242216264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.381222184] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.442329832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.541903688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.640459880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.741526248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022810.841925960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.045144744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.143429192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.241567240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.381167400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.440243592] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.540789192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.640489640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.845579176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022811.942015944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.046510824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.147021768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.243233480] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.377203560] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.444475720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.540525544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.641632264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.742052136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.843405512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022812.942368808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.050294568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.152503144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.240331144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.381266568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.446072584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.542008744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.643123720] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.741836360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.840200936] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022813.948590920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.040737448] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.147662280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.241220040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.379153736] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.445871464] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.542534632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.644782824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.741646408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.847976168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022814.939990920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.040392392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.148862216] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.244665832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.399052200] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.440469320] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.542814632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.640227272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.754684104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022815.840049864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.070283112] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.080327016] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.176587208] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.245870536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.348196968] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.447937192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.542647688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.761474408] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.769048872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.843589416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022816.957084552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.046433384] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.159471432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.243425800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.342411272] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.453580808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.546031848] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.643464136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.742990536] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.843172808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022817.946717704] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.062145960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.150128072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.253632552] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.343102856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.441468104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.546148840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.641593032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022818.706997704] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [ERROR] [1793022818.747344648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.844601512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022818.943676488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.042755048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.151457064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.253754632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.408768904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.444365672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.541217000] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.640858792] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.745483176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.841717192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022819.947220520] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.044639176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.149008072] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.255552584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.341595400] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.445435624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.552759816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.648652264] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.753685064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.841352584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022820.945792488] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.050368648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.149855816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.258376296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.341295176] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.442222472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.555984584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.644844744] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.743500456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.843831240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022821.942917768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.043705992] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.240793160] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.248244040] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.453083368] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.546346664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.643784840] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.848972648] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.859007240] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022822.975810024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.047958824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.251984168] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.263741064] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.341984680] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.432361512] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.546727656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.649483624] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.754356584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.845825576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022823.942489224] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.043117960] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.151349928] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.267520616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.346381576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.498793768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.545658696] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.649687048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.755032392] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.851147784] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022824.953345128] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.046754088] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.146633672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.252319688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.403887432] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.450255496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.546257640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.645479912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.746186056] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.847982600] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022825.942815304] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.044921768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.144782984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.245930664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.391632296] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.444383048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.546116584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.644004136] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.747782760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.843569832] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022826.946557576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.044043944] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.150692776] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.246477032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.415962248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.446074024] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.546135048] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.645444584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793022827.756046664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793022827.791623752] [patrol_localization]: initial pose received!!
+[hdl_localization_composition-1] [INFO] [1793022827.792690280] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793022827.792860552] [patrol_localization]: manual pose anchored to current /leg_odom2 pose; stable NDT auto-reanchor pending
+[hdl_localization_composition-1] [INFO] [1793022832.851465960] [patrol_localization]: refinement diagnostic stamp=2368.645896544 reason=accepted dt_ms=2690.9 ndt_ms=2299.5 source=4477 target=2600231 delta_m=0.04391 delta_deg=0.129 score=0.05668,0.05422 overlap=0.9870,0.9882 coarse_xyzq=0.443695,-0.233088,-0.573220,0.000902,-0.165412,-0.024032,0.985931
+[hdl_localization_composition-1] [INFO] [1793022832.852645864] [patrol_localization]: full-scene refinement before estimator residual 0.0567 -> 0.0542m; overlap 0.987 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022835.175720808] [patrol_localization]: batch nearest-neighbor verified against PCL: 4477 queries
+[hdl_localization_composition-1] [INFO] [1793022835.175988936] [patrol_localization]: NDT acquisition accumulating: 1/15 fitness=0.0056 delta=0.230m
+[hdl_localization_composition-1] [INFO] [1793022835.176494792] [patrol_localization]: scan profile points=4477 prep=6.2 match=4991.3 gate=2323.9 status=0.0 odom=0.1 total=7321.0 ms
+[hdl_localization_composition-1] [INFO] [1793022835.177126120] [patrol_localization]: average pointcloud process time in 10 s is 7321.000000 ms, fps is: 0.100000
+[hdl_localization_composition-1] [WARN] [1793022835.178502824] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022837.154437288] [patrol_localization]: refinement diagnostic stamp=2375.943618880 reason=accepted dt_ms=1916.4 ndt_ms=50.1 source=4269 target=2600231 delta_m=0.03802 delta_deg=0.082 score=0.05687,0.05493 overlap=0.9850,0.9859 coarse_xyzq=0.439490,-0.227048,-0.580676,0.001838,-0.165347,-0.023916,0.985944
+[hdl_localization_composition-1] [INFO] [1793022837.230785352] [patrol_localization]: batch nearest-neighbor verified against PCL: 4269 queries
+[hdl_localization_composition-1] [INFO] [1793022837.231102920] [patrol_localization]: NDT acquisition accumulating: 2/15 fitness=0.0061 delta=0.451m
+[hdl_localization_composition-1] [INFO] [1793022838.890613576] [patrol_localization]: full-scene refinement before estimator residual 0.0541 -> 0.0535m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022838.976607464] [patrol_localization]: batch nearest-neighbor verified against PCL: 4888 queries
+[hdl_localization_composition-1] [INFO] [1793022838.977769000] [patrol_localization]: average pointcloud process time in 10 s is 1898.500000 ms, fps is: 0.200000
+[hdl_localization_composition-1] [INFO] [1793022841.981274504] [patrol_localization]: refinement diagnostic stamp=2379.742828032 reason=accepted dt_ms=2886.8 ndt_ms=107.3 source=5015 target=2600231 delta_m=0.02424 delta_deg=0.058 score=0.05571,0.05507 overlap=0.9870,0.9864 coarse_xyzq=0.446681,-0.237567,-0.591901,0.001946,-0.165530,-0.024125,0.985908
+[hdl_localization_composition-1] [INFO] [1793022842.073849064] [patrol_localization]: batch nearest-neighbor verified against PCL: 5015 queries
+[hdl_localization_composition-1] [INFO] [1793022842.074128616] [patrol_localization]: NDT acquisition accumulating: 4/15 fitness=0.0054 delta=0.456m
+[hdl_localization_composition-1] [INFO] [1793022842.074694472] [patrol_localization]: scan profile points=5015 prep=8.5 match=2995.1 gate=92.3 status=0.0 odom=0.1 total=3096.0 ms
+[hdl_localization_composition-1] [WARN] [1793022842.075828936] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022845.100446760] [patrol_localization]: refinement diagnostic stamp=2382.844412704 reason=accepted dt_ms=2989.9 ndt_ms=27.2 source=4948 target=2600231 delta_m=0.02929 delta_deg=0.031 score=0.05463,0.05375 overlap=0.9883,0.9885 coarse_xyzq=0.449169,-0.229347,-0.589623,0.002355,-0.165457,-0.024009,0.985922
+[hdl_localization_composition-1] [INFO] [1793022845.103721224] [patrol_localization]: full-scene refinement before estimator residual 0.0546 -> 0.0537m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022845.121374088] [patrol_localization]: NDT acquisition accumulating: 5/15 fitness=0.0055 delta=0.461m
+[hdl_localization_composition-1] [INFO] [1793022847.190214600] [patrol_localization]: refinement diagnostic stamp=2385.844079040 reason=accepted dt_ms=2017.8 ndt_ms=43.1 source=4836 target=2600231 delta_m=0.02154 delta_deg=0.048 score=0.05561,0.05511 overlap=0.9864,0.9866 coarse_xyzq=0.436576,-0.246170,-0.596687,0.002237,-0.165339,-0.024323,0.985934
+[hdl_localization_composition-1] [INFO] [1793022847.205746760] [patrol_localization]: NDT acquisition accumulating: 6/15 fitness=0.0055 delta=0.450m
+[hdl_localization_composition-1] [INFO] [1793022847.206244136] [patrol_localization]: scan profile points=4836 prep=4.7 match=2062.0 gate=14.7 status=0.0 odom=0.2 total=2081.0 ms
+[hdl_localization_composition-1] [WARN] [1793022847.207388872] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022849.754286888] [patrol_localization]: refinement diagnostic stamp=2387.943261696 reason=accepted dt_ms=2504.1 ndt_ms=35.5 source=4852 target=2600231 delta_m=0.02520 delta_deg=0.061 score=0.05577,0.05498 overlap=0.9837,0.9841 coarse_xyzq=0.447216,-0.240566,-0.594802,0.002120,-0.165811,-0.024175,0.985859
+[hdl_localization_composition-1] [INFO] [1793022849.769624616] [patrol_localization]: NDT acquisition accumulating: 7/15 fitness=0.0059 delta=0.448m
+[hdl_localization_composition-1] [INFO] [1793022849.770647496] [patrol_localization]: average pointcloud process time in 10 s is 2696.750000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [INFO] [1793022852.271740520] [patrol_localization]: refinement diagnostic stamp=2390.542939808 reason=accepted dt_ms=2458.2 ndt_ms=33.5 source=5768 target=2600231 delta_m=0.01862 delta_deg=0.013 score=0.05583,0.05529 overlap=0.9854,0.9847 coarse_xyzq=0.449668,-0.233118,-0.592531,0.001828,-0.165668,-0.024140,0.985884
+[hdl_localization_composition-1] [INFO] [1793022852.275639304] [patrol_localization]: full-scene refinement before estimator residual 0.0558 -> 0.0553m; overlap 0.985 -> 0.985
+[hdl_localization_composition-1] [INFO] [1793022852.294629768] [patrol_localization]: NDT acquisition accumulating: 8/15 fitness=0.0056 delta=0.461m
+[hdl_localization_composition-1] [INFO] [1793022852.298433736] [patrol_localization]: scan profile points=5768 prep=8.6 match=2495.4 gate=22.8 status=0.0 odom=0.2 total=2526.0 ms
+[hdl_localization_composition-1] [WARN] [1793022852.299399624] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022854.629904008] [patrol_localization]: refinement diagnostic stamp=2393.043188640 reason=accepted dt_ms=2229.1 ndt_ms=95.0 source=4897 target=2600231 delta_m=0.02161 delta_deg=0.032 score=0.05522,0.05466 overlap=0.9877,0.9880 coarse_xyzq=0.448769,-0.239904,-0.590654,0.001956,-0.165659,-0.024215,0.985884
+[hdl_localization_composition-1] [INFO] [1793022854.646882952] [patrol_localization]: NDT acquisition accumulating: 9/15 fitness=0.0053 delta=0.463m
+[hdl_localization_composition-1] [INFO] [1793022858.060424680] [patrol_localization]: refinement diagnostic stamp=2396.743572448 reason=accepted dt_ms=2020.0 ndt_ms=29.7 source=4800 target=2600231 delta_m=0.02847 delta_deg=0.049 score=0.05594,0.05491 overlap=0.9846,0.9846 coarse_xyzq=0.443754,-0.235386,-0.591429,0.002050,-0.165821,-0.023849,0.985865
+[hdl_localization_composition-1] [INFO] [1793022858.061751592] [patrol_localization]: full-scene refinement before estimator residual 0.0559 -> 0.0549m; overlap 0.985 -> 0.985
+[hdl_localization_composition-1] [INFO] [1793022858.078358824] [patrol_localization]: NDT acquisition accumulating: 11/15 fitness=0.0058 delta=0.448m
+[hdl_localization_composition-1] [INFO] [1793022858.078857544] [patrol_localization]: scan profile points=4800 prep=5.9 match=2050.9 gate=17.0 status=0.0 odom=0.2 total=2074.0 ms
+[hdl_localization_composition-1] [WARN] [1793022858.083359240] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022860.631391016] [patrol_localization]: refinement diagnostic stamp=2398.843292672 reason=accepted dt_ms=2505.8 ndt_ms=34.7 source=5102 target=2600231 delta_m=0.02215 delta_deg=0.030 score=0.05437,0.05375 overlap=0.9877,0.9880 coarse_xyzq=0.444686,-0.232857,-0.594275,0.002121,-0.165501,-0.024037,0.985914
+[hdl_localization_composition-1] [INFO] [1793022860.648370792] [patrol_localization]: NDT acquisition accumulating: 12/15 fitness=0.0054 delta=0.461m
+[hdl_localization_composition-1] [INFO] [1793022860.650182184] [patrol_localization]: average pointcloud process time in 10 s is 2173.600000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022864.159883528] [patrol_localization]: refinement diagnostic stamp=2403.143699424 reason=accepted dt_ms=1603.3 ndt_ms=108.3 source=4790 target=2600231 delta_m=0.01582 delta_deg=0.042 score=0.05464,0.05403 overlap=0.9873,0.9873 coarse_xyzq=0.452161,-0.241232,-0.597576,0.002169,-0.165727,-0.024271,0.985870
+[hdl_localization_composition-1] [INFO] [1793022864.161381064] [patrol_localization]: full-scene refinement before estimator residual 0.0546 -> 0.0540m; overlap 0.987 -> 0.987
+[hdl_localization_composition-1] [INFO] [1793022864.176503176] [patrol_localization]: NDT acquisition accumulating: 14/15 fitness=0.0051 delta=0.463m
+[hdl_localization_composition-1] [INFO] [1793022864.177195880] [patrol_localization]: scan profile points=4790 prep=5.9 match=1712.9 gate=15.9 status=0.0 odom=0.2 total=1734.0 ms
+[hdl_localization_composition-1] [WARN] [1793022864.179512776] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793022866.066037224] [patrol_localization]: NDT acquisition unstable: position_span=0.213m yaw_span=0.23deg
+[hdl_localization_composition-1] [INFO] [1793022868.449456456] [patrol_localization]: refinement diagnostic stamp=2406.843314400 reason=accepted dt_ms=2352.5 ndt_ms=23.8 source=4759 target=2600231 delta_m=0.02264 delta_deg=0.068 score=0.05526,0.05451 overlap=0.9870,0.9878 coarse_xyzq=0.450907,-0.242576,-0.593393,0.002245,-0.165943,-0.024157,0.985837
+[hdl_localization_composition-1] [WARN] [1793022868.465317128] [patrol_localization]: auto-promoted stable NDT candidate as anchor: x=0.447 y=-0.232 yaw=-2.9 deg, fitness=0.0055
+[hdl_localization_composition-1] [INFO] [1793022871.116456552] [patrol_localization]: refinement diagnostic stamp=2409.243379360 reason=accepted dt_ms=2601.6 ndt_ms=43.6 source=4869 target=2600231 delta_m=0.02199 delta_deg=0.030 score=0.05430,0.05359 overlap=0.9879,0.9881 coarse_xyzq=0.445860,-0.238379,-0.592195,0.002059,-0.165615,-0.024029,0.985896
+[hdl_localization_composition-1] [INFO] [1793022871.117584168] [patrol_localization]: full-scene refinement before estimator residual 0.0543 -> 0.0536m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022871.133035976] [patrol_localization]: scan profile points=4869 prep=5.0 match=2646.0 gate=15.5 status=0.0 odom=0.2 total=2666.0 ms
+[hdl_localization_composition-1] [INFO] [1793022871.134018824] [patrol_localization]: average pointcloud process time in 10 s is 2094.200000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [WARN] [1793022871.134356744] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022873.838580456] [patrol_localization]: refinement diagnostic stamp=2411.844172096 reason=accepted dt_ms=2598.0 ndt_ms=98.1 source=4528 target=2600231 delta_m=0.01725 delta_deg=0.069 score=0.05341,0.05291 overlap=0.9918,0.9914 coarse_xyzq=0.452239,-0.241857,-0.596919,0.001877,-0.165919,-0.024157,0.985842
+[hdl_localization_composition-1] [INFO] [1793022875.849396328] [patrol_localization]: refinement diagnostic stamp=2414.642661664 reason=accepted dt_ms=1890.8 ndt_ms=97.9 source=4747 target=2600231 delta_m=0.02304 delta_deg=0.020 score=0.05547,0.05492 overlap=0.9846,0.9857 coarse_xyzq=0.443618,-0.236268,-0.596970,0.001856,-0.165440,-0.024348,0.985918
+[hdl_localization_composition-1] [INFO] [1793022877.925832328] [patrol_localization]: refinement diagnostic stamp=2416.643254176 reason=accepted dt_ms=2032.4 ndt_ms=22.0 source=4633 target=2600231 delta_m=0.01732 delta_deg=0.047 score=0.05461,0.05432 overlap=0.9868,0.9868 coarse_xyzq=0.450291,-0.237853,-0.597721,0.001939,-0.165838,-0.024384,0.985850
+[hdl_localization_composition-1] [INFO] [1793022877.928463592] [fine_pose_diagnostic]: measurement_q=0.985866,0.002141,-0.165791,-0.024032 posterior_q=0.985866,0.002141,-0.165790,-0.024033 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793022877.928862760] [patrol_localization]: full-scene refinement before estimator residual 0.0546 -> 0.0543m; overlap 0.987 -> 0.987
+[hdl_localization_composition-1] [INFO] [1793022877.948813960] [patrol_localization]: scan profile points=4633 prep=5.0 match=2057.1 gate=20.0 status=0.0 odom=0.2 total=2082.0 ms
+[hdl_localization_composition-1] [WARN] [1793022877.949796392] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022879.933076840] [patrol_localization]: average pointcloud process time in 10 s is 2198.500000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [INFO] [1793022881.672056872] [patrol_localization]: refinement diagnostic stamp=2420.643296864 reason=accepted dt_ms=1708.4 ndt_ms=23.6 source=4832 target=2600231 delta_m=0.01821 delta_deg=0.023 score=0.05186,0.05129 overlap=0.9913,0.9911 coarse_xyzq=0.444462,-0.233234,-0.594694,0.002130,-0.165319,-0.024165,0.985942
+[hdl_localization_composition-1] [INFO] [1793022883.637703432] [patrol_localization]: full-scene refinement before estimator residual 0.0534 -> 0.0524m; overlap 0.990 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022883.654082792] [patrol_localization]: scan profile points=4750 prep=4.8 match=1944.5 gate=16.3 status=0.0 odom=0.2 total=1965.0 ms
+[hdl_localization_composition-1] [WARN] [1793022883.655793064] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022886.385470856] [patrol_localization]: refinement diagnostic stamp=2424.443399968 reason=accepted dt_ms=2681.1 ndt_ms=43.2 source=4889 target=2600231 delta_m=0.03057 delta_deg=0.052 score=0.05277,0.05152 overlap=0.9912,0.9912 coarse_xyzq=0.452295,-0.231791,-0.584550,0.001716,-0.165695,-0.024123,0.985880
+[hdl_localization_composition-1] [WARN] [1793022886.403036520] [patrol_localization]: rejecting IMU leveling pair: gap 0.073070s or invalid orientation
+[hdl_localization_composition-1] [WARN] [1793022886.403233864] [patrol_localization]: no valid time-aligned IMU for lidar leveling
+[hdl_localization_composition-1] [INFO] [1793022888.842497320] [patrol_localization]: refinement diagnostic stamp=2427.443085248 reason=accepted dt_ms=2054.8 ndt_ms=92.1 source=4612 target=2600231 delta_m=0.02078 delta_deg=0.032 score=0.05263,0.05210 overlap=0.9909,0.9907 coarse_xyzq=0.435064,-0.244719,-0.595022,0.002224,-0.165278,-0.024315,0.985945
+[hdl_localization_composition-1] [INFO] [1793022888.843795304] [patrol_localization]: full-scene refinement before estimator residual 0.0526 -> 0.0521m; overlap 0.991 -> 0.991
+[hdl_localization_composition-1] [INFO] [1793022888.857916584] [patrol_localization]: scan profile points=4612 prep=5.4 match=2148.0 gate=14.2 status=0.0 odom=0.2 total=2167.0 ms
+[hdl_localization_composition-1] [INFO] [1793022888.858559624] [patrol_localization]: average pointcloud process time in 10 s is 2157.750000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [WARN] [1793022888.859521256] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022891.895299688] [patrol_localization]: refinement diagnostic stamp=2431.242654784 reason=accepted dt_ms=1408.4 ndt_ms=24.7 source=4579 target=2600231 delta_m=0.01278 delta_deg=0.036 score=0.05342,0.05291 overlap=0.9900,0.9904 coarse_xyzq=0.446183,-0.234346,-0.594427,0.002198,-0.165740,-0.024255,0.985869
+[hdl_localization_composition-1] [INFO] [1793022894.743833096] [patrol_localization]: refinement diagnostic stamp=2434.150679616 reason=accepted dt_ms=1246.8 ndt_ms=86.1 source=4496 target=2600231 delta_m=0.02377 delta_deg=0.024 score=0.05186,0.05081 overlap=0.9909,0.9913 coarse_xyzq=0.446633,-0.236753,-0.591269,0.001961,-0.165528,-0.024176,0.985907
+[hdl_localization_composition-1] [INFO] [1793022894.744820136] [patrol_localization]: full-scene refinement before estimator residual 0.0519 -> 0.0508m; overlap 0.991 -> 0.991
+[hdl_localization_composition-1] [INFO] [1793022894.759556488] [patrol_localization]: scan profile points=4496 prep=4.3 match=1333.7 gate=14.6 status=0.0 odom=0.2 total=1352.0 ms
+[hdl_localization_composition-1] [WARN] [1793022894.760429576] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022898.296432072] [patrol_localization]: refinement diagnostic stamp=2437.443406656 reason=accepted dt_ms=1591.2 ndt_ms=25.5 source=4808 target=2600231 delta_m=0.01875 delta_deg=0.020 score=0.05324,0.05265 overlap=0.9902,0.9904 coarse_xyzq=0.450342,-0.235460,-0.592586,0.002095,-0.165800,-0.024277,0.985858
+[hdl_localization_composition-1] [INFO] [1793022900.016633128] [patrol_localization]: full-scene refinement before estimator residual 0.0541 -> 0.0530m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022900.031721544] [patrol_localization]: scan profile points=4737 prep=4.7 match=1697.6 gate=14.6 status=0.0 odom=0.7 total=1717.0 ms
+[hdl_localization_composition-1] [INFO] [1793022900.032545256] [patrol_localization]: average pointcloud process time in 10 s is 1594.857143 ms, fps is: 0.700000
+[hdl_localization_composition-1] [WARN] [1793022900.033532296] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022902.582916456] [patrol_localization]: refinement diagnostic stamp=2440.742708032 reason=accepted dt_ms=2508.7 ndt_ms=32.1 source=4787 target=2600231 delta_m=0.02562 delta_deg=0.005 score=0.05306,0.05185 overlap=0.9889,0.9891 coarse_xyzq=0.444902,-0.229924,-0.590780,0.001827,-0.165448,-0.024244,0.985919
+[hdl_localization_composition-1] [INFO] [1793022904.653785832] [patrol_localization]: refinement diagnostic stamp=2443.344356448 reason=accepted dt_ms=2021.9 ndt_ms=24.4 source=4615 target=2600231 delta_m=0.02473 delta_deg=0.073 score=0.05367,0.05297 overlap=0.9900,0.9902 coarse_xyzq=0.447204,-0.243297,-0.592014,0.001948,-0.165800,-0.024339,0.985857
+[hdl_localization_composition-1] [INFO] [1793022906.183690344] [patrol_localization]: full-scene refinement before estimator residual 0.0531 -> 0.0526m; overlap 0.992 -> 0.992
+[hdl_localization_composition-1] [INFO] [1793022906.200662088] [patrol_localization]: scan profile points=4659 prep=5.4 match=1508.8 gate=17.0 status=0.0 odom=0.2 total=1531.0 ms
+[hdl_localization_composition-1] [WARN] [1793022906.201589128] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022908.095684136] [patrol_localization]: refinement diagnostic stamp=2446.943261472 reason=accepted dt_ms=1863.9 ndt_ms=24.7 source=4763 target=2600231 delta_m=0.02144 delta_deg=0.037 score=0.05181,0.05079 overlap=0.9910,0.9908 coarse_xyzq=0.445655,-0.233408,-0.590031,0.002074,-0.165573,-0.024086,0.985901
+[hdl_localization_composition-1] [INFO] [1793022910.732813672] [patrol_localization]: refinement diagnostic stamp=2448.842617440 reason=accepted dt_ms=2502.0 ndt_ms=112.7 source=4903 target=2600231 delta_m=0.02432 delta_deg=0.031 score=0.05415,0.05348 overlap=0.9878,0.9878 coarse_xyzq=0.447648,-0.227021,-0.594772,0.002630,-0.165725,-0.024221,0.985871
+[hdl_localization_composition-1] [INFO] [1793022910.750871560] [patrol_localization]: average pointcloud process time in 10 s is 2142.000000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022911.973766984] [patrol_localization]: full-scene refinement before estimator residual 0.0529 -> 0.0520m; overlap 0.990 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793022911.989144712] [patrol_localization]: scan profile points=4634 prep=5.5 match=1216.2 gate=15.4 status=0.0 odom=0.2 total=1237.0 ms
+[hdl_localization_composition-1] [WARN] [1793022911.990022664] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022913.913996840] [patrol_localization]: refinement diagnostic stamp=2452.743169504 reason=accepted dt_ms=1826.3 ndt_ms=93.0 source=4683 target=2600231 delta_m=0.02244 delta_deg=0.022 score=0.05282,0.05214 overlap=0.9880,0.9878 coarse_xyzq=0.442948,-0.239563,-0.593528,0.002349,-0.165566,-0.024067,0.985902
+[hdl_localization_composition-1] [INFO] [1793022915.568468712] [fine_pose_diagnostic]: measurement_q=0.985910,0.001946,-0.165500,-0.024281 posterior_q=0.985909,0.001947,-0.165500,-0.024280 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793022917.749065672] [patrol_localization]: refinement diagnostic stamp=2456.342635584 reason=accepted dt_ms=2138.2 ndt_ms=22.7 source=4840 target=2600231 delta_m=0.02286 delta_deg=0.015 score=0.05309,0.05230 overlap=0.9882,0.9886 coarse_xyzq=0.447584,-0.240890,-0.593157,0.001923,-0.165660,-0.024034,0.985888
+[hdl_localization_composition-1] [INFO] [1793022917.750123880] [patrol_localization]: full-scene refinement before estimator residual 0.0531 -> 0.0523m; overlap 0.988 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022917.765213576] [patrol_localization]: scan profile points=4840 prep=4.5 match=2161.9 gate=15.0 status=0.0 odom=0.1 total=2181.0 ms
+[hdl_localization_composition-1] [WARN] [1793022917.766106728] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022919.607507464] [patrol_localization]: average pointcloud process time in 10 s is 1769.800000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022922.560727592] [patrol_localization]: refinement diagnostic stamp=2460.343098944 reason=accepted dt_ms=2855.6 ndt_ms=92.4 source=4816 target=2600231 delta_m=0.02613 delta_deg=0.032 score=0.05502,0.05402 overlap=0.9875,0.9877 coarse_xyzq=0.449426,-0.238055,-0.590071,0.001997,-0.165840,-0.024032,0.985858
+[hdl_localization_composition-1] [INFO] [1793022925.375396680] [patrol_localization]: refinement diagnostic stamp=2463.342749024 reason=accepted dt_ms=2699.6 ndt_ms=91.9 source=4821 target=2600231 delta_m=0.02455 delta_deg=0.036 score=0.05459,0.05379 overlap=0.9890,0.9890 coarse_xyzq=0.447417,-0.244032,-0.589530,0.002120,-0.165932,-0.024222,0.985837
+[hdl_localization_composition-1] [INFO] [1793022925.377512744] [patrol_localization]: full-scene refinement before estimator residual 0.0546 -> 0.0538m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022925.393125160] [patrol_localization]: scan profile points=4821 prep=5.2 match=2793.6 gate=15.5 status=0.0 odom=0.2 total=2814.0 ms
+[hdl_localization_composition-1] [WARN] [1793022925.394711560] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022928.899035912] [patrol_localization]: refinement diagnostic stamp=2467.642926944 reason=accepted dt_ms=2007.7 ndt_ms=24.7 source=4788 target=2600231 delta_m=0.02636 delta_deg=0.034 score=0.05605,0.05481 overlap=0.9856,0.9858 coarse_xyzq=0.444276,-0.243207,-0.584481,0.002026,-0.165649,-0.024138,0.985887
+[hdl_localization_composition-1] [INFO] [1793022928.916365992] [patrol_localization]: average pointcloud process time in 10 s is 2325.750000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [INFO] [1793022930.837787912] [patrol_localization]: full-scene refinement before estimator residual 0.0544 -> 0.0538m; overlap 0.987 -> 0.987
+[hdl_localization_composition-1] [INFO] [1793022930.853214440] [patrol_localization]: scan profile points=4800 prep=4.9 match=1915.5 gate=15.5 status=0.0 odom=0.2 total=1936.0 ms
+[hdl_localization_composition-1] [WARN] [1793022930.853985000] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022933.330260232] [patrol_localization]: refinement diagnostic stamp=2471.643172992 reason=accepted dt_ms=2381.4 ndt_ms=90.0 source=4673 target=2600231 delta_m=0.02703 delta_deg=0.040 score=0.05301,0.05227 overlap=0.9936,0.9940 coarse_xyzq=0.443747,-0.236467,-0.595879,0.002075,-0.165358,-0.024151,0.985936
+[hdl_localization_composition-1] [INFO] [1793022936.961912712] [patrol_localization]: refinement diagnostic stamp=2475.243153056 reason=accepted dt_ms=2333.1 ndt_ms=90.1 source=4940 target=2600231 delta_m=0.02503 delta_deg=0.076 score=0.05528,0.05477 overlap=0.9879,0.9885 coarse_xyzq=0.447813,-0.239250,-0.596284,0.001509,-0.165283,-0.024037,0.985952
+[hdl_localization_composition-1] [INFO] [1793022936.963004616] [patrol_localization]: full-scene refinement before estimator residual 0.0553 -> 0.0548m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022936.978865096] [patrol_localization]: scan profile points=4940 prep=5.1 match=2424.1 gate=15.9 status=0.0 odom=0.1 total=2445.0 ms
+[hdl_localization_composition-1] [WARN] [1793022936.979875336] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022939.838623176] [patrol_localization]: refinement diagnostic stamp=2479.042876896 reason=accepted dt_ms=1433.1 ndt_ms=92.1 source=4932 target=2600231 delta_m=0.02198 delta_deg=0.032 score=0.05553,0.05503 overlap=0.9880,0.9886 coarse_xyzq=0.445939,-0.247684,-0.596286,0.001615,-0.165597,-0.024191,0.985895
+[hdl_localization_composition-1] [INFO] [1793022939.855779368] [patrol_localization]: average pointcloud process time in 10 s is 1821.833333 ms, fps is: 0.600000
+[hdl_localization_composition-1] [INFO] [1793022942.401994376] [patrol_localization]: refinement diagnostic stamp=2480.643625568 reason=accepted dt_ms=2500.7 ndt_ms=39.3 source=4723 target=2600231 delta_m=0.02591 delta_deg=0.066 score=0.05524,0.05471 overlap=0.9858,0.9864 coarse_xyzq=0.445778,-0.238311,-0.592491,0.001599,-0.165576,-0.024166,0.985900
+[hdl_localization_composition-1] [INFO] [1793022942.403292712] [patrol_localization]: full-scene refinement before estimator residual 0.0552 -> 0.0547m; overlap 0.986 -> 0.986
+[hdl_localization_composition-1] [INFO] [1793022942.419759080] [patrol_localization]: scan profile points=4723 prep=5.2 match=2541.1 gate=16.6 status=0.0 odom=0.2 total=2563.0 ms
+[hdl_localization_composition-1] [WARN] [1793022942.420941224] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022945.245951976] [patrol_localization]: refinement diagnostic stamp=2483.143297664 reason=accepted dt_ms=2726.4 ndt_ms=93.3 source=4880 target=2600231 delta_m=0.01872 delta_deg=0.016 score=0.05514,0.05456 overlap=0.9865,0.9865 coarse_xyzq=0.441219,-0.226531,-0.600830,0.002248,-0.165378,-0.024118,0.985933
+[hdl_localization_composition-1] [INFO] [1793022948.880677512] [patrol_localization]: refinement diagnostic stamp=2487.642713856 reason=accepted dt_ms=1991.0 ndt_ms=22.9 source=4670 target=2600231 delta_m=0.02657 delta_deg=0.008 score=0.05381,0.05285 overlap=0.9882,0.9884 coarse_xyzq=0.448669,-0.231950,-0.590156,0.002341,-0.165831,-0.024143,0.985856
+[hdl_localization_composition-1] [INFO] [1793022948.881812264] [patrol_localization]: full-scene refinement before estimator residual 0.0538 -> 0.0528m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022948.895767784] [patrol_localization]: scan profile points=4670 prep=4.8 match=2014.9 gate=13.8 status=0.0 odom=0.2 total=2033.0 ms
+[hdl_localization_composition-1] [INFO] [1793022948.896459144] [patrol_localization]: average pointcloud process time in 10 s is 2258.750000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [WARN] [1793022948.897524424] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022951.677081640] [patrol_localization]: refinement diagnostic stamp=2489.644162944 reason=accepted dt_ms=2749.0 ndt_ms=23.7 source=4871 target=2600231 delta_m=0.02862 delta_deg=0.039 score=0.05339,0.05231 overlap=0.9908,0.9908 coarse_xyzq=0.451547,-0.232534,-0.586280,0.002048,-0.165865,-0.023962,0.985855
+[hdl_localization_composition-1] [INFO] [1793022954.493604040] [patrol_localization]: refinement diagnostic stamp=2492.443775104 reason=accepted dt_ms=2772.3 ndt_ms=22.7 source=4892 target=2600231 delta_m=0.02918 delta_deg=0.066 score=0.05452,0.05383 overlap=0.9879,0.9886 coarse_xyzq=0.451486,-0.236370,-0.590972,0.002349,-0.165868,-0.023931,0.985855
+[hdl_localization_composition-1] [INFO] [1793022954.495925960] [patrol_localization]: full-scene refinement before estimator residual 0.0545 -> 0.0538m; overlap 0.988 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022954.510488552] [patrol_localization]: scan profile points=4892 prep=4.8 match=2797.1 gate=14.7 status=0.0 odom=0.1 total=2816.0 ms
+[hdl_localization_composition-1] [WARN] [1793022954.511839944] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022958.939380232] [patrol_localization]: refinement diagnostic stamp=2496.943221728 reason=accepted dt_ms=2633.4 ndt_ms=97.6 source=4835 target=2600231 delta_m=0.03153 delta_deg=0.026 score=0.05504,0.05394 overlap=0.9888,0.9892 coarse_xyzq=0.447863,-0.232901,-0.584365,0.001779,-0.165582,-0.024147,0.985899
+[hdl_localization_composition-1] [INFO] [1793022958.940558760] [fine_pose_diagnostic]: measurement_q=0.985924,0.001945,-0.165429,-0.024172 posterior_q=0.985924,0.001945,-0.165429,-0.024172 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793022958.955321192] [patrol_localization]: average pointcloud process time in 10 s is 2513.250000 ms, fps is: 0.400000
+[hdl_localization_composition-1] [INFO] [1793022961.728880424] [patrol_localization]: refinement diagnostic stamp=2499.642590432 reason=accepted dt_ms=2745.4 ndt_ms=23.0 source=4943 target=2600231 delta_m=0.02888 delta_deg=0.092 score=0.05368,0.05254 overlap=0.9895,0.9893 coarse_xyzq=0.438518,-0.234806,-0.590067,0.002043,-0.165527,-0.024029,0.985910
+[hdl_localization_composition-1] [INFO] [1793022961.730446504] [patrol_localization]: full-scene refinement before estimator residual 0.0537 -> 0.0525m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022961.746194088] [patrol_localization]: scan profile points=4943 prep=4.7 match=2769.7 gate=15.8 status=0.0 odom=0.2 total=2790.0 ms
+[hdl_localization_composition-1] [WARN] [1793022961.747160552] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022965.169704424] [patrol_localization]: refinement diagnostic stamp=2504.043761056 reason=accepted dt_ms=1750.7 ndt_ms=89.9 source=4854 target=2600231 delta_m=0.02297 delta_deg=0.062 score=0.05496,0.05432 overlap=0.9856,0.9864 coarse_xyzq=0.444721,-0.244858,-0.592097,0.002071,-0.165600,-0.024147,0.985895
+[hdl_localization_composition-1] [INFO] [1793022967.965155624] [patrol_localization]: refinement diagnostic stamp=2505.644333888 reason=accepted dt_ms=2740.8 ndt_ms=31.3 source=4820 target=2600231 delta_m=0.02573 delta_deg=0.026 score=0.05456,0.05333 overlap=0.9878,0.9880 coarse_xyzq=0.445335,-0.235481,-0.585311,0.002317,-0.165665,-0.024092,0.985885
+[hdl_localization_composition-1] [INFO] [1793022967.966183656] [patrol_localization]: full-scene refinement before estimator residual 0.0546 -> 0.0533m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793022967.981045896] [patrol_localization]: scan profile points=4820 prep=4.5 match=2773.0 gate=14.8 status=0.0 odom=0.1 total=2792.0 ms
+[hdl_localization_composition-1] [WARN] [1793022967.982079144] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022969.467494856] [patrol_localization]: average pointcloud process time in 10 s is 2100.800000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022972.392677288] [patrol_localization]: refinement diagnostic stamp=2510.243224640 reason=accepted dt_ms=2889.1 ndt_ms=26.5 source=5170 target=2600231 delta_m=0.02530 delta_deg=0.067 score=0.05557,0.05485 overlap=0.9868,0.9878 coarse_xyzq=0.448865,-0.246423,-0.592723,0.001911,-0.165866,-0.024202,0.985849
+[hdl_localization_composition-1] [INFO] [1793022973.938915496] [patrol_localization]: full-scene refinement before estimator residual 0.0531 -> 0.0526m; overlap 0.990 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793022973.953253544] [patrol_localization]: scan profile points=4704 prep=5.8 match=1522.6 gate=14.3 status=0.0 odom=0.2 total=1542.0 ms
+[hdl_localization_composition-1] [WARN] [1793022973.954401800] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022975.128512776] [patrol_localization]: refinement diagnostic stamp=2514.743845056 reason=accepted dt_ms=1108.7 ndt_ms=57.4 source=4928 target=2600231 delta_m=0.01098 delta_deg=0.009 score=0.05528,0.05521 overlap=0.9840,0.9842 coarse_xyzq=0.443993,-0.238599,-0.606477,0.002193,-0.165412,-0.024092,0.985928
+[hdl_localization_composition-1] [INFO] [1793022978.449579944] [patrol_localization]: refinement diagnostic stamp=2517.342881344 reason=accepted dt_ms=1883.2 ndt_ms=24.4 source=4806 target=2600231 delta_m=0.03159 delta_deg=0.045 score=0.05525,0.05428 overlap=0.9875,0.9879 coarse_xyzq=0.443552,-0.235479,-0.587664,0.002092,-0.165407,-0.024114,0.985928
+[hdl_localization_composition-1] [INFO] [1793022980.713730440] [patrol_localization]: refinement diagnostic stamp=2519.243330368 reason=accepted dt_ms=2220.3 ndt_ms=22.0 source=4717 target=2600231 delta_m=0.01837 delta_deg=0.034 score=0.05497,0.05455 overlap=0.9875,0.9875 coarse_xyzq=0.444414,-0.242682,-0.596307,0.002122,-0.165618,-0.024220,0.985890
+[hdl_localization_composition-1] [INFO] [1793022980.715765800] [patrol_localization]: full-scene refinement before estimator residual 0.0550 -> 0.0546m; overlap 0.987 -> 0.987
+[hdl_localization_composition-1] [INFO] [1793022980.729302792] [patrol_localization]: scan profile points=4717 prep=5.1 match=2244.3 gate=13.5 status=0.0 odom=0.1 total=2263.0 ms
+[hdl_localization_composition-1] [INFO] [1793022980.730016712] [patrol_localization]: average pointcloud process time in 10 s is 1875.333333 ms, fps is: 0.600000
+[hdl_localization_composition-1] [WARN] [1793022980.732158120] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022983.015713672] [patrol_localization]: refinement diagnostic stamp=2521.442960704 reason=accepted dt_ms=2242.8 ndt_ms=31.1 source=4951 target=2600231 delta_m=0.02901 delta_deg=0.036 score=0.05486,0.05367 overlap=0.9867,0.9873 coarse_xyzq=0.446862,-0.242760,-0.585794,0.001795,-0.165405,-0.024177,0.985928
+[hdl_localization_composition-1] [INFO] [1793022986.449460072] [patrol_localization]: refinement diagnostic stamp=2525.543865792 reason=accepted dt_ms=1644.8 ndt_ms=22.2 source=4785 target=2600231 delta_m=0.02206 delta_deg=0.051 score=0.05578,0.05525 overlap=0.9847,0.9850 coarse_xyzq=0.450233,-0.236931,-0.593707,0.001876,-0.165349,-0.024175,0.985937
+[hdl_localization_composition-1] [INFO] [1793022986.450630952] [patrol_localization]: full-scene refinement before estimator residual 0.0558 -> 0.0552m; overlap 0.985 -> 0.985
+[hdl_localization_composition-1] [INFO] [1793022986.465028360] [patrol_localization]: scan profile points=4785 prep=4.8 match=1668.0 gate=14.3 status=0.0 odom=0.2 total=1687.0 ms
+[hdl_localization_composition-1] [WARN] [1793022986.465818824] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022988.485255016] [patrol_localization]: refinement diagnostic stamp=2527.242818560 reason=accepted dt_ms=1990.2 ndt_ms=23.9 source=4837 target=2600231 delta_m=0.02248 delta_deg=0.020 score=0.05405,0.05342 overlap=0.9880,0.9882 coarse_xyzq=0.441561,-0.233050,-0.594594,0.001689,-0.165345,-0.024299,0.985935
+[hdl_localization_composition-1] [INFO] [1793022990.290355016] [patrol_localization]: average pointcloud process time in 10 s is 1910.400000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793022991.762518408] [patrol_localization]: refinement diagnostic stamp=2531.042838368 reason=accepted dt_ms=1437.4 ndt_ms=27.8 source=5044 target=2600231 delta_m=0.01568 delta_deg=0.040 score=0.05450,0.05418 overlap=0.9895,0.9891 coarse_xyzq=0.448927,-0.238478,-0.597605,0.002033,-0.165368,-0.024071,0.985936
+[hdl_localization_composition-1] [INFO] [1793022991.763586632] [patrol_localization]: full-scene refinement before estimator residual 0.0545 -> 0.0542m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793022991.778073992] [patrol_localization]: scan profile points=5044 prep=6.1 match=1466.2 gate=14.3 status=0.0 odom=0.2 total=1486.0 ms
+[hdl_localization_composition-1] [WARN] [1793022991.779940168] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793022994.293400072] [patrol_localization]: refinement diagnostic stamp=2532.543011264 reason=accepted dt_ms=2468.0 ndt_ms=40.3 source=4857 target=2600231 delta_m=0.02278 delta_deg=0.024 score=0.05444,0.05382 overlap=0.9858,0.9864 coarse_xyzq=0.449703,-0.242502,-0.591049,0.002221,-0.165443,-0.024122,0.985922
+[hdl_localization_composition-1] [INFO] [1793022998.305551720] [patrol_localization]: refinement diagnostic stamp=2536.643355360 reason=accepted dt_ms=2374.3 ndt_ms=28.9 source=4837 target=2600231 delta_m=0.03126 delta_deg=0.071 score=0.05527,0.05427 overlap=0.9864,0.9864 coarse_xyzq=0.447601,-0.243549,-0.593319,0.001863,-0.165282,-0.024033,0.985952
+[hdl_localization_composition-1] [INFO] [1793022998.306572808] [fine_pose_diagnostic]: measurement_q=0.986042,0.002141,-0.164736,-0.024087 posterior_q=0.986041,0.002141,-0.164736,-0.024087 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793022998.306845704] [patrol_localization]: full-scene refinement before estimator residual 0.0553 -> 0.0543m; overlap 0.986 -> 0.986
+[hdl_localization_composition-1] [INFO] [1793022998.321311496] [patrol_localization]: scan profile points=4837 prep=7.1 match=2404.4 gate=14.4 status=0.0 odom=0.2 total=2426.0 ms
+[hdl_localization_composition-1] [WARN] [1793022998.322067912] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023001.099935720] [patrol_localization]: refinement diagnostic stamp=2539.042889600 reason=accepted dt_ms=2678.5 ndt_ms=93.4 source=4920 target=2600231 delta_m=0.01972 delta_deg=0.031 score=0.05520,0.05481 overlap=0.9874,0.9878 coarse_xyzq=0.443267,-0.240417,-0.595839,0.001523,-0.165210,-0.024121,0.985962
+[hdl_localization_composition-1] [INFO] [1793023001.115750888] [patrol_localization]: average pointcloud process time in 10 s is 2163.600000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793023003.564422792] [patrol_localization]: refinement diagnostic stamp=2541.842789600 reason=accepted dt_ms=2349.0 ndt_ms=91.8 source=4808 target=2600231 delta_m=0.02346 delta_deg=0.044 score=0.05473,0.05404 overlap=0.9881,0.9886 coarse_xyzq=0.444811,-0.237099,-0.591318,0.001495,-0.165336,-0.024265,0.985938
+[hdl_localization_composition-1] [INFO] [1793023003.565383016] [patrol_localization]: full-scene refinement before estimator residual 0.0547 -> 0.0540m; overlap 0.988 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793023003.580068040] [patrol_localization]: scan profile points=4808 prep=5.1 match=2441.7 gate=14.6 status=0.0 odom=0.2 total=2461.0 ms
+[hdl_localization_composition-1] [WARN] [1793023003.580906088] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023006.856672872] [patrol_localization]: refinement diagnostic stamp=2546.143133344 reason=accepted dt_ms=1403.4 ndt_ms=87.8 source=4894 target=2600231 delta_m=0.01991 delta_deg=0.014 score=0.05338,0.05284 overlap=0.9875,0.9879 coarse_xyzq=0.444331,-0.234193,-0.596154,0.001907,-0.165283,-0.024078,0.985950
+[hdl_localization_composition-1] [INFO] [1793023008.643534632] [patrol_localization]: full-scene refinement before estimator residual 0.0531 -> 0.0525m; overlap 0.990 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793023008.658179112] [patrol_localization]: scan profile points=4684 prep=4.5 match=1765.5 gate=14.6 status=0.0 odom=0.2 total=1784.0 ms
+[hdl_localization_composition-1] [WARN] [1793023008.659118856] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023010.361320264] [patrol_localization]: refinement diagnostic stamp=2549.442568576 reason=accepted dt_ms=1675.4 ndt_ms=22.2 source=4681 target=2600231 delta_m=0.02854 delta_deg=0.007 score=0.05356,0.05238 overlap=0.9902,0.9904 coarse_xyzq=0.439126,-0.240392,-0.586983,0.001752,-0.165553,-0.024298,0.985900
+[hdl_localization_composition-1] [INFO] [1793023010.379035720] [patrol_localization]: average pointcloud process time in 10 s is 1850.800000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793023013.028802568] [patrol_localization]: refinement diagnostic stamp=2551.142935552 reason=accepted dt_ms=2549.2 ndt_ms=93.7 source=4731 target=2600231 delta_m=0.02785 delta_deg=0.070 score=0.05481,0.05422 overlap=0.9869,0.9871 coarse_xyzq=0.444206,-0.248054,-0.593517,0.001585,-0.165575,-0.024230,0.985898
+[hdl_localization_composition-1] [INFO] [1793023015.001077768] [patrol_localization]: full-scene refinement before estimator residual 0.0532 -> 0.0523m; overlap 0.990 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793023015.017625352] [patrol_localization]: scan profile points=4782 prep=6.4 match=1949.3 gate=16.6 status=0.0 odom=0.2 total=1972.0 ms
+[hdl_localization_composition-1] [WARN] [1793023015.018762056] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023016.593719720] [patrol_localization]: refinement diagnostic stamp=2555.744328256 reason=accepted dt_ms=1544.3 ndt_ms=25.2 source=4799 target=2600231 delta_m=0.02310 delta_deg=0.046 score=0.05412,0.05316 overlap=0.9877,0.9879 coarse_xyzq=0.448504,-0.245924,-0.585940,0.001648,-0.165629,-0.024298,0.985887
+[hdl_localization_composition-1] [INFO] [1793023020.169837832] [patrol_localization]: refinement diagnostic stamp=2558.742683616 reason=accepted dt_ms=2148.8 ndt_ms=28.5 source=4791 target=2600231 delta_m=0.02745 delta_deg=0.069 score=0.05285,0.05227 overlap=0.9906,0.9904 coarse_xyzq=0.449146,-0.246582,-0.589879,0.002013,-0.165717,-0.024233,0.985873
+[hdl_localization_composition-1] [INFO] [1793023020.171311976] [patrol_localization]: full-scene refinement before estimator residual 0.0528 -> 0.0523m; overlap 0.991 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793023020.185697672] [patrol_localization]: scan profile points=4791 prep=7.0 match=2178.5 gate=14.5 status=0.0 odom=0.2 total=2200.0 ms
+[hdl_localization_composition-1] [INFO] [1793023020.186381544] [patrol_localization]: average pointcloud process time in 10 s is 1960.200000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [WARN] [1793023020.187251944] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023023.322558760] [patrol_localization]: refinement diagnostic stamp=2562.443219264 reason=accepted dt_ms=1574.2 ndt_ms=24.1 source=4928 target=2600231 delta_m=0.02896 delta_deg=0.051 score=0.05400,0.05289 overlap=0.9890,0.9897 coarse_xyzq=0.440969,-0.233573,-0.588042,0.001633,-0.165603,-0.024175,0.985895
+[hdl_localization_composition-1] [INFO] [1793023025.544967144] [patrol_localization]: refinement diagnostic stamp=2564.143109664 reason=accepted dt_ms=2112.9 ndt_ms=87.7 source=4879 target=2600231 delta_m=0.02420 delta_deg=0.074 score=0.05332,0.05251 overlap=0.9885,0.9887 coarse_xyzq=0.447456,-0.237340,-0.592526,0.001866,-0.165802,-0.024181,0.985861
+[hdl_localization_composition-1] [INFO] [1793023025.546627528] [patrol_localization]: full-scene refinement before estimator residual 0.0533 -> 0.0525m; overlap 0.989 -> 0.989
+[hdl_localization_composition-1] [INFO] [1793023025.563933800] [patrol_localization]: scan profile points=4879 prep=4.6 match=2202.0 gate=17.4 status=0.0 odom=0.2 total=2224.0 ms
+[hdl_localization_composition-1] [WARN] [1793023025.564911560] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023027.847202280] [patrol_localization]: refinement diagnostic stamp=2566.342863712 reason=accepted dt_ms=2250.3 ndt_ms=25.5 source=4751 target=2600231 delta_m=0.02387 delta_deg=0.049 score=0.05385,0.05314 overlap=0.9880,0.9886 coarse_xyzq=0.442295,-0.234559,-0.593983,0.001993,-0.165740,-0.024173,0.985871
+[hdl_localization_composition-1] [INFO] [1793023029.437570824] [patrol_localization]: average pointcloud process time in 10 s is 1848.000000 ms, fps is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793023031.377590152] [patrol_localization]: refinement diagnostic stamp=2570.143984832 reason=accepted dt_ms=1826.5 ndt_ms=96.3 source=4806 target=2600231 delta_m=0.02092 delta_deg=0.034 score=0.05467,0.05374 overlap=0.9875,0.9875 coarse_xyzq=0.453812,-0.240856,-0.588251,0.001971,-0.165994,-0.024006,0.985832
+[hdl_localization_composition-1] [INFO] [1793023031.379054728] [patrol_localization]: full-scene refinement before estimator residual 0.0547 -> 0.0537m; overlap 0.988 -> 0.988
+[hdl_localization_composition-1] [INFO] [1793023031.395460936] [patrol_localization]: scan profile points=4806 prep=15.5 match=1924.0 gate=16.5 status=0.0 odom=0.2 total=1956.0 ms
+[hdl_localization_composition-1] [WARN] [1793023031.396591656] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023036.196161768] [patrol_localization]: refinement diagnostic stamp=2573.945533184 reason=accepted dt_ms=2913.8 ndt_ms=30.8 source=4938 target=2600231 delta_m=0.02226 delta_deg=0.047 score=0.05393,0.05322 overlap=0.9866,0.9866 coarse_xyzq=0.453526,-0.240371,-0.591255,0.002123,-0.165985,-0.024029,0.985833
+[hdl_localization_composition-1] [INFO] [1793023037.854515112] [rclcpp]: signal_handler(signal_value=2)
+[hdl_localization_composition-1] [INFO] [1793023038.612571560] [patrol_localization]: refinement diagnostic stamp=2576.742774272 reason=accepted dt_ms=2211.1 ndt_ms=171.3 source=4875 target=2600231 delta_m=0.02430 delta_deg=0.067 score=0.05518,0.05418 overlap=0.9861,0.9865 coarse_xyzq=0.447470,-0.237134,-0.587027,0.001855,-0.165624,-0.024061,0.985894
+[hdl_localization_composition-1] [INFO] [1793023038.613481224] [fine_pose_diagnostic]: measurement_q=0.985935,0.002348,-0.165355,-0.024213 posterior_q=0.985934,0.002348,-0.165355,-0.024213 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793023038.613839016] [patrol_localization]: full-scene refinement before estimator residual 0.0552 -> 0.0542m; overlap 0.986 -> 0.986
+[hdl_localization_composition-1] [INFO] [1793023038.628495464] [patrol_localization]: scan profile points=4875 prep=8.1 match=2383.3 gate=14.8 status=0.0 odom=0.0 total=2406.0 ms
+[INFO] [hdl_localization_composition-1]: process has finished cleanly [pid 11217]

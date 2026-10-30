@@ -1,0 +1,23 @@
+Starting >>> hdl_localization
+--- stderr: hdl_localization
+In file included from /home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/hdl_localization_composition.cpp:2:
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘bool hdl_localization::HdlLocalizationApp::GetClosestImuData(const rclcpp::Time&, sensor_msgs::msg::Imu_<std::allocator<void> >::SharedPtr&)’:
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp:803:26: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::deque<std::shared_ptr<sensor_msgs::msg::Imu_<std::allocator<void> > > >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  803 |         for(int i = 0; i < imu_data_buffer_.size(); i++){
+      |                        ~~^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘bool hdl_localization::HdlLocalizationApp::Relocalize(std::shared_ptr<rmw_request_id_t>, std::shared_ptr<std_srvs::srv::Empty_Request_<std::allocator<void> > >, std::shared_ptr<std_srvs::srv::Empty_Response_<std::allocator<void> > >)’:
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp:1164:56: warning: unused parameter ‘req’ [-Wunused-parameter]
+ 1164 |         std::shared_ptr<std_srvs::srv::Empty::Request> req,
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp:1165:57: warning: unused parameter ‘res’ [-Wunused-parameter]
+ 1165 |         std::shared_ptr<std_srvs::srv::Empty::Response> res)
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp: In member function ‘void hdl_localization::HdlLocalizationApp::TimerCallback()’:
+/home/ysc/lite3_patrol_project/results/ground_acceptance_20261028/ws/src/hdl_localization/apps/./hdl_localization_app.hpp:1459:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::deque<double>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+ 1459 |             for(int i=0; i<ms_deque_.size(); i++){
+      |                          ~^~~~~~~~~~~~~~~~~
+---
+Finished <<< hdl_localization [6min 14s]
+
+Summary: 1 package finished [6min 18s]
+  1 package had stderr output: hdl_localization

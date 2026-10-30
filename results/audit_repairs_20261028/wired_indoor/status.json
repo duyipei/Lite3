@@ -1,0 +1,6153 @@
+{
+  "scope": "normal ORB initializer; production indoor .1m target, no ICP; isolated corrected binary; no motion",
+  "status": "READY_HELD_15S",
+  "request": "collecting stable visual poses; no motion has been enabled",
+  "elapsed_s": 146.51605101999985,
+  "last": {
+    "ready": true,
+    "guard": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad",
+    "visual": "PAUSED:localization_ready_ndt_odometry_active"
+  },
+  "counts": {
+    "ready": 586,
+    "guard": 583,
+    "visual": 57
+  },
+  "samples": [
+    {
+      "time": 1413.775445148,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.777515188,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.780996315,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.782538861,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.783822523,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.785013673,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.786110197,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.787167553,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.788529361,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.789564829,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.790918188,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.791991928,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.793517322,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.794991835,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.796411787,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.797511095,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.798691365,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.799752401,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.801000511,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.802090827,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.81019796,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.07s,input_age=0.04s,inference=0.03s"
+    },
+    {
+      "time": 1413.812279135,
+      "topic": "visual",
+      "value": "SEARCHING:mode=startup"
+    },
+    {
+      "time": 1413.813783952,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.11s,input_age=0.08s,inference=0.04s"
+    },
+    {
+      "time": 1413.815057759,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.11s,input_age=0.08s,inference=0.04s"
+    },
+    {
+      "time": 1413.816391054,
+      "topic": "visual",
+      "value": "SEARCHING:mode=startup"
+    },
+    {
+      "time": 1413.823579424,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.12s,input_age=0.08s,inference=0.05s"
+    },
+    {
+      "time": 1413.825556567,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.12s,input_age=0.08s,inference=0.05s"
+    },
+    {
+      "time": 1413.831287096,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1413.832861194,
+      "topic": "guard",
+      "value": "IDLE"
+    },
+    {
+      "time": 1413.834016279,
+      "topic": "visual",
+      "value": "SEARCHING:mode=startup"
+    },
+    {
+      "time": 1413.835423751,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.12s,input_age=0.08s,inference=0.04s"
+    },
+    {
+      "time": 1413.836920792,
+      "topic": "visual",
+      "value": "POSE:mode=startup,source=start_appearance,kf=54,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.12s,input_age=0.08s,inference=0.04s"
+    },
+    {
+      "time": 1413.856949724,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.021905842,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.023400963,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1414.220968781,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.223776429,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1414.330619053,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1414.42486035,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.425441925,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1414.621131225,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.621685792,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1414.824324515,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1414.826454075,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1415.024133158,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1415.026231646,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1415.2207289,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1415.222254742,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1415.424968922,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1415.427157971,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1415.620773071,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1415.625104449,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1415.821766944,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1415.823337586,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1416.021100926,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1416.022690256,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1416.220777663,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1416.222747958,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1416.421224842,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1416.423034046,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1416.62096798,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1416.623897773,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1416.822828902,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1416.823517582,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1417.020763764,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1417.022242501,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1417.221173726,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1417.223180213,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1417.433046154,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1417.435470918,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1417.621177,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1417.623727909,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1417.821030828,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1417.822518749,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1418.021054577,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1418.02248717,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1418.232687739,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1418.236342053,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1418.422385323,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1418.422884785,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1418.621154498,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1418.622701972,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1418.821700782,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1418.823916167,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1419.021158541,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1419.021694227,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1419.222456161,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1419.222995559,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1419.423810837,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1419.424435292,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1419.620709975,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1419.622995537,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1419.822543505,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1419.823206137,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1420.023052028,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1420.023546722,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1420.223143234,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1420.224355728,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1420.422906501,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1420.423527116,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1420.623584786,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1420.624222361,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1420.824156062,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1420.824746212,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1421.0225252,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1421.024206723,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1421.229396004,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1421.230122956,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1421.421432878,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1421.424621522,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1421.6221671,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1421.625315743,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1421.853500294,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1421.854051116,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1422.022944207,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1422.023523413,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1422.220857308,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1422.223339928,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1422.420838273,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1422.423411966,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1422.625204472,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1422.633227923,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1422.821120623,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1422.825006331,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1423.029281393,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1423.029796503,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1423.22386316,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1423.225674605,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1423.42271048,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1423.423254358,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1423.620921985,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1423.62414535,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1423.82089063,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1423.823010974,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1424.023967534,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1424.026154535,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1424.223760593,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1424.224364504,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1424.423204816,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1424.42371839,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1424.622474765,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1424.622979218,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1424.822787989,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1424.823398108,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1425.020904453,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1425.021429931,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1425.225914115,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1425.227670263,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1425.42258589,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1425.425401954,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1425.623042509,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1425.624883362,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1425.826132949,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1425.826761756,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1426.021298883,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1426.021890122,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1426.221073606,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1426.222371508,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1426.424769973,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1426.425537342,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1426.620838893,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1426.6224696,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1426.820946068,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1426.823669747,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1427.020756759,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1427.023656824,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1427.221760039,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1427.224815178,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1427.421080324,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1427.42191419,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1427.621029961,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1427.624749811,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1427.820791403,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1427.82225142,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1428.020930418,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1428.025081409,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1428.220850102,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1428.223188433,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1428.420896412,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1428.422006312,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1428.620634142,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1428.623936964,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1428.821233034,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1428.821754704,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1429.021212751,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1429.03187716,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1429.221935708,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1429.222609732,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1429.420965366,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1429.422607753,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1429.623226805,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1429.623840316,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1429.821259844,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1429.826981093,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1430.020801924,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1430.024553518,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1430.220697383,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1430.22213676,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1430.422696835,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1430.425814279,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1430.620759826,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1430.622939883,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1430.821000314,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1430.821963205,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1431.020798877,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1431.02385296,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1431.221299368,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1431.222809561,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1431.420666758,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1431.422188695,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1431.620790028,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1431.622249853,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1431.822485284,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1431.824104791,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1432.022064229,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1432.024545761,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1432.221009022,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1432.223600379,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1432.421428551,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1432.424426346,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1432.620733861,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1432.622297622,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1432.821654292,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1432.823101541,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1433.020928849,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1433.022775462,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1433.221848896,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1433.225272679,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1433.421026716,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1433.423795964,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1433.620816127,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1433.623472893,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1433.820762819,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1433.823442466,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1434.022220601,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1434.025022937,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1434.225684453,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1434.226252492,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1434.420669233,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1434.42314651,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1434.620988698,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1434.62329074,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1434.821310051,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1434.821873257,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1435.022199186,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1435.02573049,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1435.221355597,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1435.223902346,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1435.422510751,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1435.426081288,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1435.62144588,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1435.622678982,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1435.821179834,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1435.823271826,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1436.021620708,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1436.022242187,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1436.221050467,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1436.222591956,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1436.4214435,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1436.423584485,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1436.621055629,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1436.624917337,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1436.822494018,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1436.823159882,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1437.020696371,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1437.023313457,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1437.222339915,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1437.22296021,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1437.424303334,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1437.424941293,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1437.620897636,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1437.62421617,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1437.820976362,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1437.822694494,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1438.021060528,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1438.023801519,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1438.222419557,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1438.223184301,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1438.421929252,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1438.422505771,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1438.621836552,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1438.623791678,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1438.820960195,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1438.826523714,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1439.02340218,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1439.025137559,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1439.221266992,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1439.224348883,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1439.42060891,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1439.424970688,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1439.620930583,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1439.622628906,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1439.821137182,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1439.82292277,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1440.020863776,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1440.02246933,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1440.221814928,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1440.222391574,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1440.420945963,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1440.425894787,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1440.625167264,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1440.626279948,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1440.822747625,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1440.827343453,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1441.021668642,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1441.025838609,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1441.224943724,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1441.226569023,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1441.422206418,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1441.423859301,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1441.62070343,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1441.623110497,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1441.82171951,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1441.823362473,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1442.021128148,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1442.02372421,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1442.220789686,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1442.225135847,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1442.420929724,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1442.424996234,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1442.620756895,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1442.622363025,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1442.820953286,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1442.82377415,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1443.021960407,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1443.025460543,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1443.220683693,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1443.222114237,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1443.420753523,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1443.422724361,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1443.621176509,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1443.621751811,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1443.825399026,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1443.82663552,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1444.022168434,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1444.024575021,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1444.2208682,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1444.225182937,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1444.421488084,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1444.425638979,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1444.623253709,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1444.623797107,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1444.82149971,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1444.82536785,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1445.024593286,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1445.025181197,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1445.22116458,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1445.222692405,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1445.420624387,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1445.423932904,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1445.620719465,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1445.624834968,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1445.821003473,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1445.826266445,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1446.022171555,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1446.023178703,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1446.220984923,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1446.222542412,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1446.421189474,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1446.421924202,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1446.620658049,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1446.622127153,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1446.821483855,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1446.825367611,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1447.023385706,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1447.02408549,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1447.222948457,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1447.223684562,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1447.420862327,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1447.423432116,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1447.620937468,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1447.625422063,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1447.821580745,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1447.825637399,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1448.020614051,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1448.023102143,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1448.220752105,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1448.223123844,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1448.42054526,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1448.422979175,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1448.6219224,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1448.622720393,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1448.824202207,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1448.825819249,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1449.023027862,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1449.023580317,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1449.222107377,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1449.224889841,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1449.420872552,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1449.424302863,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1449.621216881,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1449.622078554,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1449.821328759,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1449.821938334,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1450.021213306,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1450.022790732,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1450.220815515,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1450.222292811,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1450.421027202,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1450.422827766,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1450.620909317,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1450.622903644,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1450.820604647,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1450.822297498,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1451.021099281,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1451.023277258,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1451.221348089,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1451.22285249,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1451.42490903,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1451.427269153,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1451.622744883,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1451.624402278,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1451.822545845,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1451.824324618,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1452.020688485,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1452.022231191,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1452.221239376,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1452.223919279,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1452.420548877,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1452.422714982,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1452.621598494,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1452.625802382,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1452.82237486,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1452.824109439,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1453.026689954,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1453.027230152,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1453.222031153,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1453.224298123,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1453.421924757,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1453.425943075,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1453.621262962,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1453.623332938,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1453.822664167,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1453.825768779,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1454.021722337,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1454.023230579,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1454.222459471,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1454.226231194,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1454.421543721,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1454.423623713,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1454.622424792,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1454.626005537,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1454.821155086,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1454.822107673,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1455.021572568,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1455.024747004,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1455.221380731,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1455.223945016,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1455.420890458,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1455.423254933,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1455.622556082,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1455.626009177,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1455.821668108,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1455.825467544,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1456.021753426,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1456.022369369,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1456.221264977,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1456.221909721,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1456.425471334,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1456.426816565,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1456.622342183,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1456.624282493,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1456.825004202,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1456.829735776,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1457.022579476,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1457.023165946,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1457.220665795,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1457.222162548,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1457.421216846,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1457.42441397,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1457.621283155,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1457.623189385,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1457.822896266,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1457.825360167,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1458.02088252,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1458.023410197,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1458.220701531,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1458.222192204,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1458.421691211,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1458.424397738,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1458.621900978,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1458.626459334,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1458.823264391,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1458.823938382,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1459.022508227,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1459.025185825,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1459.223303825,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1459.226072496,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1459.420768345,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1459.422222857,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1459.620588251,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1459.622670771,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1459.821850287,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1459.826289857,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1460.0208442,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1460.022864511,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1460.221050991,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1460.223048902,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1460.421923198,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1460.424458939,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1460.623202161,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1460.623859033,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1460.820713306,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1460.822434957,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1461.022753654,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1461.023437853,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1461.221040839,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1461.222775451,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1461.420937771,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1461.421528625,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1461.620681484,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1461.622214206,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1461.822579175,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1461.823117773,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1462.021146139,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1462.021779714,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1462.222838931,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1462.224663496,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1462.421841229,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1462.422558933,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1462.62174504,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1462.623231329,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1462.820886795,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1462.822437853,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1463.021645913,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1463.022533379,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1463.221937889,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1463.225173574,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1463.420962011,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1463.42249022,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1463.621983019,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1463.623997954,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1463.820537599,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1463.822677464,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1464.020708486,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1464.022278872,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1464.220605962,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1464.22291082,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1464.420854993,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1464.42358712,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1464.621546142,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1464.625059014,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1464.820685401,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1464.822952787,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1465.021234468,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1465.023237531,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1465.221370378,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1465.222973148,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1465.420810152,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1465.422204376,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1465.620694956,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1465.622680802,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1465.838564572,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1465.839340133,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1466.021926563,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1466.02335426,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1466.220936061,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1466.222551567,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1466.420925953,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1466.422450547,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1466.622519512,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1466.623111167,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1466.821461361,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1466.823043235,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1467.022553698,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1467.025032286,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1467.221257592,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1467.22391007,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1467.420849784,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1467.423101138,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1467.621129056,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1467.624888779,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1467.820965507,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1467.822824984,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1468.020871175,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1468.022337879,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1468.221994008,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1468.222607231,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1468.421204884,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1468.421807227,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1468.622745546,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1468.62448675,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1468.821003003,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1468.822583149,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1469.021985835,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1469.022650547,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1469.221328808,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1469.224335211,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1469.421347469,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1469.421895763,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1469.621729078,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1469.622586016,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1469.822716678,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1469.823400846,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1470.022468552,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1470.023044399,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1470.222467341,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1470.224227681,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1470.421084162,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1470.422505266,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1470.622297076,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1470.627626257,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1470.822460795,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1470.82312717,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1471.020709164,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1471.022339518,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1471.220680976,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1471.222985258,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1471.421318012,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1471.422743884,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1471.620578968,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1471.622904531,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1471.820730399,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1471.822245264,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1472.020737123,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1472.023438434,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1472.220558662,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1472.222091896,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1472.421220306,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1472.421900762,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1472.62074261,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1472.62270564,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1472.821591744,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1472.823602807,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1473.022037386,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1473.023622044,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1473.223623264,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1473.224534123,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1473.42122385,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1473.422747451,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1473.620873931,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1473.621444241,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1473.821581175,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1473.823162889,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1474.022010209,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1474.024605278,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1474.220864728,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1474.222815247,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1474.421149536,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1474.421797384,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1474.62494792,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1474.627296939,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1474.821201354,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1474.822668219,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1475.021548691,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1475.022282267,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1475.221331221,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1475.223271787,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1475.420929909,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1475.423477874,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1475.620703543,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1475.623434294,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1475.820976479,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1475.822545201,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1476.022173041,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1476.023803844,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1476.223043392,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1476.223790281,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1476.422260508,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1476.422986308,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1476.625002592,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1476.625681447,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1476.822161668,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1476.824271996,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1477.023886748,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1477.029633406,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1477.221135074,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1477.223337211,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1477.423574338,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1477.424881361,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1477.62155528,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1477.623578791,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1477.82169903,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1477.823756525,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1478.020892881,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1478.022361378,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1478.22105484,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1478.221669791,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1478.421435681,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1478.422982867,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1478.62110093,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1478.623791008,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1478.821423434,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1478.828854815,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1479.021862708,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1479.02237273,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1479.220644843,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1479.222526432,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1479.433284831,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1479.434998419,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1479.621471197,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1479.623196305,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1479.820513687,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1479.822682352,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1480.020699582,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1480.022032749,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1480.220808132,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1480.22349405,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1480.421180172,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1480.424454578,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1480.62077134,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1480.623624397,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1480.821071636,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1480.821689915,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1481.021530526,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1481.025177832,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1481.220864155,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1481.223695036,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1481.42107533,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1481.422484274,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1481.620572001,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1481.622133747,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1481.821617074,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1481.823905228,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1482.020891342,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1482.022959078,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1482.220801778,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1482.222310851,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1482.421128058,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1482.422736524,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1482.620964669,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1482.621627524,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1482.821210596,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1482.822655381,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1483.026387396,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1483.030296336,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1483.221633554,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1483.22358052,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1483.420889838,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1483.421527094,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1483.621356632,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1483.623348463,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1483.821327357,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1483.8226555,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1484.02142173,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1484.022104362,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1484.221228741,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1484.224194151,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1484.420914694,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1484.422660026,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1484.621065004,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1484.622486108,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1484.821226387,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1484.821804217,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1485.021670076,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1485.022236963,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1485.223210642,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1485.226373462,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1485.425903798,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1485.42648278,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1485.620685599,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1485.622060014,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1485.821194185,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1485.823482979,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1486.022135832,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1486.022733663,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1486.220940655,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1486.222393408,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1486.420877619,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1486.422353572,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1486.621108923,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1486.623717176,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1486.821685958,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1486.822317549,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1487.021965774,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1487.023662913,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1487.221744336,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1487.22227887,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1487.425763458,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1487.429435468,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1487.621017264,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1487.622787397,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1487.821146359,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1487.824628126,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1488.021963812,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1488.022532331,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1488.221277953,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1488.224145698,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1488.421951085,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1488.42287772,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1488.621342123,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1488.623026878,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1488.822754496,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1488.825264284,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1489.021276947,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1489.022064924,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1489.22127996,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1489.222668104,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1489.429860254,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1489.430436485,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1489.621645797,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1489.623200119,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1489.821451176,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1489.824340553,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1490.021448396,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1490.022041363,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1490.221576466,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1490.223800876,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1490.427861694,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1490.432625301,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1490.620802227,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1490.622249347,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1490.821462271,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1490.822255368,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1491.021569508,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1491.025715156,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1491.229231936,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1491.231379033,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1491.422536313,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1491.424976788,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1491.621123469,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1491.622571806,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1491.820881167,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1491.824612377,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1492.021129462,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1492.023739252,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1492.221810499,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1492.223794553,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1492.422251916,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1492.423739453,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1492.621450728,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1492.622150096,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1492.829124835,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1492.829841196,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1493.020976043,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1493.021619667,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1493.224094003,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1493.225628869,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1493.423533841,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1493.427723809,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1493.623002928,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1493.623634199,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1493.821164288,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1493.825523473,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1494.022149615,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1494.02273407,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1494.221105864,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1494.22268649,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1494.420961259,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1494.421538385,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1494.620590123,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1494.62343614,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1494.822647303,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1494.825212964,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1495.022487466,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1495.023077649,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1495.223054005,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1495.22454983,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1495.42190814,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1495.42553343,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1495.621743311,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1495.623496291,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1495.82596858,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1495.826614347,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1496.020995408,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1496.022576258,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1496.252877855,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1496.253636104,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1496.423676087,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1496.424514657,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1496.625630482,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1496.626357402,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1496.821990669,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1496.824632491,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1497.02059581,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1497.021993713,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1497.221478064,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1497.223680585,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1497.421046512,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1497.421619734,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1497.621829213,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1497.623213709,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1497.820818582,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1497.822805741,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1498.022726352,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1498.023555962,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1498.220645469,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1498.222002701,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1498.424825105,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1498.425409688,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1498.621016554,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1498.622632541,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1498.820744236,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1498.822110939,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1499.021870237,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1499.024288825,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1499.221379644,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1499.224418015,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1499.422342764,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1499.426303385,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1499.630081032,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1499.631507224,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1499.826634533,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1499.828401274,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1500.02098353,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1500.022693149,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1500.222470143,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1500.223997584,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1500.421925021,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1500.42493408,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1500.625554955,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1500.632571355,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1500.82134208,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1500.823998302,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1501.022778581,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1501.023323451,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1501.223566882,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1501.224573998,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1501.421787442,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1501.425485788,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1501.621124495,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1501.621795607,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1501.824733373,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1501.82539258,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.022969613,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1502.023565972,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.221414816,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1502.221942406,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.424163172,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1502.425471603,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.624421739,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1502.625039954,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.821913043,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1502.822515514,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1502.949651297,
+      "topic": "visual",
+      "value": "WARMUP_COMPLETE:waiting_for_new_image"
+    },
+    {
+      "time": 1502.952803013,
+      "topic": "visual",
+      "value": "ERROR:image_timeout"
+    },
+    {
+      "time": 1503.032970709,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1503.033539004,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1503.222033245,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1503.224796509,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1503.323600834,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1503.420955798,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1503.421449147,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1503.620897946,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1503.621436096,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1503.820989183,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1503.824928716,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1504.020633247,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1504.02229461,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1504.221943379,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1504.222469049,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1504.422064985,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1504.423195814,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1504.641172375,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1504.643290095,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1504.820977141,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1504.82282593,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1505.024696356,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1505.025554606,
+      "topic": "guard",
+      "value": "COLLECTING_VISUAL_POSES"
+    },
+    {
+      "time": 1505.184563776,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=1,inliers=37,x=-0.08,y=0.07,yaw=0.07,query_age=1.97s,input_age=0.11s,inference=1.86s"
+    },
+    {
+      "time": 1505.188382475,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=1,inliers=37,x=-0.08,y=0.07,yaw=0.07,query_age=1.97s,input_age=0.11s,inference=1.86s"
+    },
+    {
+      "time": 1505.323304171,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1505.3529447,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1505.355326871,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1505.42105146,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1505.423391102,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1505.621455213,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1505.623442179,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1505.821068077,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1505.823748907,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1506.021870618,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1506.024219477,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1506.159352727,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=813,refs=10,tried=4,max_matches=39,max_inliers=11,kf=4,recovery=0,learned=54:92/28;agree=0"
+    },
+    {
+      "time": 1506.16100129,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=813,refs=10,tried=4,max_matches=39,max_inliers=11,kf=4,recovery=0,learned=54:92/28;agree=0"
+    },
+    {
+      "time": 1506.222269507,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1506.222857866,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1506.324931092,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1506.423669112,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1506.424355071,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1506.622611376,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1506.623178519,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1506.821908717,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1506.822519155,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1507.025933375,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1507.026546502,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1507.152567584,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=810,refs=10,tried=4,max_matches=43,max_inliers=6,kf=54,recovery=0,learned=54:93/31;agree=0"
+    },
+    {
+      "time": 1507.158233793,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=810,refs=10,tried=4,max_matches=43,max_inliers=6,kf=54,recovery=0,learned=54:93/31;agree=0"
+    },
+    {
+      "time": 1507.22109022,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1507.221763476,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1507.323035989,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1507.421486773,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1507.423008934,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1507.621226967,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1507.623477392,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1507.822057925,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1507.822822413,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1508.028848598,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1508.035702052,
+      "topic": "guard",
+      "value": "COLLECTING:1/4"
+    },
+    {
+      "time": 1508.121210994,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=35,x=-0.08,y=0.13,yaw=-0.15,query_age=0.87s,input_age=0.07s,inference=0.80s"
+    },
+    {
+      "time": 1508.126587183,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=35,x=-0.08,y=0.13,yaw=-0.15,query_age=0.87s,input_age=0.07s,inference=0.80s"
+    },
+    {
+      "time": 1508.221445414,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1508.224729932,
+      "topic": "guard",
+      "value": "COLLECTING:2/4"
+    },
+    {
+      "time": 1508.326380977,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1508.420529024,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1508.423393089,
+      "topic": "guard",
+      "value": "COLLECTING:2/4"
+    },
+    {
+      "time": 1508.621263693,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1508.621797875,
+      "topic": "guard",
+      "value": "COLLECTING:2/4"
+    },
+    {
+      "time": 1508.821345299,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1508.821960698,
+      "topic": "guard",
+      "value": "COLLECTING:2/4"
+    },
+    {
+      "time": 1509.020904818,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1509.022633126,
+      "topic": "guard",
+      "value": "COLLECTING:2/4"
+    },
+    {
+      "time": 1509.098154113,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=34,x=-0.08,y=0.17,yaw=-0.18,query_age=0.83s,input_age=0.08s,inference=0.77s"
+    },
+    {
+      "time": 1509.101249829,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=34,x=-0.08,y=0.17,yaw=-0.18,query_age=0.83s,input_age=0.08s,inference=0.77s"
+    },
+    {
+      "time": 1509.221464157,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1509.223550933,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1509.323236067,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1509.42204948,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1509.422549582,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1509.621200483,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1509.621855146,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1509.821735309,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1509.824737104,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1510.021747378,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1510.024475025,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1510.088383912,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=818,refs=10,tried=4,max_matches=38,max_inliers=10,kf=4,recovery=0,learned=54:99/31;agree=0"
+    },
+    {
+      "time": 1510.090923397,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=818,refs=10,tried=4,max_matches=38,max_inliers=10,kf=4,recovery=0,learned=54:99/31;agree=0"
+    },
+    {
+      "time": 1510.220914349,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1510.222533791,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1510.323336955,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1510.421368118,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1510.423849683,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1510.623463635,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1510.624121914,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1510.821226782,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1510.823232341,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1511.020994912,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1511.023554301,
+      "topic": "guard",
+      "value": "COLLECTING:3/4"
+    },
+    {
+      "time": 1511.13861225,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=34,x=-0.06,y=0.12,yaw=-0.15,query_age=0.89s,input_age=0.07s,inference=0.82s"
+    },
+    {
+      "time": 1511.143404881,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=34,x=-0.06,y=0.12,yaw=-0.15,query_age=0.89s,input_age=0.07s,inference=0.82s"
+    },
+    {
+      "time": 1511.222070064,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1511.222739768,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1511.323042318,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1511.42116129,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1511.426390694,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1511.620621929,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1511.626313961,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1511.82177625,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1511.822323808,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1512.020883124,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1512.022162179,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1512.12658148,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=808,refs=10,tried=4,max_matches=38,max_inliers=8,kf=5,recovery=0,learned=54:93/30;agree=0"
+    },
+    {
+      "time": 1512.12855731,
+      "topic": "visual",
+      "value": "REJECTED:global:no_pnp_solution:reason=insufficient_inliers,query=808,refs=10,tried=4,max_matches=38,max_inliers=8,kf=5,recovery=0,learned=54:93/30;agree=0"
+    },
+    {
+      "time": 1512.220810264,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1512.221367358,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1512.323015299,
+      "topic": "visual",
+      "value": "SEARCHING:mode=global"
+    },
+    {
+      "time": 1512.420856637,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1512.422921172,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1512.622073135,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1512.625665432,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1512.821276427,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1512.822910141,
+      "topic": "guard",
+      "value": "WAITING_NDT:x=-0.036,y=0.094,yaw=-0.101"
+    },
+    {
+      "time": 1513.15318238,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=32,x=-0.13,y=0.07,yaw=-0.10,query_age=0.88s,input_age=0.07s,inference=0.81s"
+    },
+    {
+      "time": 1513.161305065,
+      "topic": "visual",
+      "value": "POSE:mode=global,source=learned_pnp,kf=54,inliers=32,x=-0.13,y=0.07,yaw=-0.10,query_age=0.88s,input_age=0.07s,inference=0.81s"
+    },
+    {
+      "time": 1513.165422968,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1513.166620965,
+      "topic": "guard",
+      "value": "WAITING_NDT:accepted_scans=1/3"
+    },
+    {
+      "time": 1513.221715704,
+      "topic": "ready",
+      "value": false
+    },
+    {
+      "time": 1513.223111048,
+      "topic": "guard",
+      "value": "WAITING_NDT:accepted_scans=2/3"
+    },
+    {
+      "time": 1513.301599942,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1513.303246936,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1513.323541311,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1513.420730098,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1513.421339609,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1513.62139603,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1513.623509014,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1513.822206411,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1513.822682001,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1514.020989602,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1514.023994692,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1514.220524385,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1514.223085726,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1514.323133649,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1514.421314766,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1514.425197627,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1514.621206418,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1514.622654786,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1514.820936723,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1514.824791807,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1515.020605748,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1515.02205738,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1515.221110494,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1515.223465593,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1515.323372522,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1515.420741502,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1515.424685611,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1515.620544064,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1515.623246591,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1515.82069303,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1515.822224408,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1516.021259857,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1516.023557227,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1516.223013225,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1516.224583131,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1516.3230727,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1516.420540242,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1516.42370959,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1516.621826885,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1516.623724346,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1516.821460101,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1516.823121688,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1517.020901923,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1517.022289139,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1517.221066025,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1517.222748476,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1517.325441005,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1517.421499923,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1517.42282893,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1517.620597389,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1517.622608484,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1517.821468411,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1517.822993004,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1518.021123452,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1518.022457131,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1518.225894262,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1518.228179664,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1518.32322145,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1518.421172389,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1518.423864036,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1518.62122177,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1518.622704571,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1518.821580242,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1518.822165017,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1519.020720685,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1519.023714447,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1519.221799646,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1519.223802324,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1519.32300227,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1519.420853463,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1519.422375721,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1519.620985309,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1519.623959071,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1519.821459431,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1519.823510398,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1520.02130097,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1520.023674277,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1520.220748936,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1520.222809151,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1520.324365891,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1520.421499093,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1520.422120764,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1520.621560186,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1520.62230029,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1520.821954498,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1520.825220776,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1521.021162078,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1521.022560398,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1521.221307012,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1521.226202684,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1521.323379982,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1521.423111741,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1521.423703844,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1521.62138443,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1521.625899649,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1521.820930221,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1521.822806402,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1522.021654105,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1522.023110666,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1522.220882005,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1522.223414642,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1522.323542533,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1522.42062383,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1522.423103699,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1522.620715388,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1522.622615281,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1522.822663958,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1522.824903632,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1523.021167786,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1523.023287842,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1523.221013324,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1523.221885718,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1523.324791689,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1523.420989264,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1523.423067528,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1523.621888799,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1523.622658824,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1523.820623733,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1523.822026949,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1524.021239232,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1524.024409668,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1524.221239717,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1524.222657365,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1524.324664926,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1524.420597666,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1524.422000466,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1524.620838793,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1524.622271321,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1524.821479605,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1524.823725454,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1525.021818461,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1525.023741811,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1525.220763605,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1525.222168197,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1525.32312189,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1525.422412428,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1525.423854749,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1525.620674557,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1525.621174338,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1525.821594316,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1525.823672323,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1526.021194603,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1526.022635484,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1526.220741739,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1526.222668929,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1526.323047127,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1526.420665646,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1526.422735718,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1526.621081111,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1526.623934232,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1526.820788056,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1526.822268649,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1527.021264322,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1527.022582833,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1527.220654655,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1527.222878105,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1527.324249498,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1527.420643108,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1527.422269398,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1527.622294843,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1527.622833793,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1527.82256445,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1527.823122697,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1528.021039957,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1528.022783849,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1528.222525706,
+      "topic": "ready",
+      "value": true
+    },
+    {
+      "time": 1528.224686147,
+      "topic": "guard",
+      "value": "READY:visual_plus_ndt_confirmed_0.142m_0.177rad"
+    },
+    {
+      "time": 1528.324923992,
+      "topic": "visual",
+      "value": "PAUSED:localization_ready_ndt_odometry_active"
+    },
+    {
+      "time": 1528.423730716,
+      "topic": "ready",
+      "value": true
+    }
+  ],
+  "velocity_publishers": {
+    "/cmd_vel": 0,
+    "/cmd_vel_corrected": 0,
+    "/patrol/cmd_vel_raw": 0
+  }
+}

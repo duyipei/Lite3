@@ -1,0 +1,32 @@
+[
+  {
+    "dt_s": 0.1,
+    "original_error_rad": 0.0272705,
+    "fixed_error_rad": 2.38419e-07,
+    "moving_error_rad": 0.000196695
+  },
+  {
+    "dt_s": 0.3,
+    "original_error_rad": 0.265002,
+    "fixed_error_rad": 2.38419e-07,
+    "moving_error_rad": 6.7175e-05
+  },
+  {
+    "dt_s": 0.6,
+    "original_error_rad": 0.823427,
+    "fixed_error_rad": 2.38419e-07,
+    "moving_error_rad": 3.42136e-05
+  },
+  {
+    "dt_s": 1.0,
+    "original_error_rad": 1.0598,
+    "fixed_error_rad": 2.38419e-07,
+    "moving_error_rad": 2.09225e-05
+  },
+  {
+    "dt_s": 2.0,
+    "original_error_rad": 1.25272,
+    "fixed_error_rad": 2.38419e-07,
+    "moving_error_rad": 1.10885e-05
+  }
+]

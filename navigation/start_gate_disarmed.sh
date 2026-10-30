@@ -36,6 +36,7 @@ fi
 setsid ros2 run lite3_patrol_nav velocity_gate --ros-args \
   -p use_vendor_voa:=$([[ "$USE_VOA" == 1 ]] && echo true || echo false) \
   -p require_voa_costmap:="$REQUIRE_VOA_COSTMAP" \
+  -p require_lidar_costmap:="$REQUIRE_VOA_COSTMAP" \
   -p output_topic:=/cmd_vel_corrected \
   -p require_localization_ready:=true \
   -p freshness_timeout_s:=1.5 \

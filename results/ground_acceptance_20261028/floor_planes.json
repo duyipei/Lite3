@@ -1,0 +1,43 @@
+{
+  "lidar": {
+    "plane": [
+      0.05704718036916848,
+      0.002987332467927456,
+      0.9983670142070268,
+      -0.28571519488908387
+    ],
+    "stats": {
+      "cells": 924,
+      "inlier_cells": 869,
+      "span_xy_m": [
+        1.2442110180854797,
+        5.22001576423645
+      ],
+      "inlier_abs_residual_p95_m": 0.008683554887368813
+    }
+  },
+  "depth": {
+    "plane": [
+      0.017092619306838724,
+      -0.0024817523837039057,
+      0.9998508305094004,
+      -0.01851166155224719
+    ],
+    "stats": {
+      "cells": 1081,
+      "inlier_cells": 776,
+      "span_xy_m": [
+        0.9506782293319702,
+        2.453289270401001
+      ],
+      "inlier_abs_residual_p95_m": 0.008654889110253753
+    }
+  },
+  "leg_xyz_peak_to_peak": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "user_posture_confirmation": "pending",
+  "limits": "low-return plane hypothesis; not surveyed labels"
+}

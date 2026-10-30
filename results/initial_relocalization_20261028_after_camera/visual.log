@@ -1,0 +1,11 @@
+1793023720.465649 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793023721.901515848] [rgbd_visual_localizer]: loaded 107 visual keyframes; startup references=9; strategy=startup_then_global
+[INFO] [1793023722.657992680] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=68,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.14s,input_age=0.08s,inference=0.06s
+[INFO] [1793023728.646253544] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=68,inliers=0,x=0.00,y=-0.00,yaw=0.00,query_age=0.12s,input_age=0.08s,inference=0.05s
+[WARN] [1793023731.597567240] [rgbd_visual_localizer]: no confirmed start-area match; switching to global keyframe search
+[INFO] [1793023731.986889576] [rgbd_visual_localizer]: loading local LoFTR recovery matcher
+[INFO] [1793023768.254431944] [rgbd_visual_localizer]: ERROR:image_timeout
+[WARN] [1793023772.092941032] [rgbd_visual_localizer]: visual frame processing took 1.50s in global mode
+[INFO] [1793023773.453063656] [rgbd_visual_localizer]: POSE:mode=global,source=learned_pnp,kf=4,inliers=107,x=0.41,y=-0.20,yaw=-0.05,query_age=0.94s,input_age=0.09s,inference=0.86s
+[INFO] [1793023779.507845704] [rgbd_visual_localizer]: POSE:mode=global,source=learned_pnp,kf=4,inliers=103,x=0.42,y=-0.21,yaw=-0.04,query_age=0.98s,input_age=0.08s,inference=0.90s
+[INFO] [1793023779.518030280] [rgbd_visual_localizer]: PAUSED:localization_ready_ndt_odometry_active

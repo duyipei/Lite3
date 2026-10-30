@@ -1,0 +1,13 @@
+{
+  "scope": "manual registration seed ONLY for explicitly authorized static geometry test; no localization_ready publication",
+  "source": "quaternion_holdout/frame_09.npz published full P",
+  "pose_xyz_qxyzw": [
+    0.10200899839401245,
+    -0.028494449332356453,
+    -0.7147536277770996,
+    0.001527050134278185,
+    -0.16737928374303282,
+    -0.01582023305878826,
+    0.9857644613919072
+  ]
+}

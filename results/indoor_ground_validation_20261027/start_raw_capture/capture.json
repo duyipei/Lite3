@@ -1,0 +1,652 @@
+{
+  "nominal_footprint_height_m": 0.34751,
+  "scope": "raw evidence only; no automatic calibration or motion",
+  "samples": [
+    {
+      "receive_monotonic": 2737.13199408,
+      "depth": {
+        "stamp": 2737.098717,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.002136952000000747,
+        "imu_rp_rad": [
+          -0.0006374116827396212,
+          0.02725087178621907
+        ],
+        "points": 2171,
+        "source_age_s": 0.03327708000006169
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03354604504882202,
+        0.9994371730436998
+      ],
+      "leg_stamp": 2737.114422528,
+      "file": "frame_000.npz"
+    },
+    {
+      "receive_monotonic": 2738.638440448,
+      "lidar": {
+        "stamp": 2738.624375488,
+        "frame": "rslidar",
+        "imu_dt_s": 0.0012360319997242186,
+        "imu_rp_rad": [
+          -0.0004558974278956393,
+          0.027233978008527865
+        ],
+        "points": 25248,
+        "source_age_s": 0.014064959999814164
+      },
+      "depth": {
+        "stamp": 2738.6071,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0016601600000285544,
+        "imu_rp_rad": [
+          -0.0004747819170454345,
+          0.027243630341850223
+        ],
+        "points": 2160,
+        "source_age_s": 0.03134044799980984
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03341225255791807,
+        0.99944165481483
+      ],
+      "leg_stamp": 2738.62905152,
+      "file": "frame_001.npz"
+    },
+    {
+      "receive_monotonic": 2740.140837056,
+      "lidar": {
+        "stamp": 2740.120246272,
+        "frame": "rslidar",
+        "imu_dt_s": 0.0011032320003323548,
+        "imu_rp_rad": [
+          -0.00013416346044387486,
+          0.026868699073710475
+        ],
+        "points": 20160,
+        "source_age_s": 0.020590783999978157
+      },
+      "depth": {
+        "stamp": 2740.117983,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0018352239999330777,
+        "imu_rp_rad": [
+          -0.00012152727716880457,
+          0.026852589420096398
+        ],
+        "points": 2131,
+        "source_age_s": 0.02285405599968726
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03347020005768545,
+        0.9994397158949101
+      ],
+      "leg_stamp": 2740.133550912,
+      "file": "frame_002.npz"
+    },
+    {
+      "receive_monotonic": 2741.643553984,
+      "lidar": {
+        "stamp": 2741.621218464,
+        "frame": "rslidar",
+        "imu_dt_s": 0.004220256000280642,
+        "imu_rp_rad": [
+          -0.00017980380648326092,
+          0.02746507517356761
+        ],
+        "points": 20064,
+        "source_age_s": 0.022335520000069664
+      },
+      "depth": {
+        "stamp": 2741.619307,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.003776504000143177,
+        "imu_rp_rad": [
+          -0.00018540631404033857,
+          0.02747467484184001
+        ],
+        "points": 2156,
+        "source_age_s": 0.024246984000001248
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03349101097427936,
+        0.9994390187419744
+      ],
+      "leg_stamp": 2741.6343568,
+      "file": "frame_003.npz"
+    },
+    {
+      "receive_monotonic": 2743.14357888,
+      "lidar": {
+        "stamp": 2743.120093376,
+        "frame": "rslidar",
+        "imu_dt_s": -0.004741184000067733,
+        "imu_rp_rad": [
+          -0.0006019291539265425,
+          0.027436314204619828
+        ],
+        "points": 19968,
+        "source_age_s": 0.02348550399983651
+      },
+      "depth": {
+        "stamp": 2743.122852,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.007499807999920449,
+        "imu_rp_rad": [
+          -0.0006019291539265425,
+          0.027436314204619828
+        ],
+        "points": 2162,
+        "source_age_s": 0.020726879999983794
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.033498440767423976,
+        0.9994387697433752
+      ],
+      "leg_stamp": 2743.139123136,
+      "file": "frame_004.npz"
+    },
+    {
+      "receive_monotonic": 2744.643767264,
+      "lidar": {
+        "stamp": 2744.424379104,
+        "frame": "rslidar",
+        "imu_dt_s": 0.001522752000255423,
+        "imu_rp_rad": [
+          -0.00025802946356153844,
+          0.027078765328801425
+        ],
+        "points": 19392,
+        "source_age_s": 0.21938816000010775
+      },
+      "depth": {
+        "stamp": 2744.621624,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0008400319998145278,
+        "imu_rp_rad": [
+          -7.901104977963909e-05,
+          0.02705585018039868
+        ],
+        "points": 2126,
+        "source_age_s": 0.02214326400007849
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03356812851874729,
+        0.9994364315691864
+      ],
+      "leg_stamp": 2744.63940528,
+      "file": "frame_005.npz"
+    },
+    {
+      "receive_monotonic": 2746.144379712,
+      "lidar": {
+        "stamp": 2746.12028064,
+        "frame": "rslidar",
+        "imu_dt_s": 3.423999987717252e-05,
+        "imu_rp_rad": [
+          0.0001258731381172278,
+          0.02670833692243286
+        ],
+        "points": 19968,
+        "source_age_s": 0.024099071999899024
+      },
+      "depth": {
+        "stamp": 2746.090868,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.0002030720002039743,
+        "imu_rp_rad": [
+          0.00010056586725663605,
+          0.026763801997544065
+        ],
+        "points": 2142,
+        "source_age_s": 0.05351171200027238
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.033463204858240975,
+        0.9994399501323806
+      ],
+      "leg_stamp": 2746.138960352,
+      "file": "frame_006.npz"
+    },
+    {
+      "receive_monotonic": 2747.644480704,
+      "lidar": {
+        "stamp": 2747.620356992,
+        "frame": "rslidar",
+        "imu_dt_s": 0.0004007679999631364,
+        "imu_rp_rad": [
+          -0.0006581810503700199,
+          0.027024154597833944
+        ],
+        "points": 19968,
+        "source_age_s": 0.02412371200034613
+      },
+      "depth": {
+        "stamp": 2747.623717,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.002088151999942056,
+        "imu_rp_rad": [
+          -0.0006771877388935392,
+          0.02702602128127125
+        ],
+        "points": 2142,
+        "source_age_s": 0.02076370400027372
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03337079071706062,
+        0.9994430400612724
+      ],
+      "leg_stamp": 2747.639466432,
+      "file": "frame_007.npz"
+    },
+    {
+      "receive_monotonic": 2749.144979584,
+      "lidar": {
+        "stamp": 2749.120184032,
+        "frame": "rslidar",
+        "imu_dt_s": 0.0006482560002041282,
+        "imu_rp_rad": [
+          -0.0009689719107555401,
+          0.027074244912013597
+        ],
+        "points": 20064,
+        "source_age_s": 0.02479555199988681
+      },
+      "depth": {
+        "stamp": 2749.126212,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.00021551999998337124,
+        "imu_rp_rad": [
+          -0.000962234898818296,
+          0.027061418046513387
+        ],
+        "points": 2110,
+        "source_age_s": 0.018767583999760973
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.033435365445400204,
+        0.9994408818622202
+      ],
+      "leg_stamp": 2749.134373248,
+      "file": "frame_008.npz"
+    },
+    {
+      "receive_monotonic": 2750.645168096,
+      "lidar": {
+        "stamp": 2750.621711744,
+        "frame": "rslidar",
+        "imu_dt_s": -0.0012717120002889715,
+        "imu_rp_rad": [
+          -0.0006975557183827855,
+          0.026807037077721214
+        ],
+        "points": 19872,
+        "source_age_s": 0.023456351999811886
+      },
+      "depth": {
+        "stamp": 2750.628968,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.001613951999843266,
+        "imu_rp_rad": [
+          -0.0007047115363292657,
+          0.026808640435908738
+        ],
+        "points": 2127,
+        "source_age_s": 0.01620009599992045
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03341317790553365,
+        0.9994416238791805
+      ],
+      "leg_stamp": 2750.639112544,
+      "file": "frame_009.npz"
+    },
+    {
+      "receive_monotonic": 2752.14642544,
+      "lidar": {
+        "stamp": 2752.120546336,
+        "frame": "rslidar",
+        "imu_dt_s": -0.004696160000094096,
+        "imu_rp_rad": [
+          -0.0009318836465130969,
+          0.027507262804417874
+        ],
+        "points": 19968,
+        "source_age_s": 0.025879103999614017
+      },
+      "depth": {
+        "stamp": 2752.09525,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.00024504000020897365,
+        "imu_rp_rad": [
+          -0.0009247277828504277,
+          0.027502268402180455
+        ],
+        "points": 2126,
+        "source_age_s": 0.05117543999995178
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.033252331266093976,
+        0.9994469883217268
+      ],
+      "leg_stamp": 2752.13940064,
+      "file": "frame_010.npz"
+    },
+    {
+      "receive_monotonic": 2753.647582912,
+      "lidar": {
+        "stamp": 2753.620871328,
+        "frame": "rslidar",
+        "imu_dt_s": 0.004559072000120068,
+        "imu_rp_rad": [
+          -0.0012200723772433008,
+          0.027487852807673255
+        ],
+        "points": 20160,
+        "source_age_s": 0.02671158400016793
+      },
+      "depth": {
+        "stamp": 2753.636305,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.00011255199979132158,
+        "imu_rp_rad": [
+          -0.0012038408442688118,
+          0.027475339006636665
+        ],
+        "points": 2107,
+        "source_age_s": 0.011277911999968637
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03315349513162315,
+        0.9994502717797207
+      ],
+      "leg_stamp": 2753.644193696,
+      "file": "frame_011.npz"
+    },
+    {
+      "receive_monotonic": 2755.148293504,
+      "lidar": {
+        "stamp": 2755.022822784,
+        "frame": "rslidar",
+        "imu_dt_s": -0.0036840959996879974,
+        "imu_rp_rad": [
+          -0.0010546675474324618,
+          0.02727478171889875
+        ],
+        "points": 9120,
+        "source_age_s": 0.12547072000006665
+      },
+      "depth": {
+        "stamp": 2755.119899,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0011581039998418419,
+        "imu_rp_rad": [
+          -0.0010322051721675207,
+          0.027254154574332945
+        ],
+        "points": 2134,
+        "source_age_s": 0.028394504000061715
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.033086239379236666,
+        0.9994525005040209
+      ],
+      "leg_stamp": 2755.12193824,
+      "file": "frame_012.npz"
+    },
+    {
+      "receive_monotonic": 2756.648451936,
+      "lidar": {
+        "stamp": 2756.52082112,
+        "frame": "rslidar",
+        "imu_dt_s": -0.005044608000389417,
+        "imu_rp_rad": [
+          -0.0008585449129114394,
+          0.027339153039124615
+        ],
+        "points": 18912,
+        "source_age_s": 0.1276308159999644
+      },
+      "depth": {
+        "stamp": 2756.613898,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": 0.0009783519999473356,
+        "imu_rp_rad": [
+          -0.0009614145675193404,
+          0.027413083065917346
+        ],
+        "points": 2131,
+        "source_age_s": 0.03455393600006573
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03302781286319138,
+        0.9994544329670433
+      ],
+      "leg_stamp": 2756.643946016,
+      "file": "frame_013.npz"
+    },
+    {
+      "receive_monotonic": 2758.149852608,
+      "lidar": {
+        "stamp": 2758.120245856,
+        "frame": "rslidar",
+        "imu_dt_s": 0.0005086719997962064,
+        "imu_rp_rad": [
+          -0.0011286695315069926,
+          0.027494921627711687
+        ],
+        "points": 19872,
+        "source_age_s": 0.02960675199983598
+      },
+      "depth": {
+        "stamp": 2758.121915,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0011604720002651447,
+        "imu_rp_rad": [
+          -0.0011286695315069926,
+          0.027494921627711687
+        ],
+        "points": 2140,
+        "source_age_s": 0.027937607999774627
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.032958063553535415,
+        0.9994567354552177
+      ],
+      "leg_stamp": 2758.139412512,
+      "file": "frame_014.npz"
+    },
+    {
+      "receive_monotonic": 2759.651804192,
+      "lidar": {
+        "stamp": 2759.619980128,
+        "frame": "rslidar",
+        "imu_dt_s": 0.002854431999821827,
+        "imu_rp_rad": [
+          -0.0010071596493481773,
+          0.0274258221563343
+        ],
+        "points": 15840,
+        "source_age_s": 0.03182406399992033
+      },
+      "depth": {
+        "stamp": 2759.607578,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0025074400000448804,
+        "imu_rp_rad": [
+          -0.0009678723449729674,
+          0.02743533697535954
+        ],
+        "points": 2138,
+        "source_age_s": 0.04422619199976907
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03309427231453904,
+        0.9994522345464896
+      ],
+      "leg_stamp": 2759.649594112,
+      "file": "frame_015.npz"
+    },
+    {
+      "receive_monotonic": 2761.152606592,
+      "lidar": {
+        "stamp": 2761.120729184,
+        "frame": "rslidar",
+        "imu_dt_s": -0.000919328000236419,
+        "imu_rp_rad": [
+          -0.0009313425496977581,
+          0.027126605675013554
+        ],
+        "points": 18336,
+        "source_age_s": 0.031877408000127616
+      },
+      "depth": {
+        "stamp": 2761.092783,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -0.0023021679999146727,
+        "imu_rp_rad": [
+          -0.0009043598490773702,
+          0.02710403870110772
+        ],
+        "points": 2111,
+        "source_age_s": 0.05982359200015708
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.03321922234091551,
+        0.9994480893308391
+      ],
+      "leg_stamp": 2761.144532544,
+      "file": "frame_016.npz"
+    },
+    {
+      "receive_monotonic": 2762.653246144,
+      "lidar": {
+        "stamp": 2762.62072432,
+        "frame": "rslidar",
+        "imu_dt_s": -0.00015408000035677105,
+        "imu_rp_rad": [
+          -0.0011555300784698455,
+          0.02724849893313498
+        ],
+        "points": 19968,
+        "source_age_s": 0.03252182400001402
+      },
+      "depth": {
+        "stamp": 2762.620581,
+        "frame": "camera_depth_optical_frame",
+        "imu_dt_s": -1.0760000350273913e-05,
+        "imu_rp_rad": [
+          -0.0011555300784698455,
+          0.02724849893313498
+        ],
+        "points": 2124,
+        "source_age_s": 0.03266514400002052
+      },
+      "leg_pose": [
+        0.10389978495417777,
+        0.2828188471041047,
+        0.3254582640364779,
+        0.0,
+        0.0,
+        0.0332017009215929,
+        0.9994486715464247
+      ],
+      "leg_stamp": 2762.643909216,
+      "file": "frame_017.npz"
+    }
+  ],
+  "errors": [],
+  "counts": {
+    "lidar": 255,
+    "depth": 837,
+    "imu": 4933,
+    "leg": 4892
+  },
+  "duration_s": 30.00437977599995,
+  "tf_frames_yaml": "leg_base_link: \n  parent: 'robot_odom'\n  broadcaster: 'default_authority'\n  rate: 19.999\n  most_recent_transform: 2764.084712\n  oldest_transform: 2754.134370\n  buffer_length: 9.950\ncamera_depth_frame: \n  parent: 'camera_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\ncamera_link: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\ncamera_depth_optical_frame: \n  parent: 'camera_depth_frame'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\ncamera_color_frame: \n  parent: 'camera_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\ncamera_color_optical_frame: \n  parent: 'camera_color_frame'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nrslidar: \n  parent: 'base_link'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\nbase_link: \n  parent: 'map'\n  broadcaster: 'default_authority'\n  rate: 9.900\n  most_recent_transform: 2764.020500\n  oldest_transform: 2754.020571\n  buffer_length: 10.000\n"
+}

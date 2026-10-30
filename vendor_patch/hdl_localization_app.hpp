@@ -30,6 +30,9 @@
 
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/common/transforms.h>
+#include <pcl/registration/icp.h>
+#include <pcl/search/kdtree.h>
+#include <pcl/kdtree/kdtree_flann.h>
 
 #include <pclomp/ndt_omp.h>
 #include <fast_gicp/ndt/ndt_cuda.hpp>
@@ -91,24 +94,42 @@ public:
         }else{
             RCLCPP_INFO(get_logger(), "disable imu-based pose prediction; keep IMU leveling enabled");
         }
+        // Keep only IMU buffering concurrent with heavy scan matching. All
+        // estimator/map/leg callbacks remain in the default exclusive group.
+        imu_callback_group_ = create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+        rclcpp::SubscriptionOptions imu_options;
+        imu_options.callback_group = imu_callback_group_;
         imu_sub = create_subscription<sensor_msgs::msg::Imu>(
             "/gpsimu_driver/imu_data",
             10,
             [this](sensor_msgs::msg::Imu::SharedPtr msg){
                 this->ImuCallback(msg);
-            }
+            }, imu_options
         );
-        auto reentrant_callback_group = create_callback_group(rclcpp::CallbackGroupType::Reentrant);
-        rclcpp::SubscriptionOptions reentrant_options;
-        reentrant_options.callback_group = reentrant_callback_group;
         points_sub = create_subscription<sensor_msgs::msg::PointCloud2>(
             "/velodyne_points", 
             1,
             [this](sensor_msgs::msg::PointCloud2::SharedPtr msg){
-                this->LidarCallback(msg);
-            },
-            reentrant_options
+                pending_scan_ = msg;
+            }
         );
+        // A 20 Hz leg-TF stream can legitimately arrive ~50 ms after a scan.
+        // Keep only the newest scan and retry exact-time TF without blocking
+        // callbacks or relabelling an older pose. Missing data still expires.
+        scan_timer_=create_wall_timer(std::chrono::milliseconds(10),[this](){
+            if(!pending_scan_) return;
+            const auto stamp=rclcpp::Time(pending_scan_->header.stamp.sec,
+                pending_scan_->header.stamp.nanosec,RCL_STEADY_TIME);
+            const double now=rclcpp::Clock(RCL_STEADY_TIME).now().seconds();
+            const bool tf_ready=tf_buffer.canTransform(robot_odom_frame_id,
+                robot_odom_child_frame_id,stamp,rclcpp::Duration(0));
+            const auto decision=ScanReadiness(stamp.seconds(),now,last_processed_scan_,tf_ready);
+            if(decision==ScanDecision::Wait) return;
+            auto scan=pending_scan_;pending_scan_.reset();
+            if(decision==ScanDecision::Drop) return;
+            last_processed_scan_=stamp.seconds();
+            LidarCallback(scan);
+        });
         globalmap_sub = create_subscription<sensor_msgs::msg::PointCloud2>(
             "/globalmap", 
             1, 
@@ -239,6 +260,81 @@ private:
         for (float d : distances) if (d <= max_range) { sum+=d; ++count; }
         return count ? sum/count : std::numeric_limits<double>::max();
     }
+
+    // BEGIN_FINE_REGISTRATION
+    // Full-scene rigid refinement, never a floor-only fit or height offset.
+    // Return false on inadequate support/geometry; the caller publishes no
+    // valid new pose/cloud on failure. Enable only after static acceptance.
+    struct RefinementDiagnostics {
+        const char* reason = "invalid_input";
+        double translation = 0, rotation = 0;
+    };
+    static bool RefineFullScene(
+        const pcl::PointCloud<PointT>::ConstPtr& source,
+        const pcl::PointCloud<PointT>::ConstPtr& target,
+        const Eigen::Matrix4f& coarse, Eigen::Matrix4f& refined,
+        std::array<double, 4>& quality,
+        pcl::search::KdTree<PointT>::Ptr tree = nullptr,
+        RefinementDiagnostics* diagnostics = nullptr) {
+        RefinementDiagnostics local;
+        auto& diagnostic = diagnostics ? *diagnostics : local;
+        diagnostic = RefinementDiagnostics{};
+        quality.fill(std::numeric_limits<double>::quiet_NaN());
+        if(!coarse.allFinite() || source->size() < 100 || target->size() < 100)
+            return false;
+        for(const auto& p : *source)
+            if(!std::isfinite(p.x) || !std::isfinite(p.y) || !std::isfinite(p.z)) return false;
+        auto initial = pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>());
+        pcl::transformPointCloud(*source, *initial, coarse);
+        pcl::IterativeClosestPoint<PointT, PointT> icp;
+        icp.setInputSource(initial);
+        icp.setInputTarget(target);
+        // Reuse an exact target index only for this unchanged map. The map
+        // callback owns cache invalidation; the standalone helper is safe too.
+        if(!tree || tree->getInputCloud() != target) {
+            tree.reset(new pcl::search::KdTree<PointT>());
+            tree->setInputCloud(target);
+        }
+        icp.setSearchMethodTarget(tree, true);
+        icp.setMaxCorrespondenceDistance(0.30);
+        icp.setMaximumIterations(35);
+        icp.setTransformationEpsilon(1e-8);
+        pcl::PointCloud<PointT> result;
+        icp.align(result);
+        if(!icp.hasConverged()) { diagnostic.reason="not_converged"; return false; }
+        const Eigen::Matrix4f delta = icp.getFinalTransformation();
+        const Eigen::Matrix4f candidate = delta * coarse;
+        if(!delta.allFinite()) { diagnostic.reason="nonfinite_delta"; return false; }
+        diagnostic.translation=(candidate.block<3,1>(0,3)-coarse.block<3,1>(0,3)).norm();
+        diagnostic.rotation=Eigen::Quaternionf(delta.block<3,3>(0,0)).angularDistance(
+               Eigen::Quaternionf::Identity());
+        auto score = [&tree](const pcl::PointCloud<PointT>& cloud) {
+            double sum = 0; size_t supported = 0;
+            std::vector<int> indices(1); std::vector<float> distances(1);
+            for(const auto& p : cloud) {
+                if(tree->nearestKSearch(p, 1, indices, distances) != 1)
+                    return std::array<double,2>{{1.0, 0.0}};
+                const double d = std::sqrt(distances[0]);
+                // Same complete source set for before/after: new obstacles
+                // cannot improve the score simply by losing correspondences.
+                sum += std::min(0.30, d);
+                if(d <= 0.30) ++supported;
+            }
+            return std::array<double,2>{{sum/cloud.size(), double(supported)/cloud.size()}};
+        };
+        const auto before = score(*initial), after = score(result);
+        quality = {{before[0], after[0], before[1], after[1]}};
+        if(diagnostic.translation > 0.25f) { diagnostic.reason="translation_limit"; return false; }
+        if(diagnostic.rotation > 0.174532925f) { diagnostic.reason="rotation_limit"; return false; }
+        if(after[1] < 0.70) { diagnostic.reason="low_overlap"; return false; }
+        if(after[1]+0.02 < before[1]) { diagnostic.reason="overlap_loss"; return false; }
+        if(after[0] > before[0]+1e-5) { diagnostic.reason="score_worse"; return false; }
+        if(!candidate.allFinite()) { diagnostic.reason="nonfinite_pose"; return false; }
+        refined = candidate;
+        diagnostic.reason="accepted";
+        return true;
+    }
+    // END_FINE_REGISTRATION
 
     pcl::Registration<PointT, PointT>::Ptr CreateRegistration(){
         if(reg_method == "NDT_OMP"){
@@ -396,6 +492,8 @@ private:
         if(get_parameter("ndt_neighbor_search_radius", ndt_neighbor_search_radius)){
             RCLCPP_INFO(get_logger(), "ndt_neighbor_search_radius is: %lf", ndt_neighbor_search_radius);
         }
+        declare_parameter("fine_registration_enabled", false);
+        get_parameter("fine_registration_enabled", fine_registration_enabled_);
         declare_parameter("ndt_resolution", 1.0);
         if(get_parameter("ndt_resolution", ndt_resolution)){
             RCLCPP_INFO(get_logger(), "ndt_resolution is: %lf", ndt_resolution);
@@ -431,6 +529,7 @@ private:
 private:
     bool specify_init_pose;
     double downsample_resolution_;
+    bool fine_registration_enabled_ = false;
     double init_pos_x;            
     double init_pos_y;            
     double init_pos_z;            
@@ -450,16 +549,18 @@ private:
         return matrix;
     }
 
-    bool ExpectedPoseFromLegOdom(Eigen::Matrix4f& expected){
+    // BEGIN_SCAN_READINESS
+    enum class ScanDecision { Wait, Drop, Process };
+    static ScanDecision ScanReadiness(double stamp,double now,double previous,bool tf_ready) {
+        if(!std::isfinite(stamp) || !std::isfinite(now) || stamp<=0 || stamp<=previous ||
+           now-stamp < -0.05 || now-stamp > 0.5) return ScanDecision::Drop;
+        return tf_ready ? ScanDecision::Process : ScanDecision::Wait;
+    }
+    // END_SCAN_READINESS
+
+    bool ExpectedPoseFromLegOdom(const Eigen::Matrix4f& current_leg, Eigen::Matrix4f& expected){
         std::lock_guard<std::mutex> anchor_lock(manual_anchor_mutex_);
-        if(!manual_anchor_valid_){
-            return false;
-        }
-        std::lock_guard<std::mutex> leg_lock(leg_odom_mutex_);
-        if(!leg_odom2_msg){
-            return false;
-        }
-        const Eigen::Matrix4f current_leg = OdomPoseMatrix(*leg_odom2_msg);
+        if(!manual_anchor_valid_ || !current_leg.allFinite()) return false;
         expected = manual_map_anchor_ * leg_odom_anchor_.inverse() * current_leg;
         return true;
     }
@@ -473,15 +574,40 @@ private:
                                   std::cos(first - second)));
     }
 
+    // BEGIN_ROTATION_SPAN
+    static double RotationSpan(const std::deque<std::array<double,4>>& poses) {
+        if(poses.empty()) return std::numeric_limits<double>::infinity();
+        Eigen::Vector4d sum = Eigen::Vector4d::Zero();
+        Eigen::Quaterniond ref(poses.front()[0],poses.front()[1],poses.front()[2],poses.front()[3]);
+        for(const auto& v : poses) {
+            Eigen::Quaterniond q(v[0],v[1],v[2],v[3]);
+            if(!q.coeffs().allFinite() || q.norm()<1e-6) return std::numeric_limits<double>::infinity();
+            q.normalize();
+            if(q.coeffs().dot(ref.coeffs())<0) q.coeffs()*=-1;
+            sum+=q.coeffs();
+        }
+        if(sum.norm()<1e-6) return std::numeric_limits<double>::infinity();
+        sum.normalize();
+        Eigen::Quaterniond mean(sum[3],sum[0],sum[1],sum[2]);
+        double span=0;
+        for(const auto& v : poses) {
+            Eigen::Quaterniond q(v[0],v[1],v[2],v[3]);
+            span=std::max(span,mean.angularDistance(q.normalized()));
+        }
+        return span;
+    }
+    // END_ROTATION_SPAN
+
     void ClearAutoReanchorCandidates(){
         auto_reanchor_candidates_.clear();
+        auto_reanchor_rotations_.clear();
     }
 
     bool TryPromoteStableNdtCandidate(
         const Eigen::Matrix4f& candidate,
         double translation_from_seed,
         double yaw_from_seed,
-        double fitness){
+        double fitness, const Eigen::Matrix4f& scan_leg){
         if(!auto_reanchor_pending_){
             return false;
         }
@@ -502,11 +628,14 @@ private:
         auto_reanchor_candidates_.push_back({
             static_cast<double>(candidate(0, 3)),
             static_cast<double>(candidate(1, 3)),
-            PoseYaw(candidate)});
+            PoseYaw(candidate), static_cast<double>(candidate(2, 3))});
+        const Eigen::Quaternionf orientation(candidate.block<3,3>(0,0));
+        auto_reanchor_rotations_.push_back({orientation.w(),orientation.x(),orientation.y(),orientation.z()});
         const std::size_t required = static_cast<std::size_t>(
             std::max(10, auto_reanchor_samples));
         while(auto_reanchor_candidates_.size() > required){
             auto_reanchor_candidates_.pop_front();
+            auto_reanchor_rotations_.pop_front();
         }
         if(auto_reanchor_candidates_.size() < required){
             RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
@@ -517,25 +646,36 @@ private:
 
         double mean_x = 0.0;
         double mean_y = 0.0;
+        double mean_z = 0.0;
         double yaw_sin = 0.0;
         double yaw_cos = 0.0;
         for(const auto& pose : auto_reanchor_candidates_){
             mean_x += pose[0];
             mean_y += pose[1];
+            mean_z += pose[3];
             yaw_sin += std::sin(pose[2]);
             yaw_cos += std::cos(pose[2]);
         }
         mean_x /= auto_reanchor_candidates_.size();
         mean_y /= auto_reanchor_candidates_.size();
+        mean_z /= auto_reanchor_candidates_.size();
         const double mean_yaw = std::atan2(yaw_sin, yaw_cos);
         double max_position_deviation = 0.0;
         double max_yaw_deviation = 0.0;
+        double max_z_deviation = 0.0;
         for(const auto& pose : auto_reanchor_candidates_){
+            max_z_deviation=std::max(max_z_deviation,std::abs(pose[3]-mean_z));
             max_position_deviation = std::max(
                 max_position_deviation,
                 std::hypot(pose[0] - mean_x, pose[1] - mean_y));
             max_yaw_deviation = std::max(
                 max_yaw_deviation, AngleDistance(pose[2], mean_yaw));
+        }
+        const double rotation_span = RotationSpan(auto_reanchor_rotations_);
+        if(rotation_span > auto_reanchor_yaw_span || max_z_deviation > 0.03) {
+            RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+                "NDT acquisition 3D unstable: rotation %.2fdeg z_span %.4fm", rotation_span*180.0/M_PI,max_z_deviation);
+            return false;
         }
         if(max_position_deviation > auto_reanchor_position_span ||
            max_yaw_deviation > auto_reanchor_yaw_span){
@@ -547,13 +687,8 @@ private:
 
         {
             std::lock_guard<std::mutex> anchor_lock(manual_anchor_mutex_);
-            std::lock_guard<std::mutex> leg_lock(leg_odom_mutex_);
-            if(!leg_odom2_msg){
-                ClearAutoReanchorCandidates();
-                return false;
-            }
             manual_map_anchor_ = candidate;
-            leg_odom_anchor_ = OdomPoseMatrix(*leg_odom2_msg);
+            leg_odom_anchor_ = scan_leg;
             manual_anchor_valid_ = true;
         }
         auto_reanchor_pending_ = false;
@@ -605,14 +740,9 @@ private:
 
     bool FuseNdtCorrectionWithLegOdom(
         const Eigen::Matrix4f& ndt_pose,
-        Eigen::Matrix4f& fused_pose){
+        const Eigen::Matrix4f& current_leg, Eigen::Matrix4f& fused_pose){
         std::lock_guard<std::mutex> anchor_lock(manual_anchor_mutex_);
-        std::lock_guard<std::mutex> leg_lock(leg_odom_mutex_);
-        if(!manual_anchor_valid_ || !leg_odom2_msg){
-            return false;
-        }
-
-        const Eigen::Matrix4f current_leg = OdomPoseMatrix(*leg_odom2_msg);
+        if(!manual_anchor_valid_ || !current_leg.allFinite()) return false;
         const Eigen::Matrix4f leg_relative =
             leg_odom_anchor_.inverse() * current_leg;
         const Eigen::Matrix4f expected_pose =
@@ -683,6 +813,19 @@ private:
         #endif
     }
 
+    // BEGIN_LEVELING_IMU_VALIDATION
+    static bool ValidLevelingImu(double gap, double x, double y,
+                                  double z, double w, double covariance0) {
+        // 25 Hz-equivalent maximum pairing error; normal saved pairs are
+        // within 4 ms. Reject the saved 200 ms stale pairing, not the scan's
+        // computation latency. No extrapolation or guessed inverse rotation.
+        const double norm2 = x*x + y*y + z*z + w*w;
+        return std::isfinite(gap) && gap <= 0.04 && gap >= 0.0 &&
+               std::isfinite(norm2) && std::abs(norm2 - 1.0) <= 0.01 &&
+               std::isfinite(covariance0) && covariance0 >= 0.0;
+    }
+    // END_LEVELING_IMU_VALIDATION
+
     bool GetClosestImuData(const rclcpp::Time &time, sensor_msgs::msg::Imu::SharedPtr &msg){
         std::lock_guard<std::mutex> lock(imu_data_mutex);
 
@@ -702,6 +845,14 @@ private:
             }
         }
 
+        const auto& selected = imu_data_buffer_.at(index);
+        const auto& q = selected->orientation;
+        if(!ValidLevelingImu(min_time_diff, q.x, q.y, q.z, q.w,
+                             selected->orientation_covariance[0])) {
+            RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 5000,
+                "rejecting IMU leveling pair: gap %.6fs or invalid orientation", min_time_diff);
+            return false;
+        }
         if(index > 0){
             for(int i = 0; i < index; i++){
                 imu_data_buffer_.pop_front();
@@ -722,6 +873,9 @@ private:
     void ImuCallback(const sensor_msgs::msg::Imu::SharedPtr imu_msg) {
         std::lock_guard<std::mutex> lock(imu_data_mutex);
         imu_data_buffer_.push_back(imu_msg);
+        // Bound memory during a missing lidar stream; no old sample becomes
+        // eligible merely because newer messages are absent.
+        while(imu_data_buffer_.size() > 4096) imu_data_buffer_.pop_front();
     }
 
     bool IsLidarTimeout(){
@@ -775,9 +929,24 @@ private:
         }
         const auto& stamp = msg->header.stamp;
         rclcpp::Time points_time(msg->header.stamp.sec, msg->header.stamp.nanosec, RCL_STEADY_TIME);
+        const double source_age=(rclcpp::Clock(RCL_STEADY_TIME).now()-points_time).seconds();
+        if(source_age < -0.05 || source_age > 0.5) return;
+        // One exact-time leg transform is shared by prediction, acceptance and
+        // anchor fusion. Never substitute a latest transform with a scan stamp.
+        Eigen::Matrix4f scan_leg;
+        try {
+            const auto leg_tf=tf_buffer.lookupTransform(robot_odom_frame_id,
+                robot_odom_child_frame_id, points_time, rclcpp::Duration(0));
+            scan_leg=tf2::transformToEigen(leg_tf).cast<float>().matrix();
+            if(!scan_leg.allFinite()) return;
+        } catch(const std::exception& e) {
+            RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 5000,
+                "missing same-scan leg pose: %s", e.what());
+            return;
+        }
         sensor_msgs::msg::Imu::SharedPtr imu_data;
         if(!GetClosestImuData(msg->header.stamp, imu_data)){
-            RCLCPP_WARN(get_logger(), "imu_data_buffer is empty");
+            RCLCPP_WARN(get_logger(), "no valid time-aligned IMU for lidar leveling");
             return;
         };
         Eigen::Matrix4f base2footprint_transform_matrix;
@@ -811,28 +980,7 @@ private:
             pose_estimator->predict(imu_time, acc_sign * Eigen::Vector3f(acc.x, acc.y, acc.z), gyro_sign * Eigen::Vector3f(gyro.x, gyro.y, gyro.z));
         }
 
-        // odometry-based prediction
-        rclcpp::Time last_correction_time = pose_estimator->last_correction_time();
-        if(enable_robot_odometry_prediction && !last_correction_time.nanoseconds() == 0){
-            geometry_msgs::msg::TransformStamped odom_delta;
-            // Never block scan matching for a future odometry sample. Use the
-            // existing latest-TF fallback immediately if exact-time TF is not
-            // available; freshness is supervised independently.
-            if(tf_buffer.canTransform(robot_odom_child_frame_id, last_correction_time, robot_odom_child_frame_id, rclcpp::Time(stamp.sec, stamp.nanosec), robot_odom_frame_id, rclcpp::Duration(0))){
-                odom_delta = tf_buffer.lookupTransform(robot_odom_child_frame_id, last_correction_time, robot_odom_child_frame_id, stamp, robot_odom_frame_id, rclcpp::Duration(0));
-            } 
-            else if(tf_buffer.canTransform(robot_odom_child_frame_id, last_correction_time, robot_odom_child_frame_id, rclcpp::Time(0,0), robot_odom_frame_id, rclcpp::Duration(0))){
-                odom_delta = tf_buffer.lookupTransform(robot_odom_child_frame_id, last_correction_time, robot_odom_child_frame_id, rclcpp::Time(0,0), robot_odom_frame_id, rclcpp::Duration(0));
-            }
-
-            if(odom_delta.header.stamp.nanosec == 0){
-                RCLCPP_WARN_STREAM(get_logger(), "failed to look up transform between " << cloud->header.frame_id << " and " << robot_odom_frame_id);
-            } 
-            else{
-                Eigen::Isometry3d delta = tf2::transformToEigen(odom_delta);
-                pose_estimator->predict_odom(delta.cast<float>().matrix());
-            }
-        }
+        if(enable_robot_odometry_prediction && !pose_estimator->predict_odom_at(points_time,scan_leg)) return;
 
         // First refine the coarse manual/visual seed internally while keeping
         // the externally published pose pinned to the safe leg-odometry
@@ -840,115 +988,108 @@ private:
         // bounded, good-fitness cluster remains stable for many scans.
         const bool was_rejected = correction_rejected_;
         correction_rejected_ = false;
-        auto aligned = pose_estimator->correct(points_time, filtered);
-        const auto matched_at = std::chrono::steady_clock::now();
-        Eigen::Matrix4f published_pose = pose_estimator->matrix();
-        if(candidate_pose_pub->get_subscription_count()) {
-            nav_msgs::msg::Odometry candidate;
-            candidate.header.stamp = points_time;
-            candidate.header.frame_id = "map";
-            candidate.child_frame_id = "ndt_registration";
-            candidate.pose.pose = tf2::toMsg(Eigen::Isometry3d(published_pose.cast<double>()));
-            candidate_pose_pub->publish(candidate);
+        std::array<double,4> fine_quality{{0,0,0,0}};
+        PoseEstimator::PoseRefiner refine;
+        if(fine_registration_enabled_) {
+            refine = [&](const Eigen::Matrix4f& coarse, Eigen::Matrix4f& refined) {
+                const auto begin=std::chrono::steady_clock::now();
+                RefinementDiagnostics diagnostic;
+                const bool accepted=registration->hasConverged() &&
+                    RefineFullScene(filtered, globalmap, coarse, refined, fine_quality,
+                                    fine_target_tree_, &diagnostic);
+                const Eigen::Quaternionf q(coarse.block<3,3>(0,0));
+                RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
+                    "refinement diagnostic stamp=%.9f reason=%s dt_ms=%.1f ndt_ms=%.1f source=%zu target=%zu "
+                    "delta_m=%.5f delta_deg=%.3f score=%.5f,%.5f overlap=%.4f,%.4f "
+                    "coarse_xyzq=%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f",
+                    points_time.seconds(), diagnostic.reason,
+                    std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count(),
+                    std::chrono::duration<double,std::milli>(begin-prepared_at).count(),
+                    filtered->size(),globalmap->size(),diagnostic.translation,diagnostic.rotation*180/M_PI,
+                    fine_quality[0],fine_quality[1],fine_quality[2],fine_quality[3],
+                    coarse(0,3),coarse(1,3),coarse(2,3),q.x(),q.y(),q.z(),q.w());
+                return accepted;
+            };
         }
         Eigen::Matrix4f expected_pose;
-        if(ExpectedPoseFromLegOdom(expected_pose)){
-            const Eigen::Matrix4f estimated_pose = pose_estimator->matrix();
-            const double translation_error =
-                (estimated_pose.block<2, 1>(0, 3) -
-                 expected_pose.block<2, 1>(0, 3)).norm();
-            const double estimated_yaw = PoseYaw(estimated_pose);
-            const double expected_yaw = PoseYaw(expected_pose);
-            const double yaw_error = AngleDistance(estimated_yaw, expected_yaw);
-            const double fitness = BatchFitnessScore(
-                max_correspondence_dist);
-
-            if(auto_reanchor_enabled && auto_reanchor_pending_){
-                const bool promoted = TryPromoteStableNdtCandidate(
-                    estimated_pose, translation_error, yaw_error, fitness);
-                if(!promoted){
-                    correction_rejected_ = true;
-                    published_pose = expected_pose;
-                    pcl::transformPointCloud(*filtered, *aligned, expected_pose);
-
-                    // A candidate outside the tightly bounded acquisition
-                    // region is not allowed to keep walking through the map.
-                    // Allow finite, converged candidates inside the seed's
-                    // motion bounds to keep refining even when their current
-                    // fitness is not yet good enough. Resetting on that same
-                    // promotion threshold traps a coarse visual seed at its
-                    // first iteration. TryPromoteStableNdtCandidate still
-                    // requires the unchanged fitness limit for every scan in
-                    // the stable window; only the seed prediction is published
-                    // until the candidate passes.
-                    if(!registration->hasConverged() || !std::isfinite(fitness) ||
-                       translation_error > auto_reanchor_max_translation ||
-                       yaw_error > auto_reanchor_max_yaw){
-                        const Eigen::Quaternionf expected_quaternion(
-                            expected_pose.block<3, 3>(0, 0));
-                        pose_estimator.reset(
-                            new hdl_localization::PoseEstimator(
-                                registration,
-                                expected_pose.block<3, 1>(0, 3),
-                                expected_quaternion,
-                                cool_time_duration));
-                    }
-                }else{
-                    published_pose = estimated_pose;
-                }
-            }else if(!registration->hasConverged() ||
-                     !std::isfinite(fitness) ||
-                     fitness > auto_reanchor_max_fitness ||
-                     translation_error > manual_pose_translation_gate ||
-                     yaw_error > manual_pose_yaw_gate){
-                correction_rejected_ = true;
-                published_pose = expected_pose;
-                pcl::transformPointCloud(*filtered, *aligned, expected_pose);
-                consecutive_gate_violations_++;
-                if(consecutive_gate_violations_ >=
-                   std::max(1, manual_gate_violation_samples)){
-                    const Eigen::Quaternionf expected_quaternion(
-                        expected_pose.block<3, 3>(0, 0));
-                    pose_estimator.reset(
-                        new hdl_localization::PoseEstimator(
-                            registration,
-                            expected_pose.block<3, 1>(0, 3),
-                            expected_quaternion,
-                            cool_time_duration));
-                    consecutive_gate_violations_ = 0;
-                }
-                if(!was_rejected){
-                    RCLCPP_ERROR(
-                        get_logger(),
-                        "rejecting NDT correction: disagreement %.3f m, %.1f deg, fitness %.4f, converged=%s",
-                        translation_error, yaw_error * 180.0 / M_PI,
-                        fitness, registration->hasConverged() ? "true" : "false");
-                }
-            }else{
-                consecutive_gate_violations_ = 0;
-                if(!FuseNdtCorrectionWithLegOdom(
-                       estimated_pose, published_pose)){
-                    published_pose = expected_pose;
-                }
-                pcl::transformPointCloud(
-                    *filtered, *aligned, published_pose);
-                if(was_rejected){
-                    RCLCPP_INFO(get_logger(), "NDT correction returned inside manual/leg anchor gate");
+        if(!ExpectedPoseFromLegOdom(scan_leg,expected_pose)) return;
+        const bool acquiring=auto_reanchor_enabled && auto_reanchor_pending_;
+        const Eigen::Matrix4f* guess=acquiring && acquisition_guess_ ? &*acquisition_guess_ : nullptr;
+        PoseEstimator::PoseValidator validate = [&](const Eigen::Matrix4f& posterior) {
+            if(candidate_pose_pub->get_subscription_count()) {
+                nav_msgs::msg::Odometry candidate;
+                candidate.header.stamp=points_time;candidate.header.frame_id="map";
+                candidate.child_frame_id="ndt_registration";
+                candidate.pose.pose=tf2::toMsg(Eigen::Isometry3d(posterior.cast<double>()));
+                candidate_pose_pub->publish(candidate); // diagnostic only
+            }
+            const double distance=(posterior.block<2,1>(0,3)-expected_pose.block<2,1>(0,3)).norm();
+            const double yaw=AngleDistance(PoseYaw(posterior),PoseYaw(expected_pose));
+            const double rotation=Eigen::Quaternionf(posterior.block<3,3>(0,0)).angularDistance(
+                Eigen::Quaternionf(expected_pose.block<3,3>(0,0)));
+            // Validate the exact proposed pose, not a different coarse NDT
+            // transform. Require spatial support, not only low error on a few
+            // lucky correspondences. Distance values below are squared metres.
+            pcl::PointCloud<PointT> checked;
+            pcl::transformPointCloud(*filtered,checked,posterior);
+            const auto distances=TargetDistances(checked);
+            double sum=0;size_t inliers=0,valid_points=0;
+            for(size_t i=0;i<checked.size();++i) {
+                if(!WithinStatusRange(checked[i].getVector3fMap(),posterior,max_valid_point_dist)) continue;
+                ++valid_points;
+                if(distances[i]<=max_correspondence_dist*max_correspondence_dist) {
+                    sum+=distances[i];++inliers;
                 }
             }
+            const double fitness=inliers ? sum/inliers : std::numeric_limits<double>::infinity();
+            const double overlap=double(inliers)/std::max(size_t(1),valid_points);
+            const double age=(rclcpp::Clock(RCL_STEADY_TIME).now()-points_time).seconds();
+            if(age < -0.05 || age > 0.5 || !std::isfinite(fitness) ||
+               fitness > auto_reanchor_max_fitness || overlap < 0.5) {
+                ClearAutoReanchorCandidates();acquisition_guess_=boost::none;return false;
+            }
+            if(acquiring) {
+                const bool bounded=distance<=auto_reanchor_max_translation && yaw<=auto_reanchor_max_yaw;
+                if(!bounded) {ClearAutoReanchorCandidates();acquisition_guess_=boost::none;return false;}
+                // Warm-start ONLY the registration search, never the accepted
+                // filters/time/heartbeat, until the entire candidate window passes.
+                acquisition_guess_=posterior;
+                return TryPromoteStableNdtCandidate(posterior,distance,yaw,fitness,scan_leg);
+            }
+            return (posterior.block<3,1>(0,3)-expected_pose.block<3,1>(0,3)).norm()<=manual_pose_translation_gate &&
+                yaw<=manual_pose_yaw_gate && rotation<=manual_pose_yaw_gate;
+        };
+        auto aligned=pose_estimator->correct(points_time,filtered,refine,validate,guess,acquiring);
+        const auto matched_at=std::chrono::steady_clock::now();
+        if(!aligned) {
+            correction_rejected_=true;
+            RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+                "registration transaction rejected: no accepted state/time/pose/cloud refreshed");
+            return;
         }
+        correction_rejected_=false;
+        acquisition_guess_=boost::none;
+        const Eigen::Matrix4f estimated_pose=pose_estimator->matrix();
+        Eigen::Matrix4f published_pose=estimated_pose;
+        if(!acquiring && !FuseNdtCorrectionWithLegOdom(estimated_pose,scan_leg,published_pose)) return;
+        pcl::transformPointCloud(*filtered,*aligned,published_pose);
+        if(was_rejected) RCLCPP_INFO(get_logger(),"accepted registration transaction resumed");
 
         const auto gated_at = std::chrono::steady_clock::now();
         // pub
-        if(aligned_pub->get_subscription_count()) {
+        if(!correction_rejected_ && aligned_pub->get_subscription_count()) {
+            // Registration voxel centroids can average a 16 cm obstacle with
+            // the ground inside a 30 cm cell. Keep their use in matching/status,
+            // but publish every sensor return with the SAME accepted full P.
+            auto obstacle_aligned = TransformObstacleCloud(cloud, published_pose);
             sensor_msgs::msg::PointCloud2 ros_cloud;
-            pcl::toROSMsg(*aligned, ros_cloud);
+            pcl::toROSMsg(*obstacle_aligned, ros_cloud);
             ros_cloud.header.frame_id = "map";
             ros_cloud.header.stamp = points_time;
             aligned_pub->publish(ros_cloud);
         }
         if(status_pub->get_subscription_count()) {
-            PublishScanMatchingStatus(msg->header, aligned);
+            PublishScanMatchingStatus(msg->header, aligned, published_pose);
         }
         const auto status_at = std::chrono::steady_clock::now();
         PublishOdometry(msg->header.stamp, published_pose);
@@ -996,6 +1137,11 @@ private:
         pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>());
         pcl::fromROSMsg(*points_msg, *cloud);
         globalmap = cloud;
+        fine_target_tree_.reset();
+        if(fine_registration_enabled_) {
+            fine_target_tree_.reset(new pcl::search::KdTree<PointT>());
+            fine_target_tree_->setInputCloud(globalmap);
+        }
 
         registration->setInputTarget(globalmap);
         last_globalmap_message_ = points_msg;
@@ -1093,6 +1239,7 @@ private:
      */
     void InitialPoseCallback(const geometry_msgs::msg::PoseWithCovarianceStamped::SharedPtr pose_msg){
         RCLCPP_INFO(get_logger(), "initial pose received!!");
+        acquisition_guess_=boost::none;
         const auto& p = pose_msg->pose.pose.position;
         const auto& q = pose_msg->pose.pose.orientation;
         double cool_time_duration;        
@@ -1147,6 +1294,16 @@ private:
      * @param cloud   input cloud
      * @return downsampled cloud
      */
+    // BEGIN_OBSTACLE_GEOMETRY
+    static pcl::PointCloud<PointT>::Ptr TransformObstacleCloud(
+        const pcl::PointCloud<PointT>::ConstPtr& source,
+        const Eigen::Matrix4f& pose) {
+        auto result = pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>());
+        pcl::transformPointCloud(*source, *result, pose);
+        return result;
+    }
+    // END_OBSTACLE_GEOMETRY
+
     pcl::PointCloud<PointT>::ConstPtr Downsample(const pcl::PointCloud<PointT>::ConstPtr& cloud){
         pcl::PointCloud<PointT>::Ptr filtered(new pcl::PointCloud<PointT>());
         downsample_filter_.setInputCloud(cloud);
@@ -1243,7 +1400,20 @@ private:
     /**
      * @brief publish scan matching status information
      */
-    void PublishScanMatchingStatus(const std_msgs::msg::Header& header, pcl::PointCloud<pcl::PointXYZI>::ConstPtr aligned) {
+    // BEGIN_STATUS_RANGE
+    static bool WithinStatusRange(const Eigen::Vector3f& map_point,
+                                  const Eigen::Matrix4f& map_from_registration,
+                                  double maximum) {
+        // Range is relative to this scan's registration origin, not map (0,0,0).
+        // This is invariant to a shared map translation along a long patrol.
+        return map_point.allFinite() && map_from_registration.allFinite() &&
+            (map_point-map_from_registration.block<3,1>(0,3)).norm() <= maximum;
+    }
+    // END_STATUS_RANGE
+
+    void PublishScanMatchingStatus(const std_msgs::msg::Header& header,
+                                  pcl::PointCloud<pcl::PointXYZI>::ConstPtr aligned,
+                                  const Eigen::Matrix4f& published_pose) {
         msg::ScanMatchingStatus status;
         status.header = header;
 
@@ -1255,7 +1425,7 @@ private:
         const auto squared_distances = TargetDistances(*aligned);
         for(int i = 0; i < static_cast<int>(aligned->size()); i++) {
             const auto& pt = aligned->at(i);
-            if (pt.getVector3fMap().norm() > max_valid_point_dist) {
+            if (!WithinStatusRange(pt.getVector3fMap(), published_pose, max_valid_point_dist)) {
                 continue;
             }
             num_valid_points++;
@@ -1316,6 +1486,9 @@ private:
 
     }
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::TimerBase::SharedPtr scan_timer_;
+    sensor_msgs::msg::PointCloud2::SharedPtr pending_scan_;
+    double last_processed_scan_=0;
 
 private:
     bool enable_robot_odometry_prediction;
@@ -1371,7 +1544,10 @@ private:
     bool correction_rejected_ = false;
     bool auto_reanchor_pending_ = false;
     int consecutive_gate_violations_ = 0;
-    std::deque<std::array<double, 3>> auto_reanchor_candidates_;
+    rclcpp::CallbackGroup::SharedPtr imu_callback_group_;
+    std::deque<std::array<double,4>> auto_reanchor_rotations_;
+    std::deque<std::array<double, 4>> auto_reanchor_candidates_;
+    boost::optional<Eigen::Matrix4f> acquisition_guess_;
 
     // imu input buffer
     std::mutex imu_data_mutex;
@@ -1379,6 +1555,7 @@ private:
 
     // globalmap and registration method
     pcl::PointCloud<PointT>::Ptr globalmap;
+    pcl::search::KdTree<PointT>::Ptr fine_target_tree_;
     pcl::VoxelGrid<PointT> downsample_filter_;
     pcl::Registration<PointT, PointT>::Ptr registration;
 

@@ -1,0 +1,21 @@
+-- Logs begin at Wed 2023-11-22 05:10:23 CST, end at Mon 2026-10-26 21:19:31 CST. --
+Oct 26 21:15:16 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:16,915 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:16 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:16,968 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:17 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:16,990 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:17 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:17,040 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:17 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:17,041 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:17 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:17,091 ERROR [281471755479456] (synthetic-stream.cpp:48) Exception was thrown during callback: Out of frame resources!
+Oct 26 21:15:18 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:18,525 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:15:21 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:21,492 WARNING [281472216848800] (messenger-libusb.cpp:42) control_transfer returned error, index: 768, error: Resource temporarily unavailable, number: 11
+Oct 26 21:15:25 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:25,547 WARNING [281472216848800] (messenger-libusb.cpp:42) control_transfer returned error, index: 768, error: Resource temporarily unavailable, number: 11
+Oct 26 21:15:37 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:15:37,616 WARNING [281472216848800] (messenger-libusb.cpp:42) control_transfer returned error, index: 768, error: Resource temporarily unavailable, number: 11
+Oct 26 21:16:36 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:16:36,747 WARNING [281472216848800] (messenger-libusb.cpp:42) control_transfer returned error, index: 768, error: Resource temporarily unavailable, number: 11
+Oct 26 21:17:09 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:17:09,187 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:17:11 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:17:11,539 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:17:20 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:17:20,942 WARNING [281472216848800] (messenger-libusb.cpp:42) control_transfer returned error, index: 768, error: Resource temporarily unavailable, number: 11
+Oct 26 21:17:40 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:17:40,529 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:18:22 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:18:22,203 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:18:29 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:18:29,202 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+Oct 26 21:18:39 lite bash[2244]: [realsense2_camera_node-1]  26/10 21:18:39,867 ERROR [281472040667552] (uvc-streamer.cpp:106) uvc streamer watchdog triggered on endpoint: 132
+ExecStart={ path=/bin/bash ; argv[]=/bin/bash /home/ysc/lite_cog_ros2/system/scripts/depth_camera/realsense/start_realsense.sh ; ignore_errors=no ; start_time=[Mon 2026-10-26 21:14:43 CST] ; stop_time=[Mon 2026-10-26 21:14:56 CST] ; pid=1211 ; code=exited ; status=0 }
+0eeaa99f-c92d-4dae-a532-b412bc07d963

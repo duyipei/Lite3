@@ -1,0 +1,114 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-10-26-22-04-48-525905-lite-10498
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [hdl_localization_composition-1]: process started with pid [10507]
+[hdl_localization_composition-1] 1793023489.465610 [0] hdl_locali: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[hdl_localization_composition-1] [INFO] [1793023489.617378088] [patrol_localization]: status_max_correspondence_dist is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793023489.618370728] [patrol_localization]: status_max_valid_point_dist is: 25.000000
+[hdl_localization_composition-1] [INFO] [1793023489.620044392] [patrol_localization]: robot_odom_frame_id is: robot_odom
+[hdl_localization_composition-1] [INFO] [1793023489.621021352] [patrol_localization]: robot_odom_child_frame_id is: leg_base_link
+[hdl_localization_composition-1] [INFO] [1793023489.621826792] [patrol_localization]: odom_child_frame_id is: base_link
+[hdl_localization_composition-1] [INFO] [1793023489.622397320] [patrol_localization]: use_imu is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.622940968] [patrol_localization]: invert_acc is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.623617640] [patrol_localization]: invert_gyro is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.633337448] [patrol_localization]: t_diff is: 0.250000
+[hdl_localization_composition-1] [INFO] [1793023489.634039784] [patrol_localization]: downsample_resolution is: 0.300000
+[hdl_localization_composition-1] [INFO] [1793023489.634569288] [patrol_localization]: use_global_localization is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.635034856] [patrol_localization]: specify_init_pose is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.635425352] [patrol_localization]: init_pos_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.635953160] [patrol_localization]: init_pos_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.636436584] [patrol_localization]: init_pos_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.636869032] [patrol_localization]: init_ori_w is: 1.000000
+[hdl_localization_composition-1] [INFO] [1793023489.637397832] [patrol_localization]: init_ori_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.637858216] [patrol_localization]: init_ori_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.638267656] [patrol_localization]: init_ori_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023489.638688808] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793023489.639163304] [patrol_localization]: reg_method is: NDT_OMP
+[hdl_localization_composition-1] [INFO] [1793023489.639600360] [patrol_localization]: ndt_neighbor_search_method is: DIRECT1
+[hdl_localization_composition-1] [INFO] [1793023489.639986696] [patrol_localization]: ndt_neighbor_search_radius is: 3.000000
+[hdl_localization_composition-1] [INFO] [1793023489.640422984] [patrol_localization]: ndt_resolution is: 1.000000
+[hdl_localization_composition-1] [INFO] [1793023489.646490952] [patrol_localization]: create registration method for localization
+[hdl_localization_composition-1] [INFO] [1793023489.646626504] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793023489.647003112] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793023489.647077832] [patrol_localization]: create registration method for fallback during relocalization
+[hdl_localization_composition-1] [INFO] [1793023489.647138120] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793023489.647275432] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793023489.647421352] [patrol_localization]: disable imu-based pose prediction; keep IMU leveling enabled
+[hdl_localization_composition-1] [WARN] [1793023489.706994248] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[hdl_localization_composition-1] [INFO] [1793023489.745279944] [patrol_localization]: globalmap_pcd is: /home/ysc/lite3_patrol_project/navigation/indoor_fusion_20260912_001_area_review/localization_map.pcd
+[hdl_localization_composition-1] [INFO] [1793023489.763366216] [patrol_localization]: convert_utm_to_local is: 0
+[hdl_localization_composition-1] [INFO] [1793023489.763885864] [patrol_localization]: downsample_resolution is: 0.300000
+[hdl_localization_composition-1] [INFO] [1793023489.764390024] [patrol_localization]: globalmap_downsample_resolution is: 0.100000
+[hdl_localization_composition-1] [INFO] [1793023489.781900264] [patrol_localization]: reference map points: 29823 -> 29823
+[hdl_localization_composition-1] [WARN] [1793023489.786783976] [patrol_localization]: New publisher discovered on this topic, offering incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY_QOS_POLICY
+[hdl_localization_composition-1] [INFO] [1793023499.647578824] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023509.647512936] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023519.647540488] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023529.647539368] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023539.647555880] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023541.360861832] [patrol_localization]: initial pose received!!
+[hdl_localization_composition-1] [INFO] [1793023541.364728840] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793023541.367393096] [patrol_localization]: manual pose anchored to current /leg_odom2 pose; stable NDT auto-reanchor pending
+[hdl_localization_composition-1] [INFO] [1793023549.647541992] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023559.647567496] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793023569.647520008] [patrol_localization]: average pointcloud process time in 10 s is 0.000000 ms, fps is: 0.000000
+[hdl_localization_composition-1] [WARN] [1793023573.488175976] [patrol_localization]: received first lidar
+[hdl_localization_composition-1] [WARN] [1793023573.495026824] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023573.605399496] [patrol_localization]: batch nearest-neighbor verified against PCL: 710 queries
+[hdl_localization_composition-1] [INFO] [1793023573.605634760] [patrol_localization]: NDT acquisition accumulating: 1/15 fitness=0.0079 delta=0.008m
+[hdl_localization_composition-1] [INFO] [1793023573.605915176] [patrol_localization]: scan profile points=710 prep=36.3 match=38.3 gate=42.9 status=0.0 odom=0.2 total=117.0 ms
+[hdl_localization_composition-1] [INFO] [1793023573.836540744] [patrol_localization]: batch nearest-neighbor verified against PCL: 695 queries
+[hdl_localization_composition-1] [INFO] [1793023573.993290504] [patrol_localization]: batch nearest-neighbor verified against PCL: 712 queries
+[hdl_localization_composition-1] [INFO] [1793023574.182459720] [patrol_localization]: batch nearest-neighbor verified against PCL: 702 queries
+[hdl_localization_composition-1] [INFO] [1793023575.722028744] [patrol_localization]: NDT acquisition accumulating: 10/15 fitness=0.0084 delta=0.033m
+[hdl_localization_composition-1] [WARN] [1793023576.763361320] [patrol_localization]: auto-promoted stable NDT candidate as anchor: x=0.196 y=-0.055 yaw=3.3 deg, fitness=0.0084
+[hdl_localization_composition-1] [WARN] [1793023578.768361896] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023578.785205000] [patrol_localization]: scan profile points=688 prep=5.8 match=9.0 gate=1.8 status=0.0 odom=0.2 total=16.0 ms
+[hdl_localization_composition-1] [INFO] [1793023579.647511336] [patrol_localization]: average pointcloud process time in 10 s is 23.206897 ms, fps is: 2.900000
+[hdl_localization_composition-1] [INFO] [1793023583.833267624] [patrol_localization]: scan profile points=698 prep=5.6 match=3.9 gate=1.7 status=0.0 odom=0.3 total=11.0 ms
+[hdl_localization_composition-1] [WARN] [1793023584.289359112] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023588.839930984] [patrol_localization]: scan profile points=708 prep=6.1 match=36.9 gate=3.6 status=0.0 odom=0.5 total=47.0 ms
+[hdl_localization_composition-1] [WARN] [1793023589.483942856] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023589.647626408] [patrol_localization]: average pointcloud process time in 10 s is 18.100000 ms, fps is: 5.000000
+[hdl_localization_composition-1] [INFO] [1793023593.906244904] [patrol_localization]: scan profile points=706 prep=6.1 match=20.5 gate=2.4 status=0.0 odom=0.5 total=29.0 ms
+[hdl_localization_composition-1] [WARN] [1793023595.687707176] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023599.057952936] [patrol_localization]: scan profile points=715 prep=7.1 match=4.0 gate=2.1 status=0.8 odom=0.7 total=14.0 ms
+[hdl_localization_composition-1] [INFO] [1793023599.647508168] [patrol_localization]: average pointcloud process time in 10 s is 20.541667 ms, fps is: 4.800000
+[hdl_localization_composition-1] [WARN] [1793023603.273650632] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023604.276091272] [patrol_localization]: scan profile points=669 prep=7.3 match=33.9 gate=5.3 status=0.0 odom=0.2 total=46.0 ms
+[hdl_localization_composition-1] [INFO] [1793023609.366081256] [patrol_localization]: scan profile points=694 prep=5.5 match=19.5 gate=2.2 status=0.0 odom=0.4 total=27.0 ms
+[hdl_localization_composition-1] [INFO] [1793023609.647558952] [patrol_localization]: average pointcloud process time in 10 s is 20.120000 ms, fps is: 5.000000
+[hdl_localization_composition-1] [WARN] [1793023609.966044840] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023614.480243176] [patrol_localization]: scan profile points=679 prep=6.7 match=3.6 gate=2.1 status=0.0 odom=0.2 total=12.0 ms
+[hdl_localization_composition-1] [WARN] [1793023615.454414120] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023619.587381480] [patrol_localization]: scan profile points=701 prep=5.7 match=2.9 gate=2.0 status=0.0 odom=0.2 total=10.0 ms
+[hdl_localization_composition-1] [INFO] [1793023619.647517416] [patrol_localization]: average pointcloud process time in 10 s is 17.220000 ms, fps is: 5.000000
+[hdl_localization_composition-1] [WARN] [1793023621.000604136] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023624.595356936] [patrol_localization]: scan profile points=673 prep=4.7 match=8.7 gate=1.9 status=0.0 odom=0.2 total=15.0 ms
+[hdl_localization_composition-1] [WARN] [1793023627.061962504] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023629.605581928] [patrol_localization]: scan profile points=663 prep=5.5 match=12.9 gate=2.6 status=0.0 odom=0.2 total=21.0 ms
+[hdl_localization_composition-1] [INFO] [1793023629.647547272] [patrol_localization]: average pointcloud process time in 10 s is 16.612245 ms, fps is: 4.900000
+[hdl_localization_composition-1] [WARN] [1793023632.498907656] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023634.750386376] [patrol_localization]: scan profile points=690 prep=5.3 match=10.0 gate=2.3 status=0.0 odom=0.2 total=17.0 ms
+[hdl_localization_composition-1] [WARN] [1793023638.217007848] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023639.647488968] [patrol_localization]: average pointcloud process time in 10 s is 17.961538 ms, fps is: 5.200000
+[hdl_localization_composition-1] [INFO] [1793023639.910133928] [patrol_localization]: scan profile points=699 prep=6.3 match=5.7 gate=3.4 status=0.0 odom=0.8 total=16.0 ms
+[hdl_localization_composition-1] [INFO] [1793023644.972804552] [patrol_localization]: scan profile points=644 prep=5.4 match=3.4 gate=1.9 status=0.0 odom=0.2 total=10.0 ms
+[hdl_localization_composition-1] [WARN] [1793023647.174086728] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023649.647546184] [patrol_localization]: average pointcloud process time in 10 s is 16.076923 ms, fps is: 5.200000
+[hdl_localization_composition-1] [INFO] [1793023650.312020904] [patrol_localization]: scan profile points=697 prep=12.9 match=11.0 gate=2.1 status=0.0 odom=0.5 total=26.0 ms
+[hdl_localization_composition-1] [WARN] [1793023652.869830472] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023655.508382792] [patrol_localization]: scan profile points=718 prep=5.8 match=3.6 gate=2.0 status=0.0 odom=0.6 total=12.0 ms
+[hdl_localization_composition-1] [WARN] [1793023658.872411144] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023659.647527208] [patrol_localization]: average pointcloud process time in 10 s is 16.176471 ms, fps is: 5.100000
+[hdl_localization_composition-1] [INFO] [1793023660.618239656] [patrol_localization]: scan profile points=715 prep=5.2 match=15.6 gate=1.9 status=0.0 odom=0.1 total=22.0 ms
+[hdl_localization_composition-1] [WARN] [1793023664.980069384] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023665.700223688] [patrol_localization]: scan profile points=731 prep=6.4 match=4.6 gate=2.4 status=0.0 odom=0.2 total=13.0 ms
+[hdl_localization_composition-1] [INFO] [1793023669.647543432] [patrol_localization]: average pointcloud process time in 10 s is 15.553571 ms, fps is: 5.600000
+[hdl_localization_composition-1] [INFO] [1793023670.800981928] [patrol_localization]: scan profile points=714 prep=4.9 match=3.4 gate=1.7 status=0.0 odom=0.5 total=10.0 ms
+[hdl_localization_composition-1] [WARN] [1793023671.967833768] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023675.864962728] [patrol_localization]: scan profile points=718 prep=5.9 match=10.6 gate=1.8 status=0.0 odom=0.2 total=18.0 ms
+[hdl_localization_composition-1] [WARN] [1793023678.681501992] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793023679.647988040] [patrol_localization]: average pointcloud process time in 10 s is 16.148148 ms, fps is: 5.400000
+[hdl_localization_composition-1] [INFO] [1793023680.970867464] [patrol_localization]: scan profile points=703 prep=4.4 match=12.9 gate=6.4 status=0.0 odom=0.2 total=23.0 ms
+[hdl_localization_composition-1] [INFO] [1793023681.433326664] [rclcpp]: signal_handler(signal_value=2)
+[INFO] [hdl_localization_composition-1]: process has finished cleanly [pid 10507]

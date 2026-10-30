@@ -189,7 +189,7 @@ class InitializerTests(unittest.TestCase):
 
     def accepted_scan(self, stamp, good=True):
         n = self.node
-        n.now += .1
+        n.now = float(stamp)
         n.last_leg_time = n.now
         n.status_callback(NS(header=NS(stamp=NS(sec=stamp, nanosec=0)),
                              has_converged=good, matching_error=.01, inlier_fraction=.8))
@@ -224,8 +224,8 @@ class InitializerTests(unittest.TestCase):
             n.latest_leg_pose = (0., 0., 0.)
             n.last_leg_time = n.now
             msg = PoseMessage(); msg.header.frame_id = 'map'
-            msg.header.stamp.sec = 100
-            msg.header.stamp.nanosec = step*100000000
+            ns = round(n.now*1e9)
+            msg.header.stamp.sec, msg.header.stamp.nanosec = divmod(ns, 1000000000)
             msg.pose.pose.position.x = step*.01
             n.odom_callback(msg)
             if n.state.startswith('FAILED'):
@@ -273,10 +273,28 @@ class InitializerTests(unittest.TestCase):
     def test_startup_status_gap_does_not_bypass_bad_matching(self):
         n = self.prepare_timing()
         n.last_status_time = 8.0
-        n.status_callback(NS(header=NS(stamp=NS(sec=100,nanosec=0)),
+        n.status_callback(NS(header=NS(stamp=NS(sec=10,nanosec=0)),
                              has_converged=False,matching_error=1.0,inlier_fraction=.1))
         self.assertEqual(n.state, 'READY:test')
         n.ndt_bad_count = n.params['ndt_bad_samples']-1
-        n.status_callback(NS(header=NS(stamp=NS(sec=101,nanosec=0)),
+        n.now=10.1
+        n.status_callback(NS(header=NS(stamp=NS(sec=10,nanosec=100000000)),
                              has_converged=False,matching_error=1.0,inlier_fraction=.1))
         self.assertEqual(n.state, 'FAILED:ndt_matching_failed')
+
+    def test_old_source_scan_does_not_refresh_status_or_odom(self):
+        n=self.node
+        before=n.last_status_time
+        n.status_callback(NS(header=NS(stamp=NS(sec=1,nanosec=0)),
+                             has_converged=True,matching_error=.01,inlier_fraction=.8))
+        self.assertEqual(n.last_status_time,before)
+        self.assertEqual(n.outputs['/patrol/lidar_heartbeat'],[])
+        old=PoseMessage();old.header.frame_id='map';old.header.stamp.sec=1
+        n.odom_callback(old)
+        self.assertIsNone(n.latest_odom)
+
+    def test_low_error_low_overlap_is_not_good_registration(self):
+        n=self.node
+        n.status_callback(NS(header=NS(stamp=NS(sec=10,nanosec=0)),
+                             has_converged=True,matching_error=.001,inlier_fraction=.001))
+        self.assertFalse(n.scan_results[10000000000])

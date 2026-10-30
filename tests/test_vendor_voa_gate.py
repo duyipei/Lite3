@@ -90,6 +90,22 @@ class GateTests(unittest.TestCase):
         self.gate.timer_callback()
         self.assertEqual(self.output(), (0, 0, 0))
 
+    def test_two_navigation_sources_rejected_before_arm(self):
+        self.gate.counts['/patrol/cmd_vel_raw']=2
+        self.assertEqual(self.gate.sensor_health(),(False,'nav_command_publisher_conflict'))
+
+    def test_invalid_and_old_odom_do_not_refresh_gate(self):
+        from test_visual_initializer_frames import PoseMessage
+        g=self.gate;g.last_odom_time=0
+        msg=PoseMessage();msg.header.frame_id='map';msg.header.stamp.sec=1
+        g.odom_callback(msg)
+        self.assertEqual(g.last_odom_time,0)
+        msg.header.stamp.sec=10;g.odom_callback(msg)
+        self.assertEqual(g.last_odom_time,10)
+        g.armed=True;msg.pose.pose.position.x=float('nan')
+        g.odom_callback(msg)
+        self.assertFalse(g.armed);self.assertEqual(g.fault,'invalid_odometry')
+
     def enable_costmap(self):
         self.gate.require_voa_costmap = True
         self.gate.counts.update({'/patrol/voa/costmap_heartbeat': 1,

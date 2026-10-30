@@ -1,0 +1,12 @@
+{
+  "scope": "STATIC DIAGNOSTIC ONLY. Analytical FAST-LIVO IMU -> registration frame, not a calibrated pose or READY signal; map/config/extrinsics unchanged",
+  "pose_xyz_qxyzw": [
+    0.043783161,
+    -0.024364024,
+    -0.721851546,
+    0.0,
+    -0.15643446504023087,
+    0.0,
+    0.9876883405951378
+  ]
+}

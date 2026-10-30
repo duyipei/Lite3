@@ -1,0 +1,258 @@
+[INFO] [launch]: All log files can be found below /home/ysc/.ros/log/2026-10-26-22-17-51-652594-lite-17454
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [hdl_localization_composition-1]: process started with pid [17476]
+[hdl_localization_composition-1] 1793024274.094693 [0] hdl_locali: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[hdl_localization_composition-1] [INFO] [1793024274.249425224] [patrol_localization]: status_max_correspondence_dist is: 0.500000
+[hdl_localization_composition-1] [INFO] [1793024274.251083848] [patrol_localization]: status_max_valid_point_dist is: 25.000000
+[hdl_localization_composition-1] [INFO] [1793024274.251618440] [patrol_localization]: robot_odom_frame_id is: robot_odom
+[hdl_localization_composition-1] [INFO] [1793024274.252146728] [patrol_localization]: robot_odom_child_frame_id is: leg_base_link
+[hdl_localization_composition-1] [INFO] [1793024274.252534856] [patrol_localization]: odom_child_frame_id is: base_link
+[hdl_localization_composition-1] [INFO] [1793024274.253011816] [patrol_localization]: use_imu is: 0
+[hdl_localization_composition-1] [INFO] [1793024274.253522920] [patrol_localization]: invert_acc is: 0
+[hdl_localization_composition-1] [INFO] [1793024274.254106120] [patrol_localization]: invert_gyro is: 0
+[hdl_localization_composition-1] [INFO] [1793024274.254520456] [patrol_localization]: t_diff is: 0.250000
+[hdl_localization_composition-1] [INFO] [1793024274.257952072] [patrol_localization]: downsample_resolution is: 0.300000
+[hdl_localization_composition-1] [INFO] [1793024274.259990632] [patrol_localization]: use_global_localization is: 0
+[hdl_localization_composition-1] [INFO] [1793024274.260563656] [patrol_localization]: specify_init_pose is: 0
+[hdl_localization_composition-1] [INFO] [1793024274.260994344] [patrol_localization]: init_pos_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.265126824] [patrol_localization]: init_pos_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.266142824] [patrol_localization]: init_pos_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.266777320] [patrol_localization]: init_ori_w is: 1.000000
+[hdl_localization_composition-1] [INFO] [1793024274.268520360] [patrol_localization]: init_ori_x is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.269121064] [patrol_localization]: init_ori_y is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.269774792] [patrol_localization]: init_ori_z is: 0.000000
+[hdl_localization_composition-1] [INFO] [1793024274.270405800] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793024274.271718408] [patrol_localization]: reg_method is: NDT_OMP
+[hdl_localization_composition-1] [INFO] [1793024274.272338952] [patrol_localization]: ndt_neighbor_search_method is: DIRECT1
+[hdl_localization_composition-1] [INFO] [1793024274.272924744] [patrol_localization]: ndt_neighbor_search_radius is: 3.000000
+[hdl_localization_composition-1] [INFO] [1793024274.273821576] [patrol_localization]: ndt_resolution is: 1.000000
+[hdl_localization_composition-1] Warning: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+[hdl_localization_composition-1]          at line 133 in /tmp/binarydeb/ros-foxy-tf2-0.13.14/src/buffer_core.cpp
+[hdl_localization_composition-1] [WARN] [1793024274.288389544] [patrol_localization]: Waiting for transform from rslidar to base_link
+[hdl_localization_composition-1] [INFO] [1793024275.288986312] [patrol_localization]: create registration method for localization
+[hdl_localization_composition-1] [INFO] [1793024275.289332232] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793024275.443242344] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793024275.443468872] [patrol_localization]: create registration method for fallback during relocalization
+[hdl_localization_composition-1] [INFO] [1793024275.443543816] [patrol_localization]: NDT_OMP is selected
+[hdl_localization_composition-1] [INFO] [1793024275.443632456] [patrol_localization]: search_method DIRECT1 is selected
+[hdl_localization_composition-1] [INFO] [1793024275.444821896] [patrol_localization]: disable imu-based pose prediction; keep IMU leveling enabled
+[hdl_localization_composition-1] [WARN] [1793024275.562753992] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[hdl_localization_composition-1] [INFO] [1793024275.681748360] [patrol_localization]: globalmap_pcd is: /home/ysc/lite3_patrol_project/navigation/indoor_fusion_20260912_001_area_review/localization_map.pcd
+[hdl_localization_composition-1] [INFO] [1793024275.869181576] [patrol_localization]: convert_utm_to_local is: 0
+[hdl_localization_composition-1] [INFO] [1793024275.870683592] [patrol_localization]: downsample_resolution is: 0.300000
+[hdl_localization_composition-1] [INFO] [1793024275.871611016] [patrol_localization]: globalmap_downsample_resolution is: 0.100000
+[hdl_localization_composition-1] [INFO] [1793024275.880028904] [patrol_localization]: reference map points: 29823 -> 29823
+[hdl_localization_composition-1] [WARN] [1793024275.887950600] [patrol_localization]: received first lidar
+[hdl_localization_composition-1] [WARN] [1793024275.888130344] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [ERROR] [1793024275.888219560] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024275.888284456] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024275.918309448] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024275.918492200] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.032960712] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.034050664] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.113244968] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.113722120] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.226444648] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.235706312] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.312579240] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.312745192] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.410545608] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.410706056] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.511504424] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.511691720] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.643395176] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.647872264] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024276.846581320] [patrol_localization]: globalmap has not been received!!
+[hdl_localization_composition-1] [WARN] [1793024276.848602344] [patrol_localization]: global map not received!
+[hdl_localization_composition-1] [ERROR] [1793024277.034577736] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.085833864] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.119446280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.219302760] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.344062664] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.462945576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.515829576] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.667737192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.743148328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.837169192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024277.920413544] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.127672904] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.224419656] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.374085672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.433289416] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.550370472] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.723569800] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.736896456] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.844854984] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024278.937141352] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.036238376] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.120300584] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.212693672] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.473212328] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.492196008] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.519202344] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.633110568] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.730375816] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.839748808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024279.947697032] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.035333288] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.119582920] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.228161640] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.326638280] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.527491496] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.538590856] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.624273096] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.723057608] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.830075912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024280.932454248] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.025173192] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.122764872] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.224251880] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.318896104] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.434162888] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.531404360] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.623160808] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.724282632] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.821119912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024281.935678824] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.023303912] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.118489256] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.218859144] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.327127688] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.423137768] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [ERROR] [1793024282.528956616] [patrol_localization]: waiting for initial pose input!!
+[hdl_localization_composition-1] [INFO] [1793024282.530089480] [patrol_localization]: initial pose received!!
+[hdl_localization_composition-1] [INFO] [1793024282.530245032] [patrol_localization]: cool_time_duration is: 2.000000
+[hdl_localization_composition-1] [INFO] [1793024282.530360552] [patrol_localization]: manual pose anchored to current /leg_odom2 pose; stable NDT auto-reanchor pending
+[hdl_localization_composition-1] [INFO] [1793024283.203287464] [patrol_localization]: full-scene refinement before estimator residual 0.0678 -> 0.0590m; overlap 0.968 -> 0.972
+[hdl_localization_composition-1] [INFO] [1793024283.243383272] [patrol_localization]: batch nearest-neighbor verified against PCL: 725 queries
+[hdl_localization_composition-1] [INFO] [1793024283.243661704] [patrol_localization]: NDT acquisition accumulating: 1/15 fitness=0.0064 delta=0.045m
+[hdl_localization_composition-1] [INFO] [1793024283.256771752] [patrol_localization]: batch nearest-neighbor verified against PCL: 725 queries
+[hdl_localization_composition-1] [INFO] [1793024283.258937736] [patrol_localization]: scan profile points=725 prep=8.6 match=583.5 gate=40.6 status=13.6 odom=1.5 total=647.0 ms
+[hdl_localization_composition-1] [WARN] [1793024283.259817896] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024283.849407688] [patrol_localization]: batch nearest-neighbor verified against PCL: 748 queries
+[hdl_localization_composition-1] [INFO] [1793024283.865525640] [patrol_localization]: batch nearest-neighbor verified against PCL: 748 queries
+[hdl_localization_composition-1] [WARN] [1793024284.852222472] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024285.657076488] [patrol_localization]: NDT acquisition accumulating: 6/15 fitness=0.0051 delta=0.091m
+[hdl_localization_composition-1] [INFO] [1793024285.663370344] [patrol_localization]: average pointcloud process time in 10 s is 458.833333 ms, fps is: 0.600000
+[hdl_localization_composition-1] [WARN] [1793024287.136718024] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024287.682226984] [patrol_localization]: NDT acquisition accumulating: 12/15 fitness=0.0065 delta=0.102m
+[hdl_localization_composition-1] [INFO] [1793024288.298857736] [patrol_localization]: full-scene refinement before estimator residual 0.0628 -> 0.0577m; overlap 0.981 -> 0.978
+[hdl_localization_composition-1] [INFO] [1793024288.307735432] [patrol_localization]: scan profile points=742 prep=6.9 match=356.1 gate=4.4 status=4.3 odom=0.2 total=371.0 ms
+[hdl_localization_composition-1] [WARN] [1793024288.310807656] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024288.842750888] [patrol_localization]: auto-promoted stable NDT candidate as anchor: x=0.114 y=-0.030 yaw=-2.2 deg, fitness=0.0059
+[hdl_localization_composition-1] [INFO] [1793024290.443979496] [fine_pose_diagnostic]: measurement_q=0.984197,-0.000357,-0.175892,-0.020443 posterior_q=0.984203,-0.000352,-0.175863,-0.020423 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024293.608440808] [patrol_localization]: full-scene refinement before estimator residual 0.0640 -> 0.0595m; overlap 0.964 -> 0.965
+[hdl_localization_composition-1] [INFO] [1793024293.615515464] [patrol_localization]: scan profile points=744 prep=6.8 match=361.1 gate=3.3 status=3.3 odom=0.4 total=375.0 ms
+[hdl_localization_composition-1] [WARN] [1793024293.617921960] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024295.559480392] [patrol_localization]: average pointcloud process time in 10 s is 319.766667 ms, fps is: 3.000000
+[hdl_localization_composition-1] [INFO] [1793024296.825261096] [fine_pose_diagnostic]: measurement_q=0.985255,0.000061,-0.170055,-0.018887 posterior_q=0.985249,0.000060,-0.170081,-0.018871 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024298.685280360] [patrol_localization]: full-scene refinement before estimator residual 0.0654 -> 0.0584m; overlap 0.977 -> 0.974
+[hdl_localization_composition-1] [INFO] [1793024298.689690248] [patrol_localization]: scan profile points=731 prep=5.9 match=359.3 gate=2.1 status=2.2 odom=0.2 total=369.0 ms
+[hdl_localization_composition-1] [WARN] [1793024298.691008456] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024302.583337992] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024303.742257768] [fine_pose_diagnostic]: measurement_q=0.985161,-0.000244,-0.170888,-0.016001 posterior_q=0.985164,-0.000230,-0.170865,-0.016014 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024303.742487432] [patrol_localization]: full-scene refinement before estimator residual 0.0593 -> 0.0541m; overlap 0.975 -> 0.974
+[hdl_localization_composition-1] [INFO] [1793024303.749049640] [patrol_localization]: scan profile points=727 prep=4.9 match=268.3 gate=1.8 status=4.1 odom=0.7 total=279.0 ms
+[hdl_localization_composition-1] [WARN] [1793024303.750026632] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024305.746139272] [patrol_localization]: average pointcloud process time in 10 s is 326.241379 ms, fps is: 2.900000
+[hdl_localization_composition-1] [INFO] [1793024309.114162792] [patrol_localization]: full-scene refinement before estimator residual 0.0615 -> 0.0572m; overlap 0.963 -> 0.964
+[hdl_localization_composition-1] [INFO] [1793024309.121182728] [patrol_localization]: scan profile points=747 prep=9.7 match=366.8 gate=2.1 status=4.7 odom=0.3 total=383.0 ms
+[hdl_localization_composition-1] [WARN] [1793024309.122184488] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024311.047982120] [fine_pose_diagnostic]: measurement_q=0.986307,0.000669,-0.164356,-0.013597 posterior_q=0.986303,0.000662,-0.164383,-0.013600 state_q_norm=1.000000
+[hdl_localization_composition-1] [WARN] [1793024314.181880264] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024314.500125992] [patrol_localization]: full-scene refinement before estimator residual 0.0631 -> 0.0580m; overlap 0.970 -> 0.968
+[hdl_localization_composition-1] [INFO] [1793024314.509449288] [patrol_localization]: scan profile points=745 prep=15.5 match=301.6 gate=2.5 status=2.6 odom=4.3 total=326.0 ms
+[hdl_localization_composition-1] [WARN] [1793024314.516453768] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024315.625847752] [patrol_localization]: average pointcloud process time in 10 s is 330.551724 ms, fps is: 2.900000
+[hdl_localization_composition-1] [INFO] [1793024317.273677512] [fine_pose_diagnostic]: measurement_q=0.984050,-0.000767,-0.176808,-0.019600 posterior_q=0.984053,-0.000756,-0.176792,-0.019587 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024319.546033256] [patrol_localization]: full-scene refinement before estimator residual 0.0632 -> 0.0605m; overlap 0.967 -> 0.967
+[hdl_localization_composition-1] [INFO] [1793024319.704580040] [patrol_localization]: scan profile points=735 prep=13.7 match=229.9 gate=152.3 status=2.4 odom=3.9 total=402.0 ms
+[hdl_localization_composition-1] [WARN] [1793024319.709838312] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024323.263961352] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024323.595471624] [fine_pose_diagnostic]: measurement_q=0.985529,0.001956,-0.168819,-0.015114 posterior_q=0.985534,0.001965,-0.168791,-0.015104 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024324.635214952] [patrol_localization]: full-scene refinement before estimator residual 0.0620 -> 0.0574m; overlap 0.973 -> 0.968
+[hdl_localization_composition-1] [WARN] [1793024324.912034568] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024325.206469064] [patrol_localization]: scan profile points=665 prep=6.3 match=282.1 gate=2.0 status=3.6 odom=0.5 total=294.0 ms
+[hdl_localization_composition-1] [INFO] [1793024325.528583176] [patrol_localization]: average pointcloud process time in 10 s is 298.733333 ms, fps is: 3.000000
+[hdl_localization_composition-1] [WARN] [1793024328.695920872] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024329.649322184] [patrol_localization]: full-scene refinement before estimator residual 0.0589 -> 0.0571m; overlap 0.976 -> 0.976
+[hdl_localization_composition-1] [INFO] [1793024329.903429768] [fine_pose_diagnostic]: measurement_q=0.985302,0.002517,-0.169813,-0.018381 posterior_q=0.985301,0.002504,-0.169822,-0.018363 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024330.219979912] [patrol_localization]: scan profile points=689 prep=9.8 match=286.8 gate=1.8 status=12.5 odom=0.2 total=311.0 ms
+[hdl_localization_composition-1] [WARN] [1793024330.220938856] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024331.105179528] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [WARN] [1793024333.163180392] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024334.875161768] [patrol_localization]: full-scene refinement before estimator residual 0.0615 -> 0.0591m; overlap 0.970 -> 0.969
+[hdl_localization_composition-1] [INFO] [1793024335.520869544] [patrol_localization]: scan profile points=686 prep=8.0 match=352.1 gate=1.8 status=2.9 odom=0.2 total=364.0 ms
+[hdl_localization_composition-1] [INFO] [1793024335.521863240] [patrol_localization]: average pointcloud process time in 10 s is 272.133333 ms, fps is: 3.000000
+[hdl_localization_composition-1] [WARN] [1793024335.522847656] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024336.946082856] [fine_pose_diagnostic]: measurement_q=0.985525,-0.000546,-0.168680,-0.017009 posterior_q=0.985520,-0.000548,-0.168701,-0.017015 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024340.166800264] [patrol_localization]: full-scene refinement before estimator residual 0.0585 -> 0.0563m; overlap 0.974 -> 0.972
+[hdl_localization_composition-1] [INFO] [1793024340.550128392] [patrol_localization]: scan profile points=770 prep=30.4 match=326.4 gate=2.0 status=11.5 odom=0.2 total=370.0 ms
+[hdl_localization_composition-1] [WARN] [1793024340.554895016] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024343.637563752] [fine_pose_diagnostic]: measurement_q=0.986057,0.002926,-0.165593,-0.016218 posterior_q=0.986054,0.002913,-0.165606,-0.016222 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024345.322706152] [patrol_localization]: full-scene refinement before estimator residual 0.0557 -> 0.0556m; overlap 0.971 -> 0.971
+[hdl_localization_composition-1] [INFO] [1793024345.725239560] [patrol_localization]: scan profile points=610 prep=9.8 match=381.3 gate=1.6 status=2.5 odom=0.5 total=395.0 ms
+[hdl_localization_composition-1] [INFO] [1793024345.727819560] [patrol_localization]: average pointcloud process time in 10 s is 312.031250 ms, fps is: 3.200000
+[hdl_localization_composition-1] [WARN] [1793024345.728168488] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024350.181665320] [fine_pose_diagnostic]: measurement_q=0.985724,0.000895,-0.167838,-0.013335 posterior_q=0.985727,0.000895,-0.167819,-0.013345 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024350.443833960] [patrol_localization]: full-scene refinement before estimator residual 0.0583 -> 0.0541m; overlap 0.970 -> 0.972
+[hdl_localization_composition-1] [INFO] [1793024350.828605256] [patrol_localization]: scan profile points=605 prep=6.7 match=363.7 gate=2.5 status=5.1 odom=0.5 total=378.0 ms
+[hdl_localization_composition-1] [WARN] [1793024350.829494312] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024354.943698184] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024355.554484168] [patrol_localization]: full-scene refinement before estimator residual 0.0535 -> 0.0532m; overlap 0.974 -> 0.974
+[hdl_localization_composition-1] [INFO] [1793024355.575161928] [patrol_localization]: average pointcloud process time in 10 s is 349.666667 ms, fps is: 2.700000
+[hdl_localization_composition-1] [INFO] [1793024355.987833608] [patrol_localization]: scan profile points=606 prep=10.7 match=395.7 gate=2.1 status=3.2 odom=0.4 total=412.0 ms
+[hdl_localization_composition-1] [WARN] [1793024355.988959400] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024357.280610248] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024358.202310344] [fine_pose_diagnostic]: measurement_q=0.985437,0.000770,-0.169117,-0.017727 posterior_q=0.985437,0.000779,-0.169113,-0.017721 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024360.598154664] [patrol_localization]: full-scene refinement before estimator residual 0.0569 -> 0.0542m; overlap 0.973 -> 0.973
+[hdl_localization_composition-1] [INFO] [1793024361.442695784] [patrol_localization]: scan profile points=658 prep=9.3 match=451.0 gate=1.7 status=12.7 odom=0.6 total=475.0 ms
+[hdl_localization_composition-1] [WARN] [1793024361.446327848] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024364.348906184] [fine_pose_diagnostic]: measurement_q=0.985220,0.000279,-0.170450,-0.017027 posterior_q=0.985228,0.000294,-0.170401,-0.017010 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024365.718473768] [patrol_localization]: full-scene refinement before estimator residual 0.0646 -> 0.0600m; overlap 0.964 -> 0.969
+[hdl_localization_composition-1] [INFO] [1793024365.724076552] [patrol_localization]: average pointcloud process time in 10 s is 319.290323 ms, fps is: 3.100000
+[hdl_localization_composition-1] [INFO] [1793024366.564310376] [patrol_localization]: scan profile points=697 prep=7.0 match=381.7 gate=2.2 status=2.3 odom=0.2 total=393.0 ms
+[hdl_localization_composition-1] [WARN] [1793024366.566468360] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024370.811434792] [fine_pose_diagnostic]: measurement_q=0.984791,0.000187,-0.172925,-0.016881 posterior_q=0.984793,0.000197,-0.172914,-0.016865 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024370.811683464] [patrol_localization]: full-scene refinement before estimator residual 0.0601 -> 0.0562m; overlap 0.980 -> 0.982
+[hdl_localization_composition-1] [INFO] [1793024371.700752840] [patrol_localization]: scan profile points=675 prep=4.9 match=293.5 gate=1.6 status=1.9 odom=0.2 total=302.0 ms
+[hdl_localization_composition-1] [WARN] [1793024371.702225960] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [WARN] [1793024375.353675080] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024375.776851336] [patrol_localization]: average pointcloud process time in 10 s is 312.000000 ms, fps is: 3.100000
+[hdl_localization_composition-1] [INFO] [1793024376.031859176] [patrol_localization]: full-scene refinement before estimator residual 0.0586 -> 0.0544m; overlap 0.971 -> 0.974
+[hdl_localization_composition-1] [INFO] [1793024376.844145640] [patrol_localization]: scan profile points=702 prep=6.5 match=213.8 gate=1.7 status=2.2 odom=0.2 total=224.0 ms
+[hdl_localization_composition-1] [INFO] [1793024377.097473544] [fine_pose_diagnostic]: measurement_q=0.986105,0.002212,-0.165526,-0.013916 posterior_q=0.986103,0.002207,-0.165535,-0.013935 state_q_norm=1.000000
+[hdl_localization_composition-1] [WARN] [1793024377.102635592] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024381.064293832] [patrol_localization]: full-scene refinement before estimator residual 0.0658 -> 0.0596m; overlap 0.963 -> 0.961
+[hdl_localization_composition-1] [INFO] [1793024381.894628520] [patrol_localization]: scan profile points=610 prep=11.2 match=465.1 gate=2.0 status=2.8 odom=0.2 total=481.0 ms
+[hdl_localization_composition-1] [WARN] [1793024382.318337416] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024383.383889416] [fine_pose_diagnostic]: measurement_q=0.987173,-0.000647,-0.159375,-0.009446 posterior_q=0.987167,-0.000678,-0.159412,-0.009446 state_q_norm=1.000000
+[hdl_localization_composition-1] [WARN] [1793024384.852428936] [patrol_localization]: fine registration rejected before estimator update; no metric pose/cloud refresh
+[hdl_localization_composition-1] [INFO] [1793024385.726888040] [patrol_localization]: average pointcloud process time in 10 s is 307.896552 ms, fps is: 2.900000
+[hdl_localization_composition-1] [INFO] [1793024386.253958152] [patrol_localization]: full-scene refinement before estimator residual 0.0843 -> 0.0763m; overlap 0.955 -> 0.955
+[hdl_localization_composition-1] [INFO] [1793024386.927813736] [patrol_localization]: scan profile points=562 prep=4.8 match=255.4 gate=1.6 status=1.9 odom=0.2 total=263.0 ms
+[hdl_localization_composition-1] [WARN] [1793024387.631035656] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024391.006659816] [fine_pose_diagnostic]: measurement_q=0.986823,-0.008978,-0.161521,-0.003606 posterior_q=0.986811,-0.008960,-0.161586,-0.003637 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024391.254910536] [patrol_localization]: full-scene refinement before estimator residual 0.0724 -> 0.0706m; overlap 0.988 -> 0.990
+[hdl_localization_composition-1] [INFO] [1793024392.231951496] [patrol_localization]: scan profile points=641 prep=7.5 match=357.8 gate=1.8 status=2.4 odom=0.2 total=369.0 ms
+[hdl_localization_composition-1] [WARN] [1793024392.646565288] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024395.554230888] [patrol_localization]: average pointcloud process time in 10 s is 314.774194 ms, fps is: 3.100000
+[hdl_localization_composition-1] [INFO] [1793024396.306100040] [patrol_localization]: full-scene refinement before estimator residual 0.0760 -> 0.0715m; overlap 0.991 -> 0.997
+[hdl_localization_composition-1] [INFO] [1793024397.271126344] [fine_pose_diagnostic]: measurement_q=0.985742,-0.000744,-0.167728,-0.013431 posterior_q=0.985743,-0.000731,-0.167720,-0.013425 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024397.275940680] [patrol_localization]: scan profile points=651 prep=9.7 match=264.9 gate=1.7 status=2.5 odom=0.4 total=279.0 ms
+[hdl_localization_composition-1] [WARN] [1793024397.922108808] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024401.343684200] [patrol_localization]: full-scene refinement before estimator residual 0.0718 -> 0.0656m; overlap 0.985 -> 0.987
+[hdl_localization_composition-1] [INFO] [1793024402.401642696] [patrol_localization]: scan profile points=593 prep=6.9 match=193.2 gate=1.5 status=2.0 odom=0.2 total=203.0 ms
+[hdl_localization_composition-1] [WARN] [1793024403.056534536] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024403.801585576] [fine_pose_diagnostic]: measurement_q=0.986874,-0.001521,-0.161150,-0.010389 posterior_q=0.986857,-0.001455,-0.161253,-0.010453 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024405.454510984] [patrol_localization]: average pointcloud process time in 10 s is 317.741935 ms, fps is: 3.100000
+[hdl_localization_composition-1] [INFO] [1793024406.425552424] [patrol_localization]: full-scene refinement before estimator residual 0.0595 -> 0.0549m; overlap 0.972 -> 0.973
+[hdl_localization_composition-1] [INFO] [1793024407.707066024] [patrol_localization]: scan profile points=613 prep=7.3 match=297.3 gate=1.5 status=2.2 odom=1.1 total=309.0 ms
+[hdl_localization_composition-1] [WARN] [1793024408.820782216] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024409.427017672] [fine_pose_diagnostic]: measurement_q=0.985427,-0.000203,-0.169270,-0.016765 posterior_q=0.985431,-0.000186,-0.169248,-0.016751 state_q_norm=1.000000
+[hdl_localization_composition-1] [INFO] [1793024411.688984872] [patrol_localization]: full-scene refinement before estimator residual 0.0643 -> 0.0612m; overlap 0.967 -> 0.968
+[hdl_localization_composition-1] [INFO] [1793024412.881330632] [patrol_localization]: scan profile points=616 prep=9.8 match=307.7 gate=1.6 status=2.2 odom=0.2 total=321.0 ms
+[hdl_localization_composition-1] [WARN] [1793024414.178358824] [patrol_localization]: lidar callback gap exceeds 0.250s; processing newest scan
+[hdl_localization_composition-1] [INFO] [1793024415.601990184] [patrol_localization]: average pointcloud process time in 10 s is 336.033333 ms, fps is: 3.000000
+[hdl_localization_composition-1] [INFO] [1793024416.896207080] [patrol_localization]: full-scene refinement before estimator residual 0.0660 -> 0.0587m; overlap 0.968 -> 0.970
+[hdl_localization_composition-1] [INFO] [1793024417.221472776] [fine_pose_diagnostic]: measurement_q=0.986391,0.000900,-0.164083,-0.010449 posterior_q=0.986389,0.000909,-0.164093,-0.010449 state_q_norm=1.000000

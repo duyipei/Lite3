@@ -1,0 +1,24 @@
+[INFO] stationary relocalization test uses production localization parameters
+1793022913.651524 [0] visual_pos: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793022915.035582088] [visual_pose_initializer]: visual initializer ready; velocity remains independently gated
+[INFO] [1793022924.312880488] [visual_pose_initializer]: COLLECTING_VISUAL_POSES
+[INFO] [1793022926.860802184] [visual_pose_initializer]: COLLECTING:1/4
+[INFO] [1793022927.535734440] [visual_pose_initializer]: COLLECTING:2/4
+[INFO] [1793022928.540636616] [visual_pose_initializer]: COLLECTING:3/4
+[INFO] [1793022929.668520488] [visual_pose_initializer]: WAITING_NDT:x=0.041,y=-0.027,yaw=0.001
+[INFO] [1793022929.840904488] [visual_pose_initializer]: WAITING_NDT:matching_or_leg_odometry_not_ready
+[INFO] [1793022931.227575784] [visual_pose_initializer]: WAITING_NDT:accepted_scans=1/3
+[INFO] [1793022931.327359720] [visual_pose_initializer]: WAITING_NDT:accepted_scans=2/3
+[INFO] [1793022931.417665032] [visual_pose_initializer]: WAITING_NDT:accepted_scans=3/3
+[INFO] [1793022931.421031368] [visual_pose_initializer]: READY:visual_plus_ndt_confirmed_0.093m_0.054rad
+[INFO] [1793023190.429919240] [visual_pose_initializer]: COLLECTING_VISUAL_POSES
+[INFO] [1793023191.552397320] [visual_pose_initializer]: COLLECTING:1/4
+[INFO] [1793023192.523520968] [visual_pose_initializer]: COLLECTING:2/4
+[INFO] [1793023193.553039432] [visual_pose_initializer]: COLLECTING:3/4
+[INFO] [1793023194.516680360] [visual_pose_initializer]: WAITING_NDT:x=0.041,y=-0.027,yaw=0.001
+[INFO] [1793023194.523992936] [visual_pose_initializer]: WAITING_NDT:accepted_scans=1/3
+[INFO] [1793023194.622257896] [visual_pose_initializer]: WAITING_NDT:matching_or_leg_odometry_not_ready
+[INFO] [1793023196.031092232] [visual_pose_initializer]: WAITING_NDT:accepted_scans=1/3
+[INFO] [1793023196.128077064] [visual_pose_initializer]: WAITING_NDT:accepted_scans=2/3
+[INFO] [1793023196.257213192] [visual_pose_initializer]: WAITING_NDT:accepted_scans=3/3
+[INFO] [1793023196.261519976] [visual_pose_initializer]: READY:visual_plus_ndt_confirmed_0.196m_0.069rad

@@ -1,0 +1,125 @@
+{
+  "scope": "SAVED_EVIDENCE_ONLY_NO_LIVE_CONNECTION_NO_CALIBRATION_CHANGE",
+  "convention": "T_A_B maps B coordinates into A; L=physical raw LiDAR origin, B=nominal driver target/body frame, F=nominal leveled footprint",
+  "input_capture": "/home/duyipei/Lite3_Projects/lite3_patrol_project/results/dorm_ground_reference_20261027/dorm_ground_reference_A_20261027",
+  "T_B_L_driver": [
+    [
+      0.9510565162951535,
+      0.0,
+      0.3090169943749474,
+      0.187
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      -0.3090169943749474,
+      0.0,
+      0.9510565162951535,
+      0.4
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_base_header_frame_saved": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_F_B_algorithm": [
+    [
+      0.9997217970144265,
+      0.00010491596467033186,
+      0.02358638520176484,
+      0.0
+    ],
+    [
+      0.0,
+      0.9999901070926428,
+      -0.004448113852501777,
+      0.0
+    ],
+    [
+      -0.023586618541996944,
+      0.00444687637394784,
+      0.9997119068593057,
+      0.34751
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_F_L_combined": [
+    [
+      0.943503335669652,
+      0.00010491596467033186,
+      0.3313630102665054,
+      0.1963825301224037
+    ],
+    [
+      0.0013745427733376672,
+      0.9999901070926428,
+      -0.004230407664644554,
+      -0.0017792455410007109
+    ],
+    [
+      -0.33136017596024425,
+      0.00444687637394784,
+      0.9434938574670799,
+      0.7429840650763688
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "checks": {
+    "combined_origin_equals_rotation_translation_plus_height": true,
+    "saved_lidar_T_base_identity": true,
+    "driver_rotation_orthonormal": true
+  },
+  "nominal_level_origin_height_m": 0.74751,
+  "saved_attitude_origin_height_m": 0.7429840650763688,
+  "without_foot_translation_origin_height_m": 0.3954740650763689,
+  "without_driver_z_origin_height_m": 0.34309930233264657,
+  "approx_measured_lidar_origin_height_m": 0.5046996562658722,
+  "full_chain_excess_over_approx_measured_m": 0.23828440881049662,
+  "implied_driver_z_if_current_B_F_origins_and_rotation_are_valid_m": 0.16164692330304362,
+  "physical_interpretation_limit": "Measurement is approximate mounting-bottom height; footprint plane physical validity and body origin must be independently verified. Excess alone does not prove that .400 includes all or part of .34751. The implied Z is diagnostic, not deployable calibration.",
+  "frame_semantics_issue": "Driver applies E numerically before publishing points under rslidar; saved TF base_link<-rslidar is identity. F is applied numerically in NDT, while published TF is named map->base_link and its Z is set to zero. Thus the TF tree alone cannot recover the physical raw LiDAR origin.",
+  "measurement_reference_confirmed_by_user": "Mid-360 sensor housing bottom plane to floor, approximately 0.46 m",
+  "additional_measurement_requested": "D435i depth lens optical center vertical height above floor in the same stance; intended to cross-check the nominal body/foot origin independently"
+}

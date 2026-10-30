@@ -1,0 +1,18 @@
+--- results/ground_repair_20261028/before/start_nav_isolated.sh	2026-10-28 10:23:17.475750226 +0800
++++ navigation/start_nav_isolated.sh	2026-10-28 10:25:16.486171263 +0800
+@@ -80,10 +80,11 @@
+ GROUND_ARGS=()
+ if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+   PARAMS_FILE=$MAP_DIR/nav2_dynamic.yaml
+-  if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
+-    GROUND_ARGS=(--ground-relative)
+-    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
+-  fi
++  # Every reviewed dynamic map needs metric ground-relative classification.
++  # Map Z=0 is a mapping reference, not a physical ground plane (indoors too).
++  # Missing/mismatched evidence fails here instead of reverting to absolute Z.
++  GROUND_ARGS=(--ground-relative)
++  python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
+   python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+     "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}"
+   BT_ARGS=("default_bt_xml_filename:=$PROJECT/navigation/navigate_dynamic_obstacles.xml")

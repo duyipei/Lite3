@@ -75,6 +75,8 @@ class VisualPoseInitializer(Node):
         self.declare_parameter("ready_visual_bad_samples", 3)
         self.declare_parameter("supervise_visual_after_ready", True)
         self.declare_parameter("ndt_max_matching_error", 0.15)
+        # A low mean error on a tiny subset is not registration acceptance.
+        self.declare_parameter("ndt_min_inlier_fraction", 0.50)
         self.declare_parameter("ndt_bad_samples", 5)
         self.declare_parameter("sensor_max_age_s", 1.5)
         # Only the initial visual result gets an inference allowance. LiDAR,
@@ -320,12 +322,12 @@ class VisualPoseInitializer(Node):
 
     def status_callback(self, message):
         stamp = self.stamp_ns(message)
-        # NDT status and odometry retain the LiDAR sensor clock so they can be
-        # paired exactly by scan.  Their freshness must therefore be measured
-        # from callback arrival time, not compared with the host epoch.
-        if stamp <= 0 or stamp <= self.last_status_stamp:
-            return
         now = self.now_monotonic()
+        # Source stamps are in Jetson CLOCK_MONOTONIC, not ROS wall time.
+        # Arrival alone cannot certify a queued/replayed scan as fresh.
+        if (stamp <= 0 or stamp <= self.last_status_stamp
+                or not -.05 <= now-stamp/1e9 <= float(self.get_parameter('sensor_max_age_s').value)):
+            return
         if now - self.last_status_time > float(self.get_parameter("sensor_max_age_s").value):
             self.ndt_good_count = 0
             if self.state.startswith("READY"):
@@ -339,7 +341,7 @@ class VisualPoseInitializer(Node):
             and math.isfinite(message.matching_error)
             and 0.0 <= message.matching_error <= float(self.get_parameter("ndt_max_matching_error").value)
             and math.isfinite(message.inlier_fraction)
-            and 0.0 < message.inlier_fraction <= 1.0
+            and float(self.get_parameter('ndt_min_inlier_fraction').value) <= message.inlier_fraction <= 1.0
         )
         self.scan_results[stamp] = good
         if len(self.scan_results) > 40:
@@ -523,6 +525,8 @@ class VisualPoseInitializer(Node):
         if stamp_ns <= 0 or not self.valid_pose(message):
             if self.state.startswith("READY"):
                 self.revoke_ready("invalid_odometry")
+            return
+        if not -.05 <= now-stamp_ns/1e9 <= float(self.get_parameter('sensor_max_age_s').value):
             return
         if (message.header.frame_id != self.get_parameter("lidar_map_frame").value
                 or message.child_frame_id != "base_link"):

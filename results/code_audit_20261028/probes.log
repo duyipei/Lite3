@@ -1,0 +1,63 @@
+{
+  "old_low_overlap_status": {
+    "graph_and_monotonic_now": 10.0,
+    "source_stamp": 1,
+    "marked_good": true,
+    "heartbeat_count": 1,
+    "last_status_arrival": 10.0,
+    "note": "Actual callback, mocked ROS only; no source-age check and only >0 inlier ratio."
+  },
+  "two_raw_publishers": {
+    "health": [
+      true,
+      "healthy"
+    ],
+    "raw_publishers": 2,
+    "note": "Actual gate sensor_health; all other simulated dependencies healthy."
+  },
+  "old_nonfinite_odom_at_gate": {
+    "source_stamp": 1,
+    "now": 10.0,
+    "armed": true,
+    "refreshed_arrival": 10.0,
+    "retained_nonfinite_pose": true,
+    "note": "Gate alone; initializer has separate finite-pose checks, so this is defense-in-depth gap."
+  },
+  "quaternion_hemisphere_covariance": {
+    "formula_reference_xyz": [
+      0.19583333333333336,
+      0.0,
+      0.0
+    ],
+    "formula_flipped_xyz": [
+      0.19583333333333336,
+      0.0,
+      0.0
+    ],
+    "reference_quaternion_components": [
+      1.0,
+      0.02083333333333334,
+      0.0,
+      0.0
+    ],
+    "flipped_quaternion_components": [
+      1.0,
+      -0.02083333333333334,
+      0.0,
+      0.0
+    ],
+    "fused_state_difference": 0.04166666666666668,
+    "normalized_rotation_difference_deg": 4.773957695928159,
+    "note": "Numerical evaluation of source algebra, not full NDT replay. Same physical Gaussian represented with opposite quaternion sign must give equivalent fusion."
+  },
+  "repeated_cumulative_leg_delta": {
+    "cumulative_deltas_m": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "sequential_application_m": 0.6000000000000001,
+    "correct_total_m": 0.3,
+    "note": "Algebraic trace of current call sequence, not evidence this occurred during stationary runs."
+  }
+}

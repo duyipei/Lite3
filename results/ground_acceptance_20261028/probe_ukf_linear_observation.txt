@@ -1,0 +1,5 @@
+0.1 error_deg 1.36604e-05 qnorm_minmax 1 1
+0.3 error_deg 1.36604e-05 qnorm_minmax 1 1
+0.6 error_deg 1.36604e-05 qnorm_minmax 1 1
+1 error_deg 1.36604e-05 qnorm_minmax 1 1
+2 error_deg 1.36604e-05 qnorm_minmax 1 1

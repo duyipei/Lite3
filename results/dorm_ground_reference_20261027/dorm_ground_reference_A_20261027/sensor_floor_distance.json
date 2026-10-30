@@ -1,0 +1,200 @@
+[
+  {
+    "file": "frame_000.npz",
+    "count": 76,
+    "sensor_origin_to_floor_plane_m": 0.46300365858625364,
+    "raw_plane_normal": [
+      -0.27188959956261194,
+      0.014525160812800197,
+      0.9622188240483787
+    ],
+    "configured_sensor_origin_foot_z": 0.7429840650763688
+  },
+  {
+    "file": "frame_001.npz",
+    "count": 92,
+    "sensor_origin_to_floor_plane_m": 0.4640128831092016,
+    "raw_plane_normal": [
+      -0.2725169278263089,
+      0.014710031709332494,
+      0.9620385330199727
+    ],
+    "configured_sensor_origin_foot_z": 0.7430210651616906
+  },
+  {
+    "file": "frame_002.npz",
+    "count": 62,
+    "sensor_origin_to_floor_plane_m": 0.4533053280815769,
+    "raw_plane_normal": [
+      -0.2647431376683732,
+      0.012112321432099948,
+      0.964242896124742
+    ],
+    "configured_sensor_origin_foot_z": 0.742903952990927
+  },
+  {
+    "file": "frame_003.npz",
+    "count": 58,
+    "sensor_origin_to_floor_plane_m": 0.45305612228449205,
+    "raw_plane_normal": [
+      -0.2648612176605835,
+      0.01600416583427622,
+      0.9641537232492039
+    ],
+    "configured_sensor_origin_foot_z": 0.7429263916410646
+  },
+  {
+    "file": "frame_004.npz",
+    "count": 95,
+    "sensor_origin_to_floor_plane_m": 0.4633913789540553,
+    "raw_plane_normal": [
+      -0.27208485255846215,
+      0.014558589553243406,
+      0.9621631257112588
+    ],
+    "configured_sensor_origin_foot_z": 0.7429140701256678
+  },
+  {
+    "file": "frame_005.npz",
+    "count": 67,
+    "sensor_origin_to_floor_plane_m": 0.4618723819843797,
+    "raw_plane_normal": [
+      -0.2714019679168902,
+      0.0160563144932665,
+      0.9623321498192469
+    ],
+    "configured_sensor_origin_foot_z": 0.7428615132657149
+  },
+  {
+    "file": "frame_006.npz",
+    "count": 77,
+    "sensor_origin_to_floor_plane_m": 0.46114102030424076,
+    "raw_plane_normal": [
+      -0.27065414322428477,
+      0.019192220055684883,
+      0.9624853211581269
+    ],
+    "configured_sensor_origin_foot_z": 0.742863425548054
+  },
+  {
+    "file": "frame_007.npz",
+    "count": 89,
+    "sensor_origin_to_floor_plane_m": 0.45891570983460883,
+    "raw_plane_normal": [
+      -0.2688955397298822,
+      0.015106182923145806,
+      0.9630508771351947
+    ],
+    "configured_sensor_origin_foot_z": 0.742974449144041
+  },
+  {
+    "file": "frame_008.npz",
+    "count": 76,
+    "sensor_origin_to_floor_plane_m": 0.45845857368395554,
+    "raw_plane_normal": [
+      -0.2685821056447962,
+      0.01403781864067355,
+      0.9631545006774453
+    ],
+    "configured_sensor_origin_foot_z": 0.742920338035488
+  },
+  {
+    "file": "frame_009.npz",
+    "count": 66,
+    "sensor_origin_to_floor_plane_m": 0.46563514971735104,
+    "raw_plane_normal": [
+      -0.2740920004924049,
+      0.01649054944087114,
+      0.9615620817426243
+    ],
+    "configured_sensor_origin_foot_z": 0.7429010109512901
+  },
+  {
+    "file": "frame_010.npz",
+    "count": 80,
+    "sensor_origin_to_floor_plane_m": 0.4668995922258378,
+    "raw_plane_normal": [
+      -0.2747931957215649,
+      0.015749217976267826,
+      0.9613743608596318
+    ],
+    "configured_sensor_origin_foot_z": 0.7429700476979031
+  },
+  {
+    "file": "frame_011.npz",
+    "count": 97,
+    "sensor_origin_to_floor_plane_m": 0.4556942987924939,
+    "raw_plane_normal": [
+      -0.26679274679111425,
+      0.01420646313834939,
+      0.9636492134925194
+    ],
+    "configured_sensor_origin_foot_z": 0.7429577938635572
+  },
+  {
+    "file": "frame_012.npz",
+    "count": 71,
+    "sensor_origin_to_floor_plane_m": 0.4546669390921516,
+    "raw_plane_normal": [
+      -0.2658467914429132,
+      0.014579516350141652,
+      0.9639050374297792
+    ],
+    "configured_sensor_origin_foot_z": 0.7429400038556135
+  },
+  {
+    "file": "frame_013.npz",
+    "count": 91,
+    "sensor_origin_to_floor_plane_m": 0.4649864458183214,
+    "raw_plane_normal": [
+      -0.2734462771699378,
+      0.013273667219139362,
+      0.9617956868589387
+    ],
+    "configured_sensor_origin_foot_z": 0.7429731239771555
+  },
+  {
+    "file": "frame_014.npz",
+    "count": 68,
+    "sensor_origin_to_floor_plane_m": 0.45990060517101855,
+    "raw_plane_normal": [
+      -0.2701646088502523,
+      0.013066970437990544,
+      0.9627254740622392
+    ],
+    "configured_sensor_origin_foot_z": 0.7429868609902577
+  },
+  {
+    "file": "frame_015.npz",
+    "count": 71,
+    "sensor_origin_to_floor_plane_m": 0.4553013297707862,
+    "raw_plane_normal": [
+      -0.2666705536222829,
+      0.013283358773493847,
+      0.9636962012016441
+    ],
+    "configured_sensor_origin_foot_z": 0.742931802797
+  },
+  {
+    "file": "frame_016.npz",
+    "count": 107,
+    "sensor_origin_to_floor_plane_m": 0.4624494155001012,
+    "raw_plane_normal": [
+      -0.27148248517945517,
+      0.015930206373432898,
+      0.962311534153928
+    ],
+    "configured_sensor_origin_foot_z": 0.7429388462893425
+  },
+  {
+    "file": "frame_017.npz",
+    "count": 74,
+    "sensor_origin_to_floor_plane_m": 0.4617418417029402,
+    "raw_plane_normal": [
+      -0.27121451983410705,
+      0.007654372506038842,
+      0.9624884907429768
+    ],
+    "configured_sensor_origin_foot_z": 0.7429450503742712
+  }
+]

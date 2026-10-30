@@ -1,0 +1,23 @@
+{
+  "status": "FAILED_STATIC_ACCEPTANCE_NO_MOTION",
+  "map": "outdoor_20260921_003_area_review",
+  "authorization": "user confirmed standing, supervision, emergency stop and conditional patrol after repair",
+  "raw_capture": {
+    "frames": 12,
+    "lidar_messages": 149,
+    "depth_messages": 482,
+    "imu_messages": 3266,
+    "pair_errors": 0
+  },
+  "visual": "RGB initially absent; recovered intermittently; initial seed source start_appearance, not PnP verification",
+  "registration": "ICP rejection before estimator commit; NDT confirmation timeout; about 3-4 seconds per processing cycle; no accepted geometry metrics",
+  "unchanged_limits": {
+    "imu_pair_s": 0.04,
+    "icp_translation_m": 0.25,
+    "icp_rotation_deg": 10,
+    "obstacle_min_m": 0.15
+  },
+  "real_low_obstacle_validation": "not available; user unable to supply measured objects",
+  "motion": "no velocity publisher, no single-goal movement, no 11-point patrol",
+  "remaining": "diagnose outdoor coarse-registration/refinement rejection and latency before further static acceptance; remaining indoor negative ground residual and near-threshold misses are unresolved"
+}

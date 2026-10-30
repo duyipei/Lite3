@@ -110,6 +110,33 @@ class DynamicNavigationTests(unittest.TestCase):
             source['topic'] = '/aligned_points'
         self.assertEqual(projected, original)
 
+    def test_actual_launcher_selects_relative_ground_for_both_maps(self):
+        source = (ROOT/'navigation/start_nav_isolated.sh').read_text()
+        fragment = source.split('PARAMS_FILE=$MAP_DIR/nav2_safe.yaml', 1)[1].split('nav_pid=', 1)[0]
+        # Run only the configuration fragment in an isolated temp project.
+        # No sensing, ROS processes, SSH, or navigation commands are executed.
+        with tempfile.TemporaryDirectory() as d:
+            project = Path(d)
+            (project/'scripts').symlink_to(ROOT/'scripts')
+            (project/'navigation').mkdir()
+            (project/'navigation/navigate_dynamic_obstacles.xml').symlink_to(TREE)
+            for map_id in ['indoor_fusion_20260912_001_area_review', 'outdoor_20260921_003_area_review']:
+                directory = project/'navigation'/map_id; directory.mkdir()
+                for name in ['nav2_safe.yaml', 'patrol_map.yaml', 'traversability_summary.json', 'traversability_evidence.npz']:
+                    (directory/name).symlink_to(ROOT/'navigation'/map_id/name)
+                command = 'set -eu\nPROJECT=$1\nMAP_ID=$2\nMAP_DIR=$PROJECT/navigation/$MAP_ID\n' + fragment
+                run = subprocess.run(['bash','-c',command,'fixture',str(project),map_id],
+                    env=dict(os.environ,LITE3_DYNAMIC_OBSTACLES='1'),capture_output=True,text=True)
+                self.assertEqual(run.returncode,0,run.stderr)
+                config=yaml.safe_load((directory/'nav2_dynamic.yaml').read_text())
+                for layer in ['local_costmap','global_costmap']:
+                    self.assertEqual(config[layer][layer]['ros__parameters']['stvl_obstacle_layer']['rslidar_points']['topic'],
+                                     '/patrol/costmap_obstacles')
+                (directory/'traversability_evidence.npz').unlink()
+                run = subprocess.run(['bash','-c',command,'fixture',str(project),map_id],
+                    env=dict(os.environ,LITE3_DYNAMIC_OBSTACLES='1'),capture_output=True,text=True)
+                self.assertNotEqual(run.returncode,0)
+
     def test_generator_cli_and_no_baseline_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / 'dynamic.yaml'
@@ -159,6 +186,13 @@ class DynamicNavigationTests(unittest.TestCase):
             with self.subTest(proposal=proposal):
                 self.assertEqual(PROTOCOL.braking_correction((.1, 0, 0), proposal), (0, 0, 0))
         self.assertEqual(PROTOCOL.braking_correction((0, 0, 0), (.1, 0, 0)), (0, 0, 0))
+
+    def test_experimental_refinement_cannot_start_patrol(self):
+        result = subprocess.run(['bash', str(ROOT/'scripts/navigation_start.sh'), 'start'],
+            env=dict(os.environ,LITE3_NDT_FINE_REFINE='true'),
+            text=True,capture_output=True,timeout=5)
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn('只允许 relocalize', result.stderr)
 
     def test_dynamic_mode_rejects_disabled_voa_before_connecting(self):
         result = subprocess.run(['bash', str(ROOT/'scripts/navigation_start.sh'), 'preflight'],

@@ -1,0 +1,42 @@
+--- results/ground_repair_20261028/before/velocity_gate.py	2026-10-28 10:23:17.479750303 +0800
++++ patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py	2026-10-28 10:25:16.486171263 +0800
+@@ -53,6 +53,12 @@
+         self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
+         if self.require_voa_costmap and not self.use_vendor_voa:
+             raise ValueError('VOA costmap monitoring requires VOA')
++        self.declare_parameter('require_lidar_costmap', False)
++        self.require_lidar_costmap = bool(self.get_parameter('require_lidar_costmap').value)
++        self.last_lidar_costmap_time = 0.0
++        if self.require_lidar_costmap:
++            self.create_subscription(Header, '/patrol/lidar_costmap_heartbeat',
++                                     self.lidar_costmap_callback, 1)
+         self.last_voa_costmap_time = 0.0
+         if self.require_voa_costmap:
+             self.create_subscription(Header, '/patrol/voa/costmap_heartbeat',
+@@ -201,8 +207,26 @@
+             self.get_logger().info('[VOA_COSTMAP] fresh obstacle projection received')
+         self.last_voa_costmap_time = stamp
+ 
++    def lidar_costmap_callback(self, message):
++        stamp = message.stamp.sec + message.stamp.nanosec / 1e9
++        age = self.now_monotonic() - stamp
++        timeout = self.get_parameter('freshness_timeout_s').value
++        if (message.frame_id != 'map' or message.stamp.sec < 0 or
++                not 0 <= message.stamp.nanosec < 1000000000 or
++                not -.05 <= age <= timeout or stamp <= self.last_lidar_costmap_time):
++            return
++        self.last_lidar_costmap_time = stamp
++
+     def sensor_health(self):
+         now = self.now_monotonic()
++        if self.require_lidar_costmap:
++            timeout = self.get_parameter('freshness_timeout_s').value
++            if (self.last_lidar_costmap_time <= 0 or
++                    not -.05 <= now - self.last_lidar_costmap_time <= timeout):
++                return False, 'lidar_costmap_not_ready_or_stale'
++            if (self.count_publishers('/patrol/lidar_costmap_heartbeat') != 1 or
++                    self.count_publishers('/patrol/costmap_obstacles') != 1):
++                return False, 'lidar_costmap_publisher_conflict'
+         if self.require_voa_costmap:
+             if (self.last_voa_costmap_time <= 0 or
+                     not -.05 <= now - self.last_voa_costmap_time <= .5):

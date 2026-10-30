@@ -1,0 +1,3 @@
+1793023572.781321 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793023573.611294344] [floor_candidate_sensor_only]: first corrected cloud; original source stamp preserved; diagnostic topic only
+published 549

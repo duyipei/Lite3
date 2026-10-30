@@ -53,6 +53,12 @@ class VelocityGate(Node):
         self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
         if self.require_voa_costmap and not self.use_vendor_voa:
             raise ValueError('VOA costmap monitoring requires VOA')
+        self.declare_parameter('require_lidar_costmap', False)
+        self.require_lidar_costmap = bool(self.get_parameter('require_lidar_costmap').value)
+        self.last_lidar_costmap_time = 0.0
+        if self.require_lidar_costmap:
+            self.create_subscription(Header, '/patrol/lidar_costmap_heartbeat',
+                                     self.lidar_costmap_callback, 1)
         self.last_voa_costmap_time = 0.0
         if self.require_voa_costmap:
             self.create_subscription(Header, '/patrol/voa/costmap_heartbeat',
@@ -70,6 +76,7 @@ class VelocityGate(Node):
         self.last_raw = None
         self.last_raw_time = 0.0
         self.last_odom_time = 0.0
+        self.last_odom_source_stamp = 0.0
         self.last_lidar_time = 0.0
         self.localization_ready = False
         self.last_ready_time = 0.0
@@ -164,6 +171,20 @@ class VelocityGate(Node):
     def odom_callback(self, message):
         now = self.now_monotonic()
         pose = message.pose.pose
+        q = pose.orientation
+        values = (pose.position.x, pose.position.y, pose.position.z, q.x, q.y, q.z, q.w)
+        stamp = message.header.stamp.sec + message.header.stamp.nanosec / 1e9
+        if (not all(math.isfinite(v) for v in values)
+                or abs(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w - 1.) > .01):
+            self.trip('invalid_odometry')
+            return
+        # NDT output retains this Jetson's monotonic LiDAR source clock.
+        if (message.header.frame_id != 'map' or message.child_frame_id != 'base_link'
+                or not 0 <= message.header.stamp.nanosec < 1000000000
+                or stamp <= self.last_odom_source_stamp
+                or not -.05 <= now-stamp <= self.get_parameter('freshness_timeout_s').value):
+            return
+        self.last_odom_source_stamp = stamp
         current = (pose.position.x, pose.position.y, yaw_from_quaternion(pose.orientation))
         if self.last_pose is not None and self.armed:
             distance = math.hypot(current[0] - self.last_pose[0], current[1] - self.last_pose[1])
@@ -201,8 +222,30 @@ class VelocityGate(Node):
             self.get_logger().info('[VOA_COSTMAP] fresh obstacle projection received')
         self.last_voa_costmap_time = stamp
 
+    def lidar_costmap_callback(self, message):
+        stamp = message.stamp.sec + message.stamp.nanosec / 1e9
+        age = self.now_monotonic() - stamp
+        timeout = self.get_parameter('freshness_timeout_s').value
+        if (message.frame_id != 'map' or message.stamp.sec < 0 or
+                not 0 <= message.stamp.nanosec < 1000000000 or
+                not -.05 <= age <= timeout or stamp <= self.last_lidar_costmap_time):
+            return
+        self.last_lidar_costmap_time = stamp
+
     def sensor_health(self):
         now = self.now_monotonic()
+        # Zero publishers is normal before Nav2 starts; more than one is never
+        # valid, including while waiting for the first navigation command.
+        if self.count_publishers('/patrol/cmd_vel_raw') > 1:
+            return False, 'nav_command_publisher_conflict'
+        if self.require_lidar_costmap:
+            timeout = self.get_parameter('freshness_timeout_s').value
+            if (self.last_lidar_costmap_time <= 0 or
+                    not -.05 <= now - self.last_lidar_costmap_time <= timeout):
+                return False, 'lidar_costmap_not_ready_or_stale'
+            if (self.count_publishers('/patrol/lidar_costmap_heartbeat') != 1 or
+                    self.count_publishers('/patrol/costmap_obstacles') != 1):
+                return False, 'lidar_costmap_publisher_conflict'
         if self.require_voa_costmap:
             if (self.last_voa_costmap_time <= 0 or
                     not -.05 <= now - self.last_voa_costmap_time <= .5):

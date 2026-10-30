@@ -1,0 +1,75 @@
+..F.F......F...F...............                                          [100%]
+=================================== FAILURES ===================================
+_______ InitializerTests.test_accumulated_stationary_drift_revokes_ready _______
+
+self = <test_visual_initializer_frames.InitializerTests testMethod=test_accumulated_stationary_drift_revokes_ready>
+
+    def test_accumulated_stationary_drift_revokes_ready(self):
+        n = self.node
+        n.params['stationary_drift_guard_enabled'] = True
+        n.state = 'READY:test'
+        for step in range(23):
+            n.now = 10+step*.1
+            n.latest_leg_pose = (0., 0., 0.)
+            n.last_leg_time = n.now
+            msg = PoseMessage(); msg.header.frame_id = 'map'
+            msg.header.stamp.sec = 100
+            msg.header.stamp.nanosec = step*100000000
+            msg.pose.pose.position.x = step*.01
+            n.odom_callback(msg)
+            if n.state.startswith('FAILED'):
+                break
+>       self.assertIn('FAILED:stationary_map_drift', n.state)
+E       AssertionError: 'FAILED:stationary_map_drift' not found in 'READY:test'
+
+tests/test_visual_initializer_frames.py:233: AssertionError
+________ InitializerTests.test_bad_ndt_scan_restarts_short_confirmation ________
+
+self = <test_visual_initializer_frames.InitializerTests testMethod=test_bad_ndt_scan_restarts_short_confirmation>
+
+    def test_bad_ndt_scan_restarts_short_confirmation(self):
+        n = self.production_seed()
+        self.accepted_scan(20)
+        self.accepted_scan(21, good=False)
+        for stamp in (22, 23):
+            self.accepted_scan(stamp)
+            self.assertFalse(n.state.startswith('READY'))
+        self.accepted_scan(24)
+>       self.assertTrue(n.state.startswith('READY:'))
+E       AssertionError: False is not true
+
+tests/test_visual_initializer_frames.py:216: AssertionError
+_ InitializerTests.test_shorter_production_flow_still_requires_distinct_good_ndt_scans _
+
+self = <test_visual_initializer_frames.InitializerTests testMethod=test_shorter_production_flow_still_requires_distinct_good_ndt_scans>
+
+    def test_shorter_production_flow_still_requires_distinct_good_ndt_scans(self):
+        n = self.production_seed()
+        for stamp in (20, 20, 21):
+            self.accepted_scan(stamp)
+            self.assertFalse(n.state.startswith('READY'))
+        self.accepted_scan(22)
+>       self.assertTrue(n.state.startswith('READY:'))
+E       AssertionError: False is not true
+
+tests/test_visual_initializer_frames.py:205: AssertionError
+____ InitializerTests.test_startup_status_gap_does_not_bypass_bad_matching _____
+
+self = <test_visual_initializer_frames.InitializerTests testMethod=test_startup_status_gap_does_not_bypass_bad_matching>
+
+    def test_startup_status_gap_does_not_bypass_bad_matching(self):
+        n = self.prepare_timing()
+        n.last_status_time = 8.0
+        n.status_callback(NS(header=NS(stamp=NS(sec=100,nanosec=0)),
+                             has_converged=False,matching_error=1.0,inlier_fraction=.1))
+        self.assertEqual(n.state, 'READY:test')
+        n.ndt_bad_count = n.params['ndt_bad_samples']-1
+        n.status_callback(NS(header=NS(stamp=NS(sec=101,nanosec=0)),
+                             has_converged=False,matching_error=1.0,inlier_fraction=.1))
+>       self.assertEqual(n.state, 'FAILED:ndt_matching_failed')
+E       AssertionError: 'READY:test' != 'FAILED:ndt_matching_failed'
+E       - READY:test
+E       + FAILED:ndt_matching_failed
+
+tests/test_visual_initializer_frames.py:282: AssertionError
+4 failed, 27 passed in 23.51 seconds

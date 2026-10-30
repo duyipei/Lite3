@@ -40,7 +40,7 @@ def fresh(stamp, now):
     return math.isfinite(stamp) and stamp > 0 and -.05 <= now - stamp <= MAX_AGE
 
 
-def grid_obstacles(msg, minimum):
+def grid_obstacles(msg, minimum, include_unknown=False):
     """Decode grid_map Eigen layout and circular indices, not OccupancyGrid."""
     if msg.header.frame_id != 'robot_foot_print':
         raise ValueError('expected factory robot_foot_print elevation grid')
@@ -83,11 +83,19 @@ def grid_obstacles(msg, minimum):
     occupied = np.zeros(elevation.shape, dtype=bool)
     finite = np.isfinite(elevation)
     occupied[finite] = elevation[finite].astype(np.float64) > minimum
+    # VOA rejects trajectories through unobserved cells. Expose those same
+    # cells to the planner as conservative constraints, separately counted.
+    # Zero below is a projection reference at the foot plane, not a measured
+    # obstacle height or a claim that unknown space is free.
+    if include_unknown:
+        occupied |= ~finite
     row, col = np.nonzero(occupied)
     ix, iy = (row-start[0]) % nx, (col-start[1]) % ny
     xyz = np.column_stack((p.x + lx/2 - (ix+.5)*r,
-                           p.y + ly/2 - (iy+.5)*r, elevation[row, col]))
+                           p.y + ly/2 - (iy+.5)*r,
+                           np.where(finite[row,col],elevation[row,col],0.)))
     return xyz, {'cells': nx*ny, 'obstacles': len(xyz),
+                 'unknown_constraints': int(np.count_nonzero(~finite)) if include_unknown else 0,
                  'unknown': int(np.count_nonzero(~np.isfinite(elevation)))}
 
 
@@ -140,7 +148,8 @@ def project_to_map(xyz, transform):
 
 
 class Bridge:
-    def __init__(self, node, buffer, cloud_type, field_type, header_type, time_type, minimum):
+    def __init__(self, node, buffer, cloud_type, field_type, header_type, time_type, minimum,
+                 output_topic=TOPIC, heartbeat_topic=HEARTBEAT):
         self.node, self.buffer = node, buffer
         self.Cloud, self.Field, self.Header, self.Time = cloud_type, field_type, header_type, time_type
         self.minimum = minimum
@@ -150,8 +159,8 @@ class Bridge:
         self.announced = False
         self.anchors = deque(maxlen=12)
         self.predictions = 0
-        self.publisher = node.create_publisher(cloud_type, TOPIC, 1)
-        self.heartbeat = node.create_publisher(header_type, HEARTBEAT, 1)
+        self.publisher = node.create_publisher(cloud_type, output_topic, 1)
+        self.heartbeat = node.create_publisher(header_type, heartbeat_topic, 1)
 
     def receive(self, msg):
         stamp = stamp_seconds(msg.header.stamp)
@@ -166,7 +175,10 @@ class Bridge:
                 or (self.anchors and stamp <= stamp_seconds(self.anchors[-1].header.stamp))):
             return
         p = msg.pose.pose
-        transform_matrix(SimpleNamespace(translation=p.position, rotation=p.orientation))
+        try:
+            transform_matrix(SimpleNamespace(translation=p.position, rotation=p.orientation))
+        except (ValueError, TypeError, AttributeError):
+            return
         self.anchors.append(msg)
 
     def projection_transform(self, msg):
@@ -204,8 +216,11 @@ class Bridge:
                 transform = self.projection_transform(msg)
             except Exception:
                 continue  # Never fall back to latest pose for an older frame.
-            xyz, stats = grid_obstacles(msg, self.minimum)
-            points = project_to_map(xyz, transform)
+            try:
+                xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=True)
+                points = project_to_map(xyz, transform)
+            except (ValueError, TypeError, AttributeError, IndexError):
+                continue
             output = self.Cloud()
             output.header.stamp = msg.header.stamp
             output.header.frame_id = 'map'

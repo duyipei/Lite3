@@ -1,0 +1,26 @@
+1793020890.340719 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793020891.414655240] [rgbd_visual_localizer]: loaded 56 visual keyframes; startup references=20; strategy=startup_then_global
+[INFO] [1793020892.468910024] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=55,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.27s,input_age=0.07s,inference=0.20s
+[INFO] [1793020898.293429448] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=55,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.09s,input_age=0.07s,inference=0.02s
+[WARN] [1793020901.268678312] [rgbd_visual_localizer]: no confirmed start-area match; switching to global keyframe search
+[INFO] [1793020903.471335144] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=1,inliers=24,x=0.08,y=0.02,yaw=-0.04,query_age=0.27s,input_age=0.06s,inference=0.20s
+[INFO] [1793020908.622917864] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=55,inliers=30,x=0.03,y=-0.02,yaw=0.00,query_age=0.41s,input_age=0.06s,inference=0.35s
+[INFO] [1793020914.547094856] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=1,inliers=26,x=0.07,y=0.04,yaw=-0.06,query_age=0.33s,input_age=0.05s,inference=0.28s
+[INFO] [1793020920.507356040] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=55,inliers=29,x=0.06,y=0.02,yaw=-0.04,query_age=0.32s,input_age=0.09s,inference=0.24s
+[INFO] [1793020925.649683240] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=4,inliers=29,x=0.06,y=0.01,yaw=-0.02,query_age=0.63s,input_age=0.26s,inference=0.38s
+[INFO] [1793020930.861552744] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=4,inliers=26,x=0.09,y=-0.04,yaw=-0.01,query_age=0.64s,input_age=0.05s,inference=0.59s
+[INFO] [1793020936.270144808] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020941.274033480] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020947.273833768] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020953.272922888] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020959.268960392] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020964.271946792] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020970.268867816] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020976.268772712] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020982.269242056] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020988.270220648] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020994.268636200] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793020999.269890920] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793021004.269538760] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793021009.273780744] [rgbd_visual_localizer]: POSE:mode=global,source=pnp,kf=0,inliers=26,x=0.07,y=0.01,yaw=-0.02,query_age=1.16s,input_age=0.57s,inference=0.59s
+[INFO] [1793021010.842521416] [rgbd_visual_localizer]: PAUSED:localization_ready_ndt_odometry_active

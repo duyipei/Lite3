@@ -66,6 +66,34 @@ class GroundModel:
                             unknown_ground=int(len(xyz)-np.count_nonzero(trusted)))
 
 
+class ProjectionFreshness:
+    """Jetson sensor stamps use CLOCK_MONOTONIC; preserve source time.
+
+    No valid heartbeat on localization loss, stale/replayed/future input, or
+    exceptions. This uses the existing velocity gate's 1.5 s sensor budget.
+    A legitimately empty fresh cloud is valid, and never clears the static map.
+    """
+    def __init__(self, timeout=1.5):
+        self.timeout = timeout
+        self.ready = False
+        self.ready_time = float('-inf')
+        self.last_stamp = 0.0
+
+    def update_ready(self, ready, now):
+        self.ready = bool(ready)
+        self.ready_time = now
+
+    def accepts(self, header, now):
+        stamp = header.stamp.sec + header.stamp.nanosec / 1e9
+        return (self.ready and 0 <= now-self.ready_time <= self.timeout
+                and header.frame_id == 'map' and header.stamp.sec >= 0
+                and 0 <= header.stamp.nanosec < 1000000000
+                and -.05 <= now-stamp <= self.timeout and stamp > self.last_stamp)
+
+    def commit(self, header):
+        self.last_stamp = header.stamp.sec + header.stamp.nanosec / 1e9
+
+
 def cloud_xyz(msg):
     fields = {f.name: f for f in msg.fields}
     endian = '>' if msg.is_bigendian else '<'
@@ -92,13 +120,20 @@ def main():
     import rclpy
     from rclpy.qos import QoSProfile, ReliabilityPolicy
     from sensor_msgs.msg import PointCloud2, PointField
+    from std_msgs.msg import Bool, Header
     rclpy.init()
     node = rclpy.create_node('patrol_costmap_ground_filter')
     publisher = node.create_publisher(PointCloud2, '/patrol/costmap_obstacles', 1)
+    heartbeat = node.create_publisher(Header, '/patrol/lidar_costmap_heartbeat', 1)
+    freshness = ProjectionFreshness()
+    ready_subscription = node.create_subscription(
+        Bool, '/patrol/localization_ready',
+        lambda msg: freshness.update_ready(msg.data, time.monotonic()),
+        QoSProfile(depth=1, reliability=ReliabilityPolicy.RELIABLE))
     last_log = [0.0]
     def callback(msg):
-        if msg.header.frame_id != 'map':
-            raise ValueError('ground filter requires map-frame aligned points')
+        if not freshness.accepts(msg.header, time.monotonic()):
+            return
         points, stats = model.project(cloud_xyz(msg))
         output = PointCloud2()
         output.header = msg.header
@@ -108,7 +143,12 @@ def main():
         output.is_bigendian, output.is_dense = False, True
         output.point_step, output.row_step = 12, 12*len(points)
         output.data = points.tobytes()
+        # Recheck after computation: overload cannot make old evidence fresh.
+        if not freshness.accepts(msg.header, time.monotonic()):
+            return
         publisher.publish(output)
+        freshness.commit(msg.header)
+        heartbeat.publish(output.header)
         if time.monotonic()-last_log[0] >= 5:
             node.get_logger().info('ground-relative obstacle projection: '+json.dumps(stats))
             last_log[0] = time.monotonic()

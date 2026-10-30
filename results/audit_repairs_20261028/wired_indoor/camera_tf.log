@@ -1,0 +1,2 @@
+1793190446.590465 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793190451.214193438] [patrol_voa_camera_mount]: Publishing factory base_link -> camera_link transform

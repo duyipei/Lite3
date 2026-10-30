@@ -5,6 +5,9 @@ set -Eeuo pipefail
 PROJECT=/home/ysc/lite3_patrol_project
 MAP_ID=${LITE3_PATROL_MAP_ID:-site_fusion_20260909_001}
 NDT_RESOLUTION=${LITE3_NDT_RESOLUTION:-1.0}
+# Experimental full-scene refinement: require explicit static-test selection.
+FINE_REGISTRATION=${LITE3_NDT_FINE_REFINE:-false}
+[[ "$FINE_REGISTRATION" == true || "$FINE_REGISTRATION" == false ]] || exit 1
 DEFAULT_DOWNSAMPLE_RESOLUTION=0.3
 if [[ "$MAP_ID" == outdoor_20260921_003_area_review ]]; then
   DEFAULT_DOWNSAMPLE_RESOLUTION=0.5
@@ -16,6 +19,19 @@ if [[ "$MAP_ID" == indoor_fusion_20260912_001_area_review ]]; then
 fi
 MAP_DIR=$PROJECT/navigation/$MAP_ID
 source "$PROJECT/navigation/patrol_env.sh"
+RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-vendor}
+case "$RUNTIME" in
+  vendor) ;;
+  audited)
+    python3 "$PROJECT/scripts/check_localization_runtime.py" \
+      "$PROJECT/results/audit_repairs_20261028/runtime_manifest.json"
+    set +u
+    source "$PROJECT/results/ground_acceptance_20261028/ws/install/setup.bash"
+    set -u
+    ;;
+  *) echo 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited' >&2; exit 1;;
+esac
+echo "[INFO] localization runtime=$RUNTIME ICP=$FINE_REGISTRATION"
 
 if [[ ! "$MAP_ID" =~ ^[A-Za-z0-9._-]+$ ]]; then
   echo "invalid map id: $MAP_ID" >&2
@@ -28,8 +44,8 @@ for artifact in patrol_map.yaml localization_map.pcd nav2_safe.yaml; do
   fi
 done
 
-if pgrep -af 'livox_ros_driver2|hdl_localization|fastlivo_mapping|ros2 bag play' >/dev/null; then
-  pgrep -af 'livox_ros_driver2|hdl_localization|fastlivo_mapping|ros2 bag play' >&2 || true
+if pgrep -af '(^|/)(livox_ros_driver2_node|hdl_localization_composition|fastlivo_mapping)( |$)|ros2 bag play' >/dev/null; then
+  pgrep -af '(^|/)(livox_ros_driver2_node|hdl_localization_composition|fastlivo_mapping)( |$)|ros2 bag play' >&2 || true
   echo "refusing to start: conflicting perception/localization process exists" >&2
   exit 1
 fi
@@ -112,6 +128,7 @@ setsid env OMP_NUM_THREADS=1 OMP_WAIT_POLICY=PASSIVE GOMP_SPINCOUNT=0 \
   start_localization:=True start_navigation:=False \
   specify_init_pose:=False use_imu:=False convert_utm_to_local:=False \
   ndt_resolution:="$NDT_RESOLUTION" \
+  fine_registration_enabled:="$FINE_REGISTRATION" \
   globalmap_downsample_resolution:="$GLOBALMAP_DOWNSAMPLE_RESOLUTION" \
   downsample_resolution:="$DOWNSAMPLE_RESOLUTION" &
 localization_pid=$!

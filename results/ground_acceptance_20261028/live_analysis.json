@@ -1,0 +1,182 @@
+{
+  "scope": "new live baseline captures; optional native fine refinement is OFFLINE before fusion; plane hypotheses not surveyed truth",
+  "frames": [
+    {
+      "frame": "frame_00.npz",
+      "baseline_H": {
+        "n": 160,
+        "mean": 0.051864298827475695,
+        "median": 0.044856046371835434,
+        "abs_p95": 0.1043557125942941,
+        "over15_fraction": 0.01875
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_01.npz",
+      "baseline_H": {
+        "n": 181,
+        "mean": 0.05020693130274505,
+        "median": 0.05106606333135111,
+        "abs_p95": 0.10185392766418522,
+        "over15_fraction": 0.016574585635359115
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_02.npz",
+      "baseline_H": {
+        "n": 184,
+        "mean": 0.06030213001588702,
+        "median": 0.06003965980511605,
+        "abs_p95": 0.12220127360073327,
+        "over15_fraction": 0.03260869565217391
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_03.npz",
+      "baseline_H": {
+        "n": 186,
+        "mean": 0.06356321973494117,
+        "median": 0.05946431650829476,
+        "abs_p95": 0.13253392065685435,
+        "over15_fraction": 0.03225806451612903
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_04.npz",
+      "baseline_H": {
+        "n": 36,
+        "mean": 0.09457487034865185,
+        "median": 0.08631696750583684,
+        "abs_p95": 0.1976976842849953,
+        "over15_fraction": 0.1388888888888889
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_05.npz",
+      "baseline_H": {
+        "n": 87,
+        "mean": 0.06938286662871124,
+        "median": 0.06817351716763964,
+        "abs_p95": 0.1588853117377317,
+        "over15_fraction": 0.08045977011494253
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_06.npz",
+      "baseline_H": {
+        "n": 203,
+        "mean": 0.05139071272262175,
+        "median": 0.05091902387373315,
+        "abs_p95": 0.10734848861052759,
+        "over15_fraction": 0.014778325123152709
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_07.npz",
+      "baseline_H": {
+        "n": 193,
+        "mean": 0.055630197518224844,
+        "median": 0.05529760048259624,
+        "abs_p95": 0.10650985551913236,
+        "over15_fraction": 0.015544041450777202
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_08.npz",
+      "baseline_H": {
+        "n": 192,
+        "mean": 0.06492038413337144,
+        "median": 0.06562974972253327,
+        "abs_p95": 0.12816814480811406,
+        "over15_fraction": 0.026041666666666668
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "frame": "frame_09.npz",
+      "baseline_H": {
+        "n": 155,
+        "mean": 0.07436083374433113,
+        "median": 0.07262074577920652,
+        "abs_p95": 0.13770127207513888,
+        "over15_fraction": 0.03870967741935484
+      },
+      "fine_accepted": false,
+      "fine_quality": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "baseline": {
+    "n": 1577,
+    "mean": 0.0601805223137304,
+    "median": 0.05909906890373162,
+    "abs_p95": 0.12510292473936996,
+    "over15_fraction": 0.029803424223208624
+  }
+}

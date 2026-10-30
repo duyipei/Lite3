@@ -1,0 +1,3890 @@
+{
+  "scope": "OFFLINE_SAVED_SAME_FRAME_SOURCE_AND_OUTPUT_VERIFICATION",
+  "live_connection": "SSH timed out; no current runtime attestation, sensors, or configuration changes",
+  "convention": "Column vectors; T_A_B maps B coordinates into A; matrices applied right to left",
+  "official_origin": {
+    "manual_url": "https://terra-1-g.djicdn.com/851d20f7b9f64838a34cd02351370894/Livox/Livox_Mid-360_User_Manual_EN.pdf",
+    "printed_dimensions_page": 9,
+    "printed_coordinates_page": 12,
+    "origin_above_bottom_along_lidar_Z_m": 0.047,
+    "user_measured_bottom_vertical_height_m_approx": 0.46,
+    "estimated_origin_vertical_height_with_nominal_18deg_m": 0.5046996562658722,
+    "limits": "46cm is approximate; if sensor bottom is tilted the tape measurement must refer to the bottom-center under O. Actual physical tilt is not independently surveyed."
+  },
+  "T3_description": "Driver high-resolution Cartesian branch computes p_out=R_driver*p_raw+t_driver (mm converted to m). T3=E for baseline; diagnostic C@E for candidate.",
+  "T2_description": "lookupTransform(target=odom_child_frame_id=base_link, source=rslidar) gives A. LidarCallback first applies A, then F built from IMU RPY with yaw=0 and tz=.34751; T2=F@A.",
+  "T1_description": "P is the full published_pose used to transform the filtered cloud, also published as /patrol/registration_odom. It can differ from raw /patrol/ndt_candidate Q. /odom and /tf zero Z and are not substituted for P.",
+  "equation": "T_map_raw_lidar = T1 @ T2 @ T3 = P @ F @ A @ E (baseline)",
+  "driver_T3_E": [
+    [
+      0.9510565162951535,
+      0.0,
+      0.3090169943749474,
+      0.187
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      -0.3090169943749474,
+      0.0,
+      0.9510565162951535,
+      0.4
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "saved_TF_A": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "source_evidence": [
+    {
+      "path": "vendor_patch/hdl_localization_app.hpp",
+      "sha256": "527126fd076ef99fa7c6c9a812a529e636aff2e49329439dd176734cb217f30d",
+      "snippets": [
+        {
+          "first_line": 635,
+          "last_line": 651,
+          "text": "    void CalLidar2BaseStaticTF(){\n        std::string lidar_frame = \"rslidar\";\n        while(rclcpp::ok() && !tf_buffer.canTransform(odom_child_frame_id, lidar_frame, rclcpp::Clock(RCL_STEADY_TIME).now()) ){\n            RCLCPP_WARN(get_logger(), \"Waiting for transform from %s to %s\", lidar_frame.c_str(), odom_child_frame_id.c_str());\n            sleep(1);\n        }\n        geometry_msgs::msg::TransformStamped lidar2base_transform_ = tf_buffer.lookupTransform(odom_child_frame_id, lidar_frame, rclcpp::Time(3, 0));\n        Eigen::Quaternionf rotation(lidar2base_transform_.transform.rotation.w,\n                                    lidar2base_transform_.transform.rotation.x,\n                                    lidar2base_transform_.transform.rotation.y,\n                                    lidar2base_transform_.transform.rotation.z);\n        Eigen::Vector3f translation(lidar2base_transform_.transform.translation.x,\n                                    lidar2base_transform_.transform.translation.y,\n                                    lidar2base_transform_.transform.translation.z);\n        lidar2base_transform_matrix_.setIdentity();\n        lidar2base_transform_matrix_.block<3, 3>(0, 0) = rotation.toRotationMatrix();\n        lidar2base_transform_matrix_.block<3, 1>(0, 3) = translation;"
+        },
+        {
+          "first_line": 667,
+          "last_line": 678,
+          "text": "    void CalculateBase2FootPrintTF(sensor_msgs::msg::Imu::SharedPtr msg, Eigen::Matrix4f &base2footprint_transform_matrix){\n        tf2::Quaternion quat;\n        tf2::fromMsg(msg->orientation, quat);\n        double roll, pitch, yaw;\n        tf2::Matrix3x3(tf2::Quaternion(quat)).getRPY(roll, pitch, yaw);\n        quat.setRPY(roll, pitch, 0.0);\n        Eigen::Quaternionf eigen_quat(quat.w(), quat.x(), quat.y(), quat.z());\n        base2footprint_transform_matrix = Eigen::Matrix4f::Identity();\n        base2footprint_transform_matrix.block<3, 3>(0, 0) = eigen_quat.toRotationMatrix();\n        base2footprint_transform_matrix(0, 3) = 0;\n        base2footprint_transform_matrix(1, 3) = 0;\n        base2footprint_transform_matrix(2, 3) = 0.34751;"
+        },
+        {
+          "first_line": 784,
+          "last_line": 789,
+          "text": "        CalculateBase2FootPrintTF(imu_data, base2footprint_transform_matrix);\n        pcl_ros::transformPointCloud(lidar2base_transform_matrix_, *msg, *msg);\n        pcl_ros::transformPointCloud(base2footprint_transform_matrix, *msg, *msg);\n        pcl::PointCloud<PointT>::Ptr cloud(new pcl::PointCloud<PointT>());\n        pcl::fromROSMsg(*msg, *cloud);\n        auto filtered = Downsample(cloud);"
+        },
+        {
+          "first_line": 842,
+          "last_line": 854,
+          "text": "        correction_rejected_ = false;\n        auto aligned = pose_estimator->correct(points_time, filtered);\n        const auto matched_at = std::chrono::steady_clock::now();\n        Eigen::Matrix4f published_pose = pose_estimator->matrix();\n        if(candidate_pose_pub->get_subscription_count()) {\n            nav_msgs::msg::Odometry candidate;\n            candidate.header.stamp = points_time;\n            candidate.header.frame_id = \"map\";\n            candidate.child_frame_id = \"ndt_registration\";\n            candidate.pose.pose = tf2::toMsg(Eigen::Isometry3d(published_pose.cast<double>()));\n            candidate_pose_pub->publish(candidate);\n        }\n        Eigen::Matrix4f expected_pose;"
+        },
+        {
+          "first_line": 928,
+          "last_line": 938,
+          "text": "                consecutive_gate_violations_ = 0;\n                if(!FuseNdtCorrectionWithLegOdom(\n                       estimated_pose, published_pose)){\n                    published_pose = expected_pose;\n                }\n                pcl::transformPointCloud(\n                    *filtered, *aligned, published_pose);\n                if(was_rejected){\n                    RCLCPP_INFO(get_logger(), \"NDT correction returned inside manual/leg anchor gate\");\n                }\n            }"
+        },
+        {
+          "first_line": 1164,
+          "last_line": 1173,
+          "text": "        // Geometry consumers must see the SAME full transform as aligned_points.\n        // /odom and Nav2's TF retain their historical planar-height convention.\n        if(registration_pose_pub->get_subscription_count()) {\n            nav_msgs::msg::Odometry metric;\n            metric.header.stamp = stamp;\n            metric.header.frame_id = \"map\";\n            metric.child_frame_id = \"ndt_registration\";\n            metric.pose.pose = tf2::toMsg(Eigen::Isometry3d(pose.cast<double>()));\n            registration_pose_pub->publish(metric);\n        }"
+        },
+        {
+          "first_line": 1201,
+          "last_line": 1209,
+          "text": "            auto temp_pose1 = tf2::eigenToTransform(Eigen::Isometry3d(pose.cast<double>()));\n            temp_pose1.transform.translation.z = 0.0;\n\n            // RCLCPP_INFO(get_logger(), \"localization: x:%lf, y:%lf\", temp_pose1.transform.translation.x, temp_pose1.transform.translation.y);\n\n            geometry_msgs::msg::TransformStamped odom_trans = temp_pose1;\n            odom_trans.header.stamp = stamp;\n            odom_trans.header.frame_id = \"map\";\n            odom_trans.child_frame_id = odom_child_frame_id;"
+        }
+      ]
+    },
+    {
+      "path": "fast_livo2_ws/fast-livo2-deep-robotics/src/livox_ros_driver2/src/comm/pub_handler.cpp",
+      "sha256": "d0bccf9bcd01d1f56a47cb88e9cd98730f3ff5b3277ba152b5e303551d3c9422",
+      "snippets": [
+        {
+          "first_line": 139,
+          "last_line": 139,
+          "text": "  packet.extrinsic_enable = false; "
+        },
+        {
+          "first_line": 373,
+          "last_line": 391,
+          "text": "void LidarPubHandler::ProcessCartesianHighPoint(RawPacket & pkt) {\n  LivoxLidarCartesianHighRawPoint* raw = (LivoxLidarCartesianHighRawPoint*)pkt.raw_data.data();\n  PointXyzlt point = {};\n  for (uint32_t i = 0; i < pkt.point_num; i++) {\n    if (pkt.extrinsic_enable) {\n      point.x = raw[i].x / 1000.0;\n      point.y = raw[i].y / 1000.0;\n      point.z = raw[i].z / 1000.0;\n    } else {\n      point.x = (raw[i].x * extrinsic_.rotation[0][0] +\n                raw[i].y * extrinsic_.rotation[0][1] +\n                raw[i].z * extrinsic_.rotation[0][2] + extrinsic_.trans[0]) / 1000.0;\n      point.y = (raw[i].x* extrinsic_.rotation[1][0] +\n                raw[i].y * extrinsic_.rotation[1][1] +\n                raw[i].z * extrinsic_.rotation[1][2] + extrinsic_.trans[1]) / 1000.0;\n      point.z = (raw[i].x * extrinsic_.rotation[2][0] +\n                raw[i].y * extrinsic_.rotation[2][1] +\n                raw[i].z * extrinsic_.rotation[2][2] + extrinsic_.trans[2]) / 1000.0;\n    }"
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "mode": "baseline",
+      "file": "frame_00.npz",
+      "source_stamp_s": 2763.320418304,
+      "imu_delta_s": 0.0004550719995677355,
+      "imu_roll_pitch_deg": [
+        -0.07956499971233551,
+        1.5590218933716973
+      ],
+      "T1_full_P": [
+        [
+          0.9122872590182987,
+          -0.06259446875672074,
+          -0.40473928585441693,
+          0.26048940420150757
+        ],
+        [
+          0.07444649039989906,
+          0.9971323637765102,
+          0.013592982623661206,
+          -0.0580521784722805
+        ],
+        [
+          0.40272779529108405,
+          -0.0425321242184461,
+          0.9143310895454936,
+          -0.6531945466995239
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996298290172801,
+          -3.778115954938072e-05,
+          0.027206681375488467,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999990357962842,
+          0.0013886707680079186,
+          0.0
+        ],
+        [
+          -0.027206707608297034,
+          -0.0013881567223850508,
+          0.9996288651704847,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996298290172801,
+          -3.778115954938072e-05,
+          0.027206681375488467,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999990357962842,
+          0.0013886707680079186,
+          0.0
+        ],
+        [
+          -0.027206707608297034,
+          -0.0013881567223850508,
+          0.9996288651704847,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9105502566105428,
+          -0.05976590220676352,
+          -0.4090553350341324,
+          0.2701062858104706
+        ],
+        [
+          0.07151955475788946,
+          0.9973480828649349,
+          0.01348165022807753,
+          -0.05924700200557709
+        ],
+        [
+          0.40716481119284853,
+          -0.04153117550769004,
+          0.9124099834982307,
+          -0.6456250548362732
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9951701074714023,
+          -0.062067034112917085,
+          -0.07605353687885608,
+          0.14048992072779798
+        ],
+        [
+          0.06517219867362084,
+          0.9971097204728419,
+          0.039048557702138685,
+          -0.032682069784314025
+        ],
+        [
+          0.07341009273528831,
+          -0.043816533580340974,
+          0.9963388327620276,
+          0.10513089906378492
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.1978134505764268,
+          0.0005554683072031675,
+          0.7422738917454423
+        ],
+        "map_after_P": [
+          0.14048992072779798,
+          -0.032682069784314025,
+          0.10513089906378492
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.48916043650313124,
+        "height_above_saved_ground_mean_m": 0.47128950368567213
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 18048,
+        "recomputed_voxel_centroids": 682,
+        "observed_aligned_points": 682,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.0647654253025394e-07,
+          5.331201577973843e-07,
+          9.344659702037461e-06
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 162,
+          "p05_median_p95_m": [
+            -0.2159500270657899,
+            -0.12200002943143945,
+            -0.04699996724168691
+          ],
+          "mean_m": -0.12545062094643586
+        },
+        "after_driver_E": {
+          "count": 162,
+          "p05_median_p95_m": [
+            -0.12136654071509838,
+            -0.10469874739646912,
+            -0.08512807525694373
+          ],
+          "mean_m": -0.10497720226829436
+        },
+        "after_diagnostic_C": {
+          "count": 162,
+          "p05_median_p95_m": [
+            -0.12136654071509838,
+            -0.10469874739646912,
+            -0.08512807525694373
+          ],
+          "mean_m": -0.10497720226829436
+        },
+        "after_TF_A": {
+          "count": 162,
+          "p05_median_p95_m": [
+            -0.12136654071509838,
+            -0.10469874739646912,
+            -0.08512807525694373
+          ],
+          "mean_m": -0.10497720226829436
+        },
+        "registration_after_F": {
+          "count": 162,
+          "p05_median_p95_m": [
+            0.1801574247806428,
+            0.20602601716299396,
+            0.2328812925144949
+          ],
+          "mean_m": 0.20566435304198633
+        },
+        "map_after_P": {
+          "count": 162,
+          "p05_median_p95_m": [
+            -0.13249899751968205,
+            0.08217799512759949,
+            0.15884996806135232
+          ],
+          "mean_m": 0.0534134810624918
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 155,
+        "p05_median_p95_m": [
+          0.042115146421479586,
+          0.09635891465584634,
+          0.1363861724748624
+        ],
+        "mean_m": 0.09430372669045702
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 154,
+          "p05_median_p95_m": [
+            0.0420706922125015,
+            0.09621990163057931,
+            0.13651481840241966
+          ],
+          "mean_m": 0.09420237891759116
+        },
+        "raw_candidate_Q_H": {
+          "count": 154,
+          "p05_median_p95_m": [
+            0.052791662102959644,
+            0.10832957068313331,
+            0.14934852586508138
+          ],
+          "mean_m": 0.10597350009741914
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 8249,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.559999989704028,
+            0.7680000066757202,
+            -0.047000011274306086
+          ],
+          "after_driver_E": [
+            1.6561243534088137,
+            0.7680000066757202,
+            -0.1267661750316621
+          ],
+          "after_diagnostic_C": [
+            1.6561243534088137,
+            0.7680000066757202,
+            -0.1267661750316621
+          ],
+          "after_TF_A": [
+            1.6561243534088137,
+            0.7680000066757202,
+            -0.1267661750316621
+          ],
+          "registration_after_F": [
+            1.6520334013653442,
+            0.7678232296856214,
+            0.17466707689286431
+          ],
+          "map_after_P": [
+            1.6488623126146367,
+            0.8329315488028456,
+            0.13917160851995347
+          ]
+        },
+        "map_classification_ground_z_m": 0.04281269386410713,
+        "map_saved_ground_mean_z_m": 0.05380847305059433,
+        "H_m": 0.09635891465584634
+      }
+    },
+    {
+      "mode": "baseline",
+      "file": "frame_01.npz",
+      "source_stamp_s": 2764.321329792,
+      "imu_delta_s": -0.0009300159999838797,
+      "imu_roll_pitch_deg": [
+        -0.05622100163740358,
+        1.5525740306479479
+      ],
+      "T1_full_P": [
+        [
+          0.9113624184830361,
+          -0.061428125914795566,
+          -0.40699524262987086,
+          0.2635226249694824
+        ],
+        [
+          0.07404398942808198,
+          0.9971375421432848,
+          0.015303910546753233,
+          -0.060888707637786865
+        ],
+        [
+          0.40489014535590456,
+          -0.04408296037070288,
+          0.9133020654737564,
+          -0.650626003742218
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996328844332549,
+          -2.658596397169525e-05,
+          0.027094199616104125,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995185825122,
+          0.000981241429879524,
+          0.0
+        ],
+        [
+          -0.027094212659731918,
+          -0.00098088120087588,
+          0.999632403192503,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996328844332549,
+          -2.658596397169525e-05,
+          0.027094199616104125,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995185825122,
+          0.000981241429879524,
+          0.0
+        ],
+        [
+          -0.027094212659731918,
+          -0.00098088120087588,
+          0.999632403192503,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9127017829205035,
+          -0.06841704533861927,
+          -0.4028579940386778,
+          0.272539347410202
+        ],
+        [
+          0.07918852263039255,
+          0.9968082906269277,
+          0.010119763882541757,
+          -0.0581173337996006
+        ],
+        [
+          0.4008798240587194,
+          -0.041138055916096754,
+          0.9152065488282382,
+          -0.6424412131309509
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.995036868897967,
+          -0.0610531118083029,
+          -0.07857574099079723,
+          0.14162669499574246
+        ],
+        [
+          0.06435009255433394,
+          0.9971200822548438,
+          0.040132370380305725,
+          -0.034493689820565304
+        ],
+        [
+          0.07589924322401803,
+          -0.04498954436995609,
+          0.9961000179577374,
+          0.10737220856195989
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.19776902923546033,
+          0.00039249657195180963,
+          0.7422963435096313
+        ],
+        "map_after_P": [
+          0.14162669499574246,
+          -0.034493689820565304,
+          0.10737220856195989
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.4914017460013062,
+        "height_above_saved_ground_mean_m": 0.4735308131838471
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 18048,
+        "recomputed_voxel_centroids": 677,
+        "observed_aligned_points": 677,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.0647654253025394e-07,
+          5.331201577973843e-07,
+          1.833639726100955e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 156,
+          "p05_median_p95_m": [
+            -0.21600000445654155,
+            -0.11549997709854953,
+            -0.03899998902982206
+          ],
+          "mean_m": -0.12193590442827794
+        },
+        "after_driver_E": {
+          "count": 156,
+          "p05_median_p95_m": [
+            -0.12231851369142524,
+            -0.10646272078156477,
+            -0.08878066390752792
+          ],
+          "mean_m": -0.10635941294141305
+        },
+        "after_diagnostic_C": {
+          "count": 156,
+          "p05_median_p95_m": [
+            -0.12231851369142524,
+            -0.10646272078156477,
+            -0.08878066390752792
+          ],
+          "mean_m": -0.10635941294141305
+        },
+        "after_TF_A": {
+          "count": 156,
+          "p05_median_p95_m": [
+            -0.12231851369142524,
+            -0.10646272078156477,
+            -0.08878066390752792
+          ],
+          "mean_m": -0.10635941294141305
+        },
+        "registration_after_F": {
+          "count": 156,
+          "p05_median_p95_m": [
+            0.18133981439858904,
+            0.20410660276739612,
+            0.22636264606517265
+          ],
+          "mean_m": 0.2040118684646614
+        },
+        "map_after_P": {
+          "count": 156,
+          "p05_median_p95_m": [
+            -0.1298396175867891,
+            0.08411382426382652,
+            0.17156448775622749
+          ],
+          "mean_m": 0.05526963953416556
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 144,
+        "p05_median_p95_m": [
+          0.04301368246518405,
+          0.10027035178267507,
+          0.1431305248594501
+        ],
+        "mean_m": 0.09645676890341545
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 143,
+          "p05_median_p95_m": [
+            0.04301120387657867,
+            0.09999277908422766,
+            0.14352393580985962
+          ],
+          "mean_m": 0.0962101834014681
+        },
+        "raw_candidate_Q_H": {
+          "count": 143,
+          "p05_median_p95_m": [
+            0.05371771661183059,
+            0.09968867366696044,
+            0.13334435021915142
+          ],
+          "mean_m": 0.09814956443143341
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 10807,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.3480000541509878,
+            0.7710000276565552,
+            -0.10500003802050084
+          ],
+          "after_driver_E": [
+            1.4365774393081665,
+            0.7710000276565552,
+            -0.11641589552164078
+          ],
+          "after_diagnostic_C": [
+            1.4365774393081665,
+            0.7710000276565552,
+            -0.11641589552164078
+          ],
+          "after_TF_A": [
+            1.4365774393081665,
+            0.7710000276565552,
+            -0.11641589552164078
+          ],
+          "registration_after_F": [
+            1.4328753560766534,
+            0.7708854243838764,
+            0.19145770451410318
+          ],
+          "map_after_P": [
+            1.4441149530512338,
+            0.8168159490069041,
+            0.07040691282667932
+          ]
+        },
+        "map_classification_ground_z_m": -0.029585866257548332,
+        "map_saved_ground_mean_z_m": -0.001475192024372518,
+        "H_m": 0.09999277908422766
+      }
+    },
+    {
+      "mode": "baseline",
+      "file": "frame_02.npz",
+      "source_stamp_s": 2765.122134368,
+      "imu_delta_s": 0.003940768000120443,
+      "imu_roll_pitch_deg": [
+        -0.04260099856855116,
+        1.553876075464404
+      ],
+      "T1_full_P": [
+        [
+          0.9106489385898525,
+          -0.05958592409809279,
+          -0.40886186945538383,
+          0.26368099451065063
+        ],
+        [
+          0.0723392961591962,
+          0.99725518434796,
+          0.01578364730689599,
+          -0.060314878821372986
+        ],
+        [
+          0.40679913578616056,
+          -0.04395014152983704,
+          0.9124597789399488,
+          -0.6489160060882568
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996322684599934,
+          -2.0162185919803053e-05,
+          0.027116921783527603,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999997235833001,
+          0.0007435276211507842,
+          0.0
+        ],
+        [
+          -0.027116929279099703,
+          -0.0007432542025936211,
+          0.9996319921449407,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996322684599934,
+          -2.0162185919803053e-05,
+          0.027116921783527603,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999997235833001,
+          0.0007435276211507842,
+          0.0
+        ],
+        [
+          -0.027116929279099703,
+          -0.0007432542025936211,
+          0.9996319921449407,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.90795374433051,
+          -0.05061500793223283,
+          -0.41600254702132167,
+          0.26191604137420654
+        ],
+        [
+          0.06494386601253618,
+          0.997681264077776,
+          0.020356560994349956,
+          -0.06107361242175102
+        ],
+        [
+          0.41400759947560467,
+          -0.04549962945113895,
+          0.9091355736611875,
+          -0.6472336649894714
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9949861569901317,
+          -0.05930037999800281,
+          -0.08053578291729485,
+          0.14027473480569383
+        ],
+        [
+          0.06265547752712987,
+          0.9972417189094415,
+          0.039790013852599504,
+          -0.03399508854577451
+        ],
+        [
+          0.07795407964857587,
+          -0.044636520906486454,
+          0.9959571991142532,
+          0.10883837466228574
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.1977780029154298,
+          0.0002974110484603137,
+          0.7422919310827847
+        ],
+        "map_after_P": [
+          0.14027473480569383,
+          -0.03399508854577451,
+          0.10883837466228574
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.49286791210163206,
+        "height_above_saved_ground_mean_m": 0.47499697928417295
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 23520,
+        "recomputed_voxel_centroids": 729,
+        "observed_aligned_points": 729,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.250025943340006e-07,
+          5.462856051963172e-07,
+          3.2836993341334164e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 257,
+          "p05_median_p95_m": [
+            -0.20600001064542547,
+            -0.1389999701740523,
+            -0.047599981026046415
+          ],
+          "mean_m": -0.1294474744800811
+        },
+        "after_driver_E": {
+          "count": 257,
+          "p05_median_p95_m": [
+            -0.12169777750968933,
+            -0.10233025997877121,
+            -0.08388275206089024
+          ],
+          "mean_m": -0.10257632670931315
+        },
+        "after_diagnostic_C": {
+          "count": 257,
+          "p05_median_p95_m": [
+            -0.12169777750968933,
+            -0.10233025997877121,
+            -0.08388275206089024
+          ],
+          "mean_m": -0.10257632670931315
+        },
+        "after_TF_A": {
+          "count": 257,
+          "p05_median_p95_m": [
+            -0.12169777750968933,
+            -0.10233025997877121,
+            -0.08388275206089024
+          ],
+          "mean_m": -0.10257632670931315
+        },
+        "registration_after_F": {
+          "count": 257,
+          "p05_median_p95_m": [
+            0.18163808375350585,
+            0.21115077703672097,
+            0.2350046875603238
+          ],
+          "mean_m": 0.2091934687286374
+        },
+        "map_after_P": {
+          "count": 257,
+          "p05_median_p95_m": [
+            -0.11458489420065557,
+            0.08314811091820096,
+            0.17391075130145278
+          ],
+          "mean_m": 0.06827000426851487
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 249,
+        "p05_median_p95_m": [
+          0.05333118345790508,
+          0.10370911814364758,
+          0.1447145278571908
+        ],
+        "mean_m": 0.10380840935922059
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 247,
+          "p05_median_p95_m": [
+            0.05320924221665414,
+            0.1035300522488144,
+            0.14476275343609507
+          ],
+          "mean_m": 0.10358243007218443
+        },
+        "raw_candidate_Q_H": {
+          "count": 247,
+          "p05_median_p95_m": [
+            0.051968785058793654,
+            0.11384733655841028,
+            0.1621050793539885
+          ],
+          "mean_m": 0.11448408788162161
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 14863,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.2120000026388285,
+            -0.3009999990463257,
+            -0.13299999173570676
+          ],
+          "after_driver_E": [
+            1.2985812425613403,
+            -0.3009999990463257,
+            -0.10101910680532455
+          ],
+          "after_diagnostic_C": [
+            1.2985812425613403,
+            -0.3009999990463257,
+            -0.10101910680532455
+          ],
+          "after_TF_A": [
+            1.2985812425613403,
+            -0.3009999990463257,
+            -0.10101910680532455
+          ],
+          "registration_after_F": [
+            1.2953704548812506,
+            -0.301075026341073,
+            0.21153825281606145
+          ],
+          "map_after_P": [
+            1.3747586324886059,
+            -0.26351847757181346,
+            0.0842920129010376
+          ]
+        },
+        "map_classification_ground_z_m": -0.019417105242609978,
+        "map_saved_ground_mean_z_m": -0.029499804601073265,
+        "H_m": 0.10370911814364758
+      }
+    },
+    {
+      "mode": "baseline",
+      "file": "frame_03.npz",
+      "source_stamp_s": 2766.42072224,
+      "imu_delta_s": 0.00024284799974338966,
+      "imu_roll_pitch_deg": [
+        -0.04128799965257428,
+        1.5544220726276847
+      ],
+      "T1_full_P": [
+        [
+          0.9105057504037366,
+          -0.06008946198602007,
+          -0.4091069970557325,
+          0.2647208273410797
+        ],
+        [
+          0.07311879010887223,
+          0.9971905875232392,
+          0.016265751998347785,
+          -0.05787394195795059
+        ],
+        [
+          0.40698024646749525,
+          -0.04472346937892584,
+          0.9123414329471008,
+          -0.649177074432373
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996320100052318,
+          -1.954763485825581e-05,
+          0.027126448178669552,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999997403595187,
+          0.0007206114731330529,
+          0.0
+        ],
+        [
+          -0.027126455221795444,
+          -0.0007203462953208248,
+          0.9996317504602956,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996320100052318,
+          -1.954763485825581e-05,
+          0.027126448178669552,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999997403595187,
+          0.0007206114731330529,
+          0.0
+        ],
+        [
+          -0.027126455221795444,
+          -0.0007203462953208248,
+          0.9996317504602956,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9114339267664895,
+          -0.06719551118927243,
+          -0.4059223576190769,
+          0.2743581235408783
+        ],
+        [
+          0.07328982088776943,
+          0.9973105429600551,
+          -0.0005320290958253358,
+          -0.04519591107964516
+        ],
+        [
+          0.40486639684376885,
+          -0.029265067516281124,
+          0.9139074113552266,
+          -0.6468662023544312
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9949337312004911,
+          -0.059812545908589546,
+          -0.08080426889343084,
+          0.1411088868152372
+        ],
+        [
+          0.06323535586117833,
+          0.9971771823385921,
+          0.04048403132565138,
+          -0.031051037879953964
+        ],
+        [
+          0.07815472019385111,
+          -0.04538861503944633,
+          0.9959074823176206,
+          0.10852527646300386
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.19778176514244616,
+          0.0002882445892532212,
+          0.7422900530576425
+        ],
+        "map_after_P": [
+          0.1411088868152372,
+          -0.031051037879953964,
+          0.10852527646300386
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.4925548139023502,
+        "height_above_saved_ground_mean_m": 0.47468388108489107
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 18336,
+        "recomputed_voxel_centroids": 670,
+        "observed_aligned_points": 670,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.1490760104825313e-07,
+          5.092622927804769e-07,
+          1.6438330931123346e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 104,
+          "p05_median_p95_m": [
+            -0.21884999393980972,
+            -0.1475000070806139,
+            -0.03489998763507425
+          ],
+          "mean_m": -0.13333654337643897
+        },
+        "after_driver_E": {
+          "count": 104,
+          "p05_median_p95_m": [
+            -0.122982669249177,
+            -0.10308339074254036,
+            -0.09011339358985429
+          ],
+          "mean_m": -0.10496717118299927
+        },
+        "after_diagnostic_C": {
+          "count": 104,
+          "p05_median_p95_m": [
+            -0.122982669249177,
+            -0.10308339074254036,
+            -0.09011339358985429
+          ],
+          "mean_m": -0.10496717118299927
+        },
+        "after_TF_A": {
+          "count": 104,
+          "p05_median_p95_m": [
+            -0.122982669249177,
+            -0.10308339074254036,
+            -0.09011339358985429
+          ],
+          "mean_m": -0.10496717118299927
+        },
+        "registration_after_F": {
+          "count": 104,
+          "p05_median_p95_m": [
+            0.18040322519956792,
+            0.21289564478022194,
+            0.22604795068207426
+          ],
+          "mean_m": 0.20672734366537357
+        },
+        "map_after_P": {
+          "count": 104,
+          "p05_median_p95_m": [
+            -0.13438837074960086,
+            0.0817269012413237,
+            0.1777268200810503
+          ],
+          "mean_m": 0.05069793549783777
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 104,
+        "p05_median_p95_m": [
+          0.04279303978084128,
+          0.10757158456422256,
+          0.14917246452408636
+        ],
+        "mean_m": 0.10094919585288105
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 103,
+          "p05_median_p95_m": [
+            0.04271666917354923,
+            0.10625903476960141,
+            0.1492328446742005
+          ],
+          "mean_m": 0.10076150511621441
+        },
+        "raw_candidate_Q_H": {
+          "count": 103,
+          "p05_median_p95_m": [
+            0.06669712548958957,
+            0.10244807582165649,
+            0.14875083190395166
+          ],
+          "mean_m": 0.1050475469664252
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 16835,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.0889999622728648,
+            -1.2419999837875366,
+            -0.17200000952556194
+          ],
+          "after_driver_E": [
+            1.1695495843887331,
+            -1.2419999837875366,
+            -0.10010122507810593
+          ],
+          "after_diagnostic_C": [
+            1.1695495843887331,
+            -1.2419999837875366,
+            -0.10010122507810593
+          ],
+          "after_TF_A": [
+            1.1695495843887331,
+            -1.2419999837875366,
+            -0.10010122507810593
+          ],
+          "registration_after_F": [
+            1.1664280893107672,
+            -1.2420717954053289,
+            0.21661457280847235
+          ],
+          "map_after_P": [
+            1.3127771986247083,
+            -1.2076450358042976,
+            0.07871232650347604
+          ]
+        },
+        "map_classification_ground_z_m": -0.03017180785536766,
+        "map_saved_ground_mean_z_m": 0.03879021853208542,
+        "H_m": 0.1088841343588437
+      }
+    },
+    {
+      "mode": "baseline",
+      "file": "frame_04.npz",
+      "source_stamp_s": 2767.420906784,
+      "imu_delta_s": -0.0013522560002456885,
+      "imu_roll_pitch_deg": [
+        -0.052216997992797096,
+        1.5695780620458657
+      ],
+      "T1_full_P": [
+        [
+          0.9097486998521958,
+          -0.057905206729585164,
+          -0.41110131373037884,
+          0.2649058401584625
+        ],
+        [
+          0.07137442611559973,
+          0.997296497590372,
+          0.017475330916634974,
+          -0.059676408767700195
+        ],
+        [
+          0.4089779876887119,
+          -0.04524027992377045,
+          0.9114221429494188,
+          -0.6478617787361145
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996247994903382,
+          -2.4962907911088808e-05,
+          0.027390867469913153,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995847128341,
+          0.0009113584143230744,
+          0.0
+        ],
+        [
+          -0.0273908788449936,
+          -0.0009110164721815358,
+          0.9996243843589883,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996247994903382,
+          -2.4962907911088808e-05,
+          0.027390867469913153,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995847128341,
+          0.0009113584143230744,
+          0.0
+        ],
+        [
+          -0.0273908788449936,
+          -0.0009110164721815358,
+          0.9996243843589883,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9074838425661689,
+          -0.05529684319534844,
+          -0.4164316686011883,
+          0.26566579937934875
+        ],
+        [
+          0.06805783440025806,
+          0.9975554941883559,
+          0.015848255152291997,
+          -0.06480223685503006
+        ],
+        [
+          0.4145373404870638,
+          -0.04272347302425384,
+          0.9090288764360888,
+          -0.647943377494812
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9949126472479188,
+          -0.057553372586768764,
+          -0.08268272884966155,
+          0.13977655338108647
+        ],
+        [
+          0.061117266636278124,
+          0.9972783813983879,
+          0.04123723698699926,
+          -0.032217989374673156
+        ],
+        [
+          0.08008435593203056,
+          -0.04608079100124506,
+          0.9957223792983922,
+          0.1095446608529076
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.19788618449265852,
+          0.0003645433657292298,
+          0.7422376593995815
+        ],
+        "map_after_P": [
+          0.13977655338108647,
+          -0.032217989374673156,
+          0.1095446608529076
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.4935741982922539,
+        "height_above_saved_ground_mean_m": 0.4757032654747948
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 20160,
+        "recomputed_voxel_centroids": 680,
+        "observed_aligned_points": 680,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.0647654253025394e-07,
+          5.198340545575773e-07,
+          3.274469781899825e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 153,
+          "p05_median_p95_m": [
+            -0.21639997913873146,
+            -0.11499998004209494,
+            -0.039199985617208236
+          ],
+          "mean_m": -0.12420915176029064
+        },
+        "after_driver_E": {
+          "count": 153,
+          "p05_median_p95_m": [
+            -0.12203926891088493,
+            -0.10559762269258499,
+            -0.08427729159593585
+          ],
+          "mean_m": -0.10579680247244493
+        },
+        "after_diagnostic_C": {
+          "count": 153,
+          "p05_median_p95_m": [
+            -0.12203926891088493,
+            -0.10559762269258499,
+            -0.08427729159593585
+          ],
+          "mean_m": -0.10579680247244493
+        },
+        "after_TF_A": {
+          "count": 153,
+          "p05_median_p95_m": [
+            -0.12203926891088493,
+            -0.10559762269258499,
+            -0.08427729159593585
+          ],
+          "mean_m": -0.10579680247244493
+        },
+        "registration_after_F": {
+          "count": 153,
+          "p05_median_p95_m": [
+            0.18030026949584327,
+            0.2049655371662082,
+            0.23710620304098667
+          ],
+          "mean_m": 0.20453775632174748
+        },
+        "map_after_P": {
+          "count": 153,
+          "p05_median_p95_m": [
+            -0.12654582218681337,
+            0.0931628118725949,
+            0.17724987156628286
+          ],
+          "mean_m": 0.06286769820448239
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 145,
+        "p05_median_p95_m": [
+          0.04510637536756679,
+          0.10909664972750799,
+          0.1579008643003464
+        ],
+        "mean_m": 0.10337120142181501
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 143,
+          "p05_median_p95_m": [
+            0.04506634568790263,
+            0.10806824875998089,
+            0.15792620219544518
+          ],
+          "mean_m": 0.10272454868882201
+        },
+        "raw_candidate_Q_H": {
+          "count": 143,
+          "p05_median_p95_m": [
+            0.053129842663065564,
+            0.11566183801941243,
+            0.16467139160376007
+          ],
+          "mean_m": 0.11050302446289173
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 14820,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.1460000343295837,
+            -2.367000102996826,
+            -0.13100000632681885
+          ],
+          "after_driver_E": [
+            1.2364295721054075,
+            -2.367000102996826,
+            -0.07872189581394184
+          ],
+          "after_diagnostic_C": [
+            1.2364295721054075,
+            -2.367000102996826,
+            -0.07872189581394184
+          ],
+          "after_TF_A": [
+            1.2364295721054075,
+            -2.367000102996826,
+            -0.07872189581394184
+          ],
+          "registration_after_F": [
+            1.2338684892901692,
+            -2.3670708638742033,
+            0.23710715683499495
+          ],
+          "map_after_P": [
+            1.427006758125259,
+            -2.328137709504057,
+            0.17995493455855505
+          ]
+        },
+        "map_classification_ground_z_m": 0.07085828483104706,
+        "map_saved_ground_mean_z_m": 0.07724989950656891,
+        "H_m": 0.10909664972750799
+      }
+    },
+    {
+      "mode": "baseline",
+      "file": "frame_05.npz",
+      "source_stamp_s": 2768.520634656,
+      "imu_delta_s": -0.0004600959996423626,
+      "imu_roll_pitch_deg": [
+        -0.07184600043954727,
+        1.5609249206353015
+      ],
+      "T1_full_P": [
+        [
+          0.9081995285948424,
+          -0.05414674314615942,
+          -0.41502017597554197,
+          0.2642921209335327
+        ],
+        [
+          0.06768127629797918,
+          0.9975453067296071,
+          0.017961232151798866,
+          -0.060726556926965714
+        ],
+        [
+          0.4130288865185855,
+          -0.04440147777268285,
+          0.9096348980073375,
+          -0.6448547840118408
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996289248198205,
+          -3.4157455326557076e-05,
+          0.0272398879740355,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999992138057271,
+          0.0012539489334434664,
+          0.0
+        ],
+        [
+          -0.027239909389896257,
+          -0.0012534836241170529,
+          0.9996281389172847,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9510565162951535,
+          0.0,
+          0.3090169943749474,
+          0.187
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3090169943749474,
+          0.0,
+          0.9510565162951535,
+          0.4
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996289248198205,
+          -3.4157455326557076e-05,
+          0.0272398879740355,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999992138057271,
+          0.0012539489334434664,
+          0.0
+        ],
+        [
+          -0.027239909389896257,
+          -0.0012534836241170529,
+          0.9996281389172847,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9006666747583221,
+          -0.04113850112668242,
+          -0.4325588569256638,
+          0.28077372908592224
+        ],
+        [
+          0.0523641116088795,
+          0.9985289836007197,
+          0.014066581842307616,
+          -0.055128343403339386
+        ],
+        [
+          0.4313438776605039,
+          -0.03531986175459179,
+          0.901495960373887,
+          -0.6218242049217224
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9947570928533611,
+          -0.05365750136686212,
+          -0.08705859386065706,
+          0.1358750104596219
+        ],
+        [
+          0.05737500158491256,
+          0.9975196965346571,
+          0.04077455356637143,
+          -0.03350501727596639
+        ],
+        [
+          0.08465480146489579,
+          -0.04555576332881274,
+          0.9953683926147485,
+          0.11202335450159123
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_TF_A": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "registration_after_F": [
+          0.19782656413092062,
+          0.0005015795733773865,
+          0.7422673925110033
+        ],
+        "map_after_P": [
+          0.1358750104596219,
+          -0.03350501727596639,
+          0.11202335450159123
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.49605289194093755,
+        "height_above_saved_ground_mean_m": 0.47818195912347844
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 19968,
+        "recomputed_voxel_centroids": 650,
+        "observed_aligned_points": 650,
+        "nearest_centroid_p50_p95_max_error_m": [
+          1.9570067166796434e-07,
+          5.333777409077811e-07,
+          2.637166835484095e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.21600000530279304,
+            -0.14900001290294473,
+            -0.04300000791207728
+          ],
+          "mean_m": -0.14232515594379297
+        },
+        "after_driver_E": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.12266610264778137,
+            -0.10084845125675201,
+            -0.07971051931381225
+          ],
+          "mean_m": -0.10075007168793239
+        },
+        "after_diagnostic_C": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.12266610264778137,
+            -0.10084845125675201,
+            -0.07971051931381225
+          ],
+          "mean_m": -0.10075007168793239
+        },
+        "after_TF_A": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.12266610264778137,
+            -0.10084845125675201,
+            -0.07971051931381225
+          ],
+          "mean_m": -0.10075007168793239
+        },
+        "registration_after_F": {
+          "count": 163,
+          "p05_median_p95_m": [
+            0.17732975491904374,
+            0.21431177769168944,
+            0.24087977128709115
+          ],
+          "mean_m": 0.21226401379194196
+        },
+        "map_after_P": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.11768644429075602,
+            0.09818652444616038,
+            0.2021009486052992
+          ],
+          "mean_m": 0.07028440257415289
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 158,
+        "p05_median_p95_m": [
+          0.049525870959058055,
+          0.11991011076130725,
+          0.1637148338168643
+        ],
+        "mean_m": 0.11545495484295261
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 158,
+          "p05_median_p95_m": [
+            0.049525870959058055,
+            0.11991011076130725,
+            0.1637148338168643
+          ],
+          "mean_m": 0.11545495484295261
+        },
+        "raw_candidate_Q_H": {
+          "count": 158,
+          "p05_median_p95_m": [
+            0.10299123125600967,
+            0.16707953718419227,
+            0.19801180643518232
+          ],
+          "mean_m": 0.15875555788003612
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 14707,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.4280001269717422,
+            0.7009999752044678,
+            -0.0779999649911216
+          ],
+          "after_driver_E": [
+            1.5210055112838745,
+            0.7009999752044678,
+            -0.1154586821794511
+          ],
+          "after_diagnostic_C": [
+            1.5210055112838745,
+            0.7009999752044678,
+            -0.1154586821794511
+          ],
+          "after_TF_A": [
+            1.5210055112838745,
+            0.7009999752044678,
+            -0.1154586821794511
+          ],
+          "registration_after_F": [
+            1.517272077946186,
+            0.7008546447909263,
+            0.1897835081127822
+          ],
+          "map_after_P": [
+            1.525564925505866,
+            0.7445073610583499,
+            0.12333713300109228
+          ]
+        },
+        "map_classification_ground_z_m": 0.0035028138663619757,
+        "map_saved_ground_mean_z_m": 0.06815659254789352,
+        "H_m": 0.1198343191347303
+      }
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_00.npz",
+      "rejected": "IMU gap exceeds .04s",
+      "imu_delta_s": 0.20054790400035927
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_01.npz",
+      "source_stamp_s": 3138.724273312,
+      "imu_delta_s": -0.0013629760001094837,
+      "imu_roll_pitch_deg": [
+        -0.04581600058435587,
+        1.5701989934222205
+      ],
+      "T1_full_P": [
+        [
+          0.9265264159401215,
+          -0.06036193339693296,
+          -0.37135594456227194,
+          0.18462857604026794
+        ],
+        [
+          0.05414538003680404,
+          0.9981637706924876,
+          -0.027154459995091293,
+          -0.05580683425068855
+        ],
+        [
+          0.3723131455990012,
+          0.005052115748790798,
+          0.9280934208045211,
+          -0.41821739077568054
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996245025885491,
+          -2.1911504359988185e-05,
+          0.027401703313513093,
+          0.0
+        ],
+        [
+          0.0,
+          0.999999680287904,
+          0.0007996399750744542,
+          0.0
+        ],
+        [
+          -0.027401712074171896,
+          -0.0007993397123337211,
+          0.9996241829965041,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9577301550651077,
+          0.0010714361846611107,
+          0.2876661295729249,
+          0.17800584679870854
+        ],
+        [
+          -0.014784989191982503,
+          0.998854761193724,
+          0.045503517833478606,
+          0.019138092028742032
+        ],
+        [
+          -0.2872879290425506,
+          -0.047833231807300494,
+          0.9566491664979965,
+          0.16115626951786322
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996245025885491,
+          -2.1911504359988185e-05,
+          0.027401703313513093,
+          0.0
+        ],
+        [
+          0.0,
+          0.999999680287904,
+          0.0007996399750744542,
+          0.0
+        ],
+        [
+          -0.027401712074171896,
+          -0.0007993397123337211,
+          0.9996241829965041,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9262204075457312,
+          -0.045445066379318846,
+          -0.3742332195137129,
+          0.18023154139518738
+        ],
+        [
+          0.03768473845615828,
+          0.9988964221836667,
+          -0.02803209296789651,
+          -0.06155085191130638
+        ],
+        [
+          0.3750941443601999,
+          0.011861015574104593,
+          0.9269108366915559,
+          -0.4244220554828644
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9970291782127984,
+          -0.04246894138008145,
+          -0.06425890452199667,
+          0.1653651657818252
+        ],
+        [
+          0.044934348148302126,
+          0.9982888498539748,
+          0.03742027009142283,
+          -0.04037965134328968
+        ],
+        [
+          0.062559748631201,
+          -0.04019653312517218,
+          0.9972314257863708,
+          0.11726542293865261
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "after_TF_A": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "registration_after_F": [
+          0.18235454300406662,
+          0.01926695290540287,
+          0.5037127414530842
+        ],
+        "map_after_P": [
+          0.1653651657818252,
+          -0.04037965134328968,
+          0.11726542293865261
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.5012949603779989,
+        "height_above_saved_ground_mean_m": 0.4834240275605398
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 19872,
+        "recomputed_voxel_centroids": 691,
+        "observed_aligned_points": 691,
+        "nearest_centroid_p50_p95_max_error_m": [
+          1.7881393432617188e-07,
+          4.915124804938387e-07,
+          1.9599374354584143e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 136,
+          "p05_median_p95_m": [
+            -0.19324999664614262,
+            -0.12850000680771706,
+            -0.04524999391162471
+          ],
+          "mean_m": -0.12734559164309403
+        },
+        "after_driver_E": {
+          "count": 136,
+          "p05_median_p95_m": [
+            -0.11700987554585959,
+            -0.10092789916707956,
+            -0.0801622143179549
+          ],
+          "mean_m": -0.09976320312406195
+        },
+        "after_diagnostic_C": {
+          "count": 136,
+          "p05_median_p95_m": [
+            -0.37242575734853756,
+            -0.27715355157852184,
+            -0.1965557225048542
+          ],
+          "mean_m": -0.2876557945547735
+        },
+        "after_TF_A": {
+          "count": 136,
+          "p05_median_p95_m": [
+            -0.37242575734853756,
+            -0.27715355157852184,
+            -0.1965557225048542
+          ],
+          "mean_m": -0.2876557945547735
+        },
+        "registration_after_F": {
+          "count": 136,
+          "p05_median_p95_m": [
+            -0.06631468010468113,
+            0.03426293271470496,
+            0.12120712577066219
+          ],
+          "mean_m": 0.024368466477005427
+        },
+        "map_after_P": {
+          "count": 136,
+          "p05_median_p95_m": [
+            0.025212525728527474,
+            0.08379027548044898,
+            0.19158129260114717
+          ],
+          "mean_m": 0.08796977158804987
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 119,
+        "p05_median_p95_m": [
+          0.05796716354849158,
+          0.09773346387579718,
+          0.14290755685307152
+        ],
+        "mean_m": 0.09925360226428237
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 114,
+          "p05_median_p95_m": [
+            0.055270636353523965,
+            0.09662339549193186,
+            0.13843220947701537
+          ],
+          "mean_m": 0.0969464502527874
+        },
+        "raw_candidate_Q_H": {
+          "count": 114,
+          "p05_median_p95_m": [
+            0.06037373784853323,
+            0.09409832263869364,
+            0.13005599692698327
+          ],
+          "mean_m": 0.09595949702038227
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 14063,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.254999999013098,
+            -0.252999981175582,
+            -0.12600003386925201
+          ],
+          "after_driver_E": [
+            1.3416397752544003,
+            -0.252999981175582,
+            -0.10764948090035165
+          ],
+          "after_diagnostic_C": [
+            1.3434401750564575,
+            -0.2578607499599457,
+            -0.30782610177993774
+          ],
+          "after_TF_A": [
+            1.3434401750564575,
+            -0.2578607499599457,
+            -0.30782610177993774
+          ],
+          "registration_after_F": [
+            1.3345064073521025,
+            -0.2581068175750994,
+            0.0031931419751540235
+          ],
+          "map_after_P": [
+            1.4354780489707968,
+            -0.24126905998128118,
+            0.08029643610849657
+          ]
+        },
+        "map_classification_ground_z_m": -0.017437027767300606,
+        "map_saved_ground_mean_z_m": -0.00985259935259819,
+        "H_m": 0.09773346387579718
+      }
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_02.npz",
+      "source_stamp_s": 3139.724428768,
+      "imu_delta_s": -0.0013367040000957786,
+      "imu_roll_pitch_deg": [
+        -0.051434997872368826,
+        1.58902893857588
+      ],
+      "T1_full_P": [
+        [
+          0.9264329687945455,
+          -0.061986092715477614,
+          -0.37132152999845425,
+          0.18527095019817352
+        ],
+        [
+          0.05563195780735525,
+          0.9980639440213619,
+          -0.027810949553087817,
+          -0.054381877183914185
+        ],
+        [
+          0.37232652282780687,
+          0.005107636869625883,
+          0.9280877504010936,
+          -0.41774943470954895
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996154431822882,
+          -2.4893704742005096e-05,
+          0.02773022055052809,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995970583478,
+          0.0008977099430541855,
+          0.0
+        ],
+        [
+          -0.027730231724193477,
+          -0.0008973647225752564,
+          0.99961504039559,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9577301550651077,
+          0.0010714361846611107,
+          0.2876661295729249,
+          0.17800584679870854
+        ],
+        [
+          -0.014784989191982503,
+          0.998854761193724,
+          0.045503517833478606,
+          0.019138092028742032
+        ],
+        [
+          -0.2872879290425506,
+          -0.047833231807300494,
+          0.9566491664979965,
+          0.16115626951786322
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996154431822882,
+          -2.4893704742005096e-05,
+          0.02773022055052809,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995970583478,
+          0.0008977099430541855,
+          0.0
+        ],
+        [
+          -0.027730231724193477,
+          -0.0008973647225752564,
+          0.99961504039559,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9242203062440629,
+          -0.07105982430911617,
+          -0.3751897212015385,
+          0.19274872541427612
+        ],
+        [
+          0.06810592593413055,
+          0.9974539588667168,
+          -0.021146696994296943,
+          -0.046518076211214066
+        ],
+        [
+          0.3757371533117072,
+          -0.006008436591279544,
+          0.9267067984594389,
+          -0.4128144681453705
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9969756804224083,
+          -0.044073532880190794,
+          -0.06400793970856117,
+          0.1660460212307675
+        ],
+        [
+          0.04652788970093756,
+          0.9982176014893881,
+          0.037373460593722,
+          -0.038995871272677604
+        ],
+        [
+          0.06224667160783337,
+          -0.04023858566391025,
+          0.9972493209310872,
+          0.11769582121224981
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "after_TF_A": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "registration_after_F": [
+          0.18240581591554794,
+          0.019282755902739316,
+          0.503650913635468
+        ],
+        "map_after_P": [
+          0.1660460212307675,
+          -0.038995871272677604,
+          0.11769582121224981
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.5017253586515962,
+        "height_above_saved_ground_mean_m": 0.483854425834137
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 20160,
+        "recomputed_voxel_centroids": 696,
+        "observed_aligned_points": 696,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.1490760104825313e-07,
+          5.331201577973843e-07,
+          1.1292214367131237e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.18670001433921615,
+            -0.1330000057520047,
+            -0.042999975685762575
+          ],
+          "mean_m": -0.1290306824160492
+        },
+        "after_driver_E": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.11704774915094067,
+            -0.09942601671570322,
+            -0.0799827179449482
+          ],
+          "mean_m": -0.09896357557396343
+        },
+        "after_diagnostic_C": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.36839392185211195,
+            -0.30528420209884655,
+            -0.19995133429765713
+          ],
+          "mean_m": -0.29140227356571363
+        },
+        "after_TF_A": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.36839392185211195,
+            -0.30528420209884655,
+            -0.19995133429765713
+          ],
+          "mean_m": -0.29140227356571363
+        },
+        "registration_after_F": {
+          "count": 163,
+          "p05_median_p95_m": [
+            -0.06513121167744873,
+            0.005985315500367072,
+            0.11965608432514728
+          ],
+          "mean_m": 0.02038129346289814
+        },
+        "map_after_P": {
+          "count": 163,
+          "p05_median_p95_m": [
+            0.024459466833576922,
+            0.08057238677282885,
+            0.13671666936488872
+          ],
+          "mean_m": 0.08219764784529462
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 139,
+        "p05_median_p95_m": [
+          0.047582813317649894,
+          0.09526430675162145,
+          0.13918590470608153
+        ],
+        "mean_m": 0.0967849147107554
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 136,
+          "p05_median_p95_m": [
+            0.047547578565410836,
+            0.09398143154888944,
+            0.1392771689681383
+          ],
+          "mean_m": 0.09668765682134207
+        },
+        "raw_candidate_Q_H": {
+          "count": 136,
+          "p05_median_p95_m": [
+            0.0568400524950589,
+            0.10284271847408935,
+            0.16070785943920313
+          ],
+          "mean_m": 0.1069036165559608
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 17229,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.1360000444989813,
+            -2.2210000518936,
+            -0.1480000078517564
+          ],
+          "after_driver_E": [
+            1.221665727238522,
+            -2.2210000518936,
+            -0.09179969124002846
+          ],
+          "after_diagnostic_C": [
+            1.2210330963134768,
+            -2.222848653793335,
+            -0.2005493044853211
+          ],
+          "after_TF_A": [
+            1.2210330963134768,
+            -2.222848653793335,
+            -0.2005493044853211
+          ],
+          "registration_after_F": [
+            1.2150575982050784,
+            -2.2230277932197353,
+            0.11517307415745415
+          ],
+          "map_after_P": [
+            1.405970932948505,
+            -2.2087128036723236,
+            0.1301850364483721
+          ]
+        },
+        "map_classification_ground_z_m": 0.03492072969675064,
+        "map_saved_ground_mean_z_m": 0.09225709736347198,
+        "H_m": 0.09526430675162145
+      }
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_03.npz",
+      "source_stamp_s": 3140.825388096,
+      "imu_delta_s": 0.0023017599996819627,
+      "imu_roll_pitch_deg": [
+        -0.05435400084075407,
+        1.574671912154381
+      ],
+      "T1_full_P": [
+        [
+          0.9267914119034827,
+          -0.06166938686529025,
+          -0.3704788327902259,
+          0.18450592458248138
+        ],
+        [
+          0.055137532792741986,
+          0.9980802729773245,
+          -0.02820675754209755,
+          -0.053709544241428375
+        ],
+        [
+          0.3715071080066683,
+          0.005714491855671945,
+          0.9284125232262612,
+          -0.41810840368270874
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.99962236036864,
+          -2.6068833242699368e-05,
+          0.027479737470445142,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995500256684,
+          0.0009486561340125957,
+          0.0
+        ],
+        [
+          -0.027479749835627208,
+          -0.0009482978838598598,
+          0.9996219105642367,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9577301550651077,
+          0.0010714361846611107,
+          0.2876661295729249,
+          0.17800584679870854
+        ],
+        [
+          -0.014784989191982503,
+          0.998854761193724,
+          0.045503517833478606,
+          0.019138092028742032
+        ],
+        [
+          -0.2872879290425506,
+          -0.047833231807300494,
+          0.9566491664979965,
+          0.16115626951786322
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.99962236036864,
+          -2.6068833242699368e-05,
+          0.027479737470445142,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999995500256684,
+          0.0009486561340125957,
+          0.0
+        ],
+        [
+          -0.027479749835627208,
+          -0.0009482978838598598,
+          0.9996219105642367,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9317755247239958,
+          -0.06710361192609611,
+          -0.35677931104787175,
+          0.18530960381031036
+        ],
+        [
+          0.06730028109460842,
+          0.9976620547200246,
+          -0.011878414726111647,
+          -0.058644961565732956
+        ],
+        [
+          0.35674226507369267,
+          -0.012943331807950584,
+          0.9341131764790604,
+          -0.4089421331882477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9970321754628874,
+          -0.04376933087394172,
+          -0.06333314113945071,
+          0.16572354455276322
+        ],
+        [
+          0.04616540716882914,
+          0.9982528955291862,
+          0.036876981282798385,
+          -0.038607985356023784
+        ],
+        [
+          0.06160841073001633,
+          -0.039691337120876316,
+          0.9973108850728936,
+          0.11738967785465695
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "after_TF_A": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "registration_after_F": [
+          0.18236665780668104,
+          0.019290965300704573,
+          0.503695633283372
+        ],
+        "map_after_P": [
+          0.16572354455276322,
+          -0.038607985356023784,
+          0.11738967785465695
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.5014192152940032,
+        "height_above_saved_ground_mean_m": 0.48354828247654413
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 19008,
+        "recomputed_voxel_centroids": 672,
+        "observed_aligned_points": 672,
+        "nearest_centroid_p50_p95_max_error_m": [
+          2.384185791015625e-07,
+          5.462856051963172e-07,
+          5.357963345886674e-06
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 108,
+          "p05_median_p95_m": [
+            -0.15800001143007872,
+            -0.12200001149451967,
+            -0.05640000093925456
+          ],
+          "mean_m": -0.11810185724315327
+        },
+        "after_driver_E": {
+          "count": 108,
+          "p05_median_p95_m": [
+            -0.11598245093136181,
+            -0.10226720288404095,
+            -0.08428987556135578
+          ],
+          "mean_m": -0.10198053470363672
+        },
+        "after_diagnostic_C": {
+          "count": 108,
+          "p05_median_p95_m": [
+            -0.3694415673613548,
+            -0.308505654335022,
+            -0.20116655826568608
+          ],
+          "mean_m": -0.3028262522485521
+        },
+        "after_TF_A": {
+          "count": 108,
+          "p05_median_p95_m": [
+            -0.3694415673613548,
+            -0.308505654335022,
+            -0.20116655826568608
+          ],
+          "mean_m": -0.3028262522485521
+        },
+        "registration_after_F": {
+          "count": 108,
+          "p05_median_p95_m": [
+            -0.06160750305686212,
+            0.0033579674762318767,
+            0.116536711916491
+          ],
+          "mean_m": 0.00788853563429738
+        },
+        "map_after_P": {
+          "count": 108,
+          "p05_median_p95_m": [
+            0.022725936519087112,
+            0.08127045387488427,
+            0.17908734728736286
+          ],
+          "mean_m": 0.08663386797735531
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 91,
+        "p05_median_p95_m": [
+          0.04878057087290788,
+          0.0915590300863236,
+          0.14084055564254505
+        ],
+        "mean_m": 0.09174502460690194
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 90,
+          "p05_median_p95_m": [
+            0.048777219841554184,
+            0.0912905844225623,
+            0.1396671682128855
+          ],
+          "mean_m": 0.09113615264279286
+        },
+        "raw_candidate_Q_H": {
+          "count": 90,
+          "p05_median_p95_m": [
+            0.03558579842944509,
+            0.07619665270491366,
+            0.14793692712035933
+          ],
+          "mean_m": 0.08445167238097638
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 778,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.2600001271242953,
+            0.8579999579464322,
+            -0.12499993926340536
+          ],
+          "after_driver_E": [
+            1.3467042259060544,
+            0.8579999579464322,
+            -0.10824345896896148
+          ],
+          "after_diagnostic_C": [
+            1.3497070074081423,
+            0.8518384099006655,
+            -0.3614485561847688
+          ],
+          "after_TF_A": [
+            1.3497070074081423,
+            0.8518384099006655,
+            -0.3614485561847688
+          ],
+          "registration_after_F": [
+            1.3392425866849345,
+            0.8514951362052917,
+            -0.05169930378057158
+          ],
+          "map_after_P": [
+            1.3923467671296204,
+            0.8714517555088243,
+            0.03629731756500898
+          ]
+        },
+        "map_classification_ground_z_m": -0.05526171252131462,
+        "map_saved_ground_mean_z_m": -0.0132753886282444,
+        "H_m": 0.0915590300863236
+      }
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_04.npz",
+      "source_stamp_s": 3141.925994496,
+      "imu_delta_s": 0.0016974079999272362,
+      "imu_roll_pitch_deg": [
+        -0.035397997104235114,
+        1.563181999482832
+      ],
+      "T1_full_P": [
+        [
+          0.9266506063743996,
+          -0.06214247005476208,
+          -0.3707518942924643,
+          0.18506602942943573
+        ],
+        [
+          0.0557045895105421,
+          0.9980529609407661,
+          -0.028058614806000658,
+          -0.05372017249464989
+        ],
+        [
+          0.3717736575033519,
+          0.005347950342188591,
+          0.9283080022350976,
+          -0.4180636405944824
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.9996278509699772,
+          -1.6853459570254573e-05,
+          0.027279283002050694,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999998091544207,
+          0.0006178115587781166,
+          0.0
+        ],
+        [
+          -0.027279288208182255,
+          -0.0006175816408057804,
+          0.9996276601954208,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9577301550651077,
+          0.0010714361846611107,
+          0.2876661295729249,
+          0.17800584679870854
+        ],
+        [
+          -0.014784989191982503,
+          0.998854761193724,
+          0.045503517833478606,
+          0.019138092028742032
+        ],
+        [
+          -0.2872879290425506,
+          -0.047833231807300494,
+          0.9566491664979965,
+          0.16115626951786322
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.9996278509699772,
+          -1.6853459570254573e-05,
+          0.027279283002050694,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999998091544207,
+          0.0006178115587781166,
+          0.0
+        ],
+        [
+          -0.027279288208182255,
+          -0.0006175816408057804,
+          0.9996276601954208,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9234095190436242,
+          -0.0697787717977611,
+          -0.3774199029542807,
+          0.19106732308864594
+        ],
+        [
+          0.06261216730336881,
+          0.9975488469464222,
+          -0.03124123015245359,
+          -0.05047303065657616
+        ],
+        [
+          0.3786747636761626,
+          0.005217371202013694,
+          0.9255151011153426,
+          -0.4248259663581848
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9969746576307542,
+          -0.04433451973008626,
+          -0.06384342097931983,
+          0.16606983235891115
+        ],
+        [
+          0.04675093252999571,
+          0.9982260680314691,
+          0.03686553146244732,
+          -0.03849725836907181
+        ],
+        [
+          0.06209575146188223,
+          -0.03973874007483752,
+          0.997278772554419,
+          0.11745132763871174
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "after_TF_A": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "registration_after_F": [
+          0.1823355070361563,
+          0.019237652582399466,
+          0.5037385724921237
+        ],
+        "map_after_P": [
+          0.16606983235891115,
+          -0.03849725836907181,
+          0.11745132763871174
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.501480865078058,
+        "height_above_saved_ground_mean_m": 0.48360993226059895
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 20448,
+        "recomputed_voxel_centroids": 691,
+        "observed_aligned_points": 691,
+        "nearest_centroid_p50_p95_max_error_m": [
+          1.8128045553567063e-07,
+          4.943272813306976e-07,
+          1.9163891920470633e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 105,
+          "p05_median_p95_m": [
+            -0.19760000237517042,
+            -0.12799998596305848,
+            -0.05159995458215383
+          ],
+          "mean_m": -0.13228571618421217
+        },
+        "after_driver_E": {
+          "count": 105,
+          "p05_median_p95_m": [
+            -0.1164425057732078,
+            -0.0980520631065478,
+            -0.08104967180363563
+          ],
+          "mean_m": -0.09850924265996525
+        },
+        "after_diagnostic_C": {
+          "count": 105,
+          "p05_median_p95_m": [
+            -0.36976863145828254,
+            -0.2638118267059326,
+            -0.19602324068546298
+          ],
+          "mean_m": -0.2776363865250633
+        },
+        "after_TF_A": {
+          "count": 105,
+          "p05_median_p95_m": [
+            -0.36976863145828254,
+            -0.2638118267059326,
+            -0.19602324068546298
+          ],
+          "mean_m": -0.2776363865250633
+        },
+        "registration_after_F": {
+          "count": 105,
+          "p05_median_p95_m": [
+            -0.062498531154792064,
+            0.044816561340932315,
+            0.12284691584839272
+          ],
+          "mean_m": 0.03511455247638442
+        },
+        "map_after_P": {
+          "count": 105,
+          "p05_median_p95_m": [
+            0.04285956046684257,
+            0.08336138724207787,
+            0.16108865239099948
+          ],
+          "mean_m": 0.08887149549452827
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 93,
+        "p05_median_p95_m": [
+          0.05335450574333718,
+          0.09826294915514322,
+          0.13673928703281127
+        ],
+        "mean_m": 0.09677218829825547
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 92,
+          "p05_median_p95_m": [
+            0.059400022334705045,
+            0.0982914175997752,
+            0.13682119956721056
+          ],
+          "mean_m": 0.09741128397294531
+        },
+        "raw_candidate_Q_H": {
+          "count": 92,
+          "p05_median_p95_m": [
+            0.059375349317512295,
+            0.09945849554191555,
+            0.14110892188876906
+          ],
+          "mean_m": 0.09873901448140504
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 2534,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.05300005272119,
+            -2.0430000303322524,
+            -0.17399997923234017
+          ],
+          "after_driver_E": [
+            1.134693611195947,
+            -2.0430000303322524,
+            -0.09087872545270181
+          ],
+          "after_diagnostic_C": [
+            1.1342529058456419,
+            -2.0450084209442143,
+            -0.21009157598018646
+          ],
+          "after_TF_A": [
+            1.1342529058456419,
+            -2.0450084209442143,
+            -0.21009157598018646
+          ],
+          "registration_after_F": [
+            1.1281341126361637,
+            -2.04513782766744,
+            0.10781799721269461
+          ],
+          "map_after_P": [
+            1.317568378483641,
+            -2.035059012925813,
+            0.09049791866677137
+          ]
+        },
+        "map_classification_ground_z_m": -0.007765030488371849,
+        "map_saved_ground_mean_z_m": 0.0766676738858223,
+        "H_m": 0.09826294915514322
+      }
+    },
+    {
+      "mode": "candidate",
+      "file": "frame_05.npz",
+      "source_stamp_s": 3143.025634496,
+      "imu_delta_s": 0.0020666560003519407,
+      "imu_roll_pitch_deg": [
+        -0.029545998628096364,
+        1.557532932117704
+      ],
+      "T1_full_P": [
+        [
+          0.9266654188852861,
+          -0.06101052829801459,
+          -0.37090284021419206,
+          0.1862124800682068
+        ],
+        [
+          0.05428587176430883,
+          0.998117080019364,
+          -0.02855413630995884,
+          -0.054286129772663116
+        ],
+        [
+          0.37194656278684224,
+          0.006325346663690011,
+          0.9282325917681612,
+          -0.41817036271095276
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T2_F_times_A": [
+        [
+          0.999630535707964,
+          -1.401642111905754e-05,
+          0.02718072632857314,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999998670396724,
+          0.0005156749339952385,
+          0.0
+        ],
+        [
+          -0.027180729942531897,
+          -0.0005154844105208292,
+          0.9996304027967604,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T3_effective_driver": [
+        [
+          0.9577301550651077,
+          0.0010714361846611107,
+          0.2876661295729249,
+          0.17800584679870854
+        ],
+        [
+          -0.014784989191982503,
+          0.998854761193724,
+          0.045503517833478606,
+          0.019138092028742032
+        ],
+        [
+          -0.2872879290425506,
+          -0.047833231807300494,
+          0.9566491664979965,
+          0.16115626951786322
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "F": [
+        [
+          0.999630535707964,
+          -1.401642111905754e-05,
+          0.02718072632857314,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999998670396724,
+          0.0005156749339952385,
+          0.0
+        ],
+        [
+          -0.027180729942531897,
+          -0.0005154844105208292,
+          0.9996304027967604,
+          0.34751
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_ndt_candidate_Q": [
+        [
+          0.9291133217378692,
+          -0.04228914775018782,
+          -0.3673691105030273,
+          0.1887684166431427
+        ],
+        [
+          0.03072780803155476,
+          0.99883286297012,
+          -0.03726544866883216,
+          -0.05451546981930733
+        ],
+        [
+          0.36851626447525837,
+          0.02333537729449066,
+          0.929328371989,
+          -0.4225066900253296
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "T_map_raw_lidar": [
+        [
+          0.9970117102458058,
+          -0.04322771631260769,
+          -0.06402354391261067,
+          0.16714410578356675
+        ],
+        [
+          0.04558642529032641,
+          0.9983169138213491,
+          0.03584992897435669,
+          -0.03958810861943342
+        ],
+        [
+          0.062366076211212595,
+          -0.038661403500308174,
+          0.997304250676494,
+          0.11736964299535863
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "origins_xyz_m": {
+        "raw_lidar": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "after_driver_E": [
+          0.187,
+          0.0,
+          0.4
+        ],
+        "after_diagnostic_C": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "after_TF_A": [
+          0.17800584679870854,
+          0.019138092028742032,
+          0.16115626951786322
+        ],
+        "registration_after_F": [
+          0.18232015620488431,
+          0.019221193732781586,
+          0.5037585123732495
+        ],
+        "map_after_P": [
+          0.16714410578356675,
+          -0.03958810861943342,
+          0.11736964299535863
+        ]
+      },
+      "origin_to_saved_ground_at_same_map_xy": {
+        "trusted": true,
+        "grid_ground_z_m": -0.3840295374393463,
+        "height_above_grid_m": 0.5013991804347049,
+        "height_above_saved_ground_mean_m": 0.48352824761724583
+      },
+      "independent_aligned_cloud_check": {
+        "input_points": 19968,
+        "recomputed_voxel_centroids": 679,
+        "observed_aligned_points": 679,
+        "nearest_centroid_p50_p95_max_error_m": [
+          1.884864389012364e-07,
+          4.915124804938387e-07,
+          1.80403239937732e-05
+        ],
+        "one_to_one_nearest_indices": true,
+        "accepted": true
+      },
+      "floor_point_z_stages": {
+        "reconstructed_raw": {
+          "count": 98,
+          "p05_median_p95_m": [
+            -0.2003000059760821,
+            -0.12849999287289313,
+            -0.06375002689148124
+          ],
+          "mean_m": -0.13129592084212513
+        },
+        "after_driver_E": {
+          "count": 98,
+          "p05_median_p95_m": [
+            -0.11678575270411763,
+            -0.09785082102695586,
+            -0.07735703780526879
+          ],
+          "mean_m": -0.09723532997169439
+        },
+        "after_diagnostic_C": {
+          "count": 98,
+          "p05_median_p95_m": [
+            -0.3669085517525674,
+            -0.26496197283267986,
+            -0.19137808457016947
+          ],
+          "mean_m": -0.27802659981713007
+        },
+        "after_TF_A": {
+          "count": 98,
+          "p05_median_p95_m": [
+            -0.3669085517525674,
+            -0.26496197283267986,
+            -0.19137808457016947
+          ],
+          "mean_m": -0.27802659981713007
+        },
+        "registration_after_F": {
+          "count": 98,
+          "p05_median_p95_m": [
+            -0.06034722545983728,
+            0.044982736244950194,
+            0.12651895899596688
+          ],
+          "mean_m": 0.03477930409316088
+        },
+        "map_after_P": {
+          "count": 98,
+          "p05_median_p95_m": [
+            0.04167655086811093,
+            0.0899500551051054,
+            0.15796823986874786
+          ],
+          "mean_m": 0.08793047847718966
+        }
+      },
+      "trusted_floor_H_m": {
+        "count": 84,
+        "p05_median_p95_m": [
+          0.0609527812811198,
+          0.10047470547244797,
+          0.13460745662016965
+        ],
+        "mean_m": 0.0993368134903678
+      },
+      "published_vs_raw_ndt_candidate_floor_check": {
+        "note": "Q is an alternative diagnostic transform, not the transform used for aligned_points.",
+        "published_P_H": {
+          "count": 81,
+          "p05_median_p95_m": [
+            0.060354925280351246,
+            0.0952493498977468,
+            0.13212346436495137
+          ],
+          "mean_m": 0.0983131936768187
+        },
+        "raw_candidate_Q_H": {
+          "count": 81,
+          "p05_median_p95_m": [
+            0.037548776085694235,
+            0.08690648659480404,
+            0.10838009325295384
+          ],
+          "mean_m": 0.08127953212628972
+        }
+      },
+      "representative_floor_point": {
+        "source_point_index": 4709,
+        "xyz_m": {
+          "reconstructed_raw": [
+            1.079999991663031,
+            -2.306999874622588,
+            -0.15900002437721658
+          ],
+          "after_driver_E": [
+            1.1650073200312463,
+            -2.306999874622588,
+            -0.08495636062371814
+          ],
+          "after_diagnostic_C": [
+            1.1641436815261843,
+            -2.3084225654602055,
+            -0.19087067246437078
+          ],
+          "after_TF_A": [
+            1.1641436815261843,
+            -2.3084225654602055,
+            -0.19087067246437078
+          ],
+          "registration_after_F": [
+            1.1585579243154545,
+            -2.3085206857530096,
+            0.12625755362587365
+          ],
+          "map_after_P": [
+            1.3538228256932086,
+            -2.2991719042862395,
+            0.11534545764240423
+          ]
+        },
+        "map_classification_ground_z_m": 0.014022262766957283,
+        "map_saved_ground_mean_z_m": 0.060482773929834366,
+        "H_m": 0.10132319487544694
+      }
+    }
+  ],
+  "limits": [
+    "The physical meaning of the nominal body/foot origins is not established by a frame name.",
+    "Raw input is reconstructed by inverse extrinsics; original UDP samples and runtime-selected IMU identity were not recorded.",
+    "The nearest-IMU reconstruction is checked against the observed entire aligned cloud after voxel averaging.",
+    "Floor labels use the previous broad-plane hypothesis; they are not independently surveyed truth.",
+    "Source hashes identify local audited code, not a fresh attestation of the disconnected Jetson binary."
+  ],
+  "verification_summary": {
+    "accepted_frames": 11,
+    "rejected_frames": 1,
+    "all_output_checks_pass": true,
+    "max_observed_output_error_m": 3.2836993341334164e-05
+  }
+}

@@ -1,0 +1,110 @@
+/**:
+  ros__parameters:
+    use_sim_time: false
+    always_send_full_costmap: true
+    footprint_padding: 0.05
+    footprint: '[[0.3, 0.2], [0.3, -0.2], [-0.3, -0.2], [-0.3, 0.2]]'
+    global_frame: map
+    width: 8
+    height: 8
+    origin_x: 0.0
+    origin_y: 0.0
+    plugins:
+    - static_layer
+    - stvl_obstacle_layer
+    - voa_obstacle_layer
+    - inflation_layer
+    publish_frequency: 0.5
+    resolution: 0.1
+    robot_base_frame: base_link
+    rolling_window: true
+    track_unknown_space: true
+    transform_tolerance: 0.3
+    update_frequency: 2.0
+    static_layer:
+      plugin: nav2_costmap_2d::StaticLayer
+      enabled: true
+      subscribe_to_updates: false
+      map_topic: /ground_acceptance/map
+      map_subscribe_transient_local: true
+      track_unknown_space: false
+      use_maximum: true
+      unknown_cost_value: 0
+      trinary_costmap: true
+      transform_tolerance: 0.3
+    stvl_obstacle_layer:
+      plugin: spatio_temporal_voxel_layer/SpatioTemporalVoxelLayer
+      observation_sources: rslidar_points
+      transform_tolerance: 0.3
+      enabled: true
+      publish_voxel_map: false
+      voxel_size: 0.15
+      combination_method: 1
+      mark_threshold: 0
+      update_footprint_enabled: true
+      track_unknown_space: false
+      decay_model: 0
+      voxel_decay: 1.0
+      mapping_mode: false
+      map_save_duration: 60.0
+      rslidar_points:
+        topic: /patrol/costmap_obstacles
+        sensor_frame: rslidar
+        observation_persistence: 0.0
+        expected_update_rate: 0.5
+        data_type: PointCloud2
+        min_obstacle_height: 0.15
+        max_obstacle_height: 1.2
+        inf_is_valid: false
+        marking: true
+        clearing: false
+        min_z: 0.2
+        max_z: 3.0
+        vertical_fov_angle: 0.56
+        vertical_fov_padding: 0.0
+        horizontal_fov_angle: 6.29
+        decay_acceleration: 5.0
+        filter: passthrough
+        voxel_min_points: 0
+        clear_after_reading: true
+        enabled: true
+        model_type: 1
+        obstacle_range: 4.0
+    inflation_layer:
+      plugin: nav2_costmap_2d::InflationLayer
+      inflation_radius: 0.55
+      cost_scaling_factor: 10.0
+      inflate_unknown: false
+      inflate_around_unknown: false
+    voa_obstacle_layer:
+      plugin: spatio_temporal_voxel_layer/SpatioTemporalVoxelLayer
+      observation_sources: voa_grid
+      transform_tolerance: 0.3
+      enabled: true
+      publish_voxel_map: false
+      voxel_size: 0.05
+      combination_method: 1
+      mark_threshold: 0
+      update_footprint_enabled: true
+      track_unknown_space: false
+      decay_model: 0
+      voxel_decay: 1.5
+      mapping_mode: false
+      map_save_duration: 60.0
+      voa_grid:
+        topic: /patrol/voa/costmap_obstacles
+        sensor_frame: base_link
+        data_type: PointCloud2
+        observation_persistence: 0.0
+        expected_update_rate: 0.5
+        clear_after_reading: true
+        enabled: true
+        min_obstacle_height: 0.4
+        max_obstacle_height: 0.6
+        marking: true
+        clearing: false
+        inf_is_valid: false
+        obstacle_range: 4.0
+        filter: passthrough
+        voxel_min_points: 0
+        model_type: 0

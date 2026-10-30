@@ -1,0 +1,39 @@
+{
+  "quaternion_check": {
+    "old": {
+      "n": 1966,
+      "mean_cm": -1.834908002549363,
+      "median_cm": -1.5063909148746168,
+      "abs_p95_cm": 6.2465931802809465,
+      "over15_percent": 0.0
+    },
+    "pcd_plane": {
+      "n": 312,
+      "mean_cm": -1.109564765751444,
+      "median_cm": -1.060019346961593,
+      "abs_p95_cm": 2.32436430277498,
+      "over15_percent": 0.0
+    },
+    "covered": 312,
+    "total": 1966
+  },
+  "quaternion_holdout": {
+    "old": {
+      "n": 2303,
+      "mean_cm": -2.7912680224363955,
+      "median_cm": -2.6110880472188125,
+      "abs_p95_cm": 6.560784429783788,
+      "over15_percent": 0.0
+    },
+    "pcd_plane": {
+      "n": 511,
+      "mean_cm": -2.218140596172412,
+      "median_cm": -2.091248658808593,
+      "abs_p95_cm": 3.9366663163074174,
+      "over15_percent": 0.0
+    },
+    "covered": 511,
+    "total": 2312
+  }
+}
+model cells 46 center-plane vs reference cm [-0.38472679  0.48183314  1.90046766]

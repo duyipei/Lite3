@@ -1,0 +1,149 @@
+{
+  "scope": "Local source plus saved real logs and offline callback/numeric probes; no Git, runtime deployment, service restart or robot motion. Not exhaustive verification of vendor ROS dependencies.",
+  "jetson": "SSH connection timeout to 10.119.1.171; no current remote state verified",
+  "tests": {
+    "selected_python_regressions": 139,
+    "native_regressions": 10,
+    "probe_results": "probe_results.json",
+    "regression_log": "regression.log",
+    "native_log": "native_regression.log",
+    "manifest": "manifest_check.json"
+  },
+  "findings": [
+    {
+      "id": "A01",
+      "priority": "P1",
+      "evidence": "code_confirmed",
+      "title": "NDT 外层拒绝晚于滤波器提交",
+      "mechanism": "correct() 先更新两个滤波器和校正时间；外层质量/位姿门之后拒绝，连续三次才重置。",
+      "source": "vendor_patch/hdl_localization_app.hpp:1005",
+      "limit": "尚未证明此次静止偏差由此造成"
+    },
+    {
+      "id": "A02",
+      "priority": "P1",
+      "evidence": "code_and_algebra",
+      "title": "拒绝期间可能重复施加累计腿部位移",
+      "mechanism": "预测使用 last_correction_time 到本帧累计增量；拒绝后校正时间不变，而 odom_ukf 已预测。",
+      "source": "vendor_patch/hdl_localization_app.hpp:955",
+      "limit": "需要连续拒绝的运动回放验证实际影响"
+    },
+    {
+      "id": "A03",
+      "priority": "P1",
+      "evidence": "numerical_reproduction",
+      "title": "四元数同半球变换遗漏协方差",
+      "mechanism": "融合前只变更 odom_mean 四元数符号，未同步变更交叉协方差。构造数值例产生 4.774 度融合朝向差。",
+      "source": "vendor_patch/hdl_localization/src/hdl_localization/pose_estimator.cpp:181",
+      "limit": "数值构造，不是实机误差测量"
+    },
+    {
+      "id": "A04",
+      "priority": "P1",
+      "evidence": "code_confirmed",
+      "title": "腿部锚点与点云未统一采样时刻",
+      "mechanism": "ExpectedPoseFromLegOdom/FuseNdtCorrectionWithLegOdom 使用最新腿部消息，函数未接收点云时间。",
+      "source": "vendor_patch/hdl_localization_app.hpp:536",
+      "limit": "运动中误差取决于处理延迟；静止时不能解释全部高度残差"
+    },
+    {
+      "id": "A05",
+      "priority": "P1",
+      "evidence": "code_and_callback_probe",
+      "title": "READY 不证明高度正确且低重叠可被接受",
+      "mechanism": "候选窗口存 XY/yaw，加三维旋转跨度，但不存 Z；初始化内点比例仅要求 >0。",
+      "source": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/visual_pose_initializer.py:335",
+      "limit": "新增旋转稳定性并未覆盖完整三维质量"
+    },
+    {
+      "id": "A06",
+      "priority": "P1",
+      "evidence": "callback_reproduction",
+      "title": "部分新鲜度检查只使用到达时间",
+      "mechanism": "9 秒旧 status 被记录为好并发布处理心跳；采集年龄与消息到达年龄未一致使用。",
+      "source": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/visual_pose_initializer.py:321",
+      "limit": "障碍桥有额外源时间检查，不等于整条安全链路已绕过"
+    },
+    {
+      "id": "A07",
+      "priority": "P1",
+      "evidence": "code_confirmed",
+      "title": "VOA 与 Nav2 对未知区域语义不一致",
+      "mechanism": "VOA 将非有限高程判碰撞；桥仅投影有限且超过阈值的格子。",
+      "source": "tools/build_vendor_voa_overlay.py:127",
+      "limit": "构成反复规划和制动条件，尚无同帧现场证据确认该次停车原因"
+    },
+    {
+      "id": "A08",
+      "priority": "P1",
+      "evidence": "code_confirmed",
+      "title": "生产入口与实验算法版本不一致",
+      "mechanism": "动态入口仍启动地图地面过滤；部署列表不含新局部地面链路；默认环境与隔离试验二进制不同。",
+      "source": "navigation/start_nav_isolated.sh:115",
+      "limit": "SSH 超时，未验证当前远端产物"
+    },
+    {
+      "id": "A09",
+      "priority": "P2",
+      "evidence": "code_and_saved_data",
+      "title": "旧地面参考置信度不保证无偏差",
+      "mechanism": "5cm 分箱、传播和平滑；ground_std 约束离散度，不限制历史地面均值与参考之间偏差。",
+      "source": "scripts/build_area_traversability_map.py:311",
+      "limit": "最新10帧地图残差约10.79cm，不能全归因于分箱"
+    },
+    {
+      "id": "A10",
+      "priority": "P2",
+      "evidence": "code_and_saved_data",
+      "title": "局部地面覆盖及离线评估范围不足",
+      "mechanism": "实机未获可信支持点比例中位67.7%；回放仅近处预选平面点，合成障碍仍保留原地面。",
+      "source": "results/local_ground_20261028/replay.py:25",
+      "limit": "未知比例不是地面误报率"
+    },
+    {
+      "id": "A11",
+      "priority": "P2",
+      "evidence": "code_confirmed",
+      "title": "健康心跳不证明实际代价地图消费",
+      "mechanism": "桥发布云后发布心跳；速度门检查发布者和时效，未验证实际代价地图更新。",
+      "source": "scripts/voa_costmap_bridge.py:222",
+      "limit": "当前没有证据证明实机确实丢弃了障碍消息"
+    },
+    {
+      "id": "A12",
+      "priority": "P1",
+      "evidence": "callback_reproduction",
+      "title": "速度源冲突与里程计防御不完整",
+      "mechanism": "速度门不检查 /patrol/cmd_vel_raw 发布者唯一；自身里程计回调未校验有限值和源年龄。",
+      "source": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py:167",
+      "limit": "初始化模块另有有限值检查，不能推断非有限数据必然导致运动"
+    },
+    {
+      "id": "A13",
+      "priority": "P2",
+      "evidence": "code_and_saved_data",
+      "title": "多级处理预算与故障恢复策略造成停机",
+      "mechanism": "VOA响应0.25s、投影0.5s、运动后odom0.7s、其他1.5s；传感器故障锁定后不自动重ARM。",
+      "source": "navigation/start_gate_disarmed.sh:53",
+      "limit": "锁定本身是安全策略；旧10/8秒导航等待冲突已改为按行为树计算至少60秒"
+    },
+    {
+      "id": "A14",
+      "priority": "P2",
+      "evidence": "scope_limitation",
+      "title": "动态占据不等同于行人车辆运动预测",
+      "mechanism": "当前是占据更新、重规划和近场减速；无已验收的目标跟踪/速度预测闭环。",
+      "source": "scripts/make_dynamic_nav2_config.py:40",
+      "limit": "不能据此宣称已具备可靠车辆避让能力"
+    },
+    {
+      "id": "A15",
+      "priority": "P2",
+      "evidence": "manifest_check",
+      "title": "复现清单过期且端到端测试缺口",
+      "mechanism": "app头文件与VOA桥哈希不匹配；三个新局部地面文件未登记；现有149项回归未覆盖新增复现。",
+      "source": "reproduction_manifest.json",
+      "limit": "清单陈旧不等于已证实远端程序错误"
+    }
+  ]
+}

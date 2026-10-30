@@ -1,0 +1,14 @@
+.........................................F...........                    [100%]
+=================================== FAILURES ===================================
+_________ RuntimeTests.test_malformed_grid_cannot_emit_a_health_signal _________
+
+self = <test_voa_costmap_bridge.RuntimeTests testMethod=test_malformed_grid_cannot_emit_a_health_signal>
+
+    def test_malformed_grid_cannot_emit_a_health_signal(self):
+        msg = grid(); msg.header.frame_id = 'camera_link'
+        self.bridge.receive(msg)
+>       with self.assertRaises(ValueError): self.bridge.publish()
+E       AssertionError: ValueError not raised
+
+tests/test_voa_costmap_bridge.py:211: AssertionError
+1 failed, 52 passed in 0.55 seconds

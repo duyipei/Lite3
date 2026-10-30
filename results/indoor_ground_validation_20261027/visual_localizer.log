@@ -1,0 +1,7 @@
+1793022923.737081 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793022925.906597576] [rgbd_visual_localizer]: loaded 56 visual keyframes; startup references=20; strategy=startup_then_global
+[INFO] [1793022926.858716968] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=1,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.48s,input_age=0.09s,inference=0.39s
+[INFO] [1793022931.425345544] [rgbd_visual_localizer]: PAUSED:localization_ready_ndt_odometry_active
+[INFO] [1793023190.525301480] [rgbd_visual_localizer]: WAITING_FOR_IMAGE:reinitialization
+[INFO] [1793023195.558404680] [rgbd_visual_localizer]: POSE:mode=startup,source=start_appearance,kf=1,inliers=0,x=-0.00,y=-0.00,yaw=0.00,query_age=0.25s,input_age=0.16s,inference=0.08s
+[INFO] [1793023196.263096648] [rgbd_visual_localizer]: PAUSED:localization_ready_ndt_odometry_active

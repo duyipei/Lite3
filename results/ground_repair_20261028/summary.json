@@ -1,0 +1,227 @@
+{
+  "status": "OFFLINE_FIXES_IMPLEMENTED; ROBOT_AND_LOW_OBSTACLE_ACCEPTANCE_NOT_PASSED",
+  "robot": "10.119.1.171 SSH timeout; no deployment, service restart, motion, or runtime verification",
+  "default_fine_registration_enabled": false,
+  "fine_mode_navigation_policy": "main launcher allows relocalize only; stationary experimental evaluation",
+  "original_transform_chain_preserved": "P @ F @ A @ E; optional refinement updates candidate P before existing anchor/fusion",
+  "residual_metrics": {
+    "baseline": {
+      "before": {
+        "n": 407,
+        "mean_cm": 10.744330083550201,
+        "median_cm": 11.375814394046735,
+        "p95_cm": 16.213967414004067,
+        "abs_p95_cm": 16.213967414004067,
+        "above_15cm_percent": 11.302211302211303
+      },
+      "optional_native_refinement": {
+        "n": 407,
+        "mean_cm": 1.3235689920097862,
+        "median_cm": 1.3400166451032507,
+        "p95_cm": 4.013260814225191,
+        "abs_p95_cm": 4.013260814225191,
+        "above_15cm_percent": 0.0
+      }
+    },
+    "candidate": {
+      "before": {
+        "n": 268,
+        "mean_cm": 9.586904135879376,
+        "median_cm": 9.506734645944151,
+        "p95_cm": 13.824900222044745,
+        "abs_p95_cm": 13.824900222044745,
+        "above_15cm_percent": 1.1194029850746268
+      },
+      "optional_native_refinement": {
+        "n": 268,
+        "mean_cm": -2.4364481461468293,
+        "median_cm": -2.2720410698687195,
+        "p95_cm": 0.19007828066042085,
+        "abs_p95_cm": 5.715814687966934,
+        "above_15cm_percent": 0.0
+      }
+    }
+  },
+  "obstacle_tests": {
+    "baseline": {
+      "map_reference_defined_obstacles": {
+        "retained": 1628,
+        "total": 1628
+      },
+      "new_box_included_in_registration": {
+        "retained": 192,
+        "total": 192
+      },
+      "observed_floor_raised_obstacles": [
+        {
+          "height_m": 0.16,
+          "total": 407,
+          "retained": 338,
+          "recall_percent": 83.04668304668304
+        },
+        {
+          "height_m": 0.2,
+          "total": 407,
+          "retained": 405,
+          "recall_percent": 99.5085995085995
+        },
+        {
+          "height_m": 0.5,
+          "total": 407,
+          "retained": 407,
+          "recall_percent": 100.0
+        },
+        {
+          "height_m": 1.0,
+          "total": 407,
+          "retained": 407,
+          "recall_percent": 100.0
+        }
+      ]
+    },
+    "candidate": {
+      "map_reference_defined_obstacles": {
+        "retained": 1072,
+        "total": 1072
+      },
+      "new_box_included_in_registration": {
+        "retained": 192,
+        "total": 192
+      },
+      "observed_floor_raised_obstacles": [
+        {
+          "height_m": 0.16,
+          "total": 268,
+          "retained": 47,
+          "recall_percent": 17.53731343283582
+        },
+        {
+          "height_m": 0.2,
+          "total": 268,
+          "retained": 227,
+          "recall_percent": 84.70149253731343
+        },
+        {
+          "height_m": 0.5,
+          "total": 268,
+          "retained": 268,
+          "recall_percent": 100.0
+        },
+        {
+          "height_m": 1.0,
+          "total": 268,
+          "retained": 268,
+          "recall_percent": 100.0
+        }
+      ]
+    }
+  },
+  "spatial": {
+    "baseline": {
+      "left": {
+        "n": 121,
+        "before_mean_cm": 6.2955919298970775,
+        "after_mean_cm": 1.371376255812724,
+        "after_abs_p95_cm": 3.817858533776003
+      },
+      "middle": {
+        "n": 183,
+        "before_mean_cm": 11.934054319655933,
+        "after_mean_cm": 1.439419176521484,
+        "after_abs_p95_cm": 4.0148387922129976
+      },
+      "right": {
+        "n": 103,
+        "before_mean_cm": 13.856735728061642,
+        "after_mean_cm": 1.0615761504001149,
+        "after_abs_p95_cm": 4.2799857024361625
+      },
+      "near": {
+        "n": 320,
+        "before_mean_cm": 10.293802981187723,
+        "after_mean_cm": 1.427761551021706,
+        "after_abs_p95_cm": 3.94192617932714
+      },
+      "far": {
+        "n": 87,
+        "before_mean_cm": 12.401441264653565,
+        "after_mean_cm": 0.9403319933452545,
+        "after_abs_p95_cm": 4.018856663087425
+      },
+      "after_dH_dx_dH_dy_offset": [
+        -0.011270298456974394,
+        9.8008885626992e-05,
+        0.02725972660455394
+      ]
+    },
+    "candidate": {
+      "left": {
+        "n": 14,
+        "before_mean_cm": 7.139766196027256,
+        "after_mean_cm": -4.068170751753025,
+        "after_abs_p95_cm": 5.263674039187831
+      },
+      "middle": {
+        "n": 134,
+        "before_mean_cm": 8.966617813943294,
+        "after_mean_cm": -2.166064076160602,
+        "after_abs_p95_cm": 5.993139157180255
+      },
+      "right": {
+        "n": 120,
+        "before_mean_cm": 10.565056621690754,
+        "after_mean_cm": -2.548009386977394,
+        "after_abs_p95_cm": 5.689915514836467
+      },
+      "near": {
+        "n": 238,
+        "before_mean_cm": 9.32954070265392,
+        "after_mean_cm": -2.369799016356954,
+        "after_abs_p95_cm": 5.523568550360239
+      },
+      "far": {
+        "n": 30,
+        "before_mean_cm": 11.628654039468014,
+        "after_mean_cm": -2.965197909146507,
+        "after_abs_p95_cm": 6.591516780091188
+      },
+      "after_dH_dx_dH_dy_offset": [
+        -0.01194414573709564,
+        0.0012259615570106444,
+        -0.008002346162785754
+      ]
+    }
+  },
+  "limits": [
+    "Floor points are fixed hypotheses, not surveyed truth.",
+    "Six held-out static frames share a scene; not an independent outdoor deployment.",
+    "Native refinement output is BEFORE full online anchor/fusion; only fusion kernel regression is available.",
+    "Synthetic obstacles are not real labeled boxes, steps, walls, people or vehicles.",
+    "No Jetson performance timing or STVL DDS consumption/expiry test.",
+    "No full Jetson hdl_localization build: exact numerical helper compiled against VM PCL/Eigen."
+  ],
+  "tested": {
+    "NavFn": "native detour/no-path/removal regression with synthetic rasterized camera observations",
+    "DWB": "native ObstacleFootprintCritic trajectory rejection/detour/removal/unknown/boundary; not full DWB sampling loop",
+    "VOA": "projection, bounded leg prediction, stale/missing transform, heartbeat and same-trajectory brake tests",
+    "gate": "raw lidar cannot replace ground-projection heartbeat; stale/replay/future/conflicting publisher/VOA/command checks",
+    "wiring": "actual config fragment for indoor and outdoor; lidar+camera sources in both costmaps"
+  },
+  "not_tested": [
+    "STVL live graph/voxel expiry",
+    "real people or vehicles",
+    "Jetson perception/TF/timing",
+    "low-speed single-goal detour",
+    "11-point autonomous route"
+  ],
+  "inputs_sha256": {
+    "navigation/indoor_fusion_20260912_001_area_review/localization_map.pcd": "fc38589afa5e7ba6d3e20421069b3ec3d20764348079e43ad7382e54c3529ed4",
+    "navigation/indoor_fusion_20260912_001_area_review/traversability_evidence.npz": "58b212cd63ebe0aba1b5773dd33a9a93e8868c39f1a1cb910cc8f0e4a5240c88",
+    "navigation/outdoor_20260921_003_area_review/mission_recovered_20261008.yaml": "9c3aecfec4f82de6b031f3bb2e54311b5b7ccf8f201b8c76ddd3b8326f98dde2"
+  },
+  "final_regression": {
+    "passed": 139,
+    "failed": 0,
+    "log": "results/ground_repair_20261028/final_regression.log"
+  }
+}

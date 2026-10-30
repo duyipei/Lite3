@@ -6,7 +6,7 @@
 int main(int argc, char * argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::executors::SingleThreadedExecutor exec;
+    rclcpp::executors::MultiThreadedExecutor exec(rclcpp::ExecutorOptions(), 2);
     rclcpp::NodeOptions options;
     auto hdl_localization_localization = std::make_shared<hdl_localization::HdlLocalizationApp>(options);
     auto global_map_server = std::make_shared<hdl_localization::GlobalmapServerApp>(options);

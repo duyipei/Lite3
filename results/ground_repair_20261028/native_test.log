@@ -1,0 +1,10 @@
+test_invalid_and_unmatched_cloud_rejected (test_ground_registration_native.FullSceneRegistrationTests) ... ok
+test_saved_held_out_geometry_and_added_objects (test_ground_registration_native.FullSceneRegistrationTests) ... /home/duyipei/Lite3_Projects/lite3_patrol_project/tests/test_ground_registration_native.py:88: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/duyipei/Lite3_Projects/lite3_patrol_project/results/full_transform_audit_20261028/ground_point_trace.csv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((ROOT/'results/full_transform_audit_20261028/ground_point_trace.csv').open()))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 19.856s
+
+OK
