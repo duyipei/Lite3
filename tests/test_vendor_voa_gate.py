@@ -90,8 +90,8 @@ class GateTests(unittest.TestCase):
         self.gate.timer_callback()
         self.assertEqual(self.output(), (0, 0, 0))
 
-    def test_two_navigation_sources_rejected_before_arm(self):
-        self.gate.counts['/patrol/cmd_vel_raw']=2
+    def test_third_navigation_source_rejected_before_arm(self):
+        self.gate.counts['/patrol/cmd_vel_raw']=3
         self.assertEqual(self.gate.sensor_health(),(False,'nav_command_publisher_conflict'))
 
     def test_invalid_and_old_odom_do_not_refresh_gate(self):

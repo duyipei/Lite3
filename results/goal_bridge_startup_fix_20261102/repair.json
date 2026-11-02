@@ -1,0 +1,25 @@
+{
+  "root_cause": "pathlib.Path shadowed by nav_msgs.msg.Path; constructor uses ROS message type to open YAML",
+  "fix": "alias filesystem Path to FilePath; keep ROS Path for /plan",
+  "file": "scripts/goal_pose_bridge.py",
+  "sha256": "3cd53aa93085cd410e6352df31d94296a8ebc85f836259457a589036c296b277",
+  "regression": "61 passed in 2.70 seconds",
+  "supersedes_runtime_manifest_entry_for": "scripts/goal_pose_bridge.py",
+  "no_motion": true,
+  "foxy_constructor_smoke": {
+    "constructor_passed": true,
+    "terminal_extents_m": [
+      0.5426906349431999,
+      0.46455091023858186
+    ],
+    "ros_path_type": "<class 'nav_msgs.msg._path.Path'>",
+    "motor_publishers": {
+      "/cmd_vel": 0,
+      "/cmd_vel_corrected": 0,
+      "/patrol/cmd_vel_raw": 0
+    },
+    "action_server_ready": false,
+    "scope": "real Foxy constructor, no navigation goal/ARM/motion; Nav2 not restarted"
+  },
+  "teardown_note": "Foxy ActionClient emitted ignored InvalidHandle warnings during teardown, after the constructor/smoke test passed; not the original startup TypeError"
+}

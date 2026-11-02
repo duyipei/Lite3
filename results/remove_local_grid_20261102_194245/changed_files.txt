@@ -1,0 +1,13 @@
+patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py
+patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py
+patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py
+navigation/start_gate_disarmed.sh
+navigation/obstacle_response.yaml
+scripts/check_avoidance_readiness.py
+scripts/record_avoidance_test.sh
+tests/test_obstacle_response.py
+tests/test_obstacle_sync_clearance.py
+tests/test_costmap_sync.py
+tests/test_factory_voa_mode.py
+docs/2026-11-02_障碍同步与近障绕行修改.md
+docs/2026-11-02_FactoryOnly避障修改与测试操作.md

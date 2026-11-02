@@ -1,0 +1,50 @@
+..................F...............F..................................... [ 80%]
+.................                                                        [100%]
+=================================== FAILURES ===================================
+___ test_profile_changes_only_private_overlay_and_uses_shared_goal_tolerance ___
+
+tmp_path = PosixPath('/tmp/pytest-of-duyipei/pytest-0/test_profile_changes_only_priv0')
+
+    def test_profile_changes_only_private_overlay_and_uses_shared_goal_tolerance(tmp_path):
+        base = yaml.safe_load((ROOT/'navigation/patrol_map_20261031_01_area_v2_review/nav2_safe.yaml').read_text())
+        before = copy.deepcopy(base)
+        result = build(base,ROOT/'navigation/navigate_dynamic_obstacles.xml',factory_only=True)
+        assert base == before
+        for key,hz in [('local_costmap',5.),('global_costmap',2.)]:
+            c = result[key][key]['ros__parameters']
+            assert c['update_frequency'] >= hz
+            assert c['publish_frequency'] == 2.
+>           assert c['inflation_layer']['inflation_radius'] == .55
+E           assert 0.5 == 0.55
+
+tests/test_obstacle_response.py:179: AssertionError
+_ RuntimeTests.test_newest_transformable_sample_empty_cloud_and_original_stamp _
+
+self = <test_voa_costmap_bridge.RuntimeTests testMethod=test_newest_transformable_sample_empty_cloud_and_original_stamp>
+
+    def test_newest_transformable_sample_empty_cloud_and_original_stamp(self):
+        self.bridge.receive(grid(stamp=100.))
+        self.bridge.receive(grid(stamp=100.1))
+        self.bridge.publish()
+        out = self.outputs[M.TOPIC][-1]
+        self.assertEqual(out.width, 0)
+        self.assertEqual(out.header.frame_id, 'map')
+        self.assertEqual(M.stamp_seconds(out.header.stamp), 100.)
+>       self.assertEqual(self.tf_queries, [100.1, 100.])
+E       AssertionError: Lists differ: [100.1, 100.1, 100.0] != [100.1, 100.0]
+E       
+E       First differing element 1:
+E       100.1
+E       100.0
+E       
+E       First list contains 1 additional elements.
+E       First extra element 2:
+E       100.0
+E       
+E       - [100.1, 100.1, 100.0]
+E       ?         -------
+E       
+E       + [100.1, 100.0]
+
+tests/test_voa_costmap_bridge.py:135: AssertionError
+2 failed, 87 passed in 4.83 seconds

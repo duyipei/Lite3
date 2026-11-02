@@ -1,0 +1,14 @@
+# Factory-only Nav2 profile and obstacle/costmap synchronization settings.
+# Collision checking is performed by Nav2; no direct local-grid speed veto.
+local_update_hz: 5.0
+global_update_hz: 2.0
+costmap_publish_hz: 2.0
+local_inflation_m: 0.50
+global_inflation_m: 0.50
+blocked_progress_timeout_s: 15.0
+goal_xy_tolerance_m: 0.12
+goal_extra_margin_m: 0.03
+planning_sync:
+  costmap_timeout_s: 0.75
+  near_radius_m: 1.0
+  quantization_m: 0.04

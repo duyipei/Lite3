@@ -1,0 +1,9 @@
+{
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py": "b15cb9471841505658787b050597673b6421f85573316d09b6fbfa60b7bbdae5",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py": "585e9bd17957b1b8f551bb8a698615b1cc657cf58df3468027dfc706bc18f325",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py": "51367f08068b772e306219c4810f78e77f08d38ef1c17f778c02ef241db32df6",
+  "navigation/start_gate_disarmed.sh": "4f25c726f10720cebc70b931bc33f80f8435f7d90a85b50e125ae826f84455cc",
+  "navigation/obstacle_response.yaml": "dc0c656bb0e655ecb91f581cad9029d1e1d0086b61652de06ad9bc558883454f",
+  "scripts/check_avoidance_readiness.py": "cf48b31b987137a48390a62ca42cff5cd007bb4ebc8766951ea528ab11c2860f",
+  "scripts/record_avoidance_test.sh": "ac804db7ff959d5edc3196e2fcf533652cdfec4671b7d0f4d44e4ba04e1e5977"
+}

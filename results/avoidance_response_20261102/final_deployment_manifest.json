@@ -1,0 +1,17 @@
+{
+  "scripts/make_dynamic_nav2_config.py": "3ec109ac78d12c250f0eecf06f2cef54c9b7ccb69a80c5c338487ebd713737dd",
+  "scripts/voa_costmap_bridge.py": "4c2432e00042811bbb10f6ad3ae8d8d4d7b64960cc13e1520848f224a7cb3ee0",
+  "scripts/goal_pose_bridge.py": "44f2262d107b3f645dd34b7fdb6a93374e87a3037450b2c7dcb36498de85d8e9",
+  "scripts/navigation_start.sh": "b75f3beb6907241ee4490135b6a023d36dfaf8979a7fa3f9bb23414ae345c58b",
+  "scripts/check_avoidance_readiness.py": "53d7c7c8bf069dce5896a99945d7a91c75026675f745a91ab3b45efe288042ad",
+  "scripts/check_obstacle_costmap_consumption.py": "840db1d19025fb1dc5ebb82d2b97d8cc7b11104e924c448b44af97cf643f640e",
+  "scripts/record_avoidance_test.sh": "1b908fb41f5dc192fa3230d3a38fa03fb8cbdcafe6dc46dc282524543dd1f375",
+  "navigation/start_gate_disarmed.sh": "2c53fa2bb6859b9a76e006a2e624758259d1663a0de6b037ab6e647d6149a7f2",
+  "navigation/obstacle_response.yaml": "e31657941671a9a3959adbce2b0c89752fb7866a5d79f3063255e692b0498515",
+  "patrol_nav_ws/src/lite3_patrol_nav/package.xml": "79d122de154416cfaae7a5a93d3b57ff8d4e2ffedbcc45192b8271745cd5a482",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py": "b18543227653ad55a68f0af059cf8332782689341e42bbe7abe4bccc7af93b40",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py": "2a38d633709532e065550b9d9263281f356ff87993348e1cade3e36b843a354b",
+  "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py": "b8ee3a13aed402d3a411e95017850043a6b5ff2390a2e9f79f846fbfde375cd5",
+  "navigation/start_factory_voa.sh": "02122f7fd8a5c138c919f9a71c7feabfb3f1d42eae795126d9ac211421f6b416",
+  "tools/build_factory_voa_safety_overlay.py": "e97276cd120dc24c7bf4bac063316aad8886d3ed3a7ba8d128c405ea0f407c05"
+}

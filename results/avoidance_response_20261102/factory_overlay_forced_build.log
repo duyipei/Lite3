@@ -1,0 +1,36 @@
+Scanning dependencies of target voa_composition
+[ 50%] Building CXX object CMakeFiles/voa_composition.dir/src/VoaComposition.cpp.o
+[100%] Linking CXX executable voa_composition
+[100%] Built target voa_composition
+-- Install configuration: "Release"
+-- Installing: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/lib/voa/voa_composition
+-- Set runtime path of "/home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/lib/voa/voa_composition" to ""
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/lib/voa/fake_imu_publisher
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/rviz
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/rviz/voa.rviz
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/__pycache__
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/__pycache__/debug_launch.cpython-38.pyc
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/__pycache__/voa_launch.cpython-38.pyc
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/__pycache__/voa_rviz_launch.cpython-38.pyc
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/voa_rviz_launch.py
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/voa_launch.py
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/debug_launch.py
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/config
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/config/voa.yaml
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/ament_index/resource_index/package_run_dependencies/voa
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/ament_index/resource_index/parent_prefix_path/voa
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/environment/path.sh
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/environment/path.dsv
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/local_setup.bash
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/local_setup.sh
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/local_setup.zsh
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/local_setup.dsv
+-- Installing: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/package.dsv
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/ament_index/resource_index/packages/voa
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/cmake/voaConfig.cmake
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/cmake/voaConfig-version.cmake
+-- Up-to-date: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/package.xml

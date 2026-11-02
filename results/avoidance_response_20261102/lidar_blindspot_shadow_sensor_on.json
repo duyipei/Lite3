@@ -1,0 +1,3383 @@
+{
+  "scope": "private shadow, no production safety or motion topics",
+  "counts": {
+    "no_physically_supported_ground_plane": 225
+  },
+  "rows": [
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 13964,
+      "seed_cells": 308,
+      "stamp": 2808.546643104,
+      "age_s": 0.0922099839999646,
+      "imu_delta_s": -0.0001218239999616344,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14032,
+      "seed_cells": 293,
+      "stamp": 2808.644575136,
+      "age_s": 0.07581577599967204,
+      "imu_delta_s": 0.002270271999805118,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14045,
+      "seed_cells": 317,
+      "stamp": 2808.742703936,
+      "age_s": 0.07591961600019204,
+      "imu_delta_s": 5.01760000588547e-05,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14077,
+      "seed_cells": 311,
+      "stamp": 2808.842538208,
+      "age_s": 0.07494544000019232,
+      "imu_delta_s": 0.00011401600022509228,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13950,
+      "seed_cells": 308,
+      "stamp": 2808.942782752,
+      "age_s": 0.07246022400022412,
+      "imu_delta_s": 0.00041737600031410693,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13929,
+      "seed_cells": 313,
+      "stamp": 2809.043507616,
+      "age_s": 0.0709747839996453,
+      "imu_delta_s": -0.0019010240002899081,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19488,
+      "roi_points": 13757,
+      "seed_cells": 288,
+      "stamp": 2809.342460384,
+      "age_s": 0.07270367999990412,
+      "imu_delta_s": 0.0008155519999490934,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20544,
+      "roi_points": 14239,
+      "seed_cells": 329,
+      "stamp": 2809.445058016,
+      "age_s": 0.07663263999984338,
+      "imu_delta_s": 0.0016572479999013012,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14002,
+      "seed_cells": 316,
+      "stamp": 2809.542688608,
+      "age_s": 0.0743091839999579,
+      "imu_delta_s": -0.0009310719997301931,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13860,
+      "seed_cells": 309,
+      "stamp": 2809.642498112,
+      "age_s": 0.07285184000011213,
+      "imu_delta_s": 0.0003414719999454974,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13932,
+      "seed_cells": 306,
+      "stamp": 2809.742493952,
+      "age_s": 0.07243065600005139,
+      "imu_delta_s": 0.002747103999809042,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14217,
+      "seed_cells": 321,
+      "stamp": 2809.846547104,
+      "age_s": 0.06864265600006547,
+      "imu_delta_s": 3.023999988727155e-05,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13860,
+      "seed_cells": 306,
+      "stamp": 2809.942665344,
+      "age_s": 0.0795411519998197,
+      "imu_delta_s": -0.0009568320001562824,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13820,
+      "seed_cells": 300,
+      "stamp": 2810.042484096,
+      "age_s": 0.0718627840001318,
+      "imu_delta_s": 0.00016156799983946257,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13996,
+      "seed_cells": 323,
+      "stamp": 2810.143784256,
+      "age_s": 0.07241459200031386,
+      "imu_delta_s": -0.001211679999869375,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14122,
+      "seed_cells": 312,
+      "stamp": 2810.244847488,
+      "age_s": 0.07168124800000442,
+      "imu_delta_s": -0.0018331519995626877,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13731,
+      "seed_cells": 302,
+      "stamp": 2810.342842592,
+      "age_s": 0.07167161600000327,
+      "imu_delta_s": -0.0012164160002612334,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14035,
+      "seed_cells": 304,
+      "stamp": 2810.44419856,
+      "age_s": 0.07089222400009021,
+      "imu_delta_s": -0.0019548479999684787,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14133,
+      "seed_cells": 311,
+      "stamp": 2810.542557984,
+      "age_s": 0.07296329600012541,
+      "imu_delta_s": 0.00022553600001629093,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13952,
+      "seed_cells": 314,
+      "stamp": 2810.842511616,
+      "age_s": 0.07220956799983469,
+      "imu_delta_s": -0.0007575680001536966,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13940,
+      "seed_cells": 308,
+      "stamp": 2810.945012096,
+      "age_s": 0.0697066879997692,
+      "imu_delta_s": -0.002190239999890764,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13778,
+      "seed_cells": 295,
+      "stamp": 2811.042619072,
+      "age_s": 0.07239382399984606,
+      "imu_delta_s": 0.0005504639998434868,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14053,
+      "seed_cells": 317,
+      "stamp": 2811.144925312,
+      "age_s": 0.07254812800010768,
+      "imu_delta_s": 0.0017663040002844355,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13888,
+      "seed_cells": 307,
+      "stamp": 2811.2448176,
+      "age_s": 0.07003558400037946,
+      "imu_delta_s": 0.002104608000081498,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13909,
+      "seed_cells": 308,
+      "stamp": 2811.343860992,
+      "age_s": 0.06920896000019638,
+      "imu_delta_s": -0.0012925759997415298,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13861,
+      "seed_cells": 310,
+      "stamp": 2811.442711424,
+      "age_s": 0.07771222399969702,
+      "imu_delta_s": 0.00011366399985490716,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14056,
+      "seed_cells": 315,
+      "stamp": 2811.543479456,
+      "age_s": 0.0712367359997188,
+      "imu_delta_s": -0.0020260480000615644,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13802,
+      "seed_cells": 304,
+      "stamp": 2811.642610368,
+      "age_s": 0.07324163199973555,
+      "imu_delta_s": -0.0009858560001703154,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13878,
+      "seed_cells": 307,
+      "stamp": 2811.744133088,
+      "age_s": 0.07342707199995857,
+      "imu_delta_s": -0.0023952960000315215,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13957,
+      "seed_cells": 318,
+      "stamp": 2811.844458336,
+      "age_s": 0.07590214399988326,
+      "imu_delta_s": -0.0017088320000766544,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13905,
+      "seed_cells": 308,
+      "stamp": 2811.943812416,
+      "age_s": 0.0717450879997159,
+      "imu_delta_s": -0.0011313280001559178,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13826,
+      "seed_cells": 305,
+      "stamp": 2812.043309504,
+      "age_s": 0.07282624000026772,
+      "imu_delta_s": -0.001848447999691416,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13956,
+      "seed_cells": 310,
+      "stamp": 2812.143447136,
+      "age_s": 0.071346848000303,
+      "imu_delta_s": -0.0017666879998614604,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13981,
+      "seed_cells": 315,
+      "stamp": 2812.24261936,
+      "age_s": 0.07253539200019077,
+      "imu_delta_s": -6.329600000753999e-05,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13877,
+      "seed_cells": 303,
+      "stamp": 2812.342545792,
+      "age_s": 0.07481814400034636,
+      "imu_delta_s": -0.0011828159999822674,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13869,
+      "seed_cells": 314,
+      "stamp": 2812.44348416,
+      "age_s": 0.07267859200010207,
+      "imu_delta_s": -0.0018944640000881918,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13923,
+      "seed_cells": 321,
+      "stamp": 2812.54266576,
+      "age_s": 0.07221788800006834,
+      "imu_delta_s": -0.0010864640003092063,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13900,
+      "seed_cells": 312,
+      "stamp": 2812.642567232,
+      "age_s": 0.07311660799996389,
+      "imu_delta_s": 0.00011516799986566184,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13820,
+      "seed_cells": 298,
+      "stamp": 2812.742553024,
+      "age_s": 0.07212796800013166,
+      "imu_delta_s": 0.0004925440002807591,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13968,
+      "seed_cells": 313,
+      "stamp": 2812.843429184,
+      "age_s": 0.07323452800028463,
+      "imu_delta_s": -0.0019222400001126516,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14030,
+      "seed_cells": 317,
+      "stamp": 2812.942604864,
+      "age_s": 0.07361788800017166,
+      "imu_delta_s": -0.0007544959998995182,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13893,
+      "seed_cells": 308,
+      "stamp": 2813.043149856,
+      "age_s": 0.07134009599985802,
+      "imu_delta_s": -0.0005494720003298426,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13868,
+      "seed_cells": 308,
+      "stamp": 2813.142590336,
+      "age_s": 0.07173523199980991,
+      "imu_delta_s": 0.0003211520001968893,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13954,
+      "seed_cells": 326,
+      "stamp": 2813.243044,
+      "age_s": 0.07196352000028128,
+      "imu_delta_s": -0.0014557119998244161,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14131,
+      "seed_cells": 313,
+      "stamp": 2813.342880576,
+      "age_s": 0.07257497599994167,
+      "imu_delta_s": -0.0011311039997963235,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13914,
+      "seed_cells": 297,
+      "stamp": 2813.442558048,
+      "age_s": 0.07305017599992425,
+      "imu_delta_s": -8.748800019020564e-05,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14053,
+      "seed_cells": 323,
+      "stamp": 2813.545730176,
+      "age_s": 0.0698519360003047,
+      "imu_delta_s": 0.000582976000259805,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14013,
+      "seed_cells": 324,
+      "stamp": 2813.642682912,
+      "age_s": 0.07251043199994456,
+      "imu_delta_s": -0.0011116800001218508,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13961,
+      "seed_cells": 320,
+      "stamp": 2813.74355744,
+      "age_s": 0.07425849599985668,
+      "imu_delta_s": -0.0018949120003526332,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13840,
+      "seed_cells": 303,
+      "stamp": 2813.842542944,
+      "age_s": 0.07449779200032935,
+      "imu_delta_s": 0.0006502080000245769,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13850,
+      "seed_cells": 321,
+      "stamp": 2813.942591776,
+      "age_s": 0.0713877439998214,
+      "imu_delta_s": 0.0002865279998331971,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14087,
+      "seed_cells": 319,
+      "stamp": 2814.042846112,
+      "age_s": 0.0746389440000712,
+      "imu_delta_s": -0.0014175999999679334,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13770,
+      "seed_cells": 299,
+      "stamp": 2814.142655584,
+      "age_s": 0.0721354560000691,
+      "imu_delta_s": -0.0010260479998578376,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13851,
+      "seed_cells": 300,
+      "stamp": 2814.243781568,
+      "age_s": 0.07092560000000958,
+      "imu_delta_s": -0.001104223999845999,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14070,
+      "seed_cells": 323,
+      "stamp": 2814.344105088,
+      "age_s": 0.07831446399995912,
+      "imu_delta_s": -0.0011800320003203524,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13902,
+      "seed_cells": 315,
+      "stamp": 2814.442514272,
+      "age_s": 0.07387571199978993,
+      "imu_delta_s": -0.0013353600002119492,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13888,
+      "seed_cells": 291,
+      "stamp": 2814.542787584,
+      "age_s": 0.07133123199992042,
+      "imu_delta_s": -0.0012375040000733861,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13859,
+      "seed_cells": 318,
+      "stamp": 2814.642605152,
+      "age_s": 0.07724489599968365,
+      "imu_delta_s": -0.0001903040001707268,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14108,
+      "seed_cells": 322,
+      "stamp": 2814.743544448,
+      "age_s": 0.07184921599991867,
+      "imu_delta_s": -0.0006913600000189035,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13715,
+      "seed_cells": 304,
+      "stamp": 2814.842495136,
+      "age_s": 0.07682345600005647,
+      "imu_delta_s": -0.0014210559997991368,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13785,
+      "seed_cells": 304,
+      "stamp": 2814.942590624,
+      "age_s": 0.07189308800025174,
+      "imu_delta_s": -0.0007798399997227534,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14009,
+      "seed_cells": 315,
+      "stamp": 2815.042597152,
+      "age_s": 0.07878752000033273,
+      "imu_delta_s": -0.0009183359998132801,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13966,
+      "seed_cells": 317,
+      "stamp": 2815.14254688,
+      "age_s": 0.07234892800033776,
+      "imu_delta_s": -0.00017695999986244715,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13933,
+      "seed_cells": 289,
+      "stamp": 2815.244111424,
+      "age_s": 0.07107193599995298,
+      "imu_delta_s": -0.0010750719998213754,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13947,
+      "seed_cells": 315,
+      "stamp": 2815.342762976,
+      "age_s": 0.07188975999997638,
+      "imu_delta_s": -0.0016221119999499933,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14007,
+      "seed_cells": 319,
+      "stamp": 2815.442678592,
+      "age_s": 0.07253097600005276,
+      "imu_delta_s": -0.0010537600001043756,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13850,
+      "seed_cells": 304,
+      "stamp": 2815.542697888,
+      "age_s": 0.07189532799975495,
+      "imu_delta_s": -0.00090223999995942,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13879,
+      "seed_cells": 309,
+      "stamp": 2815.642601408,
+      "age_s": 0.07245142400006443,
+      "imu_delta_s": -0.00022329599960357882,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13997,
+      "seed_cells": 311,
+      "stamp": 2815.742741056,
+      "age_s": 0.07765011199990113,
+      "imu_delta_s": -0.0017040640000232088,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13948,
+      "seed_cells": 319,
+      "stamp": 2815.842686272,
+      "age_s": 0.0746216320003441,
+      "imu_delta_s": -0.0011234559997319593,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13793,
+      "seed_cells": 298,
+      "stamp": 2815.942518304,
+      "age_s": 0.07996681600025113,
+      "imu_delta_s": -0.0009831679999479093,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13954,
+      "seed_cells": 315,
+      "stamp": 2816.042590112,
+      "age_s": 0.07336739199990916,
+      "imu_delta_s": -0.00025833600011537783,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14071,
+      "seed_cells": 313,
+      "stamp": 2816.14258272,
+      "age_s": 0.0728241279998656,
+      "imu_delta_s": 0.0005137919997650897,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13757,
+      "seed_cells": 310,
+      "stamp": 2816.242926016,
+      "age_s": 0.07205065599964655,
+      "imu_delta_s": -0.001580384000135382,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13981,
+      "seed_cells": 310,
+      "stamp": 2816.344586144,
+      "age_s": 0.07111558399992646,
+      "imu_delta_s": 0.0018614720002005924,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14085,
+      "seed_cells": 324,
+      "stamp": 2816.443726368,
+      "age_s": 0.07302927999990061,
+      "imu_delta_s": -0.0020734400000037567,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 13999,
+      "seed_cells": 303,
+      "stamp": 2816.544770496,
+      "age_s": 0.07085222399973645,
+      "imu_delta_s": -0.0016978560001916776,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13756,
+      "seed_cells": 287,
+      "stamp": 2816.642766304,
+      "age_s": 0.074046336000265,
+      "imu_delta_s": -0.0014116479997028364,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14069,
+      "seed_cells": 327,
+      "stamp": 2816.747156448,
+      "age_s": 0.06967139199969097,
+      "imu_delta_s": -0.00045142399994801963,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13977,
+      "seed_cells": 310,
+      "stamp": 2816.842488128,
+      "age_s": 0.07505785600005765,
+      "imu_delta_s": -0.00078694399962842,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14102,
+      "seed_cells": 327,
+      "stamp": 2817.143709024,
+      "age_s": 0.07293279999976221,
+      "imu_delta_s": -0.0026158079999731854,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13995,
+      "seed_cells": 310,
+      "stamp": 2817.243968384,
+      "age_s": 0.07162723200008259,
+      "imu_delta_s": -0.0022623999998359068,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13824,
+      "seed_cells": 297,
+      "stamp": 2817.343834432,
+      "age_s": 0.08680655999978626,
+      "imu_delta_s": -0.0022014080000190006,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14030,
+      "seed_cells": 328,
+      "stamp": 2817.444858144,
+      "age_s": 0.07401657599984901,
+      "imu_delta_s": -0.002391328000157955,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13918,
+      "seed_cells": 315,
+      "stamp": 2817.54263776,
+      "age_s": 0.07431257600001118,
+      "imu_delta_s": -0.0013643840002259822,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13792,
+      "seed_cells": 309,
+      "stamp": 2817.644106016,
+      "age_s": 0.07172124799990343,
+      "imu_delta_s": 0.0023998719998417073,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13952,
+      "seed_cells": 314,
+      "stamp": 2817.742574976,
+      "age_s": 0.07440678400007528,
+      "imu_delta_s": -0.0010542400000304042,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14228,
+      "seed_cells": 319,
+      "stamp": 2817.843868928,
+      "age_s": 0.07335932799969669,
+      "imu_delta_s": -0.0022435200003201317,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13878,
+      "seed_cells": 313,
+      "stamp": 2817.9438,
+      "age_s": 0.07532140800003617,
+      "imu_delta_s": -0.0013006720000703353,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19776,
+      "roi_points": 13689,
+      "seed_cells": 295,
+      "stamp": 2818.042575776,
+      "age_s": 0.07388124799990692,
+      "imu_delta_s": -0.001340383999831829,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14196,
+      "seed_cells": 314,
+      "stamp": 2818.143928224,
+      "age_s": 0.074908607999987,
+      "imu_delta_s": -0.0024579519999861077,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14003,
+      "seed_cells": 309,
+      "stamp": 2818.24382032,
+      "age_s": 0.07263420800018139,
+      "imu_delta_s": -0.0021260479998090887,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 13831,
+      "seed_cells": 300,
+      "stamp": 2818.345322848,
+      "age_s": 0.07112236800003302,
+      "imu_delta_s": -0.002412735999769211,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13971,
+      "seed_cells": 317,
+      "stamp": 2818.442591744,
+      "age_s": 0.07510704000014812,
+      "imu_delta_s": -0.0015664959996684047,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14085,
+      "seed_cells": 315,
+      "stamp": 2818.545011616,
+      "age_s": 0.07278364800004056,
+      "imu_delta_s": 0.0014271360000748246,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13896,
+      "seed_cells": 314,
+      "stamp": 2818.643773088,
+      "age_s": 0.07264870399967549,
+      "imu_delta_s": -0.0020715200002996426,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13949,
+      "seed_cells": 304,
+      "stamp": 2818.743860576,
+      "age_s": 0.07250355199994374,
+      "imu_delta_s": -0.0019321919999129022,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14159,
+      "seed_cells": 313,
+      "stamp": 2818.844639872,
+      "age_s": 0.07785568000008425,
+      "imu_delta_s": 0.0016555840002183686,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14043,
+      "seed_cells": 306,
+      "stamp": 2818.943784224,
+      "age_s": 0.07870851200004836,
+      "imu_delta_s": 0.0026164800001424737,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13934,
+      "seed_cells": 290,
+      "stamp": 2819.045684352,
+      "age_s": 0.07385062399998787,
+      "imu_delta_s": 0.0009568639998178696,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13993,
+      "seed_cells": 320,
+      "stamp": 2819.14271968,
+      "age_s": 0.07571222400019906,
+      "imu_delta_s": -0.001156960000116669,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14064,
+      "seed_cells": 305,
+      "stamp": 2819.245334848,
+      "age_s": 0.0725760000000264,
+      "imu_delta_s": 0.002571168000031321,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13774,
+      "seed_cells": 317,
+      "stamp": 2819.344241568,
+      "age_s": 0.07344518399986555,
+      "imu_delta_s": 0.0019959359997301362,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13891,
+      "seed_cells": 302,
+      "stamp": 2819.443948832,
+      "age_s": 0.0779959679998683,
+      "imu_delta_s": -0.0025234239997189434,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 14015,
+      "seed_cells": 315,
+      "stamp": 2819.543323392,
+      "age_s": 0.07459347200028787,
+      "imu_delta_s": -0.001653311999689322,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13983,
+      "seed_cells": 304,
+      "stamp": 2819.642718976,
+      "age_s": 0.07438972799991461,
+      "imu_delta_s": -0.001029120000112016,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13957,
+      "seed_cells": 291,
+      "stamp": 2819.743828832,
+      "age_s": 0.07411424000019906,
+      "imu_delta_s": -0.0005959039999652305,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13994,
+      "seed_cells": 317,
+      "stamp": 2819.845025504,
+      "age_s": 0.07285497599968949,
+      "imu_delta_s": 0.0013316159997884824,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13874,
+      "seed_cells": 315,
+      "stamp": 2820.143451904,
+      "age_s": 0.07478880000007848,
+      "imu_delta_s": -0.0004864960001214058,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14029,
+      "seed_cells": 320,
+      "stamp": 2820.242478208,
+      "age_s": 0.07695334399977583,
+      "imu_delta_s": -0.0011331200003041886,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13984,
+      "seed_cells": 306,
+      "stamp": 2820.34344544,
+      "age_s": 0.07562860799998816,
+      "imu_delta_s": -0.0018006400000558642,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19776,
+      "roi_points": 13675,
+      "seed_cells": 295,
+      "stamp": 2820.442663552,
+      "age_s": 0.07591683200007537,
+      "imu_delta_s": -0.0011372159997335984,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14020,
+      "seed_cells": 301,
+      "stamp": 2820.745254336,
+      "age_s": 0.07958736000000499,
+      "imu_delta_s": 0.0012205120001453906,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13842,
+      "seed_cells": 312,
+      "stamp": 2820.84268464,
+      "age_s": 0.08191660800002865,
+      "imu_delta_s": -0.001030975999583461,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13970,
+      "seed_cells": 316,
+      "stamp": 2820.943076992,
+      "age_s": 0.07619148799994946,
+      "imu_delta_s": -0.0013801599998259917,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13900,
+      "seed_cells": 310,
+      "stamp": 2821.043673472,
+      "age_s": 0.07521411199968497,
+      "imu_delta_s": -0.0008152959999279119,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13798,
+      "seed_cells": 295,
+      "stamp": 2821.142701792,
+      "age_s": 0.07701836800015371,
+      "imu_delta_s": -0.0015785280002091895,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14084,
+      "seed_cells": 316,
+      "stamp": 2821.242698048,
+      "age_s": 0.07750272000021141,
+      "imu_delta_s": -0.001341535999927146,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13822,
+      "seed_cells": 300,
+      "stamp": 2821.343190112,
+      "age_s": 0.07538403200032917,
+      "imu_delta_s": -0.00167788799990376,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13988,
+      "seed_cells": 305,
+      "stamp": 2821.44380928,
+      "age_s": 0.07635481599982086,
+      "imu_delta_s": -0.002279807999912009,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13891,
+      "seed_cells": 305,
+      "stamp": 2821.542658048,
+      "age_s": 0.07825852800033317,
+      "imu_delta_s": -0.0009675520000200777,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14057,
+      "seed_cells": 314,
+      "stamp": 2821.642699712,
+      "age_s": 0.08027087999971627,
+      "imu_delta_s": 0.001166943999578507,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13796,
+      "seed_cells": 301,
+      "stamp": 2821.742652544,
+      "age_s": 0.07508310399998663,
+      "imu_delta_s": -0.0015964479998729075,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13840,
+      "seed_cells": 306,
+      "stamp": 2821.842592576,
+      "age_s": 0.07440515200005393,
+      "imu_delta_s": -0.0011467839999568241,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14103,
+      "seed_cells": 312,
+      "stamp": 2821.945860416,
+      "age_s": 0.07194467199997234,
+      "imu_delta_s": 0.0008474239998577104,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13900,
+      "seed_cells": 300,
+      "stamp": 2822.04431136,
+      "age_s": 0.07301404800000455,
+      "imu_delta_s": -0.0024200960001508065,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13694,
+      "seed_cells": 301,
+      "stamp": 2822.143135904,
+      "age_s": 0.08472579200042674,
+      "imu_delta_s": -0.002009663999615441,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13980,
+      "seed_cells": 314,
+      "stamp": 2822.242695456,
+      "age_s": 0.07569014399996377,
+      "imu_delta_s": -0.0012182400000710913,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13940,
+      "seed_cells": 301,
+      "stamp": 2822.3426112,
+      "age_s": 0.07563779199972487,
+      "imu_delta_s": -0.0009890559999803372,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13867,
+      "seed_cells": 307,
+      "stamp": 2822.442696288,
+      "age_s": 0.07509590399968147,
+      "imu_delta_s": -0.0008587520001128723,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13746,
+      "seed_cells": 300,
+      "stamp": 2822.544497472,
+      "age_s": 0.07316659200023423,
+      "imu_delta_s": -0.003422719999889523,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14108,
+      "seed_cells": 327,
+      "stamp": 2822.643465888,
+      "age_s": 0.0753135680001833,
+      "imu_delta_s": -0.0021351999998842075,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13906,
+      "seed_cells": 303,
+      "stamp": 2822.742602816,
+      "age_s": 0.07456966400013698,
+      "imu_delta_s": -0.001047967999966204,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13760,
+      "seed_cells": 293,
+      "stamp": 2822.842603456,
+      "age_s": 0.076987680000002,
+      "imu_delta_s": -0.0009788799998204922,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13873,
+      "seed_cells": 322,
+      "stamp": 2822.943088832,
+      "age_s": 0.08253059200023927,
+      "imu_delta_s": -0.00033551999968040036,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14082,
+      "seed_cells": 322,
+      "stamp": 2823.043718208,
+      "age_s": 0.08658633599998211,
+      "imu_delta_s": -0.0024497919998793805,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13796,
+      "seed_cells": 302,
+      "stamp": 2823.1430408,
+      "age_s": 0.07599974400000065,
+      "imu_delta_s": -0.001481375999901502,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14030,
+      "seed_cells": 314,
+      "stamp": 2823.442574496,
+      "age_s": 0.07588480000003983,
+      "imu_delta_s": -0.0015026559999569145,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13945,
+      "seed_cells": 306,
+      "stamp": 2823.543331488,
+      "age_s": 0.07573273599973618,
+      "imu_delta_s": -0.002019391999965592,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14063,
+      "seed_cells": 329,
+      "stamp": 2823.643548192,
+      "age_s": 0.07478169600017281,
+      "imu_delta_s": -0.0021258879996821634,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13955,
+      "seed_cells": 311,
+      "stamp": 2823.742979968,
+      "age_s": 0.07490755200024068,
+      "imu_delta_s": -0.0007048959996609483,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13920,
+      "seed_cells": 296,
+      "stamp": 2823.843681088,
+      "age_s": 0.07346992000020691,
+      "imu_delta_s": 0.00254012799996417,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13798,
+      "seed_cells": 304,
+      "stamp": 2823.943381824,
+      "age_s": 0.07491734399991401,
+      "imu_delta_s": -0.002240287999939028,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14025,
+      "seed_cells": 315,
+      "stamp": 2824.043623264,
+      "age_s": 0.07548809599984452,
+      "imu_delta_s": -0.0019558399999368703,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13964,
+      "seed_cells": 319,
+      "stamp": 2824.14342304,
+      "age_s": 0.07360316799986322,
+      "imu_delta_s": -0.002430783999898267,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13702,
+      "seed_cells": 299,
+      "stamp": 2824.242529504,
+      "age_s": 0.07690995200027828,
+      "imu_delta_s": -0.001324159999967378,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13942,
+      "seed_cells": 318,
+      "stamp": 2824.342524544,
+      "age_s": 0.07484876800026541,
+      "imu_delta_s": -0.001422079999883863,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14008,
+      "seed_cells": 313,
+      "stamp": 2824.44273888,
+      "age_s": 0.07567011199989793,
+      "imu_delta_s": -0.0012275519998183881,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13933,
+      "seed_cells": 309,
+      "stamp": 2824.542597632,
+      "age_s": 0.07625232000009419,
+      "imu_delta_s": -0.0010615999999572523,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13871,
+      "seed_cells": 291,
+      "stamp": 2824.643406016,
+      "age_s": 0.07489712000005966,
+      "imu_delta_s": -0.002395615999830625,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14008,
+      "seed_cells": 319,
+      "stamp": 2824.743423104,
+      "age_s": 0.07482755199998792,
+      "imu_delta_s": -0.002378720000251633,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13934,
+      "seed_cells": 303,
+      "stamp": 2824.842500224,
+      "age_s": 0.08561251199989783,
+      "imu_delta_s": -0.0011143360002279223,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13770,
+      "seed_cells": 304,
+      "stamp": 2824.942471008,
+      "age_s": 0.08431740799960608,
+      "imu_delta_s": -0.0008939520002968493,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13910,
+      "seed_cells": 312,
+      "stamp": 2825.042456064,
+      "age_s": 0.07781622399988919,
+      "imu_delta_s": -0.0008277759998236434,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14102,
+      "seed_cells": 316,
+      "stamp": 2825.142443232,
+      "age_s": 0.08588518399983514,
+      "imu_delta_s": 0.0002391680000073393,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13841,
+      "seed_cells": 306,
+      "stamp": 2825.242509312,
+      "age_s": 0.07594048000009934,
+      "imu_delta_s": -0.0013433280000754166,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13853,
+      "seed_cells": 301,
+      "stamp": 2825.34273584,
+      "age_s": 0.07521321600006559,
+      "imu_delta_s": -0.001353407999886258,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14008,
+      "seed_cells": 319,
+      "stamp": 2825.44268832,
+      "age_s": 0.08363881600007517,
+      "imu_delta_s": -0.0011437439998189802,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13991,
+      "seed_cells": 306,
+      "stamp": 2825.543398336,
+      "age_s": 0.07495036799991794,
+      "imu_delta_s": -0.0017516799998702481,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13821,
+      "seed_cells": 305,
+      "stamp": 2825.642667072,
+      "age_s": 0.07719715199982602,
+      "imu_delta_s": -0.0016574720002608956,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13917,
+      "seed_cells": 310,
+      "stamp": 2825.743261248,
+      "age_s": 0.07528688000002148,
+      "imu_delta_s": -0.0020543040000120527,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14046,
+      "seed_cells": 306,
+      "stamp": 2825.843341184,
+      "age_s": 0.07664163199979157,
+      "imu_delta_s": -0.0019004159998985415,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13751,
+      "seed_cells": 308,
+      "stamp": 2825.942522784,
+      "age_s": 0.07621452800003681,
+      "imu_delta_s": -0.0009689920002529107,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13741,
+      "seed_cells": 292,
+      "stamp": 2826.043052352,
+      "age_s": 0.07630947200004812,
+      "imu_delta_s": -0.001343712000107189,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13986,
+      "seed_cells": 306,
+      "stamp": 2826.344806496,
+      "age_s": 0.0751582400002917,
+      "imu_delta_s": 0.002103136000187078,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13909,
+      "seed_cells": 309,
+      "stamp": 2826.442534368,
+      "age_s": 0.07822239999995872,
+      "imu_delta_s": -0.0009804159999475814,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14233,
+      "seed_cells": 308,
+      "stamp": 2826.542842048,
+      "age_s": 0.09548412800040751,
+      "imu_delta_s": -0.0009598079996067099,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19296,
+      "roi_points": 13278,
+      "seed_cells": 311,
+      "stamp": 2826.64258912,
+      "age_s": 0.07602095999982339,
+      "imu_delta_s": -0.001442944000245916,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20640,
+      "roi_points": 14340,
+      "seed_cells": 298,
+      "stamp": 2826.742734368,
+      "age_s": 0.0769478719998915,
+      "imu_delta_s": -0.0016669440001351177,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13988,
+      "seed_cells": 329,
+      "stamp": 2826.84335104,
+      "age_s": 0.07526553600018815,
+      "imu_delta_s": -0.001662111999849003,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13873,
+      "seed_cells": 305,
+      "stamp": 2826.944905536,
+      "age_s": 0.07591084800014869,
+      "imu_delta_s": 0.001858399999946414,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13976,
+      "seed_cells": 300,
+      "stamp": 2827.043705824,
+      "age_s": 0.07510291200014763,
+      "imu_delta_s": 0.002388192000125855,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13999,
+      "seed_cells": 311,
+      "stamp": 2827.14261856,
+      "age_s": 0.08299270399993475,
+      "imu_delta_s": -0.0016057599996202043,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14017,
+      "seed_cells": 312,
+      "stamp": 2827.242924576,
+      "age_s": 0.08465801600004852,
+      "imu_delta_s": -0.0013704960001632571,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13928,
+      "seed_cells": 307,
+      "stamp": 2827.343936256,
+      "age_s": 0.0824184640000567,
+      "imu_delta_s": -0.0022940799999560113,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13940,
+      "seed_cells": 314,
+      "stamp": 2827.443031488,
+      "age_s": 0.07747840000001815,
+      "imu_delta_s": -0.0013813119999213086,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14147,
+      "seed_cells": 322,
+      "stamp": 2827.543619328,
+      "age_s": 0.07859702399991875,
+      "imu_delta_s": 0.0022120959997664613,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13859,
+      "seed_cells": 310,
+      "stamp": 2827.642630368,
+      "age_s": 0.08881833599980382,
+      "imu_delta_s": -0.001431392000085907,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13810,
+      "seed_cells": 297,
+      "stamp": 2827.742856352,
+      "age_s": 0.08728729599988583,
+      "imu_delta_s": -0.0013318720002644113,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14025,
+      "seed_cells": 325,
+      "stamp": 2827.842822112,
+      "age_s": 0.08167648000016925,
+      "imu_delta_s": -0.0012699199996859534,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14100,
+      "seed_cells": 307,
+      "stamp": 2827.942614784,
+      "age_s": 0.07783193600016602,
+      "imu_delta_s": -0.0015770879999763565,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13844,
+      "seed_cells": 307,
+      "stamp": 2828.044803072,
+      "age_s": 0.07637670400026764,
+      "imu_delta_s": 0.0015725440002825053,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14136,
+      "seed_cells": 306,
+      "stamp": 2828.143295392,
+      "age_s": 0.07789638400026888,
+      "imu_delta_s": -0.0017581759998392954,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 14028,
+      "seed_cells": 323,
+      "stamp": 2828.244161024,
+      "age_s": 0.07555753600036041,
+      "imu_delta_s": -0.002474783999787178,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14037,
+      "seed_cells": 317,
+      "stamp": 2828.8429856,
+      "age_s": 0.07598598399999901,
+      "imu_delta_s": -0.0020626879995688796,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14057,
+      "seed_cells": 317,
+      "stamp": 2828.94897824,
+      "age_s": 0.07483359999969252,
+      "imu_delta_s": 0.0025808000000324682,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13963,
+      "seed_cells": 309,
+      "stamp": 2829.042605728,
+      "age_s": 0.0780427839999902,
+      "imu_delta_s": -0.0014175999999679334,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13927,
+      "seed_cells": 308,
+      "stamp": 2829.143441504,
+      "age_s": 0.1022267200000897,
+      "imu_delta_s": -0.0019026879999728408,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14164,
+      "seed_cells": 323,
+      "stamp": 2829.242883744,
+      "age_s": 0.08543721599971832,
+      "imu_delta_s": -0.0012510400001701782,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13853,
+      "seed_cells": 300,
+      "stamp": 2829.342490624,
+      "age_s": 0.07855139199955374,
+      "imu_delta_s": -0.0014804480001657794,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 13758,
+      "seed_cells": 293,
+      "stamp": 2829.443300608,
+      "age_s": 0.07683926400022756,
+      "imu_delta_s": -0.002227039999979752,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14024,
+      "seed_cells": 323,
+      "stamp": 2829.544152448,
+      "age_s": 0.07682745599959162,
+      "imu_delta_s": -0.0023711360004199378,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14080,
+      "seed_cells": 314,
+      "stamp": 2829.642733632,
+      "age_s": 0.09511171200028912,
+      "imu_delta_s": -0.0019909439997718437,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13873,
+      "seed_cells": 312,
+      "stamp": 2829.74267536,
+      "age_s": 0.07576729600032195,
+      "imu_delta_s": -0.001709312000002683,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14033,
+      "seed_cells": 308,
+      "stamp": 2829.843316928,
+      "age_s": 0.07809769599998617,
+      "imu_delta_s": -0.0018258879999848432,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 14121,
+      "seed_cells": 322,
+      "stamp": 2829.942731872,
+      "age_s": 0.07740329599982942,
+      "imu_delta_s": -0.0011976000000686327,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13953,
+      "seed_cells": 305,
+      "stamp": 2830.042853504,
+      "age_s": 0.07563756799982002,
+      "imu_delta_s": -0.0013492160001078446,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13861,
+      "seed_cells": 300,
+      "stamp": 2830.14262608,
+      "age_s": 0.07580172799998763,
+      "imu_delta_s": -0.0014508479998767143,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14048,
+      "seed_cells": 318,
+      "stamp": 2830.242674976,
+      "age_s": 0.07721676799974375,
+      "imu_delta_s": -0.0013512960003936314,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13929,
+      "seed_cells": 311,
+      "stamp": 2830.34279872,
+      "age_s": 0.07698012800028664,
+      "imu_delta_s": -0.0012029119998260285,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13801,
+      "seed_cells": 298,
+      "stamp": 2830.442647104,
+      "age_s": 0.07683414399980393,
+      "imu_delta_s": -0.0010391680002612702,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13999,
+      "seed_cells": 311,
+      "stamp": 2830.542576256,
+      "age_s": 0.07682000000022526,
+      "imu_delta_s": -0.0018648959999154613,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13813,
+      "seed_cells": 294,
+      "stamp": 2830.842730304,
+      "age_s": 0.10366153600034522,
+      "imu_delta_s": -0.0008891519996723218,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14031,
+      "seed_cells": 319,
+      "stamp": 2830.94273296,
+      "age_s": 0.07889971200029322,
+      "imu_delta_s": -0.0021147519996702613,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13996,
+      "seed_cells": 312,
+      "stamp": 2831.04259984,
+      "age_s": 0.0787516800000958,
+      "imu_delta_s": -0.001461375999951997,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13770,
+      "seed_cells": 298,
+      "stamp": 2831.14378752,
+      "age_s": 0.08432496000023093,
+      "imu_delta_s": -0.002411200000096869,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13955,
+      "seed_cells": 309,
+      "stamp": 2831.243571232,
+      "age_s": 0.091398560000016,
+      "imu_delta_s": -0.0019404159997975512,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13987,
+      "seed_cells": 306,
+      "stamp": 2831.34335056,
+      "age_s": 0.09210499199980404,
+      "imu_delta_s": -0.002450528000281338,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13839,
+      "seed_cells": 313,
+      "stamp": 2831.443825312,
+      "age_s": 0.09387046399979226,
+      "imu_delta_s": 0.0024402239996561548,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13886,
+      "seed_cells": 307,
+      "stamp": 2831.542559424,
+      "age_s": 0.08600367999997616,
+      "imu_delta_s": -0.0012054399999215093,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14071,
+      "seed_cells": 325,
+      "stamp": 2831.643534784,
+      "age_s": 0.07748255999968023,
+      "imu_delta_s": -0.002071423999950639,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13835,
+      "seed_cells": 294,
+      "stamp": 2831.742650144,
+      "age_s": 0.07680707200006509,
+      "imu_delta_s": -0.0017332160000478325,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13841,
+      "seed_cells": 297,
+      "stamp": 2831.842581952,
+      "age_s": 0.07846080000035727,
+      "imu_delta_s": -0.001392543999827467,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13964,
+      "seed_cells": 315,
+      "stamp": 2831.943245472,
+      "age_s": 0.08000857600018207,
+      "imu_delta_s": -0.0021596480000880547,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20160,
+      "roi_points": 14115,
+      "seed_cells": 305,
+      "stamp": 2832.042553088,
+      "age_s": 0.07832908799991856,
+      "imu_delta_s": -0.0011730560004252766,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13895,
+      "seed_cells": 315,
+      "stamp": 2832.143563936,
+      "age_s": 0.08661455999981627,
+      "imu_delta_s": -0.001934496000103536,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13741,
+      "seed_cells": 305,
+      "stamp": 2832.242490368,
+      "age_s": 0.08181132800018531,
+      "imu_delta_s": -0.0016953919998741185,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 14026,
+      "seed_cells": 313,
+      "stamp": 2832.34319584,
+      "age_s": 0.07855695999978707,
+      "imu_delta_s": -0.0022113600002739986,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19872,
+      "roi_points": 13803,
+      "seed_cells": 292,
+      "stamp": 2832.44321904,
+      "age_s": 0.07730032000017673,
+      "imu_delta_s": -0.0019925439996768546,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13925,
+      "seed_cells": 311,
+      "stamp": 2832.543167104,
+      "age_s": 0.07576431999996203,
+      "imu_delta_s": -0.001669887999923958,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13922,
+      "seed_cells": 317,
+      "stamp": 2832.642578016,
+      "age_s": 0.09188451200043346,
+      "imu_delta_s": -0.0018914879997282696,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 20064,
+      "roi_points": 13996,
+      "seed_cells": 314,
+      "stamp": 2832.742599616,
+      "age_s": 0.07706486400002177,
+      "imu_delta_s": -0.001673023999956058,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13805,
+      "seed_cells": 315,
+      "stamp": 2832.843429056,
+      "age_s": 0.07716985600018234,
+      "imu_delta_s": -0.00229603199977646,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 19968,
+      "roi_points": 13847,
+      "seed_cells": 300,
+      "stamp": 2832.943915136,
+      "age_s": 0.07813817599981121,
+      "imu_delta_s": -0.0025472640004409186,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    },
+    {
+      "valid": false,
+      "reason": "no_physically_supported_ground_plane",
+      "input": 16896,
+      "roi_points": 11234,
+      "seed_cells": 278,
+      "stamp": 2833.345060192,
+      "age_s": 0.21823715200025617,
+      "imu_delta_s": 0.011169760000029783,
+      "velocity_publishers": {
+        "/cmd_vel": 0,
+        "/cmd_vel_corrected": 0,
+        "/patrol/cmd_vel_raw": 0
+      }
+    }
+  ]
+}

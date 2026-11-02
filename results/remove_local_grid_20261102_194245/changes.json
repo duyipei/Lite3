@@ -1,0 +1,67 @@
+[
+  {
+    "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py",
+    "before_lines": 552,
+    "after_lines": 473
+  },
+  {
+    "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py",
+    "before_lines": 248,
+    "after_lines": 47
+  },
+  {
+    "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py",
+    "before_lines": 79,
+    "after_lines": 79
+  },
+  {
+    "path": "navigation/start_gate_disarmed.sh",
+    "before_lines": 143,
+    "after_lines": 128
+  },
+  {
+    "path": "navigation/obstacle_response.yaml",
+    "before_lines": 24,
+    "after_lines": 14
+  },
+  {
+    "path": "scripts/check_avoidance_readiness.py",
+    "before_lines": 151,
+    "after_lines": 139
+  },
+  {
+    "path": "scripts/record_avoidance_test.sh",
+    "before_lines": 43,
+    "after_lines": 43
+  },
+  {
+    "path": "tests/test_obstacle_response.py",
+    "before_lines": 281,
+    "after_lines": 153
+  },
+  {
+    "path": "tests/test_obstacle_sync_clearance.py",
+    "before_lines": 144,
+    "after_lines": 60
+  },
+  {
+    "path": "tests/test_costmap_sync.py",
+    "before_lines": 110,
+    "after_lines": 107
+  },
+  {
+    "path": "tests/test_factory_voa_mode.py",
+    "before_lines": 527,
+    "after_lines": 525
+  },
+  {
+    "path": "docs/2026-11-02_\u969c\u788d\u540c\u6b65\u4e0e\u8fd1\u969c\u7ed5\u884c\u4fee\u6539.md",
+    "before_lines": 85,
+    "after_lines": 88
+  },
+  {
+    "path": "docs/2026-11-02_FactoryOnly\u907f\u969c\u4fee\u6539\u4e0e\u6d4b\u8bd5\u64cd\u4f5c.md",
+    "before_lines": 141,
+    "after_lines": 143
+  }
+]

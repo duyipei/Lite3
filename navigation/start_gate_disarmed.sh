@@ -18,6 +18,7 @@ START_FACTORY=0
 START_PRIVATE=0
 REQUIRE_VOA_COSTMAP=false
 REQUIRE_LIDAR_COSTMAP=false
+COSTMAP_SYNC_ARGS=()
 case "$BACKEND" in
   factory_only)
     # Factory Only is a dynamic-costmap mode by definition; only an explicit
@@ -31,6 +32,9 @@ case "$BACKEND" in
     REQUIRE_VOA_COSTMAP=true
     REQUIRE_LIDAR_COSTMAP=false
     START_FACTORY=1
+    COSTMAP_SYNC_ARGS=(
+      -p require_costmap_sync:=true
+      -p safety_response_file:="$PROJECT/navigation/obstacle_response.yaml")
     ;;
   private_combined)
     [[ "$DYNAMIC_EXPLICIT" != 1 || "$DYNAMIC" == 1 ]] || { \
@@ -88,7 +92,8 @@ elif [[ "$START_PRIVATE" == 1 ]]; then
   setsid bash "$PROJECT/navigation/start_vendor_voa.sh" &
   voa_pid=$!
 fi
-setsid ros2 run lite3_patrol_nav velocity_gate --ros-args \
+setsid env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  ros2 run lite3_patrol_nav velocity_gate --ros-args \
   -p use_vendor_voa:=$([[ "$USE_VOA" == 1 ]] && echo true || echo false) \
   -p require_voa_costmap:="$REQUIRE_VOA_COSTMAP" \
   -p require_lidar_costmap:="$REQUIRE_LIDAR_COSTMAP" \
@@ -97,6 +102,7 @@ setsid ros2 run lite3_patrol_nav velocity_gate --ros-args \
   -p freshness_timeout_s:=1.5 \
   -p command_timeout_s:=0.5 \
   -p nav_command_wait_timeout_s:="$COMMAND_WAIT" \
+  "${COSTMAP_SYNC_ARGS[@]}" \
   -p max_linear_x:=0.15 -p max_reverse_x:=0.08 \
   -p max_linear_y:=0.0 -p max_angular_z:=0.40 &
 gate_pid=$!

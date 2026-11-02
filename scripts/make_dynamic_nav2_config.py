@@ -44,7 +44,8 @@ def voa_layer(source=None):
                  voxel_decay=1.5, mapping_mode=False,
                  publish_voxel_map=False)
     layer['voa_grid'] = dict(
-        topic='/patrol/voa/costmap_obstacles', sensor_frame='base_link',
+        topic='/patrol/voa/costmap_obstacles',
+        sensor_frame='patrol_voa_costmap_origin' if source is None else 'base_link',
         data_type='PointCloud2', observation_persistence=0.0,
         expected_update_rate=.5, clear_after_reading=True, enabled=True,
         min_obstacle_height=.4, max_obstacle_height=.6,
@@ -54,7 +55,20 @@ def voa_layer(source=None):
     return layer
 
 
-def build(config, behavior_tree, ground_relative=False, factory_only=False):
+def load_response_profile(path=None):
+    path = path or Path(__file__).resolve().parents[1]/'navigation/obstacle_response.yaml'
+    profile = yaml.safe_load(Path(path).read_text())
+    limits = {'local_update_hz': (5., 10.), 'global_update_hz': (1., 3.),
+              'costmap_publish_hz': (1., 5.), 'local_inflation_m': (.50, .65),
+              'global_inflation_m': (.50, .65), 'goal_xy_tolerance_m': (.08, .15),
+              'goal_extra_margin_m': (.03, .10), 'blocked_progress_timeout_s': (15.,45.)}
+    for key, (low, high) in limits.items():
+        if not low <= float(profile[key]) <= high:
+            raise ValueError('response profile outside tested bounds: '+key)
+    return profile
+
+
+def build(config, behavior_tree, ground_relative=False, factory_only=False, response_profile=None):
     result = copy.deepcopy(config)
     local = result['local_costmap']['local_costmap']['ros__parameters']
     global_map = result['global_costmap']['global_costmap']['ros__parameters']
@@ -127,8 +141,27 @@ def build(config, behavior_tree, ground_relative=False, factory_only=False):
         plugins.insert(plugins.index('inflation_layer'), 'voa_obstacle_layer')
         costmap['plugins'] = plugins
         # More clearance for unclassified moving obstacles; keep footprint.
-        costmap['inflation_layer']['inflation_radius'] = max(
-            .55, costmap['inflation_layer']['inflation_radius'])
+        # Slightly wider than the previous .55 m floor: the collision review
+        # showed the leg sweep can contact obstacles before the inflated
+        # footprint critic reacts. Keep this a small increase so narrow
+        # corridors remain plannable.
+        if factory_only:
+            profile = load_response_profile(response_profile)
+            key = 'local' if costmap is local else 'global'
+            costmap['inflation_layer']['inflation_radius'] = profile[key+'_inflation_m']
+            costmap['update_frequency'] = max(costmap['update_frequency'], profile[key+'_update_hz'])
+            costmap['publish_frequency'] = profile['costmap_publish_hz']
+        else:
+            costmap['inflation_layer']['inflation_radius'] = max(
+                .60, costmap['inflation_layer']['inflation_radius'])
+    if factory_only:
+        # The goal bridge reads this same effective overlay, not the baseline.
+        profile = load_response_profile(response_profile)
+        controller['goal_checker']['xy_goal_tolerance'] = profile['goal_xy_tolerance_m']
+        follow['xy_goal_tolerance'] = profile['goal_xy_tolerance_m']
+        # If a valid obstacle keeps the gate at zero, let Nav2's existing BT
+        # stop/wait/replan earlier. Never clear costmaps, spin or reverse out.
+        controller['progress_checker']['movement_time_allowance'] = profile['blocked_progress_timeout_s']
     navigator = result['bt_navigator']['ros__parameters']
     navigator['default_bt_xml_filename'] = str(behavior_tree)
     for plugin in ('nav2_rate_controller_bt_node', 'nav2_pipeline_sequence_bt_node',
@@ -149,6 +182,7 @@ def main():
     parser.add_argument('output_yaml', type=Path)
     parser.add_argument('--behavior-tree', required=True, type=Path)
     parser.add_argument('--ground-relative', action='store_true')
+    parser.add_argument('--response-profile', type=Path)
     parser.add_argument('--factory-only', action='store_true',
                         help='VOA camera grid only; no Mid-360 obstacle layer')
     args = parser.parse_args()
@@ -160,7 +194,7 @@ def main():
         parser.error('--factory-only and --ground-relative are mutually exclusive')
     config = build(yaml.safe_load(args.base_yaml.read_text()),
                    args.behavior_tree.resolve(), args.ground_relative,
-                   args.factory_only)
+                   args.factory_only, args.response_profile)
     args.output_yaml.parent.mkdir(parents=True, exist_ok=True)
     args.output_yaml.write_text(yaml.safe_dump(config, sort_keys=False))
     mode = 'factory-only' if args.factory_only else 'private-combined'

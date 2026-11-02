@@ -1,0 +1,9 @@
+1793426358.700495 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+Traceback (most recent call last):
+  File "/home/ysc/lite3_patrol_project/scripts/goal_pose_bridge.py", line 754, in <module>
+    main()
+  File "/home/ysc/lite3_patrol_project/scripts/goal_pose_bridge.py", line 739, in main
+    node = GoalPoseBridge()
+  File "/home/ysc/lite3_patrol_project/scripts/goal_pose_bridge.py", line 56, in __init__
+    nav = yaml.safe_load(Path(nav_file).read_text())
+TypeError: __init__() takes 1 positional argument but 2 were given

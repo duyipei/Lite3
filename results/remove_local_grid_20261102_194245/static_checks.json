@@ -1,0 +1,61 @@
+{
+  "syntax_checks": [
+    {
+      "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "navigation/start_gate_disarmed.sh",
+      "check": "bash -n only"
+    },
+    {
+      "path": "navigation/obstacle_response.yaml",
+      "check": "YAML parse only"
+    },
+    {
+      "path": "scripts/check_avoidance_readiness.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "scripts/record_avoidance_test.sh",
+      "check": "bash -n only"
+    },
+    {
+      "path": "tests/test_obstacle_response.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "tests/test_obstacle_sync_clearance.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "tests/test_costmap_sync.py",
+      "check": "Python syntax only"
+    },
+    {
+      "path": "tests/test_factory_voa_mode.py",
+      "check": "Python syntax only"
+    }
+  ],
+  "retired_gate_references": false,
+  "unit_tests_run": false,
+  "ros_nodes_started": false,
+  "navigation_or_motion_test": false,
+  "deployment_files": [
+    "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py",
+    "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py",
+    "patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py",
+    "navigation/start_gate_disarmed.sh",
+    "navigation/obstacle_response.yaml",
+    "scripts/check_avoidance_readiness.py",
+    "scripts/record_avoidance_test.sh"
+  ]
+}

@@ -5,11 +5,15 @@ import math
 import time
 import json
 import uuid
+from pathlib import Path as FilePath
+
+import numpy as np
 
 import rclpy
 from geometry_msgs.msg import PoseStamped
-from nav_msgs.msg import Path
+from nav_msgs.msg import OccupancyGrid, Path
 from nav2_msgs.action import ComputePathToPose, NavigateToPose
+from sensor_msgs.msg import PointCloud2
 from rclpy.action import ActionClient
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
@@ -34,6 +38,33 @@ class GoalPoseBridge(Node):
         self.last_goal_time = 0.0
         self.duplicate_goal_window_s = 1.0
         self.declare_parameter('active_map_id', '')
+        self.declare_parameter('goal_clearance_m', 0.45)
+        self.declare_parameter('require_voa_obstacles', False)
+        self.goal_clearance_m = float(self.get_parameter('goal_clearance_m').value)
+        self.declare_parameter('goal_nav2_file', '')
+        self.declare_parameter('goal_response_file', '')
+        self.goal_geometry = None
+        nav_file = self.get_parameter('goal_nav2_file').value
+        if nav_file:
+            import yaml
+            try:
+                from lite3_patrol_nav.obstacle_safety import footprint_extents, terminal_extents
+            except ModuleNotFoundError:
+                import sys
+                sys.path.insert(0, str(FilePath(__file__).resolve().parents[1]/'patrol_nav_ws/src/lite3_patrol_nav'))
+                from lite3_patrol_nav.obstacle_safety import footprint_extents, terminal_extents
+            nav = yaml.safe_load(FilePath(nav_file).read_text())
+            extents = np.maximum(*[footprint_extents(nav[k][k]['ros__parameters'])
+                                   for k in ('local_costmap', 'global_costmap')])
+            tolerance = nav['controller_server']['ros__parameters']['goal_checker']
+            profile = yaml.safe_load(FilePath(self.get_parameter('goal_response_file').value).read_text())
+            self.goal_geometry = terminal_extents(*extents, tolerance['yaw_goal_tolerance'],
+                                                 tolerance['xy_goal_tolerance'], profile['goal_extra_margin_m'])
+        self.require_voa_obstacles = bool(
+            self.get_parameter('require_voa_obstacles').value)
+        self.map_msg = None
+        self.voa_cloud = None
+        self.voa_cloud_time = 0.0
         self.mission_token = None
         self.mission_index = 0
         self.mission_last_heartbeat = 0.0
@@ -82,6 +113,16 @@ class GoalPoseBridge(Node):
             PoseStamped, "/patrol/goal_request", self.goal_callback, 10
         )
         self.create_subscription(Bool, "/patrol/armed", self.armed_callback, 10)
+        map_qos = QoSProfile(depth=1)
+        map_qos.reliability = ReliabilityPolicy.RELIABLE
+        map_qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
+        self.create_subscription(
+            OccupancyGrid, "/map", self.map_callback, map_qos)
+        voa_qos = QoSProfile(depth=1)
+        voa_qos.reliability = ReliabilityPolicy.RELIABLE
+        self.create_subscription(
+            PointCloud2, "/patrol/voa/costmap_obstacles",
+            self.voa_cloud_callback, voa_qos)
         self.create_service(Trigger, "/patrol/cancel_goal", self.cancel_callback)
         self.action_client = ActionClient(self, NavigateToPose, "/navigate_to_pose")
         self.planner_client = ActionClient(
@@ -325,6 +366,121 @@ class GoalPoseBridge(Node):
     def angle_delta(first, second):
         return math.atan2(math.sin(first - second), math.cos(first - second))
 
+    def map_callback(self, message):
+        self.map_msg = message
+
+    def voa_cloud_callback(self, message):
+        self.voa_cloud = message
+        self.voa_cloud_time = time.monotonic()
+
+    def geometry_clearance(self, x, y, yaw):
+        """Conservative oriented footprint over all accepted terminal poses."""
+        from lite3_patrol_nav.obstacle_safety import rectangle_hits
+        from costmap_ground_filter import cloud_xyz
+        message = self.map_msg
+        if message is None:
+            return False, 'map_not_ready'
+        try:
+            info = message.info
+            r, w, h = float(info.resolution), int(info.width), int(info.height)
+            p, q = info.origin.position, info.origin.orientation
+            if (message.header.frame_id != 'map' or not 0 < r <= .2 or w <= 0 or h <= 0
+                    or len(message.data) != w*h or not np.isfinite([p.x,p.y,q.x,q.y,q.z,q.w]).all()
+                    or abs(q.x)+abs(q.y) > 1e-6 or abs(q.z*q.z+q.w*q.w-1) > .01):
+                return False, 'invalid_map'
+            map_yaw = 2*math.atan2(q.z, q.w)
+            c, s = math.cos(map_yaw), math.sin(map_yaw)
+            rotation = np.array([[c,-s],[s,c]])
+            center = (np.array([x,y])-[p.x,p.y]) @ rotation
+            # Outside/unknown space is not established terminal clearance.
+            radius = math.hypot(*self.goal_geometry)+r/math.sqrt(2)
+            cols = np.arange(math.floor((center[0]-radius)/r), math.ceil((center[0]+radius)/r)+1)
+            rows = np.arange(math.floor((center[1]-radius)/r), math.ceil((center[1]+radius)/r)+1)
+            cc, rr = np.meshgrid(cols, rows)
+            world = np.column_stack(((cc.ravel()+.5)*r,(rr.ravel()+.5)*r)) @ rotation.T+[p.x,p.y]
+            selected = rectangle_hits(world, (x,y), yaw, self.goal_geometry, r/math.sqrt(2))
+            cc, rr = cc.ravel()[selected], rr.ravel()[selected]
+            if ((cc < 0)|(cc >= w)|(rr < 0)|(rr >= h)).any():
+                return False, 'goal_footprint_outside_map'
+            values = np.asarray(message.data).reshape(h,w)[rr,cc]
+            if (values < 0).any():
+                return False, 'goal_footprint_contains_unknown'
+            if (values >= 50).any():
+                return False, 'goal_footprint_hits_static_obstacle'
+            if self.require_voa_obstacles:
+                cloud = self.voa_cloud
+                now = time.monotonic()
+                if (cloud is None or cloud.header.frame_id != 'map'
+                        or now-self.voa_cloud_time > .5):
+                    return False, 'voa_obstacles_stale'
+                stamp = cloud.header.stamp.sec+cloud.header.stamp.nanosec/1e9
+                if not -.05 <= now-stamp <= .5:
+                    return False, 'voa_obstacles_stale'
+                points = cloud_xyz(cloud)
+                if not np.isfinite(points).all():
+                    return False, 'invalid_voa_cloud'
+                if rectangle_hits(points[:,:2], (x,y), yaw, self.goal_geometry, .05/math.sqrt(2)).any():
+                    return False, 'goal_footprint_hits_voa_obstacle'
+            return True, ''
+        except (ValueError, TypeError, AttributeError, IndexError, KeyError, BufferError, OverflowError):
+            return False, 'invalid_goal_geometry_input'
+
+    def goal_clearance(self, x, y, yaw=0.):
+        """Reject goals too close to static-map or VOA-camera obstacles."""
+        if self.goal_geometry is not None:
+            return self.geometry_clearance(x, y, yaw)
+        radius = self.goal_clearance_m
+        if radius <= 0.0:
+            return True, ''
+        message = self.map_msg
+        if message is None:
+            return False, 'map_not_ready'
+        info = message.info
+        resolution = float(info.resolution)
+        width, height = int(info.width), int(info.height)
+        origin_x = float(info.origin.position.x)
+        origin_y = float(info.origin.position.y)
+        if resolution <= 0.0 or width <= 0 or height <= 0:
+            return False, 'invalid_map'
+        col = math.floor((x-origin_x)/resolution)
+        row = math.floor((y-origin_y)/resolution)
+        if not (0 <= col < width and 0 <= row < height):
+            return False, 'goal_outside_map'
+
+        def cell(column, line):
+            if 0 <= column < width and 0 <= line < height:
+                return int(message.data[line*width+column])
+            return -1
+
+        if cell(col, row) != 0:
+            return False, 'goal_not_free'
+        span = int(math.ceil(radius/resolution))
+        for delta_row in range(-span, span+1):
+            for delta_col in range(-span, span+1):
+                if math.hypot(delta_col*resolution, delta_row*resolution) > radius:
+                    continue
+                if cell(col+delta_col, row+delta_row) >= 50:
+                    return False, 'goal_too_close_to_static_obstacle'
+        if not self.require_voa_obstacles:
+            return True, ''
+        cloud = self.voa_cloud
+        if (cloud is None or time.monotonic()-self.voa_cloud_time > .5
+                or cloud.header.frame_id != 'map'):
+            return False, 'voa_obstacles_stale'
+        step = int(cloud.point_step)
+        if step < 8 or step % 4 or not cloud.data:
+            return False, 'invalid_voa_cloud'
+        points = np.frombuffer(cloud.data, dtype=np.float32)
+        if points.size % (step//4):
+            return False, 'invalid_voa_cloud'
+        points = points.reshape(-1, step//4)
+        points = points[np.isfinite(points[:, :2]).all(axis=1)]
+        if len(points):
+            distance = np.hypot(points[:, 0]-x, points[:, 1]-y)
+            if float(distance.min()) <= radius:
+                return False, 'goal_too_close_to_voa_obstacle'
+        return True, ''
+
     def goal_callback(self, message):
         if self.disarm_required:
             return
@@ -349,6 +505,16 @@ class GoalPoseBridge(Node):
             )
             self.publish_state("REJECTED:NAV2_ACTION_UNAVAILABLE")
             return
+        if not self.mission_dispatch or self.goal_geometry is not None:
+            clearance_ok, clearance_reason = self.goal_clearance(
+                float(message.pose.position.x), float(message.pose.position.y),
+                self.pose_signature(message)[2])
+            if not clearance_ok:
+                self.get_logger().warn(
+                    "rejected /patrol/goal_request: {} (clearance {:.2f} m)".format(
+                        clearance_reason, self.goal_clearance_m))
+                self.publish_state("REJECTED:" + clearance_reason.upper())
+                return
 
         now = time.monotonic()
         pose = self.pose_signature(message)

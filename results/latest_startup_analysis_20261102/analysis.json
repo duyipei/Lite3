@@ -1,0 +1,27 @@
+{
+  "scope": "latest completed failed attempt; newer 18:46 attempt was still running during inspection",
+  "session": "logs/lite3_indoor_nav_patrol_map_20261031_01_area_v2_review_20261102_183902_2769",
+  "facts": {
+    "initialization_ready": "visual_plus_ndt_confirmed_0.060m_0.002rad",
+    "initialization_later_revoked": "odom_speed_1.086mps",
+    "odom_speed_threshold_mps": 1.0,
+    "goal_bridge_action_connected": true,
+    "gate_disarmed_started": true,
+    "voa_projection_received": true,
+    "arm_seen": false,
+    "launcher_exit_status": 1,
+    "localization_runtime": "vendor",
+    "icp": false
+  },
+  "limitations": [
+    "No raw odometry/leg history to distinguish real movement from registration jump",
+    "session_events records shell_exit status=1 but not the particular explicit die message; launcher exit check not uniquely identified",
+    "different vendor/audited binary hashes do not by themselves establish which patches vendor includes"
+  ],
+  "secondary": [
+    "VOA startup TF wait recovered",
+    "controller exit -11 occurred after group SIGINT cleanup; not evidence of initial crash",
+    "load/scheduling delays present, not isolated as sole cause"
+  ],
+  "no_motion_or_service_change": true
+}

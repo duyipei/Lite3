@@ -1,0 +1,17 @@
+1793426465.504430 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793426466.238828464] [patrol_goal_pose_bridge]: bridging isolated /patrol/goal_request to Foxy /navigate_to_pose; the first goal requires ARM and later goals run in the same explicitly armed session
+{"constructor_passed": true, "terminal_extents_m": [0.5426906349431999, 0.46455091023858186], "ros_path_type": "<class 'nav_msgs.msg._path.Path'>", "motor_publishers": {"/cmd_vel": 0, "/cmd_vel_corrected": 0, "/patrol/cmd_vel_raw": 0}, "action_server_ready": false, "scope": "real Foxy constructor, no navigation goal/ARM/motion; Nav2 not restarted"}
+Exception ignored in: <function ActionClient.__del__ at 0xffff75dfb790>
+Traceback (most recent call last):
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/action/client.py", line 605, in __del__
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/action/client.py", line 598, in destroy
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/handle.py", line 124, in __enter__
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/handle.py", line 106, in _get_capsule
+rclpy.handle.InvalidHandle: Tried to use a handle that has been destroyed.
+Exception ignored in: <function ActionClient.__del__ at 0xffff75dfb790>
+Traceback (most recent call last):
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/action/client.py", line 605, in __del__
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/action/client.py", line 598, in destroy
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/handle.py", line 124, in __enter__
+  File "/opt/ros/foxy/lib/python3.8/site-packages/rclpy/handle.py", line 106, in _get_capsule
+rclpy.handle.InvalidHandle: Tried to use a handle that has been destroyed.

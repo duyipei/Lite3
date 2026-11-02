@@ -18,6 +18,7 @@ fi
 VISUAL_MAP_ID=${LITE3_VISUAL_MAP_ID:-$DEFAULT_VISUAL_MAP_ID}
 VISUAL_BACKEND=${LITE3_VISUAL_BACKEND:-orb}
 VISUAL_SEARCH_STRATEGY=${LITE3_VISUAL_SEARCH_STRATEGY:-startup_then_global}
+GOAL_CLEARANCE_M=${LITE3_GOAL_CLEARANCE_M:-0.45}
 VISUAL_WAIT_TIMEOUT_S=${LITE3_VISUAL_WAIT_TIMEOUT_S:-240}
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
 DYNAMIC_OBSTACLES_EXPLICIT=${LITE3_DYNAMIC_OBSTACLES:+1}
@@ -58,6 +59,7 @@ RVIZ_POINTCLOUD_RELAY_PID=
 RVIZ_SSH_BRIDGE_PID=
 NAV_RESULT_NOTIFIER_PID=
 SESSION_ACTIVE=0
+LAST_CONTROL_COMMAND=none
 LOG_DIR=$PROJECT_DIR/logs/lite3_indoor_nav_${MAP_ID}_$(date +%Y%m%d_%H%M%S)_$$
 
 line() { printf '%s\n' '------------------------------------------------------------'; }
@@ -152,6 +154,8 @@ validate_inputs() {
     startup_then_global|startup_only|global) ;;
     *) die "LITE3_VISUAL_SEARCH_STRATEGY 只能是 startup_then_global、startup_only 或 global" ;;
   esac
+  [[ "$GOAL_CLEARANCE_M" =~ ^(0|0\.[0-9]+|1([.]0+)?)$ ]] || \
+    die "LITE3_GOAL_CLEARANCE_M 必须是 0~1 之间的米数"
   [[ "$VISUAL_WAIT_TIMEOUT_S" =~ ^[0-9]+$ ]] || \
     die "LITE3_VISUAL_WAIT_TIMEOUT_S 必须为整数秒"
   (( VISUAL_WAIT_TIMEOUT_S >= 30 && VISUAL_WAIT_TIMEOUT_S <= 300 )) || \
@@ -182,7 +186,9 @@ deploy_runtime() {
   (( ${#map_summaries[@]} > 0 )) || \
     die "本地缺少地图边界摘要: $local_map_dir/{traversability_summary,patrol_map_summary}.json"
   "${SSH[@]}" \
-    "mkdir -p '$REMOTE_PROJECT/scripts' '$REMOTE_PROJECT/navigation/$MAP_ID'"
+    "mkdir -p '$REMOTE_PROJECT/scripts' '$REMOTE_PROJECT/tools' '$REMOTE_PROJECT/navigation/$MAP_ID'"
+  scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
+    "$PROJECT_DIR/tools/build_factory_voa_safety_overlay.py" "$ROBOT:$REMOTE_PROJECT/tools/"
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$SCRIPT_DIR/make_dynamic_nav2_config.py" \
     "$SCRIPT_DIR/costmap_ground_filter.py" \
@@ -191,6 +197,9 @@ deploy_runtime() {
     "$SCRIPT_DIR/local_ground_costmap_bridge.py" \
     "$SCRIPT_DIR/capture_ground_reference.py" \
     "$SCRIPT_DIR/check_localization_runtime.py" \
+    "$SCRIPT_DIR/check_obstacle_costmap_consumption.py" \
+    "$SCRIPT_DIR/check_avoidance_readiness.py" \
+    "$SCRIPT_DIR/record_avoidance_test.sh" \
     "$SCRIPT_DIR/navigation_recovery_budget.py" \
     "$SCRIPT_DIR/voa_camera_tf.py" \
     "$SCRIPT_DIR/voa_costmap_bridge.py" \
@@ -202,6 +211,9 @@ deploy_runtime() {
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_protocol.py" \
+    "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py" \
+    "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py" \
+    "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/costmap_sync.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/patrol_runner.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/rgbd_visual_localizer.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/visual_matching.py" \
@@ -223,6 +235,7 @@ deploy_runtime() {
     "$PROJECT_DIR/navigation/start_factory_voa.sh" \
     "$PROJECT_DIR/navigation/navigate_dynamic_obstacles.xml" \
     "$PROJECT_DIR/navigation/vendor_voa.yaml" \
+    "$PROJECT_DIR/navigation/obstacle_response.yaml" \
     "$ROBOT:$REMOTE_PROJECT/navigation/"
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$local_map_dir/nav2_safe.yaml" \
@@ -246,7 +259,7 @@ cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/launch/patrol_navigation.launch.
   "$PROJECT/patrol_nav_ws/install_merged/share/lite3_patrol_nav/launch/patrol_navigation.launch.py"
 cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/launch/map_display.launch.py" \
   "$PROJECT/patrol_nav_ws/install_merged/share/lite3_patrol_nav/launch/map_display.launch.py"
-for module in velocity_gate voa_protocol rgbd_visual_localizer visual_matching learned_matching xfeat_matching visual_pose_initializer localization_consistency patrol_runner; do
+for module in velocity_gate voa_protocol voa_grid obstacle_safety costmap_sync rgbd_visual_localizer visual_matching learned_matching xfeat_matching visual_pose_initializer localization_consistency patrol_runner; do
   cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/$module.py" \
     "$PROJECT/patrol_nav_ws/install_merged/lib/python3.8/site-packages/lite3_patrol_nav/$module.py"
 done
@@ -1087,20 +1100,33 @@ stop_local_sessions() {
   return 0
 }
 
+session_event() {
+  # Log only controlled labels, never shell command text/credentials. Recording
+  # an error must not itself change the fail-closed exit behavior.
+  [[ -d "$LOG_DIR" ]] || return 0
+  printf '%s pid=%s event=%s status=%s control=%s\n' \
+    "$(date -Is)" "$BASHPID" "$1" "${2:-0}" "$LAST_CONTROL_COMMAND" \
+    >> "$LOG_DIR/session_events.log" 2>/dev/null || true
+}
+
 cleanup() {
+  local exit_reason=${1:-shell_exit}
+  local exit_status=${2:-0}
   if (( SESSION_ACTIVE == 1 )); then
     SESSION_ACTIVE=0
-    trap - EXIT INT TERM HUP
+    session_event "$exit_reason" "$exit_status"
+    trap - EXIT INT TERM HUP ERR
     echo
-    echo "[INFO] 正在 DISARM 并关闭本脚本启动的节点……"
+    echo "[INFO] 正在 DISARM 并关闭本脚本启动的节点（原因=$exit_reason，状态=$exit_status；详见 session_events.log）……"
     stop_local_sessions
   fi
 }
-trap cleanup EXIT
+trap 'session_event "command_error_line_${LINENO}" "$?"' ERR
+trap 'cleanup shell_exit "$?"' EXIT
 # An interrupt during preflight must exit, not resume startup after cleanup.
-trap 'cleanup; exit 130' INT
-trap 'cleanup; exit 143' TERM
-trap 'cleanup; exit 129' HUP
+trap 'cleanup signal_INT 130; exit 130' INT
+trap 'cleanup signal_TERM 143; exit 143' TERM
+trap 'cleanup signal_HUP 129; exit 129' HUP
 
 show_failure_logs() {
   local file
@@ -1335,8 +1361,16 @@ start_session() {
   fi
 
   title "启动轻量 Foxy 导航目标桥"
+  local goal_require_voa=false
+  local goal_geometry_args=''
+  if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+    goal_require_voa=true
+  fi
+  if [[ "$OBSTACLE_BACKEND" == factory_only ]]; then
+    goal_geometry_args="-p goal_nav2_file:='$REMOTE_PROJECT/navigation/$MAP_ID/nav2_dynamic.yaml' -p goal_response_file:='$REMOTE_PROJECT/navigation/obstacle_response.yaml'"
+  fi
   "${SSH_BG[@]}" \
-    "source '$REMOTE_PROJECT/navigation/patrol_env.sh'; exec python3 '$REMOTE_PROJECT/scripts/goal_pose_bridge.py' --ros-args -p active_map_id:='$MAP_ID'" \
+    "source '$REMOTE_PROJECT/navigation/patrol_env.sh'; exec python3 '$REMOTE_PROJECT/scripts/goal_pose_bridge.py' --ros-args -p active_map_id:='$MAP_ID' -p goal_clearance_m:='$GOAL_CLEARANCE_M' -p require_voa_obstacles:='$goal_require_voa' $goal_geometry_args" \
     >"$LOG_DIR/goal_bridge.log" 2>&1 &
   GOAL_BRIDGE_SSH_PID=$!
   sleep 1
@@ -1346,7 +1380,7 @@ start_session() {
   fi
 
   title "启动默认 DISARMED 的速度门"
-  "${SSH_BG[@]}" "$(factory_env_prefix) LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_USE_VENDOR_VOA='$USE_VENDOR_VOA' LITE3_OBSTACLE_BACKEND='$OBSTACLE_BACKEND' exec bash '$REMOTE_PROJECT/navigation/start_gate_disarmed.sh'" \
+  "${SSH_BG[@]}" "$(factory_env_prefix) LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_USE_VENDOR_VOA='$USE_VENDOR_VOA' LITE3_OBSTACLE_BACKEND='$OBSTACLE_BACKEND' exec bash '$REMOTE_PROJECT/navigation/start_gate_disarmed.sh'" \
     >"$LOG_DIR/velocity_gate.log" 2>&1 &
   GATE_SSH_PID=$!
   sleep 1
@@ -1388,7 +1422,15 @@ start_session() {
 EOF
 
   while true; do
-    read -r -p "导航控制> " command || break
+    if ! read -r -p "导航控制> " command; then
+      session_event control_input_eof
+      break
+    fi
+    case ${command^^} in
+      STATUS|CLEAR|ARM|DISARM|CANCEL|QUIT|Q|EXIT) LAST_CONTROL_COMMAND=${command^^} ;;
+      *) LAST_CONTROL_COMMAND=invalid ;;
+    esac
+    session_event control_command
     case ${command^^} in
       STATUS)
         if ! status_snapshot; then

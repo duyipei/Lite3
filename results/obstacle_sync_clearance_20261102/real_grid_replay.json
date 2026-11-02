@@ -1,0 +1,338 @@
+{
+  "scope": "saved real standing grids; same source age and velocity; not motion/ground truth obstacle acceptance",
+  "frames": 30,
+  "holdout_frames": 10,
+  "changed_scale_count": 0,
+  "rows": [
+    {
+      "file": "2565.103150.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2567.149698.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2569.244552.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2571.255909.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2573.265638.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2575.275375.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2577.281049.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2579.279150.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2581.316315.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2583.347579.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2585.386511.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2587.385522.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2589.418392.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2591.419331.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2593.421454.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2595.456528.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2597.459348.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2599.494490.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2601.499824.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2603.528149.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2605.533031.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2607.570374.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2609.601423.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2611.634452.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2613.636902.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2615.636643.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2617.640093.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2619.639959.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2621.643351.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    },
+    {
+      "file": "2623.676779.npz",
+      "before": {
+        "scale": 0.0,
+        "reason": "obstacle_or_unknown_in_swept_footprint"
+      },
+      "after": {
+        "scale": 0.0,
+        "reason": "unknown_in_swept_footprint_wait_observation"
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+[INFO] Nav2 zero-speed command-wait budget: 60.0s
+[INFO] obstacle backend: factory_only (vendor_voa=0 require_voa_costmap=true require_lidar_costmap=false)
+[INFO] factory VOA package prefix: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa
+[INFO] factory VOA setup: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/setup.bash
+[INFO] factory VOA executable: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/lib/voa/voa_composition
+[INFO] factory launch file: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/voa_launch.py (NOT started by this script)
+[INFO] factory launch declares a static TF; voa_camera_tf.py reuses a matching existing TF or refuses a conflict
+[INFO] voa_ros2.service state: inactive
+[INFO] voa_ros2.service ExecStart: /bin/bash  /home/ysc/lite_cog_ros2/system/scripts/voa/start_voa.sh
+[PASS] factory VOA environment and exclusivity checks passed
+1793427010.955253 [0] velocity_g: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793427012.504533616] [patrol_velocity_gate]: velocity gate started DISARMED; non-zero output is blocked
+[INFO] [1793427012.517113584] [patrol_velocity_gate]: zero-command heartbeat active on /cmd_vel_corrected
+[INFO] factory VOA package prefix: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa
+[INFO] factory VOA setup: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/setup.bash
+[INFO] factory VOA executable: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/lib/voa/voa_composition
+[INFO] factory launch file: /home/ysc/lite3_patrol_project/factory_voa_safety_ws/install/voa/share/voa/launch/voa_launch.py (NOT started by this script)
+[INFO] factory launch declares a static TF; voa_camera_tf.py reuses a matching existing TF or refuses a conflict
+[INFO] voa_ros2.service state: inactive
+[INFO] voa_ros2.service ExecStart: /bin/bash  /home/ysc/lite_cog_ros2/system/scripts/voa/start_voa.sh
+1793427026.855207 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+1793427027.555674 [0] voa_compos: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793427028.272447312] [realsense_point_cloud_processer]: timeout_s_pc is: 0.500000
+[INFO] [1793427028.319728272] [realsense_point_cloud_processer]: pass_x_min is: 0.000000
+[INFO] [1793427028.320748336] [realsense_point_cloud_processer]: pass_x_max is: 3.000000
+[INFO] [1793427028.322651760] [realsense_point_cloud_processer]: pc_process_params_.pass_x_max: 3.000000
+[INFO] [1793427028.324516368] [realsense_point_cloud_processer]: pass_y_min is: -1.500000
+[INFO] [1793427028.342799536] [realsense_point_cloud_processer]: pass_y_max is: 1.500000
+[INFO] [1793427028.343436976] [realsense_point_cloud_processer]: leaf_size is: 0.050000
+Warning: Invalid frame ID "base_link" passed to canTransform argument target_frame - frame does not exist
+         at line 133 in /tmp/binarydeb/ros-foxy-tf2-0.13.14/src/buffer_core.cpp
+[WARN] [1793427028.508755632] [realsense_point_cloud_processer]: Waiting for transform from camera_depth_optical_frame to base_link
+[WARN] [1793427029.510229680] [realsense_point_cloud_processer]: Waiting for transform from camera_depth_optical_frame to base_link
+1793427029.876271 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793427030.510599408] [realsense_point_cloud_processer]: Waiting for transform from camera_depth_optical_frame to base_link
+[INFO] [1793427030.911600944] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427030.919398640] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.455s
+[WARN] [1793427031.511232784] [realsense_point_cloud_processer]: Waiting for transform from camera_depth_optical_frame to base_link
+[INFO] [1793427032.027326640] [patrol_voa_camera_mount]: Publishing factory base_link -> camera_link transform
+[INFO] [1793427032.513918512] [realsense_point_cloud_processer]: PointCloudProcessor for camera_depth_optical_frame initialized!
+[INFO] [1793427032.747934096] [grid_mapper]: timeout_s_gm is: 0.500000
+[INFO] [1793427032.756931728] [grid_mapper]: height is: 6
+[INFO] [1793427032.762792496] [grid_mapper]: width is: 4
+[INFO] [1793427032.770549872] [grid_mapper]: resolution is: 0.050000
+[INFO] [1793427032.775274352] [grid_mapper]: use_cv is: 1
+[INFO] [1793427032.783429552] [grid_mapper]: use_cuda is: 0
+[INFO] [1793427032.791985808] [grid_mapper]: is_dilate is: 1
+[INFO] [1793427032.811333296] [grid_mapper]: dilate_kernel_size is: 3
+[INFO] [1793427032.812808688] [grid_mapper]: is_erode is: 0
+[INFO] [1793427032.819632112] [grid_mapper]: erode_kernel_size is: 3
+[INFO] [1793427032.846501040] [grid_mapper]: point_cloud_subs_.size(): 1
+[INFO] [1793427033.054319216] [safety_controller]: timeout_s_sc is: 0.500000
+[INFO] [1793427033.062138384] [safety_controller]: kMaxOdomBufferLength is: 10
+[INFO] [1793427033.064901872] [safety_controller]: kMaxPredictTimes is: 10
+[INFO] [1793427033.068145808] [safety_controller]: kPredictDtS is: 0.150000
+[INFO] [1793427033.071614896] [safety_controller]: kSafetyDtS is: 0.300000
+[INFO] [1793427033.075003856] [safety_controller]: kRobotLengthM is: 0.700000
+[INFO] [1793427033.081258064] [safety_controller]: kRobotWidthM is: 0.500000
+[INFO] [1793427033.086912848] [safety_controller]: kObstatleHeight is: 0.100000
+[INFO] [1793427033.091113616] [safety_controller]: kP4Vx is: 0.010000
+[INFO] [1793427033.095972784] [safety_controller]: kP4Vyaw is: 0.010000
+[INFO] [1793427033.185140848] [safety_controller]: SafetyController initialized!
+[INFO] [1793427033.497296720] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] first fresh projection published
+[INFO] [1793427033.500982416] [patrol_velocity_gate]: [VOA_COSTMAP] fresh obstacle projection received
+[INFO] [1793427033.507680944] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.234s
+[INFO] [1793427035.513813616] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 455, "unknown_constraints": 0, "unknown": 8599, "source_age_s": 0.1216, "compensated": 22}
+[INFO] [1793427039.156836720] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] heartbeat_gap age=0.364 pending=16 anchors=12 fail_project=87 fail_grid=0 last=ExtrapolationException:Lookup would require extrapolation into the future.  Requested time 4177.715109 
+[INFO] [1793427040.520361552] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 448, "unknown_constraints": 0, "unknown": 8643, "source_age_s": 0.094, "compensated": 87}
+[INFO] [1793427045.560346320] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427050.551183024] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427055.570424272] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427060.559598768] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427065.578551984] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427070.636345616] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 438, "unknown_constraints": 0, "unknown": 8652, "source_age_s": 0.123, "compensated": 587}
+[INFO] [1793427075.672559600] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 434, "unknown_constraints": 0, "unknown": 8590, "source_age_s": 0.1384, "compensated": 681}
+[INFO] [1793427080.721404400] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 453, "unknown_constraints": 0, "unknown": 8613, "source_age_s": 0.0864, "compensated": 782}
+[INFO] [1793427085.669375440] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427090.682037680] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427095.703599632] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427100.702400912] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427105.705105872] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427110.748655088] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 445, "unknown_constraints": 0, "unknown": 8625, "source_age_s": 0.0773, "compensated": 1350}
+[INFO] [1793427115.777853744] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 457, "unknown_constraints": 0, "unknown": 8645, "source_age_s": 0.1145, "compensated": 1442}
+[INFO] [1793427120.767698832] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 451, "unknown_constraints": 0, "unknown": 8624, "source_age_s": 0.0882, "compensated": 1549}
+[INFO] [1793427125.804615088] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 441, "unknown_constraints": 0, "unknown": 8598, "source_age_s": 0.0736, "compensated": 1644}
+[INFO] [1793427128.388644784] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.337s
+[INFO] [1793427128.414674832] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] heartbeat_gap age=0.408 pending=16 anchors=12 fail_project=1255 fail_grid=0 last=ExtrapolationException:Lookup would require extrapolation into the future.  Requested time 4266.696200 
+[INFO] [1793427130.762977424] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[INFO] [1793427135.803661392] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 434, "unknown_constraints": 0, "unknown": 8620, "source_age_s": 0.089, "compensated": 1819}
+[INFO] [1793427140.877731440] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 440, "unknown_constraints": 0, "unknown": 8616, "source_age_s": 0.1271, "compensated": 1906}
+[INFO] [1793427145.848869488] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 454, "unknown_constraints": 0, "unknown": 8600, "source_age_s": 0.0938, "compensated": 1982}
+[WARN] [1793427150.141357936] [patrol_velocity_gate]: velocity output ARMED by explicit service call
+[INFO] [1793427150.848054576] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF
+[ERROR] [1793427150.931880688] [patrol_velocity_gate]: gate fault: local_grid_stale_during_evaluation
+[INFO] [1793427155.868116944] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 451, "unknown_constraints": 0, "unknown": 8618, "source_age_s": 0.0832, "compensated": 2133}
+[INFO] [1793427160.935871888] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 443, "unknown_constraints": 0, "unknown": 8632, "source_age_s": 0.1222, "compensated": 2219}
+[INFO] [1793427165.905046064] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 456, "unknown_constraints": 0, "unknown": 8658, "source_age_s": 0.1152, "compensated": 2310}
+[INFO] [1793427170.913010832] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 451, "unknown_constraints": 0, "unknown": 8631, "source_age_s": 0.1145, "compensated": 2401}
+[INFO] [1793427174.627317552] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.224s
+[INFO] [1793427175.976857200] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {"cells": 9600, "obstacles": 445, "unknown_constraints": 0, "unknown": 8620, "source_age_s": 0.1035, "compensated": 2470}
+[ERROR] [1793427178.352421328] [patrol_velocity_gate]: gate fault: local_grid_stale_during_evaluation
+[INFO] [1793427178.356244784] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.241s
+[INFO] [1793427180.919901904] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF

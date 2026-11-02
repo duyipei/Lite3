@@ -26,6 +26,7 @@ import numpy as np
 
 TOPIC = '/patrol/voa/costmap_obstacles'
 HEARTBEAT = '/patrol/voa/costmap_heartbeat'
+MARKING_FRAME = 'patrol_voa_costmap_origin'
 MAX_AGE = .5
 MAX_PREDICTION = .5
 # Keep an explicit margin below the velocity gate's 0.5 s freshness so a
@@ -47,63 +48,13 @@ def fresh(stamp, now, max_age=MAX_AGE):
     return math.isfinite(stamp) and stamp > 0 and -.05 <= now - stamp <= max_age
 
 
-def grid_obstacles(msg, minimum, include_unknown=False):
-    """Decode grid_map Eigen layout and circular indices, not OccupancyGrid."""
-    if msg.header.frame_id != 'robot_foot_print':
-        raise ValueError('expected factory robot_foot_print elevation grid')
-    if (len(msg.layers) != len(msg.data) or msg.layers.count('elevation') != 1
-            or not math.isfinite(minimum) or minimum <= 0):
-        raise ValueError('missing/invalid elevation layer or obstacle threshold')
-    info = msg.info
-    r, lx, ly = info.resolution, info.length_x, info.length_y
-    pose = info.pose
-    p, q = pose.position, pose.orientation
-    if (not all(math.isfinite(v) for v in (r, lx, ly, p.x, p.y, p.z, q.x, q.y, q.z, q.w))
-            or not .01 <= r <= .2 or not 0 < lx <= 10 or not 0 < ly <= 10
-            or max(abs(p.z), abs(q.x), abs(q.y), abs(q.z), abs(abs(q.w)-1)) > 1e-6):
-        raise ValueError('unsupported grid geometry/orientation')
-    nx, ny = round(lx/r), round(ly/r)
-    if nx <= 0 or ny <= 0 or not np.allclose([nx*r, ny*r], [lx, ly], atol=1e-6):
-        raise ValueError('grid size is not an integral number of cells')
-    layer = msg.data[msg.layers.index('elevation')]
-    dims = layer.layout.dim
-    if len(dims) != 2:
-        raise ValueError('grid must have two dimensions')
-    labels = tuple(d.label for d in dims)
-    if labels == ('column_index', 'row_index'):
-        sizes, order = (ny, nx), 'F'
-    elif labels == ('row_index', 'column_index'):
-        sizes, order = (nx, ny), 'C'
-    else:
-        raise ValueError('unknown grid matrix storage order')
-    if (tuple(d.size for d in dims) != sizes
-            or tuple(d.stride for d in dims) != (nx*ny, sizes[1])):
-        raise ValueError('grid matrix size/stride mismatch')
-    offset = layer.layout.data_offset
-    if offset < 0 or len(layer.data) != offset + nx*ny:
-        raise ValueError('grid matrix data size mismatch')
-    elevation = np.asarray(layer.data, dtype=np.float32)[offset:].reshape((nx, ny), order=order)
-    start = (msg.outer_start_index, msg.inner_start_index)
-    if not (0 <= start[0] < nx and 0 <= start[1] < ny):
-        raise ValueError('invalid circular grid start index')
-    # The factory compares float elevation (promoted to double) strictly >.
-    occupied = np.zeros(elevation.shape, dtype=bool)
-    finite = np.isfinite(elevation)
-    occupied[finite] = elevation[finite].astype(np.float64) > minimum
-    # VOA rejects trajectories through unobserved cells. Expose those same
-    # cells to the planner as conservative constraints, separately counted.
-    # Zero below is a projection reference at the foot plane, not a measured
-    # obstacle height or a claim that unknown space is free.
-    if include_unknown:
-        occupied |= ~finite
-    row, col = np.nonzero(occupied)
-    ix, iy = (row-start[0]) % nx, (col-start[1]) % ny
-    xyz = np.column_stack((p.x + lx/2 - (ix+.5)*r,
-                           p.y + ly/2 - (iy+.5)*r,
-                           np.where(finite[row,col],elevation[row,col],0.)))
-    return xyz, {'cells': nx*ny, 'obstacles': len(xyz),
-                 'unknown_constraints': int(np.count_nonzero(~finite)) if include_unknown else 0,
-                 'unknown': int(np.count_nonzero(~np.isfinite(elevation)))}
+# The same decoder is used inside the velocity gate, before any map TF wait.
+try:
+    from lite3_patrol_nav.voa_grid import grid_obstacles
+except ModuleNotFoundError:
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'patrol_nav_ws/src/lite3_patrol_nav'))
+    from lite3_patrol_nav.voa_grid import grid_obstacles
 
 
 def transform_matrix(transform):
@@ -154,12 +105,27 @@ def project_to_map(xyz, transform):
     return output.astype('<f4')
 
 
+def marking_origin(transform):
+    """2-D marking frame, NOT a physical sensor/extrinsic/registration TF.
+
+    Cloud Z is synthetic .5, so range must also originate in that same plane.
+    Use the very pose that projected XY, never a later/older localization pose.
+    """
+    matrix=transform if isinstance(transform,np.ndarray) else transform_matrix(transform)
+    if matrix.shape!=(4,4) or not np.isfinite(matrix).all():
+        raise ValueError('invalid marking origin')
+    yaw=math.atan2(matrix[1,0],matrix[0,0])
+    return (float(matrix[0,3]),float(matrix[1,3]),.5), (0.,0.,math.sin(yaw/2),math.cos(yaw/2))
+
+
 class Bridge:
     def __init__(self, node, buffer, cloud_type, field_type, header_type, time_type, minimum,
-                 output_topic=TOPIC, heartbeat_topic=HEARTBEAT):
+                 output_topic=TOPIC, heartbeat_topic=HEARTBEAT, include_unknown=True, origin_publisher=None):
         self.node, self.buffer = node, buffer
         self.Cloud, self.Field, self.Header, self.Time = cloud_type, field_type, header_type, time_type
         self.minimum = minimum
+        self.include_unknown = include_unknown
+        self.origin_publisher = origin_publisher
         self.pending = deque(maxlen=16)
         self.last_received = self.last_published = 0.
         self.last_publish_time = 0.
@@ -175,6 +141,7 @@ class Bridge:
         # MultiThreadedExecutor runs the TF listener, grid callback and timer
         # concurrently; this lock keeps Bridge state consistent.
         self.lock = threading.RLock()
+        self.publish_lock = threading.Lock()
         self.publisher = node.create_publisher(cloud_type, output_topic, 1)
         self.heartbeat = node.create_publisher(header_type, heartbeat_topic, 1)
 
@@ -208,12 +175,21 @@ class Bridge:
         stamp = stamp_seconds(msg.header.stamp)
         # Both leg transforms must exist at their exact requested timestamps.
         # Missing/stale odometry never refreshes the obstacle heartbeat.
-        for anchor in reversed(self.anchors):
+        with self.lock:
+            anchors = tuple(reversed(self.anchors))
+        if not anchors:
+            raise ValueError('no recent NDT anchor')
+        # This endpoint is common to every anchor. If the grid-time leg TF is
+        # pending, trying it twelve times cannot help; try an older grid next.
+        leg1 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', target_time)
+        for anchor in anchors:
             age = stamp-stamp_seconds(anchor.header.stamp)
             if not 0 <= age <= MAX_PREDICTION:
                 continue
-            leg0 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', self.Time.from_msg(anchor.header.stamp))
-            leg1 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', target_time)
+            try:
+                leg0 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', self.Time.from_msg(anchor.header.stamp))
+            except Exception:
+                continue  # An older bounded anchor can still have both TFs.
             pose = anchor.pose.pose
             result = compensated_pose(SimpleNamespace(translation=pose.position, rotation=pose.orientation),
                                       leg0.transform, leg1.transform)
@@ -222,67 +198,88 @@ class Bridge:
         raise ValueError('no recent NDT anchor with timestamped leg odometry')
 
     def publish(self):
+        # A delayed timer must not occupy the executor's other worker waiting
+        # for a big lock. Leave it free to receive TF, registration and grids.
+        if not self.publish_lock.acquire(blocking=False):
+            return
+        try:
+            self._publish()
+        finally:
+            self.publish_lock.release()
+
+    def _publish(self):
+        now = time.monotonic()
+        if self.last_timer and now - self.last_timer > .2:
+            self.node.get_logger().info(
+                '[VOA_COSTMAP] timer_delayed {:.3f}s'.format(now - self.last_timer))
+        self.last_timer = now
+        # NDT runs at 10 Hz. Keep a bounded backlog so a newer camera frame
+        # does not continually replace the one waiting for interpolated TF.
+        reason = 'waiting for fresh grid and matching NDT TF'
         with self.lock:
-            now = time.monotonic()
-            if self.last_timer and now - self.last_timer > .2:
-                self.node.get_logger().info(
-                    '[VOA_COSTMAP] timer_delayed {:.3f}s'.format(now - self.last_timer))
-            self.last_timer = now
-            # NDT runs at 10 Hz. Keep a bounded backlog so a newer camera frame
-            # does not continually replace the one waiting for interpolated TF.
-            reason = 'waiting for fresh grid and matching NDT TF'
-            for msg in list(reversed(self.pending))[:MAX_PENDING_TRIES]:
-                stamp = stamp_seconds(msg.header.stamp)
-                if stamp <= self.last_published or not fresh(stamp, now, PUBLISH_MAX_AGE):
-                    continue
+            candidates = list(reversed(self.pending))[:MAX_PENDING_TRIES]
+        for msg in candidates:
+            stamp = stamp_seconds(msg.header.stamp)
+            if stamp <= self.last_published or not fresh(stamp, now, PUBLISH_MAX_AGE):
+                continue
+            try:
+                transform = self.projection_transform(msg)
+            except Exception as error:
+                self.fail_project += 1
+                self.last_failure = '{}:{}'.format(type(error).__name__, str(error)[:80])
+                continue  # Never fall back to latest pose for an older frame.
+            try:
+                xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=self.include_unknown)
+                points = project_to_map(xyz, transform)
+            except (ValueError, TypeError, AttributeError, IndexError) as error:
+                self.fail_grid += 1
+                self.last_failure = 'grid:{}:{}'.format(type(error).__name__, str(error)[:80])
+                continue
+            output = self.Cloud()
+            output.header.stamp = msg.header.stamp
+            output.header.frame_id = 'map'
+            output.height, output.width = 1, len(points)
+            output.fields = [self.Field(name=k, offset=i*4, datatype=self.Field.FLOAT32, count=1)
+                             for i, k in enumerate(('x', 'y', 'z'))]
+            output.is_bigendian, output.is_dense = False, True
+            output.point_step, output.row_step = 12, 12*len(points)
+            output.data = points.tobytes()
+            published_at = time.monotonic()
+            if not fresh(stamp, published_at, PUBLISH_MAX_AGE):
+                continue
+            if self.origin_publisher is not None:
                 try:
-                    transform = self.projection_transform(msg)
+                    self.origin_publisher(msg.header.stamp,transform)
                 except Exception as error:
                     self.fail_project += 1
-                    self.last_failure = '{}:{}'.format(type(error).__name__, str(error)[:80])
-                    continue  # Never fall back to latest pose for an older frame.
-                try:
-                    xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=True)
-                    points = project_to_map(xyz, transform)
-                except (ValueError, TypeError, AttributeError, IndexError) as error:
-                    self.fail_grid += 1
-                    self.last_failure = 'grid:{}:{}'.format(type(error).__name__, str(error)[:80])
-                    continue
-                output = self.Cloud()
-                output.header.stamp = msg.header.stamp
-                output.header.frame_id = 'map'
-                output.height, output.width = 1, len(points)
-                output.fields = [self.Field(name=k, offset=i*4, datatype=self.Field.FLOAT32, count=1)
-                                 for i, k in enumerate(('x', 'y', 'z'))]
-                output.is_bigendian, output.is_dense = False, True
-                output.point_step, output.row_step = 12, 12*len(points)
-                output.data = points.tobytes()
-                published_at = time.monotonic()
-                if not fresh(stamp, published_at, PUBLISH_MAX_AGE):
-                    continue
-                self.publisher.publish(output)  # Empty fresh clouds are valid.
-                self.heartbeat.publish(output.header)
-                self.last_published = stamp
-                self.last_publish_time = published_at
-                stats.update(source_age_s=round(published_at-stamp, 4), compensated=self.predictions)
-                reason = 'projected ' + json.dumps(stats)
-                if not self.announced:
-                    self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
-                    self.announced = True
-                break
-            if (self.last_publish_time
-                    and now - self.last_publish_time > PUBLISH_MAX_AGE
-                    and now - self.last_gap_log >= 1.0):
-                self.node.get_logger().info(
-                    '[VOA_COSTMAP] heartbeat_gap age={:.3f} pending={} anchors={} '
-                    'fail_project={} fail_grid={} last={}'.format(
-                        now - self.last_publish_time, len(self.pending),
-                        len(self.anchors), self.fail_project, self.fail_grid,
-                        self.last_failure))
-                self.last_gap_log = now
-            if now-self.last_log >= 5:
-                self.node.get_logger().info('[VOA_COSTMAP] ' + reason)
-                self.last_log = now
+                    self.last_failure = 'marking_origin:'+str(error)[:80]
+                    continue  # No cloud/health when its origin was not sent.
+            published_at = time.monotonic()
+            if not fresh(stamp,published_at,PUBLISH_MAX_AGE):
+                continue
+            self.publisher.publish(output)  # Empty fresh clouds are valid.
+            self.heartbeat.publish(output.header)
+            self.last_published = stamp
+            self.last_publish_time = published_at
+            stats.update(source_age_s=round(published_at-stamp, 4), compensated=self.predictions)
+            reason = 'projected ' + json.dumps(stats)
+            if not self.announced:
+                self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
+                self.announced = True
+            break
+        if (self.last_publish_time
+                and now - self.last_publish_time > PUBLISH_MAX_AGE
+                and now - self.last_gap_log >= 1.0):
+            self.node.get_logger().info(
+                '[VOA_COSTMAP] heartbeat_gap age={:.3f} pending={} anchors={} '
+                'fail_project={} fail_grid={} last={}'.format(
+                    now - self.last_publish_time, len(self.pending),
+                    len(self.anchors), self.fail_project, self.fail_grid,
+                    self.last_failure))
+            self.last_gap_log = now
+        if now-self.last_log >= 5:
+            self.node.get_logger().info('[VOA_COSTMAP] ' + reason)
+            self.last_log = now
 
 
 def main():
@@ -300,6 +297,9 @@ def main():
     from tf2_ros import Buffer, TransformListener
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, required=True)
+    parser.add_argument('--known-obstacles-only', action='store_true',
+                        help='Factory-only: unknown is vetoed by direct grid stop, not marked as a physical wall')
+    parser.add_argument('--publish-costmap-origin', action='store_true')
     args = parser.parse_args()
     # One obstacle threshold for VOA braking and Nav2 planning, no duplicate
     # parameter to silently drift away from the factory predicate.
@@ -311,7 +311,19 @@ def main():
     node = rclpy.create_node('patrol_voa_costmap_bridge')
     buffer = Buffer()
     listener = TransformListener(buffer, node)
-    bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum)
+    publish_origin = None
+    if args.publish_costmap_origin:
+        from geometry_msgs.msg import TransformStamped
+        from tf2_ros import TransformBroadcaster
+        origin_broadcaster=TransformBroadcaster(node)
+        def publish_origin(stamp,pose):
+            xyz,quat=marking_origin(pose)
+            t=TransformStamped();t.header.stamp=stamp;t.header.frame_id='map';t.child_frame_id=MARKING_FRAME
+            t.transform.translation.x,t.transform.translation.y,t.transform.translation.z=xyz
+            t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w=quat
+            origin_broadcaster.sendTransform(t)
+    bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum,
+                    include_unknown=not args.known_obstacles_only,origin_publisher=publish_origin)
     def on_grid(message):
         # Only enqueue here. Projection is done by the 25 ms timer so the
         # 30 Hz grid callback cannot starve the TF listener callbacks that the

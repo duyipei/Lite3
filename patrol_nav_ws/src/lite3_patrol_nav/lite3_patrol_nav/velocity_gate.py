@@ -51,6 +51,24 @@ class VelocityGate(Node):
         self.use_vendor_voa = bool(self.get_parameter("use_vendor_voa").value)
         self.declare_parameter('require_voa_costmap', False)
         self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
+        self.declare_parameter('require_costmap_sync', False)
+        self.require_costmap_sync = bool(self.get_parameter('require_costmap_sync').value)
+        if self.require_costmap_sync:
+            from pathlib import Path
+            import yaml
+            from sensor_msgs.msg import PointCloud2
+            from nav2_msgs.msg import Costmap
+            from .costmap_sync import CostmapSync
+            self.declare_parameter('safety_response_file', '')
+            params = yaml.safe_load(Path(self.get_parameter('safety_response_file').value).read_text())['planning_sync']
+            self.costmap_sync = CostmapSync(params['costmap_timeout_s'],params['near_radius_m'],params['quantization_m'])
+            cloud_qos = QoSProfile(depth=1)
+            cloud_qos.reliability = ReliabilityPolicy.BEST_EFFORT
+            self.create_subscription(PointCloud2,'/patrol/voa/costmap_obstacles',self.sync_cloud_callback,cloud_qos)
+            map_qos = QoSProfile(depth=1)
+            map_qos.reliability = ReliabilityPolicy.RELIABLE
+            map_qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
+            self.create_subscription(Costmap,'/local_costmap/costmap_raw',self.sync_map_callback,map_qos)
         # Factory-only uses the vendor VOA as a perception source only. In that
         # mode use_vendor_voa is false (no /patrol/voa/input request/response),
         # while require_voa_costmap still gates ARM on fresh projected
@@ -115,6 +133,15 @@ class VelocityGate(Node):
 
     def now_monotonic(self):
         return time.monotonic()
+
+    def ros_seconds(self):
+        return self.get_clock().now().nanoseconds/1e9
+
+    def sync_cloud_callback(self,message):
+        self.costmap_sync.receive_cloud(message,self.now_monotonic())
+
+    def sync_map_callback(self,message):
+        self.costmap_sync.receive_raw(message,self.now_monotonic(),self.ros_seconds())
 
     def raw_callback(self, message):
         if not all(math.isfinite(v) for v in (message.linear.x, message.linear.y, message.angular.z)):
@@ -242,6 +269,12 @@ class VelocityGate(Node):
         # through this gate, so only a third publisher is a conflict.
         if self.count_publishers('/patrol/cmd_vel_raw') > 2:
             return False, 'nav_command_publisher_conflict'
+        endpoints = getattr(self, 'get_publishers_info_by_topic', None)
+        if endpoints is not None:
+            names = [info.node_name for info in endpoints('/patrol/cmd_vel_raw')]
+            if (any(name not in ('controller_server', 'recoveries_server') for name in names)
+                    or len(names) != len(set(names))):
+                return False, 'nav_command_publisher_conflict'
         # The gate is the only project publisher on the public command topic
         # and the only publisher of its corrected output. This check applies in
         # every backend, including factory-only where vendor VOA is perception
@@ -250,6 +283,9 @@ class VelocityGate(Node):
             return False, 'public_cmd_vel_publisher_conflict'
         if self.count_publishers(self.get_parameter('output_topic').value) != 1:
             return False, 'corrected_command_publisher_conflict'
+        if self.require_costmap_sync:
+            ok,reason = self.costmap_sync.healthy(now,self.ros_seconds())
+            if not ok:return False,reason
         if self.require_lidar_costmap:
             timeout = self.get_parameter('freshness_timeout_s').value
             if (self.last_lidar_costmap_time <= 0 or
@@ -381,6 +417,22 @@ class VelocityGate(Node):
             command = Twist()
             if self.armed and self.goal_active and healthy and raw_fresh:
                 command.linear.x, command.linear.y, command.angular.z = corrected
+        costmap_waiting = False
+        if self.require_costmap_sync:
+            synced,_sync_reason,_sync_metrics = self.costmap_sync.check(
+                self.last_pose,self.now_monotonic(),self.ros_seconds())
+            if not synced:
+                costmap_waiting = True
+                command = Twist()  # Wait for representation, never fake ACK.
+            # Keep the independent projection/costmap deadlines, including
+            # time spent checking spatial correspondence. No raw VOA grid is
+            # read or used to constrain velocity here.
+            sync_healthy,sync_reason = self.costmap_sync.healthy(
+                self.now_monotonic(),self.ros_seconds())
+            if not sync_healthy:
+                command = Twist()
+                if self.armed:
+                    self.trip(sync_reason)
         self.publisher.publish(command)
         self.publish_count += 1
         if self.publish_count == 1:
@@ -395,6 +447,8 @@ class VelocityGate(Node):
             state.data = "ARMED:WAITING_NAV_COMMAND"
         elif self.armed and voa_braking:
             state.data = "ARMED:VOA_BRAKING_OR_WAITING"
+        elif self.armed and costmap_waiting:
+            state.data = "ARMED:WAITING_OBSTACLE_COSTMAP_SYNC"
         elif self.armed:
             state.data = "ARMED"
         else:
@@ -403,13 +457,17 @@ class VelocityGate(Node):
 
 
 def main(args=None):
+    from rclpy.executors import MultiThreadedExecutor
     rclpy.init(args=args)
     node = VelocityGate()
+    executor = MultiThreadedExecutor(num_threads=2)
+    executor.add_node(node)
     try:
-        rclpy.spin(node)
+        executor.spin()
     except KeyboardInterrupt:
         pass
     finally:
+        executor.shutdown()
         node.publisher.publish(Twist())
         node.destroy_node()
         rclpy.shutdown()

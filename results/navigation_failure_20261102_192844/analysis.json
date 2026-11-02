@@ -1,0 +1,24 @@
+{
+  "session": "logs/lite3_indoor_nav_patrol_map_20261031_01_area_v2_review_20261102_192844_5882",
+  "localization_ready": "visual_plus_ndt_confirmed_0.091m_0.019rad",
+  "preview_poses": 69,
+  "arm_server_applied_epoch": 1793426793.6466155,
+  "goal_accepted_epoch": 1793426793.7517476,
+  "gate_fault_epoch": 1793426794.7481055,
+  "gate_fault": "local_grid_stale_during_evaluation",
+  "goal_cancelled": true,
+  "outer_exit": {
+    "command": "ARM",
+    "line": 1449,
+    "status": 124,
+    "source": "session_events.log; timeout 8s ros2 service call; shell errexit cleanup"
+  },
+  "confirmed": "goal cancellation after local grid protection, followed by client-side ARM timeout causing whole-session cleanup",
+  "limits": [
+    "fault label covers stale/invalid local grid; no per-cycle recording to isolate decode, scheduling, or producer delay",
+    "server applied ARM although CLI timed out; do not infer ARM was never applied",
+    "controller/planner -11 appears after cleanup SIGINT, not initial cancellation",
+    "no evidence this attempt failed because route was blocked or inflation too large"
+  ],
+  "no_testing_or_runtime_change": true
+}

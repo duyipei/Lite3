@@ -1,0 +1,16 @@
+{
+  "session": "logs/lite3_indoor_nav_patrol_map_20261031_01_area_v2_review_20261102_172413_6280",
+  "goal_accepted_epoch": 1793427150.2363958,
+  "gate_fault_epoch": 1793427150.9318807,
+  "gate_fault": "local_grid_stale_during_evaluation",
+  "goal_cancel_epoch": 1793427150.9988744,
+  "group_sigint_epoch": 1793427185.015869,
+  "shutdown_trigger": "not uniquely recorded; parent EXIT/INT/TERM/HUP cleanup compatible with group signals; no proof of specific operator action",
+  "load_evidence": [
+    "DWB missed 5 Hz control deadline",
+    "NDT callback gaps >0.25s",
+    "VOA timer delays up to 0.337s"
+  ],
+  "changes": "log shell exit status, signal, EOF, command failure line and control verb; preserve fail-closed behavior",
+  "no_goal_or_arm_or_shutdown_sent_during_investigation": true
+}

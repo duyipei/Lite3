@@ -1,0 +1,3 @@
+1793425424.247126 [0] velocity_g: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793425425.127758384] [patrol_velocity_gate]: velocity gate started DISARMED; non-zero output is blocked
+[INFO] [1793425425.134019728] [patrol_velocity_gate]: zero-command heartbeat active on /patrol/testing/zero_only

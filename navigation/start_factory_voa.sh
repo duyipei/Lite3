@@ -51,6 +51,11 @@ factory_setups() {
     printf '%s\n' "$LITE3_FACTORY_VOA_WS/install/setup.bash"
     printf '%s\n' "$LITE3_FACTORY_VOA_WS/install/local_setup.bash"
   fi
+  # Isolated factory perception repair: timestamps and unknown mask only.
+  # No vendor command-selection changes, and no original install replacement.
+  if [[ -r "$PROJECT/factory_voa_safety_ws/install/setup.bash" ]]; then
+    printf '%s\n' "$PROJECT/factory_voa_safety_ws/install/setup.bash"
+  fi
   cat <<'EOF'
 /home/ysc/lite_cog_ros2/voa/install/setup.bash
 /home/ysc/lite_cog_ros2/voa/install/local_setup.bash
@@ -173,7 +178,7 @@ voa_pid=$!
 # Keep BLAS worker threads out of the TF/sensor callbacks this bridge needs.
 setsid env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
   python3 "$PROJECT/scripts/voa_costmap_bridge.py" \
-  --config "$PROJECT/navigation/vendor_voa.yaml" &
+  --config "$PROJECT/navigation/vendor_voa.yaml" --known-obstacles-only --publish-costmap-origin &
 bridge_pid=$!
 
 children=("$tf_pid" "$voa_pid" "$bridge_pid")

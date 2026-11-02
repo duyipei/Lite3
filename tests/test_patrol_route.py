@@ -106,7 +106,9 @@ module('rclpy', init=lambda **kw: None, shutdown=lambda: None, spin_once=lambda 
 module('rclpy.node', Node=Node)
 module('rclpy.action', ActionClient=ActionClient)
 module('rclpy.qos', QoSProfile=lambda **kw: NS(), DurabilityPolicy=NS(TRANSIENT_LOCAL=1), ReliabilityPolicy=NS(RELIABLE=1))
-for pkg, attrs in [('geometry_msgs', dict(PoseStamped=Message, Twist=Message)), ('nav_msgs', dict(Path=Message, Odometry=Message)),
+for pkg, attrs in [('geometry_msgs', dict(PoseStamped=Message, Twist=Message)),
+                   ('nav_msgs', dict(Path=Message, Odometry=Message, OccupancyGrid=Message)),
+                   ('sensor_msgs', dict(PointCloud2=Message)),
                    ('std_msgs', dict(Bool=Message, String=Message))]:
     module(pkg); module(pkg+'.msg', **attrs)
 module('std_srvs'); module('std_srvs.srv', Trigger=NS(Request=Message), SetBool=NS(Request=Message))
@@ -193,6 +195,32 @@ class Tests(unittest.TestCase):
         self.acquire(); p=Message(); p.header.frame_id='map'
         self.bridge.goal_callback(p)
         self.assertEqual(self.bridge.request_serial, 0)
+
+    def test_goal_clearance_checks_static_and_voa_obstacles(self):
+        import numpy as np
+        b = self.bridge
+        b.goal_clearance_m = 0.45
+        grid = NS(
+            info=NS(
+                resolution=0.1, width=20, height=20,
+                origin=NS(position=NS(x=0., y=0.))),
+            data=[0]*(20*20))
+        grid.data[10*20+10] = 100
+        b.map_msg = grid
+        b.require_voa_obstacles = False
+        self.assertTrue(b.goal_clearance(0.5, 0.5)[0])
+        ok, reason = b.goal_clearance(0.75, 0.75)
+        self.assertFalse(ok)
+        self.assertEqual(reason, 'goal_too_close_to_static_obstacle')
+        b.voa_cloud = NS(
+            header=NS(frame_id='map', stamp=None), point_step=12,
+            data=np.asarray([[0.6, 0.5, 0.5]], dtype=np.float32).tobytes())
+        b.voa_cloud_time = bridge.time.monotonic()
+        b.require_voa_obstacles = True
+        self.assertTrue(b.goal_clearance(0.1, 0.1)[0])
+        ok, reason = b.goal_clearance(0.3, 0.3)
+        self.assertFalse(ok)
+        self.assertEqual(reason, 'goal_too_close_to_voa_obstacle')
     def test_cannot_acquire_armed_or_busy(self):
         self.bridge.armed=True; self.assertFalse(self.acquire().success)
         self.bridge.armed=False; self.bridge.goal_active=True; self.assertFalse(self.acquire().success)

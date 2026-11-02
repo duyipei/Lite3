@@ -1,0 +1,64 @@
+{
+  "code_deployed": true,
+  "regression": "113 passed; see final_regression.log",
+  "standing_perception_timing_passed": true,
+  "standing_perception": {
+    "scope": "stationary perception only",
+    "passed": true,
+    "failures": [],
+    "seconds": 60.00952950400006,
+    "streams": {
+      "grid": {
+        "count": 1782,
+        "max_gap_s": 0.18356476799999655,
+        "first_arrival_s": 0.00622419199999058,
+        "source_age_p95_s": 0.03795667799993224,
+        "source_age_max_s": 0.18255809599986605
+      },
+      "local_safety": {
+        "count": 1186,
+        "max_gap_s": 0.2105232320000141,
+        "first_arrival_s": 0.0824403199999324
+      },
+      "armed": {
+        "count": 1186,
+        "max_gap_s": 0.20941990400024224,
+        "first_arrival_s": 0.08343174399988129
+      }
+    },
+    "rejected_grids": [],
+    "shadow": {
+      "count": 1782,
+      "stops": 1782,
+      "slowdowns": 0,
+      "max_evaluation_s": 0.029804415999933553,
+      "reasons": {
+        "obstacle_or_unknown_in_swept_footprint": 1782
+      },
+      "note": "hypothetical .10 m/s command, NEVER published; stops can be legitimate obstacles"
+    },
+    "nonzero_corrected_count": 0,
+    "armed_count": 0,
+    "motor_publishers": {
+      "/cmd_vel": 0,
+      "/cmd_vel_corrected": 0
+    }
+  },
+  "movement_allowed": false,
+  "motion_tested": false,
+  "nav2_integration_tested_this_round": false,
+  "blockers": [
+    "camera near-field observation gap from x=0.35 to 0.55 m within |y|<=0.25 m in saved standing samples",
+    "existing LiDAR local ground model not accepted; no automatic fallback"
+  ],
+  "lidar_shadow_counts": {
+    "no_physically_supported_ground_plane": 225
+  },
+  "map_id": "patrol_map_20261031_01_area_v2_review",
+  "visual_backend": "xfeat_lighterglue",
+  "notes": [
+    "local safety only scales or zeros commands; it does not steer",
+    "unknown is not cleared or assumed free; Factory Only planning marks known obstacles and direct local stop checks unknown",
+    "before and after posture/load/startup conditions differ; no controlled timing speedup ratio claimed"
+  ]
+}

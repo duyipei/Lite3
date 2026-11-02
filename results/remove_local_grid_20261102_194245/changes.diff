@@ -1,0 +1,1061 @@
+--- before/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py
++++ after/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py
+@@ -3,7 +3,6 @@
+ 
+ import math
+ import time
+-import json
+ 
+ import rclpy
+ from geometry_msgs.msg import Twist, TwistStamped
+@@ -52,38 +51,20 @@
+         self.use_vendor_voa = bool(self.get_parameter("use_vendor_voa").value)
+         self.declare_parameter('require_voa_costmap', False)
+         self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
+-        self.declare_parameter('require_local_grid_stop', False)
+-        self.require_local_grid_stop = bool(self.get_parameter('require_local_grid_stop').value)
+-        self.local_safety = None
+-        self.local_safety_diagnostics = None
+         self.declare_parameter('require_costmap_sync', False)
+         self.require_costmap_sync = bool(self.get_parameter('require_costmap_sync').value)
+-        if self.require_costmap_sync and not self.require_local_grid_stop:
+-            raise ValueError('costmap synchronization requires direct local safety')
+-        if self.require_local_grid_stop:
+-            from grid_map_msgs.msg import GridMap
+-            from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
+-            from .obstacle_safety import LocalGridSafety
+-            for key in ('safety_nav2_file', 'safety_voa_file', 'safety_response_file'):
+-                self.declare_parameter(key, '')
+-            self.local_safety = LocalGridSafety.from_files(*[
+-                self.get_parameter(key).value for key in
+-                ('safety_nav2_file', 'safety_voa_file', 'safety_response_file')])
+-            grid_qos = QoSProfile(depth=1)
+-            grid_qos.reliability = ReliabilityPolicy.BEST_EFFORT
+-            self.local_grid_group = MutuallyExclusiveCallbackGroup()
+-            self.create_subscription(GridMap, '/patrol/voa/grid_map', self.local_grid_callback, grid_qos,
+-                                     callback_group=self.local_grid_group)
+-            self.local_safety_diagnostics = self.create_publisher(String, '/patrol/voa/local_safety', 1)
+         if self.require_costmap_sync:
+             from pathlib import Path
+             import yaml
+             from sensor_msgs.msg import PointCloud2
+             from nav2_msgs.msg import Costmap
+             from .costmap_sync import CostmapSync
++            self.declare_parameter('safety_response_file', '')
+             params = yaml.safe_load(Path(self.get_parameter('safety_response_file').value).read_text())['planning_sync']
+             self.costmap_sync = CostmapSync(params['costmap_timeout_s'],params['near_radius_m'],params['quantization_m'])
+-            self.create_subscription(PointCloud2,'/patrol/voa/costmap_obstacles',self.sync_cloud_callback,grid_qos)
++            cloud_qos = QoSProfile(depth=1)
++            cloud_qos.reliability = ReliabilityPolicy.BEST_EFFORT
++            self.create_subscription(PointCloud2,'/patrol/voa/costmap_obstacles',self.sync_cloud_callback,cloud_qos)
+             map_qos = QoSProfile(depth=1)
+             map_qos.reliability = ReliabilityPolicy.RELIABLE
+             map_qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
+@@ -153,9 +134,6 @@
+     def now_monotonic(self):
+         return time.monotonic()
+ 
+-    def local_grid_callback(self, message):
+-        self.local_safety.update(message, self.now_monotonic())
+-
+     def ros_seconds(self):
+         return self.get_clock().now().nanoseconds/1e9
+ 
+@@ -305,11 +283,6 @@
+             return False, 'public_cmd_vel_publisher_conflict'
+         if self.count_publishers(self.get_parameter('output_topic').value) != 1:
+             return False, 'corrected_command_publisher_conflict'
+-        if self.require_local_grid_stop:
+-            if self.count_publishers('/patrol/voa/grid_map') != 1:
+-                return False, 'local_grid_publisher_conflict'
+-            if not self.local_safety.healthy(now):
+-                return False, 'local_grid_stale_or_invalid'
+         if self.require_costmap_sync:
+             ok,reason = self.costmap_sync.healthy(now,self.ros_seconds())
+             if not ok:return False,reason
+@@ -444,65 +417,23 @@
+             command = Twist()
+             if self.armed and self.goal_active and healthy and raw_fresh:
+                 command.linear.x, command.linear.y, command.angular.z = corrected
+-        local_braking = False
+         costmap_waiting = False
+-        local_diagnostic = None
+-        if self.require_local_grid_stop:
+-            proposed = (command.linear.x, command.linear.y, command.angular.z)
+-            started = self.now_monotonic()
+-            scale, stop_reason = self.local_safety.limit(proposed, started)
+-            finished = self.now_monotonic()
+-            if not self.local_safety.healthy(finished):
+-                if self.armed:
+-                    self.trip('local_grid_stale_during_evaluation')
+-                scale, stop_reason = 0., 'local_grid_stale_during_evaluation'
+-            elif not self.local_safety.evaluated_fresh(finished):
+-                # A fresh frame may arrive on the independent callback group
+-                # during a slow evaluation. Do not use it to re-date the old
+-                # decision. Send zero; next tick evaluates the new snapshot.
+-                scale, stop_reason = 0., 'waiting_for_new_frame_evaluation'
+-            local_braking = proposed != (0., 0., 0.) and scale < 1.
+-            command.linear.x *= scale
+-            command.linear.y *= scale
+-            command.angular.z *= scale
+-            local_diagnostic = dict(
+-                source_stamp=self.local_safety.evaluated_frame.stamp,
+-                latest_source_stamp=self.local_safety.stamp,
+-                grid_age_s=finished-self.local_safety.evaluated_frame.stamp,
+-                latest_grid_age_s=finished-self.local_safety.stamp,
+-                known_obstacle_clearance_m=self.local_safety.evaluated_frame.clearance,
+-                scale=scale, reason=stop_reason, proposed=proposed,
+-                armed=self.armed, evaluation_s=finished-started)
+-            # Final age check comes before command publication, not before
+-            # JSON serialization/telemetry, which can also be delayed by load.
+-            now = self.now_monotonic()
+-            if not self.local_safety.evaluated_fresh(now) or not self.local_safety.healthy(now):
+-                command = Twist()
+-                local_braking = proposed != (0.,0.,0.)
+-                local_diagnostic.update(scale=0.,reason='zero_on_final_grid_age_check')
+-                if self.armed and not self.local_safety.healthy(now):
+-                    self.trip('local_grid_stale_during_evaluation')
+         if self.require_costmap_sync:
+-            synced,sync_reason,sync_metrics = self.costmap_sync.check(
++            synced,_sync_reason,_sync_metrics = self.costmap_sync.check(
+                 self.last_pose,self.now_monotonic(),self.ros_seconds())
+             if not synced:
+                 costmap_waiting = True
+                 command = Twist()  # Wait for representation, never fake ACK.
+-            if local_diagnostic is not None:
+-                local_diagnostic.update(costmap_sync_reason=sync_reason,costmap_sync=sync_metrics)
+-            # The spatial check cannot extend the source-age budget either.
+-            now = self.now_monotonic()
+-            if not self.local_safety.evaluated_fresh(now) or not self.local_safety.healthy(now):
++            # Keep the independent projection/costmap deadlines, including
++            # time spent checking spatial correspondence. No raw VOA grid is
++            # read or used to constrain velocity here.
++            sync_healthy,sync_reason = self.costmap_sync.healthy(
++                self.now_monotonic(),self.ros_seconds())
++            if not sync_healthy:
+                 command = Twist()
+-                if self.armed and not self.local_safety.healthy(now):
+-                    self.trip('local_grid_stale_during_evaluation')
++                if self.armed:
++                    self.trip(sync_reason)
+         self.publisher.publish(command)
+-        if local_diagnostic is not None:
+-            actual = (command.linear.x,command.linear.y,command.angular.z)
+-            self.local_safety.remember_output(actual,self.now_monotonic())
+-            local_diagnostic.update(output=actual,armed=self.armed)
+-            diagnostic = String(); diagnostic.data = json.dumps(local_diagnostic)
+-            self.local_safety_diagnostics.publish(diagnostic)
+         self.publish_count += 1
+         if self.publish_count == 1:
+             self.get_logger().info("zero-command heartbeat active on " + self.get_parameter("output_topic").value)
+@@ -514,16 +445,6 @@
+             state.data = "ARMED:IDLE_READY_FOR_GOAL"
+         elif self.armed and waiting_for_nav_command:
+             state.data = "ARMED:WAITING_NAV_COMMAND"
+-        elif self.armed and local_braking:
+-            detail = local_diagnostic['reason'] if local_diagnostic else ''
+-            if self.local_safety.evaluated_frame.hard_contact:
+-                state.data = "ARMED:LOCAL_GRID_MANUAL_CLEARANCE_REQUIRED"
+-            elif 'unknown' in detail or 'observed_grid' in detail:
+-                state.data = "ARMED:LOCAL_GRID_WAITING_FOR_OBSERVATION"
+-            elif 'frame' in detail or 'age_check' in detail:
+-                state.data = "ARMED:LOCAL_GRID_WAITING_FOR_SYNCHRONIZED_DATA"
+-            else:
+-                state.data = "ARMED:LOCAL_GRID_WAITING_FOR_REPLAN"
+         elif self.armed and voa_braking:
+             state.data = "ARMED:VOA_BRAKING_OR_WAITING"
+         elif self.armed and costmap_waiting:
+--- before/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py
++++ after/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/obstacle_safety.py
+@@ -1,20 +1,12 @@
+-"""Local grid veto, independent of map projection and Nav2 costmap updates.
++"""Goal-footprint geometry shared by endpoint clearance checks.
+ 
+-Not an independent sensor: camera/VOA faults still stop this path. Commands may
+-only be multiplied by 0, .5 or 1; this module never chooses a steering direction.
+-Braking constants require field measurement before motion acceptance.
++Runtime obstacle avoidance is handled by Nav2; this module does not read
++VOA grids, constrain velocity or implement a direct stopping layer.
+ """
+-from collections import deque, namedtuple
+ import math
+-from pathlib import Path
+-import threading
+ 
+ import numpy as np
+ import yaml
+-
+-from .voa_grid import decode_grid
+-
+-GridFrame = namedtuple('GridFrame', 'stamp xyz resolution error danger lo hi hard_contact obstacle_flags clearance')
+ 
+ 
+ def footprint_extents(costmap):
+@@ -53,196 +45,3 @@
+     local_y = -d[:, 0]*s+d[:, 1]*c
+     return ((abs(local_x) <= half_extents[0]+cell_radius)
+             & (abs(local_y) <= half_extents[1]+cell_radius))
+-
+-
+-class LocalGridSafety:
+-    def __init__(self, hx, hy, minimum, settings, max_v=.15, max_w=.4):
+-        self.hx, self.hy, self.minimum = hx, hy, minimum
+-        self.settings = settings
+-        for key in ('grid_timeout_s', 'reaction_s', 'linear_braking_mps2',
+-                    'angular_braking_radps2', 'margin_m', 'prediction_s'):
+-            if not math.isfinite(float(settings[key])) or float(settings[key]) <= 0:
+-                raise ValueError('invalid local stop setting '+key)
+-        if not (.05 <= settings['grid_timeout_s'] <= .25
+-                and .03 <= settings['margin_m'] <= .2
+-                and .5 <= settings['prediction_s'] <= 3
+-                and .05 <= settings['linear_braking_mps2'] <= .25
+-                and .1 <= settings['angular_braking_radps2'] <= .5
+-                and 1 <= settings['release_clear_frames'] <= 10):
+-            raise ValueError('unsafe local stop configuration')
+-        if not (0 < minimum <= .10 and 0 < max_v <= .15 and 0 < max_w <= .4):
+-            raise ValueError('invalid local stop geometry/speed')
+-        self.max_v, self.max_w = max_v, max_w
+-        self._frame = GridFrame(0., None, 0., 'no_grid', None, None, None, False,None,None)
+-        self._update_lock = threading.Lock()
+-        self.evaluated_frame = self._frame
+-        self.history = deque(maxlen=40)
+-        self.stopped = False
+-        self.clear_count = 0
+-        self.clear_stamp = 0.
+-
+-    @property
+-    def stamp(self): return self._frame.stamp
+-
+-    @property
+-    def xyz(self): return self._frame.xyz
+-
+-    @property
+-    def resolution(self): return self._frame.resolution
+-
+-    @property
+-    def error(self): return self._frame.error
+-
+-    @classmethod
+-    def from_files(cls, nav_file, voa_file, response_file):
+-        nav = yaml.safe_load(Path(nav_file).read_text())
+-        local = nav['local_costmap']['local_costmap']['ros__parameters']
+-        global_map = nav['global_costmap']['global_costmap']['ros__parameters']
+-        extents = np.maximum(footprint_extents(local), footprint_extents(global_map))
+-        voa = yaml.safe_load(Path(voa_file).read_text())['/**']['ros__parameters']
+-        # Never use less than either the Nav2 or factory collision rectangle.
+-        hx = max(float(extents[0]), float(voa['kRobotLengthM'])/2)
+-        hy = max(float(extents[1]), float(voa['kRobotWidthM'])/2)
+-        config = yaml.safe_load(Path(response_file).read_text())
+-        follow = nav['controller_server']['ros__parameters']['FollowPath']
+-        if follow['min_vel_x'] < 0 or follow['min_vel_y'] != 0 or follow['max_vel_y'] != 0:
+-            raise ValueError('camera-only local stop requires forward-only navigation')
+-        return cls(hx, hy, float(voa['kObstatleHeight']), config['local_stop'],
+-                   float(follow['max_vel_x']), float(follow['max_vel_theta']))
+-
+-    def update(self, msg, now):
+-        # A complete immutable snapshot is exchanged in one assignment. The
+-        # grid callback can then run while a timer evaluates an older frame,
+-        # without mixing that frame's geometry and a newer source timestamp.
+-        with self._update_lock:
+-            return self._update(msg, now)
+-
+-    def _update(self, msg, now):
+-        try:
+-            stamp = msg.header.stamp.sec + msg.header.stamp.nanosec/1e9
+-            if (msg.header.stamp.sec < 0 or not 0 <= msg.header.stamp.nanosec < 1000000000
+-                    or not math.isfinite(stamp) or not -.05 <= now-stamp <= self.settings['grid_timeout_s']):
+-                return False
+-            if stamp <= self.stamp:
+-                return False
+-            if self.settings.get('require_observation_validity', False) and 'observation_validity' not in msg.layers:
+-                raise ValueError('factory grid lacks independent observation_validity layer')
+-            xyz, resolution = decode_grid(msg)
+-            finite = np.isfinite(xyz[:,2])
+-            obstacle = np.zeros(len(xyz), dtype=bool)
+-            obstacle[finite] = xyz[finite,2] > self.minimum
+-            inside = rectangle_hits(xyz[:,:2], (0.,0.), 0., (self.hx,self.hy))
+-            unknown = ~finite & ~inside
+-            danger = xyz[obstacle|unknown,:2].copy()
+-            flags = obstacle[obstacle|unknown].copy()
+-            lo = xyz[:,:2].min(axis=0)-resolution/2
+-            hi = xyz[:,:2].max(axis=0)+resolution/2
+-            hard_contact = rectangle_hits(xyz[obstacle,:2],(0.,0.),0.,
+-                                          (self.hx,self.hy),resolution/math.sqrt(2)).any()
+-            clearance = None
+-            if obstacle.any():
+-                d = abs(xyz[obstacle,:2])-[self.hx,self.hy]
+-                distances = np.hypot(np.maximum(d[:,0],0),np.maximum(d[:,1],0)) + np.minimum(np.max(d,axis=1),0)
+-                clearance = float(distances.min()-resolution/math.sqrt(2))
+-            for a in (xyz,danger,flags,lo,hi): a.setflags(write=False)
+-            self._frame = GridFrame(stamp,xyz,resolution,'',danger,lo,hi,bool(hard_contact),flags,clearance)
+-            return True
+-        except (ValueError, TypeError, AttributeError, IndexError) as error:
+-            self._frame = GridFrame(self.stamp,None,0.,str(error),None,None,None,False,None,None)
+-            return False
+-
+-    def healthy(self, now, frame=None):
+-        frame = self._frame if frame is None else frame
+-        return (frame.xyz is not None and not frame.error
+-                and -.05 <= now-frame.stamp <= self.settings['grid_timeout_s'])
+-
+-    def evaluated_fresh(self, now):
+-        return self.healthy(now,self.evaluated_frame)
+-
+-    def remember_output(self, command, now):
+-        if any(abs(v) > 1e-6 for v in command):
+-            self.history.append((now, tuple(command)))
+-
+-    def collision(self, command, age, horizon, frame=None):
+-        frame = self._frame if frame is None else frame
+-        vx, vy, wz = command
+-        if vx < -1e-6 or abs(vy) > 1e-6:
+-            return 'unverified_reverse_or_lateral_coverage'
+-        speed = math.hypot(vx, vy)
+-        radius = math.hypot(self.hx, self.hy)
+-        # Account for cell extent, inter-sample sweep, and unknown motion since
+-        # the grid's sensor timestamp. No map TF or restamping is involved.
+-        steps = max(1, math.ceil((speed+radius*abs(wz))*horizon/.02))
+-        dt = horizon/steps
+-        margin = (self.settings['margin_m']+frame.resolution/math.sqrt(2)
+-                  +(self.max_v+radius*self.max_w)*max(0., age)
+-                  +(speed+radius*abs(wz))*dt/2)
+-        if frame.hard_contact:
+-            return 'obstacle_in_current_footprint_manual_clearance_required'
+-        # Points outside this enclosing circle cannot intersect any pose of
+-        # this swept rectangle, including the complete uncertainty margin.
+-        reach = speed*horizon+radius+math.sqrt(2)*margin
+-        nearby = np.sum(frame.danger**2,axis=1) <= reach*reach
+-        xy,obstacle_flags = frame.danger[nearby],frame.obstacle_flags[nearby]
+-        lo,hi = frame.lo,frame.hi
+-        for t in np.linspace(0, horizon, steps+1):
+-            theta = wz*t
+-            if abs(wz) < 1e-7:
+-                center = np.array([vx*t, vy*t])
+-            else:
+-                center = np.array([(vx*math.sin(theta)+vy*(math.cos(theta)-1))/wz,
+-                                   (vx*(1-math.cos(theta))+vy*math.sin(theta))/wz])
+-            c, s = abs(math.cos(theta)), abs(math.sin(theta))
+-            bounds = np.array([c*(self.hx+margin)+s*(self.hy+margin),
+-                               s*(self.hx+margin)+c*(self.hy+margin)])
+-            if np.any(center-bounds < lo) or np.any(center+bounds > hi):
+-                return 'outside_observed_grid'
+-            hits = rectangle_hits(xy, center, theta, (self.hx+margin, self.hy+margin))
+-            if (hits & obstacle_flags).any():
+-                return 'obstacle_in_swept_footprint_wait_replan'
+-            if hits.any():
+-                return 'unknown_in_swept_footprint_wait_observation'
+-        return ''
+-
+-    def limit(self, command, now):
+-        frame = self._frame
+-        self.evaluated_frame = frame
+-        if not self.healthy(now,frame):
+-            return 0., 'local_grid_stale_or_invalid'
+-        if not all(math.isfinite(v) for v in command):
+-            return 0., 'invalid_command'
+-        if abs(command[0]) > self.max_v+1e-6 or abs(command[2]) > self.max_w+1e-6:
+-            return 0., 'command_exceeds_validated_limits'
+-        age = max(0., now-frame.stamp)
+-        reaction = self.settings['reaction_s']
+-        braking = max(self.max_v/self.settings['linear_braking_mps2'],
+-                      self.max_w/self.settings['angular_braking_radps2'])+reaction
+-        while self.history and now-self.history[0][0] > braking:
+-            self.history.popleft()
+-        # Recent published motion may still be decelerating after a command
+-        # change or zero output. It must not disappear from the collision test.
+-        recent = {command: stamp for stamp, command in self.history}
+-        for previous, stamp in recent.items():
+-            remaining = max(0., braking-(now-stamp))
+-            if self.collision(previous, age, remaining, frame):
+-                self.stopped = True; self.clear_count = 0
+-                return 0., 'recent_motion_braking_envelope_blocked'
+-        if command == (0., 0., 0.):
+-            return 1., 'zero_command'
+-        reason = ''
+-        for scale in (1., .5):
+-            candidate = tuple(v*scale for v in command)
+-            horizon = max(self.settings['prediction_s'], reaction+max(
+-                abs(candidate[0])/self.settings['linear_braking_mps2'],
+-                abs(candidate[2])/self.settings['angular_braking_radps2']))
+-            reason = self.collision(candidate, age, horizon, frame)
+-            if not reason:
+-                if self.stopped:
+-                    if frame.stamp != self.clear_stamp:
+-                        self.clear_stamp = frame.stamp; self.clear_count += 1
+-                    if self.clear_count < self.settings['release_clear_frames']:
+-                        return 0., 'waiting_for_distinct_clear_frames'
+-                self.stopped = False; self.clear_count = 0
+-                return scale, 'clear' if scale == 1 else 'same_path_slowdown'
+-        self.stopped = True; self.clear_count = 0
+-        return 0., reason
+--- before/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py
++++ after/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_grid.py
+@@ -1,4 +1,4 @@
+-"""Validated factory GridMap decoder shared by local stopping and map projection.
++"""Validated factory GridMap decoder for map projection and diagnostics.
+ Unknown heights remain unknown. Coordinates include circular storage indices.
+ """
+ import math
+--- before/navigation/start_gate_disarmed.sh
++++ after/navigation/start_gate_disarmed.sh
+@@ -18,7 +18,7 @@
+ START_PRIVATE=0
+ REQUIRE_VOA_COSTMAP=false
+ REQUIRE_LIDAR_COSTMAP=false
+-LOCAL_STOP_ARGS=()
++COSTMAP_SYNC_ARGS=()
+ case "$BACKEND" in
+   factory_only)
+     # Factory Only is a dynamic-costmap mode by definition; only an explicit
+@@ -32,24 +32,9 @@
+     REQUIRE_VOA_COSTMAP=true
+     REQUIRE_LIDAR_COSTMAP=false
+     START_FACTORY=1
+-    MAP_ID=${LITE3_PATROL_MAP_ID:-indoor_fusion_20260912_001_area_review}
+-    [[ "$MAP_ID" =~ ^[A-Za-z0-9._-]+$ ]] || exit 1
+-    LOCAL_STOP_ARGS=(
+-      -p require_local_grid_stop:=true
++    COSTMAP_SYNC_ARGS=(
+       -p require_costmap_sync:=true
+-      -p safety_nav2_file:="$PROJECT/navigation/$MAP_ID/nav2_dynamic.yaml"
+-      -p safety_voa_file:="$PROJECT/navigation/vendor_voa.yaml"
+       -p safety_response_file:="$PROJECT/navigation/obstacle_response.yaml")
+-    # Fail closed rather than silently starting without the local stop path.
+-    GRID_MAP_SETUP=${LITE3_GRID_MAP_SETUP:-/home/ysc/lite_cog_ros2/grid_map_foxy/install/setup.bash}
+-    [[ -r "$GRID_MAP_SETUP" ]] || { echo '[FAIL] grid_map dependency setup missing' >&2; exit 1; }
+-    set +u
+-    source "$GRID_MAP_SETUP"
+-    set -u
+-    python3 -c 'from grid_map_msgs.msg import GridMap' || {
+-      echo '[FAIL] grid_map_msgs missing in gate environment; source factory grid_map dependency setup' >&2
+-      exit 1
+-    }
+     ;;
+   private_combined)
+     [[ "$DYNAMIC_EXPLICIT" != 1 || "$DYNAMIC" == 1 ]] || { \
+@@ -117,7 +102,7 @@
+   -p freshness_timeout_s:=1.5 \
+   -p command_timeout_s:=0.5 \
+   -p nav_command_wait_timeout_s:="$COMMAND_WAIT" \
+-  "${LOCAL_STOP_ARGS[@]}" \
++  "${COSTMAP_SYNC_ARGS[@]}" \
+   -p max_linear_x:=0.15 -p max_reverse_x:=0.08 \
+   -p max_linear_y:=0.0 -p max_angular_z:=0.40 &
+ gate_pid=$!
+--- before/navigation/obstacle_response.yaml
++++ after/navigation/obstacle_response.yaml
+@@ -1,6 +1,5 @@
+-# Factory-only candidate profile. Static perception/stop acceptance is required
+-# on Jetson before motion; braking rates below are conservative assumptions,
+-# not a measured certification of the chassis.
++# Factory-only Nav2 profile and obstacle/costmap synchronization settings.
++# Collision checking is performed by Nav2; no direct local-grid speed veto.
+ local_update_hz: 5.0
+ global_update_hz: 2.0
+ costmap_publish_hz: 2.0
+@@ -13,12 +12,3 @@
+   costmap_timeout_s: 0.75
+   near_radius_m: 1.0
+   quantization_m: 0.04
+-local_stop:
+-  require_observation_validity: true
+-  grid_timeout_s: 0.25
+-  reaction_s: 0.15
+-  linear_braking_mps2: 0.15
+-  angular_braking_radps2: 0.4
+-  margin_m: 0.04
+-  prediction_s: 1.0
+-  release_clear_frames: 3
+--- before/scripts/check_avoidance_readiness.py
++++ after/scripts/check_avoidance_readiness.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Read-only timing/zero-motion acceptance, including local-grid shadow checks.
++"""Read-only perception, projection and costmap synchronization diagnostics.
+ 
+ No publisher, service, ARM request or navigation goal is created. Costmap topic
+ arrival cadence does not prove its internal update deadline or a safe path.
+@@ -17,9 +17,10 @@
+     p = argparse.ArgumentParser(description=__doc__)
+     p.add_argument('--seconds', type=float, default=60.)
+     p.add_argument('--output', type=Path, required=True)
+-    p.add_argument('--nav-config', type=Path, required=True)
++    p.add_argument('--nav-config', type=Path,
++                   help='legacy compatibility argument; no local collision model is loaded')
+     p.add_argument('--perception-only', action='store_true')
+-    p.add_argument('--save-grids', type=Path, help='save a local-grid sample every two seconds')
++    p.add_argument('--save-grids', type=Path, help='save a VOA elevation sample every two seconds')
+     args = p.parse_args()
+     if args.output.exists() or args.seconds < 5:
+         p.error('use a new output path and at least five seconds')
+@@ -27,23 +28,21 @@
+         args.save_grids.mkdir(parents=True,exist_ok=False)
+     root = Path(__file__).resolve().parents[1]
+     sys.path.insert(0,str(root/'patrol_nav_ws/src/lite3_patrol_nav'))
+-    from lite3_patrol_nav.obstacle_safety import LocalGridSafety
++    from lite3_patrol_nav.voa_grid import decode_grid
+     from lite3_patrol_nav.costmap_sync import CostmapSync
+     import yaml
+     sync_settings=yaml.safe_load((root/'navigation/obstacle_response.yaml').read_text())['planning_sync']
+     sync=CostmapSync(sync_settings['costmap_timeout_s'],sync_settings['near_radius_m'],sync_settings['quantization_m'])
+-    local = LocalGridSafety.from_files(args.nav_config,root/'navigation/vendor_voa.yaml',
+-                                      root/'navigation/obstacle_response.yaml')
+     import rclpy
+     from grid_map_msgs.msg import GridMap
+     from geometry_msgs.msg import Twist
+     from nav_msgs.msg import Odometry
+     from nav2_msgs.msg import Costmap
+     from sensor_msgs.msg import PointCloud2
+-    from std_msgs.msg import Bool, Header, String
++    from std_msgs.msg import Bool, Header
+     from rclpy.qos import QoSProfile, ReliabilityPolicy
+     rclpy.init(); node = rclpy.create_node('avoidance_readonly_acceptance')
+-    streams = {}; shadow = []; errors = []; moving = []; armed = []; saved = [0.]; rejected = []
++    streams = {}; errors = []; moving = []; armed = []; saved = [0.]; rejected = []
+     pose=[None];sync_samples=[];next_sync=[0.]
+     def receive(key, msg):
+         now = time.monotonic()
+@@ -64,20 +63,15 @@
+             errors.append('localization_not_ready')
+         if key == 'grid':
+             try:
+-                if not local.update(msg,now):
+-                    errors.append('local_grid_rejected')
+-                    rejected.append(dict(arrival=now,source_stamp=stamp,source_age_s=now-stamp,
+-                                         error=local.error))
+-                else:
+-                    started = time.monotonic()
+-                    scale,reason = local.limit((.10,0.,0.),now)
+-                    shadow.append(dict(scale=scale,reason=reason,evaluation_s=time.monotonic()-started))
+-                    if args.save_grids and now-saved[0] >= 2.:
+-                        np.savez_compressed(args.save_grids/('{:.6f}.npz'.format(local.stamp)),
+-                            xyz=local.xyz,resolution=local.resolution,stamp=local.stamp,arrival=now)
+-                        saved[0] = now
++                xyz,resolution = decode_grid(msg)
++                if args.save_grids and now-saved[0] >= 2.:
++                    np.savez_compressed(args.save_grids/('{:.6f}.npz'.format(stamp)),
++                        xyz=xyz,resolution=resolution,stamp=stamp,arrival=now)
++                    saved[0] = now
+             except Exception as error:
+                 errors.append(type(error).__name__+':'+str(error))
++                rejected.append(dict(arrival=now,source_stamp=stamp,source_age_s=now-stamp,
++                                     error=str(error)))
+         if key == 'corrected' and any(abs(v)>1e-6 for v in (msg.linear.x,msg.linear.y,msg.angular.z)):
+             moving.append(now)
+         if key == 'armed' and msg.data:
+@@ -90,7 +84,6 @@
+         'global': (Costmap,'/global_costmap/costmap_raw'),
+         'odom': (Odometry,'/odom'),
+         'ready': (Bool,'/patrol/localization_ready'),
+-        'local_safety': (String,'/patrol/voa/local_safety'),
+         'raw': (Twist,'/patrol/cmd_vel_raw'),
+         'corrected': (Twist,'/cmd_vel_corrected'),
+         'armed': (Bool,'/patrol/armed')}
+@@ -113,8 +106,10 @@
+             summary[key].update(source_age_p95_s=float(np.percentile(data['ages'],95)),
+                                 source_age_max_s=float(max(data['ages'])))
+     failures = list(dict.fromkeys(errors))
+-    required = {'grid': .25} if args.perception_only else {
+-        'grid': .25,'heartbeat':.5,'projection':.5,'local':sync.timeout,'global':1.,'local_safety':.25,
++    # Match the retained projection heartbeat budget; the retired direct
++    # grid-stop layer's 0.25 s deadline is no longer an acceptance condition.
++    required = {'grid': .5} if args.perception_only else {
++        'grid': .5,'heartbeat':.5,'projection':.5,'local':sync.timeout,'global':1.,
+         'corrected':.25,'armed':.5,'odom':.7,'ready':.5}
+     for key,deadline in required.items():
+         if key not in summary or summary[key]['count'] < 3:
+@@ -125,8 +120,6 @@
+             failures.append(key+':source_stale')
+     if moving or armed:
+         failures.append('not_a_disarmed_stationary_session')
+-    if shadow and max(x['evaluation_s'] for x in shadow) > .05:
+-        failures.append('local_shadow_evaluation_over_50ms')
+     if not args.perception_only and (len(sync_samples)<10 or not all(s['ok'] for s in sync_samples[-10:])):
+         failures.append('near_obstacle_costmap_sync_not_stable_at_end')
+     report = dict(scope='stationary perception only' if args.perception_only else 'stationary timing; dynamic/path acceptance separate',
+@@ -134,11 +127,6 @@
+         rejected_grids=rejected,
+         costmap_sync=dict(samples=len(sync_samples),waiting=sum(not s['ok'] for s in sync_samples),last=sync_samples[-1] if sync_samples else None,
+                           note='raw local costmap spatial correspondence; not plugin provenance or motion certification'),
+-        shadow=dict(count=len(shadow),stops=sum(x['scale']==0 for x in shadow),
+-                    slowdowns=sum(x['scale']==.5 for x in shadow),
+-                    max_evaluation_s=max((x['evaluation_s'] for x in shadow),default=None),
+-                    reasons={reason:sum(x['reason']==reason for x in shadow) for reason in {x['reason'] for x in shadow}},
+-                    note='hypothetical .10 m/s command, NEVER published; stops can be legitimate obstacles'),
+         nonzero_corrected_count=len(moving),armed_count=len(armed),
+         motor_publishers={t:node.count_publishers(t) for t in ['/cmd_vel','/cmd_vel_corrected']})
+     args.output.parent.mkdir(parents=True,exist_ok=True)
+--- before/scripts/record_avoidance_test.sh
++++ after/scripts/record_avoidance_test.sh
+@@ -34,7 +34,7 @@
+ timeout --signal=INT "$SECONDS_TO_RECORD" ros2 bag record -o "$OUT" \
+   --qos-profile-overrides-path "$QOS_FILE" \
+   /patrol/voa/grid_map /patrol/voa/costmap_obstacles /patrol/voa/costmap_heartbeat \
+-  /patrol/voa/local_safety /patrol/cmd_vel_raw /cmd_vel_corrected \
++  /patrol/cmd_vel_raw /cmd_vel_corrected \
+   /patrol/gate_state /patrol/armed /patrol/localization_ready /patrol/registration_odom \
+   /patrol/goal_bridge_state /patrol/goal_active /patrol/goal_request \
+   /local_costmap/costmap /global_costmap/costmap /map /plan \
+--- before/tests/test_obstacle_response.py
++++ after/tests/test_obstacle_response.py
+@@ -1,12 +1,9 @@
+ """Synthetic geometry and actual gate integration; no robot motion or ROS bus."""
+ import copy
+-import importlib.util
+-import json
+ import math
+ from pathlib import Path
+ import sys
+ from types import SimpleNamespace as NS
+-import time
+ from unittest.mock import patch
+ 
+ import numpy as np
+@@ -16,12 +13,11 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT/'patrol_nav_ws/src/lite3_patrol_nav'))
+ sys.path.insert(0, str(ROOT/'scripts'))
+-from lite3_patrol_nav.obstacle_safety import LocalGridSafety, terminal_extents
++from lite3_patrol_nav.obstacle_safety import footprint_extents, terminal_extents
+ from test_voa_costmap_bridge import grid
+ from make_dynamic_nav2_config import build
+ 
+ PROFILE = ROOT/'navigation/obstacle_response.yaml'
+-SETTINGS = yaml.safe_load(PROFILE.read_text())['local_stop']
+ 
+ 
+ def scene(points=(), stamp=100., order='F', start=(0, 0)):
+@@ -37,61 +33,6 @@
+     return msg
+ 
+ 
+-def guard(points=(), stamp=100.):
+-    g = LocalGridSafety(.35, .25, .1, copy.deepcopy(SETTINGS))
+-    assert g.update(scene(points, stamp), stamp+.02)
+-    return g
+-
+-
+-@pytest.mark.parametrize('points,scale', [([], 1.), ([(.55,0,.2)], .5),
+-    ([(.40,0,.2)], 0.), ([(.45,.6,.2)], 1.), ([(.40,0,float('nan'))], 0.)])
+-def test_local_clear_slow_stop_and_off_path_obstacle(points, scale):
+-    assert guard(points).limit((.15,0.,0.), 100.02)[0] == scale
+-
+-
+-def test_passable_corridor_and_true_footprint_collision():
+-    walls = [(x,y,.2) for x in np.arange(-.5,1.5,.05) for y in (-.45,.45)]
+-    assert guard(walls).limit((.15,0.,0.),100.02)[0] == 1.
+-    narrow = [(x,y,.2) for x in np.arange(-.5,1.5,.05) for y in (-.25,.25)]
+-    assert guard(narrow).limit((.15,0.,0.),100.02)[0] == 0.
+-
+-
+-def test_no_map_tf_needed_and_circular_layout_preserves_stop():
+-    msg = scene([(.4,0,.2)], order='C', start=(113,73))
+-    g = guard()
+-    msg.header.stamp.nanosec = 50000000
+-    assert g.update(msg,100.06)
+-    assert g.limit((.15,0.,0.),100.06)[0] == 0.
+-
+-
+-def test_replay_stale_invalid_and_forward_only():
+-    g = guard()
+-    assert not g.update(scene(stamp=99.),100.02)
+-    assert g.stamp == 100.
+-    assert not g.healthy(100.251)
+-    assert g.limit((.1,0.,0.),100.3)[0] == 0.
+-    assert g.limit((-.08,0.,0.),100.02)[0] == 0.
+-    malformed = scene(stamp=100.1); malformed.data[0].data.pop()
+-    assert not g.update(malformed,100.11)
+-    assert not g.healthy(100.11)
+-
+-
+-def test_missing_or_cv_filled_observation_mask_fails_closed():
+-    g = guard()
+-    msg = scene(stamp=100.04)
+-    msg.layers.pop(); msg.data.pop()
+-    assert not g.update(msg,100.05)
+-    assert not g.healthy(100.05)
+-    msg = scene([(.4,0,float('nan'))],stamp=100.08)
+-    # Reproduce the factory CV conversion defect: unobserved NaN becomes
+-    # minimum finite elevation, while independent validity remains zero.
+-    a = np.asarray(msg.data[0].data)
+-    a[~np.isfinite(a)] = -.43
+-    msg.data[0].data = a.tolist()
+-    assert not g.update(msg,100.09)
+-    assert not g.healthy(100.09)
+-
+-
+ def test_planner_known_only_does_not_invent_unknown_walls_or_clear_obstacles():
+     from lite3_patrol_nav.voa_grid import grid_obstacles
+     msg = scene([(.4,0,float('nan')),(.8,0,.2)])
+@@ -99,75 +40,18 @@
+     assert len(known) == 1 and stats['unknown'] == 1
+     conservative,_ = grid_obstacles(msg,.1,include_unknown=True)
+     assert len(conservative) == 2
+-    # Same missing observation still vetoes local motion, not fabricated free.
+-    assert guard([(.4,0,float('nan'))]).limit((.1,0.,0.),100.02)[0] == 0.
+-
+-
+-def test_stop_release_requires_distinct_clear_sensor_frames():
+-    g = guard([(.4,0,.2)])
+-    assert g.limit((.15,0.,0.),100.02)[0] == 0.
+-    assert g.update(scene(stamp=100.04),100.05)
+-    for _ in range(5):
+-        assert g.limit((.15,0.,0.),100.05)[0] == 0.
+-    assert g.update(scene(stamp=100.08),100.09)
+-    assert g.limit((.15,0.,0.),100.09)[0] == 0.
+-    assert g.update(scene(stamp=100.12),100.13)
+-    assert g.limit((.15,0.,0.),100.13)[0] == 1.
+-
+-
+-def test_recent_output_momentum_is_not_removed_by_new_command():
+-    g = guard([(.4,0,.2)])
+-    g.remember_output((.15,0.,0.),100.)
+-    assert g.limit((0.,0.,.2),100.02) == (0.,'recent_motion_braking_envelope_blocked')
+-
+-
+-def test_rotation_sweep_checks_corners_not_only_robot_center():
+-    g = guard([(.3,.4,.2)])
+-    scale, reason = g.limit((0.,0.,.4),100.02)
+-    assert scale < 1.
+-    assert reason != 'clear'
+ 
+ 
+ @pytest.mark.parametrize('height', [.10, .16, .20])
+ def test_true_height_obstacles_are_never_removed_to_improve_passage(height):
+     # Float32 .10 is strictly above the factory double threshold, matching its
+     # original predicate. No obstacle threshold has been raised by this change.
+-    assert guard([(.4,0,height)]).limit((.15,0.,0.),100.02)[0] == 0.
++    from lite3_patrol_nav.voa_grid import grid_obstacles
++    points,_ = grid_obstacles(scene([(.4,0,height)]),.1,include_unknown=False)
++    assert len(points) == 1
+ 
+ 
+-def test_flat_floor_is_not_an_obstacle_and_unknown_body_is_not_free_space_ahead():
+-    assert guard([(.4,0,.099)]).limit((.15,0.,0.),100.02)[0] == 1.
+-    assert guard([(0,0,float('nan'))]).limit((.15,0.,0.),100.02)[0] == 1.
+-    assert guard([(.4,0,float('nan'))]).limit((.15,0.,0.),100.02)[0] == 0.
+-
+-
+-def test_held_out_dense_trajectory_oracle_detects_no_missed_physical_contact():
+-    # Independent dense continuous-path approximation; seed/locations do not
+-    # reuse the hand-selected pass/stop fixtures used to tune margins.
+-    rng = np.random.default_rng(19342)
+-    for _ in range(24):
+-        p = rng.uniform([.15,-.55],[.8,.55])
+-        g = guard([(p[0],p[1],.20)])
+-        cmd = (float(rng.uniform(.04,.15)),0.,float(rng.uniform(-.4,.4)))
+-        scale,_ = g.limit(cmd,100.02)
+-        if scale == 0:
+-            continue
+-        vx,_,w = np.array(cmd)*scale
+-        t = np.linspace(0,1.,2001)
+-        if abs(w) < 1e-7:
+-            x,y = vx*t,np.zeros(len(t))
+-        else:
+-            x,y = vx*np.sin(w*t)/w,vx*(1-np.cos(w*t))/w
+-        # Use the actual quantized occupied cell rather than its requested
+-        # coordinate. The oracle checks the unpadded physical rectangle.
+-        point = g.xyz[np.isfinite(g.xyz[:,2]) & (g.xyz[:,2]>.1)][0,:2]
+-        dx,dy = point[0]-x,point[1]-y
+-        local_x = dx*np.cos(w*t)+dy*np.sin(w*t)
+-        local_y = -dx*np.sin(w*t)+dy*np.cos(w*t)
+-        assert not ((abs(local_x)<=.35)&(abs(local_y)<=.25)).any()
+-
+-
+-def test_profile_changes_only_private_overlay_and_uses_shared_goal_tolerance(tmp_path):
++def test_profile_changes_only_private_overlay_and_uses_shared_goal_tolerance():
+     base = yaml.safe_load((ROOT/'navigation/patrol_map_20261031_01_area_v2_review/nav2_safe.yaml').read_text())
+     before = copy.deepcopy(base)
+     result = build(base,ROOT/'navigation/navigate_dynamic_obstacles.xml',factory_only=True)
+@@ -183,12 +67,11 @@
+     assert controller['FollowPath']['xy_goal_tolerance'] == .12
+     assert controller['FollowPath']['min_vel_x'] == 0.
+     assert controller['progress_checker']['movement_time_allowance'] == 15.
+-    nav = tmp_path/'nav.yaml'; nav.write_text(yaml.safe_dump(result))
+-    safety = LocalGridSafety.from_files(nav,ROOT/'navigation/vendor_voa.yaml',PROFILE)
+-    assert safety.hx >= .35 and safety.hy >= .25
++    hx,hy = footprint_extents(result['local_costmap']['local_costmap']['ros__parameters'])
++    assert hx >= .35 and hy >= .25
+ 
+ 
+-def test_actual_gate_stops_without_waiting_for_costmap_heartbeat_failure():
++def test_actual_gate_keeps_command_publisher_checks_without_direct_grid_input():
+     from test_factory_voa_mode import FactoryGateTests
+     fixture = FactoryGateTests(); fixture.setUp()
+     try:
+@@ -196,27 +79,17 @@
+         g.get_publishers_info_by_topic = lambda topic: [NS(node_name='controller_server'),NS(node_name='unknown_teleop')]
+         assert g.sensor_health()[1] == 'nav_command_publisher_conflict'
+         g.get_publishers_info_by_topic = lambda topic: [NS(node_name='controller_server'),NS(node_name='recoveries_server')]
+-        g.require_local_grid_stop = True
+-        g.local_safety = guard(stamp=10.)
+-        g.local_safety_diagnostics = g.create_publisher(NS,'/patrol/voa/local_safety',1)
+-        g.counts['/patrol/voa/grid_map'] = 1
+         fixture.heartbeat()
+         assert fixture.arm().success
+         g.goal_active_callback(NS(data=True))
+         command = fixture.module.Twist(); command.linear.x = .15; g.raw_callback(command)
+-        assert g.local_safety.update(scene([(.4,0,.2)],stamp=10.01),10.02)
+-        g.clock_time = 10.02
+         g.timer_callback()
+-        assert fixture.output() == (0.,0.,0.)
+-        assert g.armed  # Physical obstruction waits; it does not re-ARM a fault.
+-        d = json.loads(g.outputs['/patrol/voa/local_safety'][-1].data)
+-        assert d['scale'] == 0
+-        assert d['evaluation_s'] >= 0
+-        g.clock_time = 10.3
+-        fixture.heartbeat(10.3)  # Map bridge healthy; LOCAL grid is stale.
++        assert fixture.output() == (.15,0.,0.)
++        # Projection heartbeat safety is independent of the removed grid veto.
++        g.clock_time = 10.6
+         g.timer_callback()
+         assert not g.armed
+-        assert g.fault == 'local_grid_stale_or_invalid'
++        assert g.fault == 'voa_costmap_not_ready_or_stale'
+         assert fixture.output() == (0.,0.,0.)
+     finally:
+         fixture.doCleanups()
+@@ -224,7 +97,6 @@
+ 
+ def test_actual_goal_bridge_oriented_extent_unknown_boundary_and_empty_cloud():
+     from test_patrol_route import Tests
+-    from costmap_ground_filter import cloud_xyz
+     fixture = Tests(); fixture.setUp()
+     b = fixture.bridge
+     try:
+--- before/tests/test_obstacle_sync_clearance.py
++++ after/tests/test_obstacle_sync_clearance.py
+@@ -1,64 +1,10 @@
+-"""Concurrency, freshness and near-obstacle decisions using actual code."""
+-import json
++"""Obstacle projection concurrency and marking-origin integrity."""
+ import threading
+ import time
+-from types import SimpleNamespace as NS
+ 
+ import numpy as np
+ 
+-from test_obstacle_response import guard, scene
+ from test_voa_costmap_bridge import grid, M
+-
+-
+-def test_grid_ingestion_continues_during_old_frame_evaluation():
+-    g = guard()
+-    collision = g.collision
+-    entered,resume = threading.Event(),threading.Event()
+-    result = []
+-    def delayed(command,age,horizon,frame=None):
+-        entered.set(); assert resume.wait(2)
+-        return collision(command,age,horizon,frame)
+-    g.collision = delayed
+-    worker = threading.Thread(target=lambda:result.append(g.limit((.1,0.,0.),100.02)))
+-    worker.start(); assert entered.wait(1)
+-    try:
+-        assert g.update(scene([(.4,0,.2)],stamp=100.2),100.21)
+-        assert g.stamp == 100.2
+-    finally:
+-        resume.set();worker.join(2)
+-    assert not worker.is_alive()
+-    assert result[0][0] == 1.
+-    assert g.evaluated_frame.stamp == 100.
+-    assert g.healthy(100.3) and not g.evaluated_fresh(100.3)
+-    assert not g.xyz.flags.writeable
+-
+-
+-def test_actual_gate_never_dates_an_old_decision_with_a_new_snapshot():
+-    from test_factory_voa_mode import FactoryGateTests
+-    f = FactoryGateTests();f.setUp()
+-    try:
+-        g=f.gate;g.require_local_grid_stop=True;g.local_safety=guard(stamp=10.)
+-        g.local_safety_diagnostics=g.create_publisher(NS,'/patrol/voa/local_safety',1)
+-        g.counts['/patrol/voa/grid_map']=1;f.heartbeat()
+-        assert f.arm().success
+-        g.goal_active_callback(NS(data=True))
+-        command=f.module.Twist();command.linear.x=.1;g.raw_callback(command)
+-        collision=g.local_safety.collision
+-        def arriving(command,age,horizon,frame=None):
+-            g.clock_time=10.3
+-            g.local_safety.update(scene([(.4,0,.2)],stamp=10.29),10.3)
+-            return collision(command,age,horizon,frame)
+-        g.local_safety.collision=arriving
+-        g.timer_callback()
+-        assert f.output()==(0.,0.,0.) and g.armed
+-        report=json.loads(g.outputs['/patrol/voa/local_safety'][-1].data)
+-        assert report['source_stamp']==10. and report['latest_source_stamp']>10.2
+-        assert report['scale']==0.
+-        g.local_safety.collision=collision;f.heartbeat(10.3)
+-        g.timer_callback()
+-        assert f.output()==(0.,0.,0.)
+-    finally:
+-        f.doCleanups()
+ 
+ 
+ def test_projection_does_not_block_receiving_or_fill_both_executor_workers():
+@@ -89,36 +35,6 @@
+         f.doCleanups()
+ 
+ 
+-def test_close_obstacle_allows_safe_new_heading_but_not_hard_contact():
+-    straight=guard([(.55,0.,.2)])
+-    assert straight.limit((.15,0.,0.),100.02)[0]<1.
+-    turn=guard([(.55,0.,.2)])
+-    assert turn.limit((.02,0.,-.4),100.02)[0]==1.
+-    touching=guard([(.30,0.,.2)])
+-    scale,reason=touching.limit((.02,0.,-.4),100.02)
+-    assert scale==0. and 'manual_clearance_required' in reason
+-    assert touching.evaluated_frame.clearance<0.
+-
+-
+-def test_narrow_clearance_is_not_obtained_by_shrinking_the_robot():
+-    for width in (.75,.85,1.0):
+-        walls=[(x,y,.2) for x in np.arange(-.5,1.5,.05) for y in (-width/2,width/2)]
+-        g=guard(walls)
+-        assert (g.hx,g.hy)==(.35,.25)
+-        assert g.limit((.1,0.,0.),100.02)[0]==1.
+-    too_narrow=guard([(0.,.24,.2),(0.,-.24,.2)])
+-    assert too_narrow.limit((.1,0.,0.),100.02)[0]==0.
+-
+-
+-def test_same_narrow_passage_stops_when_pose_age_consumes_clearance():
+-    walls=[(x,y,.2) for x in np.arange(-.5,1.5,.05) for y in (-.375,.375)]
+-    fresh=guard(walls)
+-    assert fresh.limit((.1,0.,0.),100.02)[0]==1.
+-    aged=guard(walls)
+-    assert aged.healthy(100.22)  # Still within hard source-age limit.
+-    assert aged.limit((.1,0.,0.),100.22)[0]==0.  # Uncertainty uses the clearance.
+-
+-
+ def test_2d_marking_origin_uses_projecting_pose_and_synthetic_height_only():
+     from test_voa_costmap_bridge import transform
+     pose=transform(yaw=.4,pitch=.2,x=7.,y=-2.)
+--- before/tests/test_costmap_sync.py
++++ after/tests/test_costmap_sync.py
+@@ -79,12 +79,9 @@
+ 
+ def test_actual_gate_waits_for_costmap_then_resumes_and_latches_map_loss():
+     from test_factory_voa_mode import FactoryGateTests
+-    from test_obstacle_response import guard,scene
+     f=FactoryGateTests();f.setUp()
+     try:
+-        g=f.gate;g.require_local_grid_stop=True;g.local_safety=guard(stamp=10.)
+-        g.local_safety_diagnostics=g.create_publisher(NS,'/patrol/voa/local_safety',1)
+-        g.counts['/patrol/voa/grid_map']=1
++        g=f.gate
+         g.require_costmap_sync=True;g.costmap_sync=CostmapSync()
+         g.ros_seconds=lambda:1700000000.+g.clock_time-10.
+         g.last_pose=(0.,0.,0.)
+@@ -101,7 +98,7 @@
+         g.timer_callback()
+         assert f.output()==(.1,0.,0.)
+         g.clock_time=10.9
+-        g.local_safety.update(scene(stamp=10.9),10.9);f.heartbeat(10.9)
++        f.heartbeat(10.9)
+         g.costmap_sync.receive_cloud(cloud(stamp=10.9),10.9)
+         g.timer_callback()
+         assert f.output()==(0.,0.,0.) and not g.armed
+--- before/tests/test_factory_voa_mode.py
++++ after/tests/test_factory_voa_mode.py
+@@ -457,13 +457,8 @@
+                 (ROOT / 'navigation/start_gate_disarmed.sh').read_text().replace(
+                     'PROJECT=/home/ysc/lite3_patrol_project',
+                     'PROJECT=' + str(root)))
+-            (root/'grid_setup.bash').write_text('true\n')
+-            (root/'grid_map_msgs').mkdir()
+-            (root/'grid_map_msgs/__init__.py').write_text('')
+-            (root/'grid_map_msgs/msg.py').write_text('class GridMap: pass\n')
+             env = dict(os.environ, PATH=str(root / 'bin') + ':' + os.environ['PATH'],
+-                       LITE3_OBSTACLE_BACKEND='factory_only',
+-                       LITE3_GRID_MAP_SETUP=str(root/'grid_setup.bash'), PYTHONPATH=str(root))
++                       LITE3_OBSTACLE_BACKEND='factory_only')
+             env.pop('LITE3_DYNAMIC_OBSTACLES', None)
+             env.pop('LITE3_USE_VENDOR_VOA', None)
+             result = subprocess.run(['bash', str(gate)], env=env,
+@@ -473,7 +468,10 @@
+             self.assertIn('GATE_STARTED', result.stdout)
+             self.assertIn('use_vendor_voa:=false', result.stdout)
+             self.assertIn('require_voa_costmap:=true', result.stdout)
+-            self.assertIn('require_local_grid_stop:=true', result.stdout)
++            self.assertNotIn('require_local_grid_stop', result.stdout)
++            self.assertIn('require_costmap_sync:=true', result.stdout)
++            self.assertNotIn('safety_nav2_file', result.stdout)
++            self.assertNotIn('safety_voa_file', result.stdout)
+             self.assertIn('require_lidar_costmap:=false', result.stdout)
+             self.assertIn('VOA perception supervisor exited', result.stderr)
+             self.assertNotIn('ARMED', result.stdout)
+--- before/docs/2026-11-02_障碍同步与近障绕行修改.md
++++ after/docs/2026-11-02_障碍同步与近障绕行修改.md
+@@ -2,14 +2,15 @@
+ 
+ 本轮针对障碍出现后规划反应滞后、贴近障碍后持续顶着目标、窄通道受规划余量影响的问题。地图为 `patrol_map_20261031_01_area_v2_review`，定位仍为 XFeat＋LighterGlue 初始化及原 NDT/腿部里程计。启动默认 DISARMED，不自动发送目标。
+ 
++2026-11-02 后续按用户要求删除速度门内的本地栅格停车功能。本次只修改并同步代码，不启动导航、ARM 或实机测试。修改前源码备份为 `results/remove_local_grid_20261102_194245/source_before.tar.gz`。原厂 VOA 高程栅格仍负责感知与投影；Nav2 的局部代价地图也继续保留。
++
+ ## 障碍同步
+ 
+-1. 本地栅格接收使用独立回调组；碰撞检查使用不可变的同帧快照。计算期间新帧能继续入队，几何与时间戳不会混用。
+-2. 旧帧判断结果在输出前过期时，禁止输出非零速度。若最新帧仍新鲜，则零速等待下一次判断；若数据源本身过期，则保持原有故障锁存。0.25 秒上限没有放宽。
+-3. 去掉二维旋转中的 BLAS 小矩阵乘法，缓存每帧危险格和边界，限定 NumPy 线程为 1，减少计算与线程争用。
+-4. 投影桥不再用大锁包住整个投影。新栅格、定位与 TF 可以并行接收；重复定时器不等待正在执行的投影，避免占满两个执行线程。
+-5. Factory Only 向 STVL 提供专用 `patrol_voa_costmap_origin`。XY/朝向来自本次投影所用的真实或有界腿部补偿位姿，时间戳与云一致；Z=0.5 与二维标记云一致。它是二维标记参考，不能用于物理外参、真实高度或相机投影，也不修改 NDT 的 TF。
+-6. 速度门订阅实际 `/local_costmap/costmap_raw`，检查机器人附近 1 m 内的已投影障碍是否在局部代价地图中有对应 lethal 格。缺少对应时先零速等待；不制造消费心跳、不清除障碍。已有静态 lethal 格也算已表示，因此这是空间对应检查，不是插件来源证明。
++1. 删除速度门对 `/patrol/voa/grid_map` 的直接订阅、`LocalGridSafety`、0.25 秒源年龄限制、未知格扫掠停车、制动包络、连续三帧放行及 `/patrol/voa/local_safety` 诊断。启动器不再传入本地栅格参数或为速度门加载 grid_map 环境。
++2. 原厂 VOA → 投影桥 → 全局/局部代价地图 → NavFn/DWB → 速度门的链路保留。速度门不再直接根据高程栅格决定减速或停车；Factory Only 的障碍碰撞判断由 Nav2 完成。
++3. 投影桥不再用大锁包住整个投影。新栅格、定位与 TF 可以并行接收；重复定时器不等待正在执行的投影，避免占满两个执行线程。
++4. Factory Only 向 STVL 提供专用 `patrol_voa_costmap_origin`。XY/朝向来自本次投影所用的真实或有界腿部补偿位姿，时间戳与云一致；Z=0.5 与二维标记云一致。它是二维标记参考，不能用于物理外参、真实高度或相机投影，也不修改 NDT 的 TF。
++5. 速度门仍订阅实际 `/local_costmap/costmap_raw`，检查机器人附近 1 m 内的已投影障碍是否在局部代价地图中有对应 lethal 格。缺少对应时先零速等待；不制造消费心跳、不清除障碍。已有静态 lethal 格也算已表示，因此这是空间对应检查，不是插件来源证明。该检查已解除对本地栅格停车模块的依赖，仍检查投影与代价地图的有效期。
+ 
+ 选择 raw 格式的原因：Foxy 上游 `OccupancyGrid` 可视化消息使用零时间戳，也可能只发局部更新；raw 格式提供完整原生代价和节点时钟时间戳。代码将传感器单调时钟与 Nav2 ROS 时钟分开检查。[Foxy 发布器源码](https://raw.githubusercontent.com/ros-navigation/navigation2/foxy-devel/nav2_costmap_2d/src/costmap_2d_publisher.cpp)
+ 
+@@ -17,14 +18,14 @@
+ 
+ ## 贴近障碍时的处理
+ 
+-- 有已知障碍挡住当前扫掠：同轨迹减速或停车，让 Nav2 用实际障碍图重新规划。
+-- 当前轨迹会进入未知区域：等待有效观测，不把它当成自由空间。
+-- 已知障碍触及当前足迹：报告需要人工清障/重新摆位，不自动倒车进入未验证的后方区域。
+-- 有已观测且足迹扫掠安全的新方向：本地检查允许 Nav2 给出的曲线，最终目标朝向不被修改。本地检查自身不挑选绕行方向。
++- 已投影障碍尚未在局部代价地图中表示：速度门先零速等待同步。
++- 障碍已经进入代价地图：由 NavFn/DWB 根据实际足迹规划和检查轨迹；无可行轨迹时停车、等待或重规划。
++- 删除本地栅格逻辑后，不再有该层的未知区域停车或接触障碍专用状态。此修改没有补齐相机近场观测，也不能证明贴障脱困已经通过验收。
++- 最终目标朝向、真实足迹、终点净空检查和 Factory Only 禁止倒车的设置保持不变。
+ 
+ Factory Only 的无进展时间由原 v2 的 45 秒改为 15 秒：持续不动时更早进入现有等待/重规划流程。行为树仍是每秒重规划、等待 3 秒、最多 8 次恢复；没有加 spin/back_up，也不会为继续运动清空代价地图。该时间需验证 90° 转向实际耗时，尚未证明根治 180° 振荡。
+ 
+-新增诊断会输出所用帧/最新帧时间、计算耗时、已知障碍距当前足迹的净空、代价地图中未表示的近场点数量，以及等待观测/重规划/同步或人工清障原因。
++本地停车诊断已删除；保留 `/patrol/gate_state` 中的代价地图同步等待状态和现有故障原因。只读探针保留感知、投影、代价地图时序及空间对应统计，不再模拟本地运动指令。
+ 
+ ## 窄路通行
+ 
+@@ -36,18 +37,20 @@
+ | cost scaling | 保持 10.0 |
+ | 局部更新 / 全局更新 | 保持 5 Hz / 2 Hz |
+ | 实际地图对外发布 | 2 Hz |
+-| 本地栅格源年龄 | 保持最多 0.25 s |
++| 速度门直接读取本地栅格 | 已删除，不再有该层 0.25 s 限制 |
+ | 投影源年龄保护 | 保持原 0.5 s 门控及桥接 0.35 s 发布上限 |
+ | 局部 raw costmap 年龄 | 最多 0.75 s，针对 2 Hz 完整图发布 |
+ | 原生代价对应误差 | 最多 0.04 m，仅覆盖体素量化误差 |
+ 
+-真实足迹、padding、本地安全余量、障碍高度门槛没有缩小/提高。规划膨胀是软代价范围，不等于实际必须离障碍 0.50 m；静态地图自身预膨胀和机器人真实尺寸仍可能使某些通道不可通过。新鲜度不足也会消耗净空余量，同一通道在新鲜数据下可通过、旧数据下应停车。
++真实足迹、padding、障碍高度门槛保持不变。规划膨胀是软代价范围，不等于实际必须离障碍 0.50 m；静态地图自身预膨胀和机器人真实尺寸仍可能使某些通道不可通过。
+ 
+-合成、全观测测试覆盖 0.75/0.85/1.0 m 直通道及实际足迹冲突；这些宽度不是实机通行保证，转弯所需空间也大于直行。近场盲区尚未补齐时仍不能执行运动试验。
++此前本地停车模块的合成通道测试属于已删除功能的历史结果，不作为当前版本的验收依据。删除该功能后尚未进行实机通行或避障验收。
+ 
+ ## 验证与操作顺序
+ 
+ 结果保存到本机与 Jetson 的 `results/obstacle_sync_clearance_20261102/`，包括修改前备份、部署清单、回归、并发测试、受控基准和真实栅格回放。
++
++以上是删除本地栅格功能之前的历史验证。本次未运行回归或实机测试，以下命令供用户自行执行。另一个已定位的 ARM 服务调用超时导致启动器退出的问题不在本次删除范围内，仍需单独修复。
+ 
+ 虚拟机启动静止会话：
+ 
+--- before/docs/2026-11-02_FactoryOnly避障修改与测试操作.md
++++ after/docs/2026-11-02_FactoryOnly避障修改与测试操作.md
+@@ -1,4 +1,6 @@
+ # Lite3 Factory Only 避障反应与通行测试
++
++> **后续变更（2026-11-02）：** 用户要求删除本地栅格速度约束，现已从速度门、配置、启动器、只读探针和录包话题中移除；不再有该层 0.25 秒检查、扫掠停车或三帧放行。原厂 VOA 高程感知、投影、Nav2 全局/局部代价地图、代价地图同步、定位检查、投影心跳与默认 DISARMED 保留。当前版本见 [障碍同步与近障绕行修改](2026-11-02_障碍同步与近障绕行修改.md)。以下内容保留为删除前的历史测试记录，其中本地停车行为、测试结果和限制不能当作当前版本的验收结论；膨胀现值为 0.50 m。本次未替用户进行测试。
+ 
+ 本轮修改调整 Factory Only 动态导航覆盖配置和隔离的原厂感知程序，增加直接读取原厂 VOA 栅格的本地停车检查，并完善终点几何验收。静态地图、NDT、重定位算法、原巡航路线及足迹没有重建或缩小。部署不等于运动验收；所有启动仍然默认 DISARMED。
+ 

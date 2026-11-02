@@ -1,0 +1,21 @@
+{
+  "scope": "controlled VM benchmark, same immutable synthetic scene; not Jetson load/motion acceptance",
+  "results": {
+    "before": {
+      "evaluation_p50_ms": 0.6486134999477144,
+      "evaluation_p95_ms": 1.0606024500020794,
+      "evaluation_max_ms": 1.2990029999855324,
+      "scales": [
+        1.0
+      ]
+    },
+    "after": {
+      "evaluation_p50_ms": 0.3014714999380885,
+      "evaluation_p95_ms": 0.42021240010399197,
+      "evaluation_max_ms": 0.6104919998506375,
+      "scales": [
+        1.0
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "session": "logs/lite3_indoor_nav_patrol_map_20261031_01_area_v2_review_20261102_194724_6901",
+  "arm_response": "cannot arm: costmap_sync_cloud_missing_or_stale",
+  "code_condition": "cloud is None or sensor monotonic source age outside [-0.05, 0.5] seconds",
+  "initialization_ready": "READY:visual_plus_ndt_confirmed_0.073m_0.005rad",
+  "goal_preview_poses": 77,
+  "evidence": [
+    "[INFO] [1793427863.728137680] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] first fresh projection published",
+    "[INFO] [1793427863.744884496] [patrol_velocity_gate]: [VOA_COSTMAP] fresh obstacle projection received",
+    "[INFO] [1793427944.645419024] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] waiting for fresh grid and matching NDT TF",
+    "[INFO] [1793427948.095056496] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] timer_delayed 0.474s",
+    "[INFO] [1793427948.180722832] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] heartbeat_gap age=0.520 pending=16 anchors=12 fail_project=774 fail_grid=0 last=ExtrapolationException:Lookup would require extrapolation into the future.  Requested time 5086.907076 ",
+    "[INFO] [1793427949.660378960] [patrol_voa_costmap_bridge]: [VOA_COSTMAP] projected {\"cells\": 9600, \"obstacles\": 453, \"unknown_constraints\": 0, \"unknown\": 8590, \"source_age_s\": 0.1338, \"compensated\": 1233}"
+  ],
+  "confirmed": "projection existed; transient projection/TF stall and publication gap occurred near ARM attempt",
+  "not_unique": "gate had no accepted cloud versus accepted source expired cannot be proven from current logs",
+  "wireless_ssh": "one read-only connection attempt timed out; no repeated connection attempts",
+  "runtime_actions": false,
+  "files_modified": false,
+  "tests_run": false,
+  "next_focus": "exact-time TF/leg odometry arrival, projection scheduling and gate cloud parsing/arrival diagnostics; retain source freshness checks"
+}
