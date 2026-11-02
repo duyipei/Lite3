@@ -167,6 +167,13 @@ ORB（含 LoFTR）和 XFeat 均在 NDT 确认 READY 后暂停视觉计算，定�
 当前接入使用旧库稀疏深度关联，属于实验路径，不代表完整 XFeat 地图库或现场
 精度已经验证。这里不生成或替换原 ORB 数据库。
 
+新采集的数据可在 Jetson 上使用
+`python3 scripts/build_rgbd_visual_map.py ... --feature-backend xfeat` 生成带
+`xfeat_features` 缓存的视觉库；该库同时保留 ORB 关键帧字段。`xfeat_lighterglue`
+模式启动时直接读取预计算的 XFeat 关键点、描述子和三维点，不再现场从参考图
+重新提取。旧库没有 `xfeat_features` 表时仍走上述稀疏深度关联实验路径。
+构建与校验命令见 [地图生成流程](docs/2026-09-12_indoor_map_generation_navigation.md)。
+
 首次部署（虚拟机执行，Jetson 必须可通过 SSH 访问）：
 
 ```bash

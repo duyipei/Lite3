@@ -77,21 +77,39 @@ PARAMS_FILE=$MAP_DIR/nav2_safe.yaml
 BT_ARGS=()
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
 GROUND_MODE=${LITE3_GROUND_MODE:-map}
+BACKEND=${LITE3_OBSTACLE_BACKEND:-}
 [[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || exit 1
 [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || exit 1
+case "$BACKEND" in
+  ''|private_combined|factory_only) ;;
+  *) echo "invalid LITE3_OBSTACLE_BACKEND: $BACKEND" >&2; exit 1 ;;
+esac
+if [[ -n "$BACKEND" && "$DYNAMIC_OBSTACLES" != 1 ]]; then
+  echo "$BACKEND requires LITE3_DYNAMIC_OBSTACLES=1" >&2
+  exit 1
+fi
 GROUND_ARGS=()
 if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
   PARAMS_FILE=$MAP_DIR/nav2_dynamic.yaml
-  # Every reviewed dynamic map needs metric ground-relative classification.
-  # Map Z=0 is a mapping reference, not a physical ground plane (indoors too).
-  # Missing/mismatched evidence fails here instead of reverting to absolute Z.
-  GROUND_ARGS=(--ground-relative)
-  if [[ "$GROUND_MODE" == map ]]; then
-    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
+  if [[ "$BACKEND" == factory_only ]]; then
+    # Factory Only deliberately withholds the unverified Mid-360 ground model
+    # from both costmaps. Neither ground evidence nor the LiDAR filter runs.
+    echo '[INFO] obstacle backend: factory_only (VOA camera grid only; no Mid-360 obstacle layer)'
+    python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+      "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" --factory-only
+  else
+    # Private combined mode retains the reviewed ground-relative LiDAR path.
+    # Every reviewed dynamic map needs metric ground-relative classification.
+    # Map Z=0 is a mapping reference, not a physical ground plane (indoors too).
+    # Missing/mismatched evidence fails here instead of reverting to absolute Z.
+    GROUND_ARGS=(--ground-relative)
+    if [[ "$GROUND_MODE" == map ]]; then
+      python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check
+    fi
+    echo "[INFO] dynamic LiDAR classification mode: $GROUND_MODE"
+    python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+      "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}"
   fi
-  echo "[INFO] dynamic LiDAR classification mode: $GROUND_MODE"
-  python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
-    "$PARAMS_FILE" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}"
   BT_ARGS=("default_bt_xml_filename:=$PROJECT/navigation/navigate_dynamic_obstacles.xml")
 fi
 nav_pid=

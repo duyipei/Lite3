@@ -24,13 +24,79 @@ def appearance_vector(image_bgr):
     return (small/max(float(np.linalg.norm(small)), 1e-6)).ravel()
 
 
+def validate_xfeat_cache(connection, meta):
+    """Structural checks for the precomputed XFeat keyframe cache."""
+    tables = {row[0] for row in connection.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    if "xfeat_features" not in tables:
+        return None
+    if "xfeat" not in meta or not meta["xfeat"].get("weights_sha256"):
+        raise RuntimeError("xfeat_features exists but metadata['xfeat'].weights_sha256 is missing")
+    keyframe_ids = {row[0] for row in connection.execute("SELECT id FROM keyframes")}
+    rows = connection.execute(
+        "SELECT id,keypoints,descriptors,points,feature_count,depth_source "
+        "FROM xfeat_features ORDER BY id"
+    ).fetchall()
+    if {row[0] for row in rows} != keyframe_ids:
+        raise RuntimeError("xfeat_features ids do not match keyframes ids")
+    feature_counts = []
+    for identifier, keypoint_blob, descriptor_blob, point_blob, count, depth_source in rows:
+        count = int(count)
+        keypoints = np.frombuffer(keypoint_blob, "<f4")
+        descriptors = np.frombuffer(descriptor_blob, "<f4")
+        points = np.frombuffer(point_blob, "<f4")
+        if keypoints.size != count*2 or descriptors.size != count*64 or points.size != count*3:
+            raise RuntimeError("xfeat_features row {} has inconsistent blob sizes".format(identifier))
+        if count < 1:
+            raise RuntimeError("xfeat_features row {} has no features".format(identifier))
+        keypoints = keypoints.reshape(count, 2)
+        descriptors = descriptors.reshape(count, 64)
+        points = points.reshape(count, 3)
+        if not (np.isfinite(keypoints).all() and np.isfinite(descriptors).all()
+                and np.isfinite(points).all()):
+            raise RuntimeError("xfeat_features row {} has non-finite values".format(identifier))
+        if not np.isfinite(points[:, 2]).all() or (points[:, 2] <= 0).any():
+            raise RuntimeError("xfeat_features row {} has invalid depth".format(identifier))
+        if not (points[:, 2] >= 0.2).all() or not (points[:, 2] <= 8.0).all():
+            raise RuntimeError("xfeat_features row {} depth outside [0.2, 8.0] m".format(identifier))
+        norms = np.linalg.norm(descriptors, axis=1)
+        if not (norms >= 0.9).all() or not (norms <= 1.1).all():
+            raise RuntimeError("xfeat_features row {} descriptors are not unit length".format(identifier))
+        if not depth_source:
+            raise RuntimeError("xfeat_features row {} has empty depth_source".format(identifier))
+        feature_counts.append(count)
+    return {
+        "keyframes": len(rows),
+        "features_min": int(min(feature_counts)),
+        "features_median": float(np.median(feature_counts)),
+        "features_max": int(max(feature_counts)),
+        "weights_sha256": meta["xfeat"]["weights_sha256"],
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("database")
     parser.add_argument("--queries", type=int, default=12)
+    parser.add_argument(
+        "--require-xfeat-cache", action="store_true",
+        help="fail when the database has no valid precomputed XFeat features",
+    )
     args = parser.parse_args()
     connection = sqlite3.connect("file:{}?mode=ro".format(args.database), uri=True)
     meta = {key: json.loads(value) for key, value in connection.execute("SELECT key,value FROM metadata")}
+    try:
+        xfeat_cache = validate_xfeat_cache(connection, meta)
+    except RuntimeError as error:
+        print(json.dumps({"xfeat_cache": "invalid", "error": str(error)}, indent=2))
+        connection.close()
+        return 2
+    if args.require_xfeat_cache and xfeat_cache is None:
+        print(json.dumps({"xfeat_cache": "missing"}, indent=2))
+        connection.close()
+        return 2
+    if xfeat_cache is not None:
+        print(json.dumps({"xfeat_cache": xfeat_cache}, indent=2))
     k = np.asarray(meta["color_k"], np.float64)
     t_base_camera = np.asarray(meta["base_to_color_optical"], np.float64)
     frames = []
@@ -62,8 +128,14 @@ def main():
             (frame for frame in frames if frame["id"] != query["id"]),
             key=lambda frame: 0.25*cv2.compareHist(query["histogram"], frame["histogram"], cv2.HISTCMP_BHATTACHARYYA) + 0.75*(1.0-float(np.dot(query["appearance"], frame["appearance"]))),
         )[:8]
+        if descriptors is None or len(descriptors) < 2:
+            results.append({"query": int(query_id), "match": None})
+            print(json.dumps(results[-1]), flush=True)
+            continue
         solutions = []
         for frame in candidates:
+            if len(frame["descriptors"]) < 2:
+                continue
             pairs = matcher.knnMatch(frame["descriptors"], descriptors, k=2)
             matches = [pair[0] for pair in pairs if len(pair) == 2 and pair[0].distance < 0.75*pair[1].distance]
             if len(matches) < 18:

@@ -13,6 +13,8 @@ TIME_PROBE_LOCAL="$SCRIPT_DIR/time_probe.py"
 COUNTER_LOCAL="$SCRIPT_DIR/count_fast_livo_outputs.py"
 MONITOR_LOCAL="$SCRIPT_DIR/monitor_pid.py"
 PROFILE_LOCAL="$SCRIPT_DIR/profile_fast_livo.py"
+VISUAL_DB_LOCAL="$SCRIPT_DIR/build_rgbd_visual_map.py"
+VALIDATE_DB_LOCAL="$SCRIPT_DIR/validate_visual_map_db.py"
 GUIDE_LOCAL="$SCRIPT_DIR/../docs/2026-09-12_indoor_lidar_rgbd_mapping.md"
 VIDEO_VIEWER_LOCAL="$SCRIPT_DIR/camera_preview.py"
 SSH_KEY=${LITE3_SSH_KEY:-$HOME/.ssh/id_ed25519_cyberdog}
@@ -34,6 +36,8 @@ SYNC_FILES=(
   "$COUNTER_LOCAL"
   "$MONITOR_LOCAL"
   "$PROFILE_LOCAL"
+  "$VISUAL_DB_LOCAL"
+  "$VALIDATE_DB_LOCAL"
 )
 
 log() { printf '[Round3A-VM] %s\n' "$*"; }
@@ -87,7 +91,7 @@ install_backend() {
   scp -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$GUIDE_LOCAL" "$ROBOT:$GUIDE_REMOTE"
   "${ssh_base[@]}" \
-    "chmod 0755 '$BACKEND_REMOTE' '$OFFLINE_REMOTE' '$MERGE_REMOTE' '$ODOM_REMOTE' /home/ysc/lite3_patrol_project/scripts/count_fast_livo_outputs.py /home/ysc/lite3_patrol_project/scripts/mid360_isolated.launch.py /home/ysc/lite3_patrol_project/scripts/monitor_pid.py /home/ysc/lite3_patrol_project/scripts/time_probe.py /home/ysc/lite3_patrol_project/scripts/profile_fast_livo.py && bash -n '$BACKEND_REMOTE' '$OFFLINE_REMOTE' && python3 -m py_compile '$MERGE_REMOTE' '$ODOM_REMOTE' /home/ysc/lite3_patrol_project/scripts/count_fast_livo_outputs.py /home/ysc/lite3_patrol_project/scripts/mid360_isolated.launch.py /home/ysc/lite3_patrol_project/scripts/monitor_pid.py /home/ysc/lite3_patrol_project/scripts/time_probe.py /home/ysc/lite3_patrol_project/scripts/profile_fast_livo.py"
+    "chmod 0755 '$BACKEND_REMOTE' '$OFFLINE_REMOTE' '$MERGE_REMOTE' '$ODOM_REMOTE' /home/ysc/lite3_patrol_project/scripts/count_fast_livo_outputs.py /home/ysc/lite3_patrol_project/scripts/mid360_isolated.launch.py /home/ysc/lite3_patrol_project/scripts/monitor_pid.py /home/ysc/lite3_patrol_project/scripts/time_probe.py /home/ysc/lite3_patrol_project/scripts/profile_fast_livo.py && bash -n '$BACKEND_REMOTE' '$OFFLINE_REMOTE' && python3 -m py_compile '$MERGE_REMOTE' '$ODOM_REMOTE' /home/ysc/lite3_patrol_project/scripts/count_fast_livo_outputs.py /home/ysc/lite3_patrol_project/scripts/mid360_isolated.launch.py /home/ysc/lite3_patrol_project/scripts/monitor_pid.py /home/ysc/lite3_patrol_project/scripts/time_probe.py /home/ysc/lite3_patrol_project/scripts/profile_fast_livo.py /home/ysc/lite3_patrol_project/scripts/build_rgbd_visual_map.py /home/ysc/lite3_patrol_project/scripts/validate_visual_map_db.py"
   log "capture and offline mapping runtime installed on $ROBOT"
 }
 

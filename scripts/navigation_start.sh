@@ -20,9 +20,18 @@ VISUAL_BACKEND=${LITE3_VISUAL_BACKEND:-orb}
 VISUAL_SEARCH_STRATEGY=${LITE3_VISUAL_SEARCH_STRATEGY:-startup_then_global}
 VISUAL_WAIT_TIMEOUT_S=${LITE3_VISUAL_WAIT_TIMEOUT_S:-240}
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
+DYNAMIC_OBSTACLES_EXPLICIT=${LITE3_DYNAMIC_OBSTACLES:+1}
 GROUND_MODE=${LITE3_GROUND_MODE:-map}
 LOCALIZATION_RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-vendor}
+OBSTACLE_BACKEND=${LITE3_OBSTACLE_BACKEND:-}
 USE_VENDOR_VOA=${LITE3_USE_VENDOR_VOA:-$DYNAMIC_OBSTACLES}
+USE_VENDOR_VOA_EXPLICIT=${LITE3_USE_VENDOR_VOA:+1}
+# Optional factory-workspace overrides. Empty values keep the on-Jetson
+# discovery in navigation/start_factory_voa.sh.
+FACTORY_VOA_SETUP=${LITE3_FACTORY_VOA_SETUP:-}
+FACTORY_VOA_WS=${LITE3_FACTORY_VOA_WS:-}
+FACTORY_GRID_MAP_SETUP=${LITE3_GRID_MAP_SETUP:-}
+FACTORY_DEPTH_TOPIC=${LITE3_FACTORY_VOA_DEPTH_TOPIC:-}
 RVIZ_SSH_BRIDGE=${LITE3_RVIZ_SSH_BRIDGE:-1}
 RVIZ_LOCALHOST_ONLY=$RVIZ_SSH_BRIDGE
 NDT_RESOLUTION=${NDT_RESOLUTION:-1.0}
@@ -54,6 +63,11 @@ LOG_DIR=$PROJECT_DIR/logs/lite3_indoor_nav_${MAP_ID}_$(date +%Y%m%d_%H%M%S)_$$
 line() { printf '%s\n' '------------------------------------------------------------'; }
 title() { line; printf '%s\n' "$1"; line; }
 die() { printf '[FAIL] %s\n' "$*" >&2; exit 1; }
+factory_env_prefix() {
+  printf 'LITE3_FACTORY_VOA_SETUP=%q LITE3_FACTORY_VOA_WS=%q LITE3_GRID_MAP_SETUP=%q LITE3_FACTORY_VOA_DEPTH_TOPIC=%q' \
+    "$FACTORY_VOA_SETUP" "$FACTORY_VOA_WS" \
+    "$FACTORY_GRID_MAP_SETUP" "$FACTORY_DEPTH_TOPIC"
+}
 
 usage() {
   cat <<EOF
@@ -83,6 +97,9 @@ LITE3_VISUAL_BACKEND=orb（默认）或 xfeat_lighterglue；XFeat 首次使用�
 RViz 默认通过无线 SSH 转发地图、点云和目标，适用于 NAT 虚拟机。
 LITE3_RVIZ_SSH_BRIDGE=0 可恢复直接 DDS 显示。
 LITE3_DYNAMIC_OBSTACLES=1 启用实时全局绕行、等待和 VOA 近距离停车；需预先构建 VOA。
+LITE3_OBSTACLE_BACKEND=factory_only（第一阶段默认）仅使用原厂 VOA 障碍感知；
+  private_combined 保留私有 VOA 速度修正、Mid-360 与相机联合代价地图。
+  未设置时沿用旧行为：LITE3_DYNAMIC_OBSTACLES=1 等价 private_combined。
 EOF
 }
 
@@ -90,7 +107,35 @@ validate_inputs() {
   [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || die 'LITE3_DYNAMIC_OBSTACLES must be 0 or 1'
   [[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || die 'LITE3_GROUND_MODE must be map or local'
   [[ "$LOCALIZATION_RUNTIME" == vendor || "$LOCALIZATION_RUNTIME" == audited ]] || die 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited'
-  if [[ "$DYNAMIC_OBSTACLES" == 1 && "$USE_VENDOR_VOA" != 1 ]]; then
+  case "$OBSTACLE_BACKEND" in
+    '') ;;
+    factory_only)
+      if [[ "$DYNAMIC_OBSTACLES_EXPLICIT" == 1 && "$DYNAMIC_OBSTACLES" != 1 ]]; then
+        die 'factory_only 不能关闭 LITE3_DYNAMIC_OBSTACLES'
+      fi
+      DYNAMIC_OBSTACLES=1
+      if [[ "$USE_VENDOR_VOA_EXPLICIT" == 1 && "$USE_VENDOR_VOA" == 1 ]]; then
+        die 'factory_only 不允许启用私有 VOA 速度修正'
+      fi
+      USE_VENDOR_VOA=0
+      ;;
+    private_combined)
+      if [[ "$DYNAMIC_OBSTACLES_EXPLICIT" == 1 && "$DYNAMIC_OBSTACLES" != 1 ]]; then
+        die 'private_combined 不能关闭 LITE3_DYNAMIC_OBSTACLES'
+      fi
+      DYNAMIC_OBSTACLES=1
+      if [[ "$USE_VENDOR_VOA_EXPLICIT" == 1 && "$USE_VENDOR_VOA" != 1 ]]; then
+        die 'private_combined 需要 LITE3_USE_VENDOR_VOA=1'
+      fi
+      USE_VENDOR_VOA=1
+      ;;
+    *) die "LITE3_OBSTACLE_BACKEND 只能是 factory_only 或 private_combined" ;;
+  esac
+  for factory_value in "$FACTORY_VOA_SETUP" "$FACTORY_VOA_WS" \
+                       "$FACTORY_GRID_MAP_SETUP" "$FACTORY_DEPTH_TOPIC"; do
+    [[ "$factory_value" != *"'"* ]] || die 'Factory VOA 路径/话题不能包含单引号'
+  done
+  if [[ -z "$OBSTACLE_BACKEND" && "$DYNAMIC_OBSTACLES" == 1 && "$USE_VENDOR_VOA" != 1 ]]; then
     die '动态避障模式需要 VOA；不能关闭近距离速度检查'
   fi
   [[ "$USE_VENDOR_VOA" == 0 || "$USE_VENDOR_VOA" == 1 ]] || die 'LITE3_USE_VENDOR_VOA must be 0 or 1'
@@ -175,6 +220,7 @@ deploy_runtime() {
     "$PROJECT_DIR/navigation/start_local_ground.sh" \
     "$PROJECT_DIR/navigation/start_gate_disarmed.sh" \
     "$PROJECT_DIR/navigation/start_vendor_voa.sh" \
+    "$PROJECT_DIR/navigation/start_factory_voa.sh" \
     "$PROJECT_DIR/navigation/navigate_dynamic_obstacles.xml" \
     "$PROJECT_DIR/navigation/vendor_voa.yaml" \
     "$ROBOT:$REMOTE_PROJECT/navigation/"
@@ -183,7 +229,8 @@ deploy_runtime() {
     "$local_map_dir/visual_initialization.yaml" \
     "${map_summaries[@]}" \
     "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
-  if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+  if [[ "$DYNAMIC_OBSTACLES" == 1 && "$OBSTACLE_BACKEND" != factory_only ]]; then
+    # Factory Only does not consume the unverified Mid-360 ground model.
     [[ -r "$local_map_dir/traversability_evidence.npz" ]] || die '缺少当前地图的地面高度证据'
     scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
       "$local_map_dir/traversability_evidence.npz" "$ROBOT:$REMOTE_PROJECT/navigation/$MAP_ID/"
@@ -211,26 +258,34 @@ chmod 0755 \
   "$PROJECT/navigation/start_visual_localizer.sh" \
   "$PROJECT/navigation/start_visual_initialization.sh" \
   "$PROJECT/navigation/start_nav_isolated.sh" \
-  "$PROJECT/navigation/start_gate_disarmed.sh"
+  "$PROJECT/navigation/start_gate_disarmed.sh" \
+  "$PROJECT/navigation/start_factory_voa.sh"
 REMOTE
   echo "[PASS] 运行脚本已同步到 Jetson"
 }
 
 static_preflight() {
   title "启动前检查"
-  "${SSH[@]}" "bash -s -- '$MAP_ID' '$VISUAL_MAP_ID' '$USE_VENDOR_VOA' '$DYNAMIC_OBSTACLES'" <<'REMOTE'
+  "${SSH[@]}" "$(factory_env_prefix) bash -s -- '$MAP_ID' '$VISUAL_MAP_ID' '$USE_VENDOR_VOA' '$DYNAMIC_OBSTACLES' '$OBSTACLE_BACKEND'" <<'REMOTE'
 set -Eeuo pipefail
 MAP_ID=$1
 VISUAL_MAP_ID=$2
 USE_VOA=$3
 DYNAMIC_OBSTACLES=$4
+BACKEND=$5
 PROJECT=/home/ysc/lite3_patrol_project
 MAP_DIR=$PROJECT/navigation/$MAP_ID
 fail=0
 pass() { echo "[PASS] $*"; }
 bad() { echo "[FAIL] $*"; fail=1; }
 
-if [[ "$USE_VOA" == 1 ]]; then
+if [[ "$BACKEND" == factory_only ]]; then
+  if bash "$PROJECT/navigation/start_factory_voa.sh" --check; then
+    pass '原厂 VOA 环境、排他性和 systemd 服务状态检查通过'
+  else
+    bad '原厂 VOA 环境预检失败'
+  fi
+elif [[ "$USE_VOA" == 1 ]]; then
   [[ -x "$PROJECT/voa_overlay_ws/install/voa/lib/voa/voa_composition" ]] || bad 'VOA 未构建；先执行 scripts/install_vendor_voa.sh'
   if systemctl is-active --quiet voa_ros2.service; then
     bad '原厂 VOA 服务仍占用公共速度链路，不能与项目 VOA 同时启动'
@@ -239,10 +294,17 @@ fi
 if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
   python3 "$PROJECT/scripts/navigation_recovery_budget.py" \
     "$PROJECT/navigation/navigate_dynamic_obstacles.xml" >/dev/null || bad '动态恢复等待预算无效'
-  GROUND_ARGS=(--ground-relative)
-  python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败' 
-  python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
-    "$MAP_DIR/nav2_dynamic.yaml" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}" || bad '动态避障配置生成失败'
+  if [[ "$BACKEND" == factory_only ]]; then
+    python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+      "$MAP_DIR/nav2_dynamic.yaml" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" --factory-only \
+      || bad 'Factory Only 动态避障配置生成失败'
+  else
+    GROUND_ARGS=(--ground-relative)
+    python3 "$PROJECT/scripts/costmap_ground_filter.py" "$MAP_DIR" --check || bad '地面高度证据校验失败'
+    python3 "$PROJECT/scripts/make_dynamic_nav2_config.py" "$MAP_DIR/nav2_safe.yaml" \
+      "$MAP_DIR/nav2_dynamic.yaml" --behavior-tree "$PROJECT/navigation/navigate_dynamic_obstacles.xml" "${GROUND_ARGS[@]}" \
+      || bad '动态避障配置生成失败'
+  fi
 fi
 
 for file in patrol_map.yaml patrol_map.pgm localization_map.pcd nav2_safe.yaml visual_initialization.yaml; do
@@ -338,7 +400,7 @@ else
 fi
 
 conflicts=$(pgrep -af \
-  'start_localization_only|start_map_display_only|start_visual_localizer|start_visual_initialization|start_nav_isolated|patrol_navigation.launch.py|hdl_localization|livox_ros_driver2|manual_ndt_guard|rgbd_visual_localizer|visual_pose_initializer|velocity_gate' \
+  'start_localization_only|start_map_display_only|start_visual_localizer|start_visual_initialization|start_nav_isolated|start_gate_disarmed|start_factory_voa|patrol_navigation.launch.py|hdl_localization|livox_ros_driver2|manual_ndt_guard|rgbd_visual_localizer|visual_pose_initializer|velocity_gate|voa_composition' \
   || true)
 if [[ -n "$conflicts" ]]; then
   bad "发现上次遗留的定位/导航进程；先执行 navigation_start.sh stop"
@@ -348,7 +410,7 @@ else
 fi
 
 source "$PROJECT/navigation/patrol_env.sh" >/dev/null 2>&1
-if [[ "$USE_VOA" == 1 ]]; then
+if [[ "$USE_VOA" == 1 || "$BACKEND" == factory_only ]]; then
   depth_sample=$(timeout 15s env RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
     ros2 topic echo /camera/depth/color/points sensor_msgs/msg/PointCloud2 --no-arr \
     2>/dev/null | head -n 1 || true)
@@ -886,7 +948,13 @@ status_log_fallback() {
 
 wait_gate_disarmed() {
   local gate_log=$LOG_DIR/velocity_gate.log
-  for _ in $(seq 1 30); do
+  # Factory Only first runs the vendor environment check, then starts the
+  # factory VOA, its camera mount and the projection bridge before the first
+  # projected obstacle heartbeat can arrive.  That startup is longer than the
+  # private VOA path, so keep the private 30 s budget and allow up to 90 s here.
+  local attempts=30
+  [[ "$OBSTACLE_BACKEND" == factory_only ]] && attempts=90
+  for _ in $(seq 1 "$attempts"); do
     if grep -F 'velocity gate started DISARMED' "$gate_log" >/dev/null 2>&1 && \
        grep -F 'zero-command heartbeat active on /cmd_vel_corrected' "$gate_log" >/dev/null 2>&1 && \
        "${SSH[@]}" "pgrep -f '/lite3_patrol_nav/velocity_gate' >/dev/null"; then
@@ -895,7 +963,7 @@ wait_gate_disarmed() {
           sleep 1
           continue
         fi
-        echo "[PASS] 速度门已启动且为 DISARMED；仅向 /cmd_vel_corrected 发布零速心跳；VOA=$USE_VENDOR_VOA"
+        echo "[PASS] 速度门已启动且为 DISARMED；仅向 /cmd_vel_corrected 发布零速心跳；VOA=$USE_VENDOR_VOA backend=${OBSTACLE_BACKEND:-legacy}"
         return 0
       fi
     fi
@@ -929,8 +997,10 @@ patterns=(
   '/lite3_patrol_nav/rgbd_visual_localizer'
   '/navigation/start_gate_disarmed.sh'
   '/navigation/start_vendor_voa.sh'
+  '/navigation/start_factory_voa.sh'
   '/scripts/voa_camera_tf.py'
   '/lite3_patrol_project/voa_overlay_ws/install/voa/lib/voa/voa_composition'
+  '/voa/lib/voa/voa_composition'
   '/lite3_patrol_nav/velocity_gate'
   '/navigation/start_map_display_only.sh'
   'manual_initial_pose_map_server'
@@ -940,14 +1010,31 @@ patterns=(
   'hdl_localization_composition'
   'livox_ros_driver2_node'
 )
+# Never kill a factory process owned by systemd just because it shares the
+# voa_composition executable name. The official service is managed externally.
+in_voa_service_cgroup() {
+  local pid=$1
+  [[ -r "/proc/$pid/cgroup" ]] || return 1
+  grep -q 'voa_ros2.service' "/proc/$pid/cgroup" 2>/dev/null
+}
+service_main_pid=$(systemctl show -p MainPID --value voa_ros2.service 2>/dev/null || true)
+[[ "$service_main_pid" =~ ^[0-9]+$ ]] || service_main_pid=
 signal_groups() {
   local signal=$1 pattern pids pid pgid
   declare -A seen=()
   for pattern in "${patterns[@]}"; do
     pids=$(pgrep -f "$pattern" || true)
     for pid in $pids; do
+      if in_voa_service_cgroup "$pid" || [[ -n "$service_main_pid" && "$pid" == "$service_main_pid" ]]; then
+        echo "[INFO] skip systemd-managed voa_ros2.service pid $pid" >&2
+        continue
+      fi
       pgid=$(ps -o pgid= -p "$pid" 2>/dev/null | tr -d ' ')
       [[ -n "$pgid" && -z "${seen[$pgid]:-}" ]] || continue
+      if [[ -n "$service_main_pid" && "$pgid" == "$service_main_pid" ]]; then
+        echo "[INFO] skip systemd voa_ros2.service process group $pgid" >&2
+        continue
+      fi
       seen[$pgid]=1
       kill -"$signal" -- "-$pgid" 2>/dev/null || true
     done
@@ -1238,7 +1325,7 @@ start_session() {
   title "切换到完整隔离 Nav2"
   stop_map_display
   "${SSH_BG[@]}" \
-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_GROUND_MODE='$GROUND_MODE' bash '$REMOTE_PROJECT/navigation/start_nav_isolated.sh'" \
+    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_GROUND_MODE='$GROUND_MODE' LITE3_OBSTACLE_BACKEND='$OBSTACLE_BACKEND' bash '$REMOTE_PROJECT/navigation/start_nav_isolated.sh'" \
     >"$LOG_DIR/nav2.log" 2>&1 &
   NAV_SSH_PID=$!
   sleep 2
@@ -1259,7 +1346,7 @@ start_session() {
   fi
 
   title "启动默认 DISARMED 的速度门"
-  "${SSH_BG[@]}" "LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_USE_VENDOR_VOA='$USE_VENDOR_VOA' exec bash '$REMOTE_PROJECT/navigation/start_gate_disarmed.sh'" \
+  "${SSH_BG[@]}" "$(factory_env_prefix) LITE3_DYNAMIC_OBSTACLES='$DYNAMIC_OBSTACLES' LITE3_USE_VENDOR_VOA='$USE_VENDOR_VOA' LITE3_OBSTACLE_BACKEND='$OBSTACLE_BACKEND' exec bash '$REMOTE_PROJECT/navigation/start_gate_disarmed.sh'" \
     >"$LOG_DIR/velocity_gate.log" 2>&1 &
   GATE_SSH_PID=$!
   sleep 1

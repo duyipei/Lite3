@@ -18,6 +18,7 @@ from collections import deque
 import json
 import math
 from pathlib import Path
+import threading
 import time
 from types import SimpleNamespace
 
@@ -27,6 +28,12 @@ TOPIC = '/patrol/voa/costmap_obstacles'
 HEARTBEAT = '/patrol/voa/costmap_heartbeat'
 MAX_AGE = .5
 MAX_PREDICTION = .5
+# Keep an explicit margin below the velocity gate's 0.5 s freshness so a
+# projection that is already old when it reaches the gate cannot be rejected.
+PUBLISH_MAX_AGE = .35
+# Bound the work done by one timer tick. The newest few frames are the only
+# ones that can still satisfy PUBLISH_MAX_AGE after TF lookup.
+MAX_PENDING_TRIES = 4
 
 
 def stamp_seconds(stamp):
@@ -35,9 +42,9 @@ def stamp_seconds(stamp):
     return stamp.sec + stamp.nanosec / 1e9
 
 
-def fresh(stamp, now):
+def fresh(stamp, now, max_age=MAX_AGE):
     # Small controller/host timestamp skew is already present on this Lite3.
-    return math.isfinite(stamp) and stamp > 0 and -.05 <= now - stamp <= MAX_AGE
+    return math.isfinite(stamp) and stamp > 0 and -.05 <= now - stamp <= max_age
 
 
 def grid_obstacles(msg, minimum, include_unknown=False):
@@ -155,31 +162,42 @@ class Bridge:
         self.minimum = minimum
         self.pending = deque(maxlen=16)
         self.last_received = self.last_published = 0.
+        self.last_publish_time = 0.
         self.last_log = 0.
+        self.last_gap_log = 0.
+        self.last_timer = 0.
+        self.fail_project = 0
+        self.fail_grid = 0
+        self.last_failure = 'none'
         self.announced = False
         self.anchors = deque(maxlen=12)
         self.predictions = 0
+        # MultiThreadedExecutor runs the TF listener, grid callback and timer
+        # concurrently; this lock keeps Bridge state consistent.
+        self.lock = threading.RLock()
         self.publisher = node.create_publisher(cloud_type, output_topic, 1)
         self.heartbeat = node.create_publisher(header_type, heartbeat_topic, 1)
 
     def receive(self, msg):
-        stamp = stamp_seconds(msg.header.stamp)
-        if fresh(stamp, time.monotonic()) and stamp > self.last_received:
-            self.pending.append(msg)
-            self.last_received = stamp
+        with self.lock:
+            stamp = stamp_seconds(msg.header.stamp)
+            if fresh(stamp, time.monotonic()) and stamp > self.last_received:
+                self.pending.append(msg)
+                self.last_received = stamp
 
     def registration(self, msg):
-        stamp = stamp_seconds(msg.header.stamp)
-        if (msg.header.frame_id != 'map' or msg.child_frame_id != 'ndt_registration'
-                or not 0 <= time.monotonic()-stamp <= MAX_AGE
-                or (self.anchors and stamp <= stamp_seconds(self.anchors[-1].header.stamp))):
-            return
-        p = msg.pose.pose
-        try:
-            transform_matrix(SimpleNamespace(translation=p.position, rotation=p.orientation))
-        except (ValueError, TypeError, AttributeError):
-            return
-        self.anchors.append(msg)
+        with self.lock:
+            stamp = stamp_seconds(msg.header.stamp)
+            if (msg.header.frame_id != 'map' or msg.child_frame_id != 'ndt_registration'
+                    or not 0 <= time.monotonic()-stamp <= MAX_AGE
+                    or (self.anchors and stamp <= stamp_seconds(self.anchors[-1].header.stamp))):
+                return
+            p = msg.pose.pose
+            try:
+                transform_matrix(SimpleNamespace(translation=p.position, rotation=p.orientation))
+            except (ValueError, TypeError, AttributeError):
+                return
+            self.anchors.append(msg)
 
     def projection_transform(self, msg):
         target_time = self.Time.from_msg(msg.header.stamp)
@@ -204,52 +222,75 @@ class Bridge:
         raise ValueError('no recent NDT anchor with timestamped leg odometry')
 
     def publish(self):
-        now = time.monotonic()
-        # NDT runs at 10 Hz. Keep a bounded backlog so a newer camera frame
-        # does not continually replace the one waiting for interpolated TF.
-        reason = 'waiting for fresh grid and matching NDT TF'
-        for msg in reversed(self.pending):
-            stamp = stamp_seconds(msg.header.stamp)
-            if stamp <= self.last_published or not fresh(stamp, now):
-                continue
-            try:
-                transform = self.projection_transform(msg)
-            except Exception:
-                continue  # Never fall back to latest pose for an older frame.
-            try:
-                xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=True)
-                points = project_to_map(xyz, transform)
-            except (ValueError, TypeError, AttributeError, IndexError):
-                continue
-            output = self.Cloud()
-            output.header.stamp = msg.header.stamp
-            output.header.frame_id = 'map'
-            output.height, output.width = 1, len(points)
-            output.fields = [self.Field(name=k, offset=i*4, datatype=self.Field.FLOAT32, count=1)
-                             for i, k in enumerate(('x', 'y', 'z'))]
-            output.is_bigendian, output.is_dense = False, True
-            output.point_step, output.row_step = 12, 12*len(points)
-            output.data = points.tobytes()
-            if not fresh(stamp, time.monotonic()):
-                continue
-            self.publisher.publish(output)  # Empty fresh clouds are valid.
-            self.heartbeat.publish(output.header)
-            self.last_published = stamp
-            stats.update(source_age_s=round(time.monotonic()-stamp, 4), compensated=self.predictions)
-            reason = 'projected ' + json.dumps(stats)
-            if not self.announced:
-                self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
-                self.announced = True
-            break
-        if now-self.last_log >= 5:
-            self.node.get_logger().info('[VOA_COSTMAP] ' + reason)
-            self.last_log = now
+        with self.lock:
+            now = time.monotonic()
+            if self.last_timer and now - self.last_timer > .2:
+                self.node.get_logger().info(
+                    '[VOA_COSTMAP] timer_delayed {:.3f}s'.format(now - self.last_timer))
+            self.last_timer = now
+            # NDT runs at 10 Hz. Keep a bounded backlog so a newer camera frame
+            # does not continually replace the one waiting for interpolated TF.
+            reason = 'waiting for fresh grid and matching NDT TF'
+            for msg in list(reversed(self.pending))[:MAX_PENDING_TRIES]:
+                stamp = stamp_seconds(msg.header.stamp)
+                if stamp <= self.last_published or not fresh(stamp, now, PUBLISH_MAX_AGE):
+                    continue
+                try:
+                    transform = self.projection_transform(msg)
+                except Exception as error:
+                    self.fail_project += 1
+                    self.last_failure = '{}:{}'.format(type(error).__name__, str(error)[:80])
+                    continue  # Never fall back to latest pose for an older frame.
+                try:
+                    xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=True)
+                    points = project_to_map(xyz, transform)
+                except (ValueError, TypeError, AttributeError, IndexError) as error:
+                    self.fail_grid += 1
+                    self.last_failure = 'grid:{}:{}'.format(type(error).__name__, str(error)[:80])
+                    continue
+                output = self.Cloud()
+                output.header.stamp = msg.header.stamp
+                output.header.frame_id = 'map'
+                output.height, output.width = 1, len(points)
+                output.fields = [self.Field(name=k, offset=i*4, datatype=self.Field.FLOAT32, count=1)
+                                 for i, k in enumerate(('x', 'y', 'z'))]
+                output.is_bigendian, output.is_dense = False, True
+                output.point_step, output.row_step = 12, 12*len(points)
+                output.data = points.tobytes()
+                published_at = time.monotonic()
+                if not fresh(stamp, published_at, PUBLISH_MAX_AGE):
+                    continue
+                self.publisher.publish(output)  # Empty fresh clouds are valid.
+                self.heartbeat.publish(output.header)
+                self.last_published = stamp
+                self.last_publish_time = published_at
+                stats.update(source_age_s=round(published_at-stamp, 4), compensated=self.predictions)
+                reason = 'projected ' + json.dumps(stats)
+                if not self.announced:
+                    self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
+                    self.announced = True
+                break
+            if (self.last_publish_time
+                    and now - self.last_publish_time > PUBLISH_MAX_AGE
+                    and now - self.last_gap_log >= 1.0):
+                self.node.get_logger().info(
+                    '[VOA_COSTMAP] heartbeat_gap age={:.3f} pending={} anchors={} '
+                    'fail_project={} fail_grid={} last={}'.format(
+                        now - self.last_publish_time, len(self.pending),
+                        len(self.anchors), self.fail_project, self.fail_grid,
+                        self.last_failure))
+                self.last_gap_log = now
+            if now-self.last_log >= 5:
+                self.node.get_logger().info('[VOA_COSTMAP] ' + reason)
+                self.last_log = now
 
 
 def main():
     import argparse
     import yaml
     import rclpy
+    from rclpy.callback_groups import ReentrantCallbackGroup
+    from rclpy.executors import MultiThreadedExecutor
     from rclpy.qos import QoSProfile, ReliabilityPolicy
     from rclpy.time import Time
     from sensor_msgs.msg import PointCloud2, PointField
@@ -272,20 +313,30 @@ def main():
     listener = TransformListener(buffer, node)
     bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum)
     def on_grid(message):
+        # Only enqueue here. Projection is done by the 25 ms timer so the
+        # 30 Hz grid callback cannot starve the TF listener callbacks that the
+        # projection itself needs. Under Nav2 load the old callback path could
+        # leave >0.5 s heartbeat gaps and trip the velocity gate.
         bridge.receive(message)
-        bridge.publish()
     def on_registration(message):
         bridge.registration(message)
-        bridge.publish()
     latest_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
-    subscription = node.create_subscription(GridMap, '/patrol/voa/grid_map', on_grid, latest_qos)
-    registration = node.create_subscription(Odometry, '/patrol/registration_odom', on_registration, 1)
-    timer = node.create_timer(.025, bridge.publish)
+    group = ReentrantCallbackGroup()
+    subscription = node.create_subscription(
+        GridMap, '/patrol/voa/grid_map', on_grid, latest_qos,
+        callback_group=group)
+    registration = node.create_subscription(
+        Odometry, '/patrol/registration_odom', on_registration, 1,
+        callback_group=group)
+    timer = node.create_timer(.025, bridge.publish, callback_group=group)
+    executor = MultiThreadedExecutor(num_threads=2)
+    executor.add_node(node)
     try:
-        rclpy.spin(node)
+        executor.spin()
     except KeyboardInterrupt:
         pass
     finally:
+        executor.shutdown()
         node.destroy_node()
         rclpy.shutdown()
 

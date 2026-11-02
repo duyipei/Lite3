@@ -186,6 +186,82 @@ python3 scripts/visualize_rgbd_visual_map.py \
 视觉数据库已生成不代表“任意位置自动视觉初始重定位”已经通过。当前真机启动脚本
 默认使用 RViz 手动初值 + 修正后的 NDT；视觉数据库保留用于后续多位置验证。
 
+### 5.1 使用 XFeat 特征建库（在 Jetson 执行）
+
+XFeat 提取依赖 Jetson 上已部署的 `torch/kornia` 运行环境
+（`third_party/{accelerated_features,xfeat_deps}`），开发虚拟机没有这套 aarch64
+依赖，因此该方式在 Jetson 上完成。生成的数据库仍包含 ORB 关键帧字段，并额外写入
+`xfeat_features` 表；`xfeat_lighterglue` 模式启动时直接读取该缓存。
+
+先确认 XFeat 运行环境已部署（虚拟机执行，不会启动 ROS 或运动）：
+
+```bash
+bash tools/deploy_xfeat_runtime.sh
+```
+
+然后在 Jetson 执行：
+
+```bash
+ssh -t -i ~/.ssh/id_ed25519_cyberdog ysc@10.119.1.171
+
+RUN_ID=indoor_fusion_20260912_001
+PROJECT=/home/ysc/lite3_patrol_project
+source /opt/ros/foxy/setup.bash
+
+mkdir -p "$PROJECT/results/visual_maps/$RUN_ID"
+python3 "$PROJECT/scripts/build_rgbd_visual_map.py" \
+  "$PROJECT/bags/$RUN_ID/sensors" \
+  "$PROJECT/results/round3a_lio_motion/${RUN_ID}_map_05x_pcd/trajectory.csv" \
+  "$PROJECT/results/visual_maps/$RUN_ID/visual_map.db" \
+  --feature-backend xfeat \
+  --playback-rate 0.5 \
+  --keyframe-distance 1.0 \
+  --keyframe-yaw-deg 15 \
+  --base-camera-xyz 0.25489 0.0 0.07249 \
+  --base-camera-rpy-deg 0.0 20.0 0.0
+```
+
+构建日志应显示 `XFeat extractor ready`，并且每帧打印 `xfeat=<有效深度特征数>`。
+XFeat 特征有效深度不足 `--min-features`（默认 80）的关键帧会被跳过。
+
+校验（仍在 Jetson 执行）：
+
+```bash
+python3 "$PROJECT/scripts/validate_visual_map_db.py" \
+  "$PROJECT/results/visual_maps/$RUN_ID/visual_map.db" \
+  --queries 12 --require-xfeat-cache
+
+python3 "$PROJECT/tools/check_xfeat_runtime.py" \
+  --database "$PROJECT/results/visual_maps/$RUN_ID/visual_map.db" \
+  --report "$PROJECT/logs/xfeat_map_check_${RUN_ID}.json"
+```
+
+第一条检查 `xfeat_features` 与 `keyframes` 一一对应、描述子维度/归一化、深度范围；
+第二条用数据库内缓存做参考图自匹配和 PnP，报告中的
+`depth_source=database_xfeat_cache` 表示确实走了新缓存路径。自匹配通过只证明
+数据库和推理接口可用，不代表现场跨光照定位精度。
+
+需要把数据库归档回虚拟机时，在虚拟机的新终端执行：
+
+```bash
+RUN_ID=indoor_fusion_20260912_001
+REMOTE_PROJECT=/home/ysc/lite3_patrol_project
+LOCAL_PROJECT=/home/duyipei/Lite3_Projects/lite3_patrol_project
+mkdir -p "$LOCAL_PROJECT/results/visual_maps/$RUN_ID"
+scp -i ~/.ssh/id_ed25519_cyberdog \
+  "ysc@10.119.1.171:$REMOTE_PROJECT/results/visual_maps/$RUN_ID/visual_map.db" \
+  "$LOCAL_PROJECT/results/visual_maps/$RUN_ID/"
+```
+
+运行时选择 XFeat 后端（`navigation_start.sh` 会把 `_area_review` 去掉后作为
+默认视觉地图 ID，因此 `visual_map.db` 应位于 `results/visual_maps/$RUN_ID/`）：
+
+```bash
+LITE3_VISUAL_MAP_ID=$RUN_ID \
+LITE3_VISUAL_BACKEND=xfeat_lighterglue \
+bash scripts/navigation_start.sh relocalize ${RUN_ID}_area_review
+```
+
 ## 6. 生成推荐的宽区域二维导航地图
 
 宽区域生成器只把同时具有重复雷达射线、地面支撑、合理坡度/粗糙度并与实走路线连通

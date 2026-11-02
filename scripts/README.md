@@ -33,8 +33,10 @@ Jetson 后端的 `round3a_*` 名称涉及部署路径与进程识别，暂时保
 - `analyze_lio_odometry.py`、`count_fast_livo_outputs.py`、`monitor_pid.py`、
   `profile_fast_livo.py`：离线 LIO 后端的直接依赖；
 - `render_round3a_map.py`：输出点云与轨迹预览；
-- `build_rgbd_visual_map.py`：生成视觉关键帧数据库；
-- `validate_visual_map_db.py`、`visualize_rgbd_visual_map.py`：视觉地图质量检查；
+- `build_rgbd_visual_map.py`：生成视觉关键帧数据库；`--feature-backend xfeat`
+  额外写入 XFeat 缓存（需在已部署 XFeat 运行环境的 Jetson 上执行）；
+- `validate_visual_map_db.py`、`visualize_rgbd_visual_map.py`：视觉地图质量检查，
+  校验脚本可用 `--require-xfeat-cache` 检查 XFeat 缓存完整性；
 - `build_area_traversability_map.py`：生成可通行二维栅格图；
 - `make_safe_nav2_config.py`：生成低速 Nav2 参数。
 

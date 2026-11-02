@@ -51,8 +51,10 @@ class VelocityGate(Node):
         self.use_vendor_voa = bool(self.get_parameter("use_vendor_voa").value)
         self.declare_parameter('require_voa_costmap', False)
         self.require_voa_costmap = bool(self.get_parameter('require_voa_costmap').value)
-        if self.require_voa_costmap and not self.use_vendor_voa:
-            raise ValueError('VOA costmap monitoring requires VOA')
+        # Factory-only uses the vendor VOA as a perception source only. In that
+        # mode use_vendor_voa is false (no /patrol/voa/input request/response),
+        # while require_voa_costmap still gates ARM on fresh projected
+        # obstacles. The two switches are intentionally independent.
         self.declare_parameter('require_lidar_costmap', False)
         self.require_lidar_costmap = bool(self.get_parameter('require_lidar_costmap').value)
         self.last_lidar_costmap_time = 0.0
@@ -234,10 +236,20 @@ class VelocityGate(Node):
 
     def sensor_health(self):
         now = self.now_monotonic()
-        # Zero publishers is normal before Nav2 starts; more than one is never
-        # valid, including while waiting for the first navigation command.
-        if self.count_publishers('/patrol/cmd_vel_raw') > 1:
+        # Zero publishers is normal before Nav2 starts. Foxy Nav2 legitimately
+        # creates two raw publishers: controller_server and recoveries_server
+        # (both are remapped to /patrol/cmd_vel_raw). Their commands still pass
+        # through this gate, so only a third publisher is a conflict.
+        if self.count_publishers('/patrol/cmd_vel_raw') > 2:
             return False, 'nav_command_publisher_conflict'
+        # The gate is the only project publisher on the public command topic
+        # and the only publisher of its corrected output. This check applies in
+        # every backend, including factory-only where vendor VOA is perception
+        # only and must never publish a chassis command itself.
+        if self.count_publishers('/cmd_vel') != 0:
+            return False, 'public_cmd_vel_publisher_conflict'
+        if self.count_publishers(self.get_parameter('output_topic').value) != 1:
+            return False, 'corrected_command_publisher_conflict'
         if self.require_lidar_costmap:
             timeout = self.get_parameter('freshness_timeout_s').value
             if (self.last_lidar_costmap_time <= 0 or

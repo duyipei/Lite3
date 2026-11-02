@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""Build an ORB RGB-D keyframe database aligned to a FAST-LIVO map.
+"""Build an RGB-D keyframe database aligned to a FAST-LIVO map.
+
+Feature extraction supports ORB (default) and XFeat.  The keyframes table
+always keeps ORB descriptors so existing ORB checks and --backend orb remain
+usable.  With --feature-backend xfeat the database additionally stores the
+XFeat keypoints, descriptors and 3-D points in xfeat_features, which is the
+cache consumed by rgbd_visual_localizer with matching_backend=xfeat_lighterglue.
+
+XFeat extraction needs the Jetson runtime (torch/kornia) installed by
+tools/deploy_xfeat_runtime.sh; run this builder on the Jetson for that backend.
 
 The source bag is never modified. FAST-LIVO odometry in this project was
 recorded with wall-clock stamps during slowed playback, so trajectory time is
@@ -10,6 +19,7 @@ import argparse
 import bisect
 import csv
 import glob
+import hashlib
 import json
 import math
 import os
@@ -231,6 +241,100 @@ def feature_points(color_rgb, aligned_depth, kc, orb):
     return np.asarray(pixels, np.float32), np.asarray(points, np.float32), np.asarray(kept, np.uint8)
 
 
+class XFeatExtractor:
+    """Checksum-verified XFeat extractor for the deployed Jetson runtime."""
+
+    def __init__(self, root, dependencies=None, top_k=1024):
+        self.root = os.path.abspath(root)
+        manifest_path = os.path.join(self.root, "runtime_manifest.json")
+        if not os.path.isfile(manifest_path):
+            raise RuntimeError("missing XFeat runtime manifest: {}".format(manifest_path))
+        with open(manifest_path, encoding="utf-8") as stream:
+            self.manifest = json.load(stream)
+        checksums = self.manifest.get("sha256", {})
+        for name in ("weights/xfeat.pt", "weights/xfeat-lighterglue.pt"):
+            if name not in checksums:
+                raise RuntimeError("XFeat checksum missing for {}".format(name))
+        for name, expected in checksums.items():
+            path = os.path.join(self.root, name)
+            if not os.path.isfile(path):
+                raise RuntimeError("XFeat runtime file missing: {}".format(path))
+            with open(path, "rb") as stream:
+                actual = hashlib.sha256(stream.read()).hexdigest()
+            if actual != expected:
+                raise RuntimeError("XFeat runtime checksum mismatch: {}".format(name))
+        self.weights_sha256 = checksums["weights/xfeat.pt"]
+        self.top_k = int(top_k)
+        if dependencies:
+            sys.path.insert(0, os.path.abspath(dependencies))
+        sys.path.insert(0, self.root)
+        import torch
+        from modules.xfeat import XFeat
+        torch.set_num_threads(2)
+        self.torch = torch
+        self.model = XFeat(
+            weights=os.path.join(self.root, "weights/xfeat.pt"), top_k=self.top_k
+        )
+
+    def extract(self, color_rgb):
+        tensor = self.torch.from_numpy(
+            np.ascontiguousarray(color_rgb)
+        ).permute(2, 0, 1)[None].float() / 255.0
+        features = self.model.detectAndCompute(tensor)[0]
+        keypoints = features["keypoints"].detach().cpu().numpy().astype(np.float32)
+        descriptors = features["descriptors"].detach().cpu().numpy().astype(np.float32)
+        if keypoints.size == 0:
+            return np.empty((0, 2), np.float32), np.empty((0, 64), np.float32)
+        return keypoints.reshape(-1, 2), descriptors.reshape(-1, 64)
+
+
+def xfeat_feature_points(keypoints, descriptors, aligned_depth, kc):
+    """Associate XFeat keypoints with aligned RGB-D depth in color optical frame."""
+    if keypoints is None or descriptors is None or len(keypoints) < 4:
+        return (
+            np.empty((0, 2), np.float32),
+            np.empty((0, 3), np.float32),
+            np.empty((0, 64), np.float32),
+        )
+    keypoints = np.asarray(keypoints, np.float64)
+    descriptors = np.asarray(descriptors, np.float32)
+    if descriptors.shape != (len(keypoints), 64):
+        raise RuntimeError(
+            "XFeat descriptor shape {} does not match {} keypoints".format(
+                descriptors.shape, len(keypoints)
+            )
+        )
+    pixels, points, kept = [], [], []
+    height, width = aligned_depth.shape
+    for index, (u_value, v_value) in enumerate(keypoints):
+        u, v = int(round(u_value)), int(round(v_value))
+        if not (1 <= u < width-1 and 1 <= v < height-1):
+            continue
+        values = aligned_depth[v-1:v+2, u-1:u+2]
+        values = values[values > 0]
+        if not len(values):
+            continue
+        z = float(np.median(values))
+        if not 0.2 <= z <= 8.0:
+            continue
+        x = (u_value-kc[0, 2])*z/kc[0, 0]
+        y = (v_value-kc[1, 2])*z/kc[1, 1]
+        pixels.append((u_value, v_value))
+        points.append((x, y, z))
+        kept.append(index)
+    if not kept:
+        return (
+            np.empty((0, 2), np.float32),
+            np.empty((0, 3), np.float32),
+            np.empty((0, 64), np.float32),
+        )
+    return (
+        np.asarray(pixels, np.float32),
+        np.asarray(points, np.float32),
+        np.asarray(descriptors, np.float32)[kept],
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("bag_dir")
@@ -254,6 +358,29 @@ def main():
     parser.add_argument("--max-pair-gap", type=float, default=0.08)
     parser.add_argument("--base-camera-xyz", nargs=3, type=float, default=(0.25489, 0.0, 0.07249))
     parser.add_argument("--base-camera-rpy-deg", nargs=3, type=float, default=(0.0, 20.0, 0.0))
+    parser.add_argument(
+        "--feature-backend", choices=("orb", "xfeat"), default="orb",
+        help="ORB keeps the legacy database only; xfeat adds the xfeat_features cache",
+    )
+    parser.add_argument(
+        "--xfeat-root",
+        default=os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "third_party", "accelerated_features",
+        ),
+    )
+    parser.add_argument(
+        "--xfeat-dependencies",
+        default=os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "third_party", "xfeat_deps",
+        ),
+    )
+    parser.add_argument("--xfeat-top-k", type=int, default=1024)
+    parser.add_argument(
+        "--min-features", type=int, default=80,
+        help="minimum selected-backend features with valid depth per keyframe",
+    )
     args = parser.parse_args()
     selection = os.path.join(os.path.dirname(os.path.abspath(args.bag_dir)), 'camera_selection.yaml')
     if os.path.isfile(selection):
@@ -285,9 +412,23 @@ def main():
     r_link_optical = np.asarray([[0, 0, 1], [-1, 0, 0], [0, -1, 0]], dtype=np.float64)
     t_base_optical = transform(rpy_matrix(*rpy) @ r_link_optical, np.asarray(args.base_camera_xyz))
 
+    xfeat = None
+    if args.feature_backend == "xfeat":
+        xfeat = XFeatExtractor(
+            args.xfeat_root, args.xfeat_dependencies, args.xfeat_top_k
+        )
+        print(
+            "XFeat extractor ready: top_k={} device={}".format(
+                xfeat.top_k, xfeat.model.dev
+            ),
+            flush=True,
+        )
+
     output = sqlite3.connect(args.output_db)
     output.execute("CREATE TABLE metadata(key TEXT PRIMARY KEY,value TEXT NOT NULL)")
     output.execute("CREATE TABLE keyframes(id INTEGER PRIMARY KEY,bag_stamp INTEGER,map_camera BLOB NOT NULL,keypoints BLOB NOT NULL,points BLOB NOT NULL,descriptors BLOB NOT NULL,feature_count INTEGER NOT NULL,color_jpeg BLOB)")
+    if xfeat is not None:
+        output.execute("CREATE TABLE xfeat_features(id INTEGER PRIMARY KEY,keypoints BLOB NOT NULL,descriptors BLOB NOT NULL,points BLOB NOT NULL,feature_count INTEGER NOT NULL,depth_source TEXT NOT NULL)")
     orb = cv2.ORB_create(nfeatures=1800, scaleFactor=1.2, nlevels=8, fastThreshold=12)
     selected_motion = select_keyframes(
         trajectory, args.keyframe_distance, math.radians(args.keyframe_yaw_deg)
@@ -327,7 +468,15 @@ def main():
         depth = image_array(bag.message(TOPIC_DEPTH, depth_entry))
         aligned = align_depth(depth, kd, kc, r_dc, t_dc)
         pixels, points, descriptors = feature_points(color, aligned, kc, orb)
-        if len(points) < 80:
+        xfeat_pixels = xfeat_points = xfeat_descriptors = None
+        if xfeat is not None:
+            keypoints, extracted = xfeat.extract(color)
+            xfeat_pixels, xfeat_points, xfeat_descriptors = xfeat_feature_points(
+                keypoints, extracted, aligned, kc
+            )
+            if len(xfeat_points) < args.min_features:
+                continue
+        elif len(points) < args.min_features:
             continue
         t_map_base = transform(quaternion_matrix(*pose["quat"]), pose["xyz"])
         t_map_camera = t_map_base @ t_base_optical
@@ -336,11 +485,31 @@ def main():
             "INSERT INTO keyframes VALUES(?,?,?,?,?,?,?,?)",
             (stored, pose["bag_stamp"], t_map_camera.astype("<f8").tobytes(), pixels.astype("<f4").tobytes(), points.astype("<f4").tobytes(), descriptors.tobytes(), len(points), jpeg.tobytes() if jpeg_ok else None),
         )
+        if xfeat is not None:
+            output.execute(
+                "INSERT INTO xfeat_features VALUES(?,?,?,?,?,?)",
+                (
+                    stored,
+                    xfeat_pixels.astype("<f4").tobytes(),
+                    xfeat_descriptors.astype("<f4").tobytes(),
+                    xfeat_points.astype("<f4").tobytes(),
+                    len(xfeat_points),
+                    "aligned_depth_3x3_median",
+                ),
+            )
         if index in startup_index_set:
             stored_startup_ids.append(stored)
         stored_base_positions.append(t_map_base[:3, 3].copy())
         stored += 1
-        print("keyframe {}/{} stored={} features={}".format(sequence+1, len(selected), stored, len(points)), flush=True)
+        if xfeat is not None:
+            print(
+                "keyframe {}/{} stored={} xfeat={} orb={}".format(
+                    sequence+1, len(selected), stored, len(xfeat_points), len(points)
+                ),
+                flush=True,
+            )
+        else:
+            print("keyframe {}/{} stored={} features={}".format(sequence+1, len(selected), stored, len(points)), flush=True)
 
     mapped_end = trajectory[-1]["bag_stamp"]
     startup_pose = trajectory[0]
@@ -353,6 +522,7 @@ def main():
     metadata = {
         "format_version": 2,
         "map_frame": "visual_map",
+        "feature_backend": args.feature_backend,
         "source_bag": os.path.abspath(args.bag_dir),
         "trajectory_csv": os.path.abspath(args.trajectory_csv),
         "playback_rate": args.playback_rate,
@@ -379,6 +549,17 @@ def main():
         "startup_interval_s": args.startup_interval_s,
         "startup_region_radius_m": args.startup_region_radius,
     }
+    if xfeat is not None:
+        metadata["xfeat"] = {
+            "format_version": 1,
+            "weights_sha256": xfeat.weights_sha256,
+            "source_commit": xfeat.manifest.get("commit"),
+            "top_k": xfeat.top_k,
+            "descriptor_dim": 64,
+            "descriptor_dtype": "float32",
+            "depth_source": "aligned_depth_3x3_median",
+            "keypoint_frame": "color_optical",
+        }
     for key, value in metadata.items():
         output.execute("INSERT INTO metadata VALUES(?,?)", (key, json.dumps(value)))
     output.commit()

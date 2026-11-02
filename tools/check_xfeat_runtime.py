@@ -23,17 +23,28 @@ def main():
     meta={k:json.loads(v) for k,v in c.execute('SELECT key,value FROM metadata')}
     ids=[row[0] for row in c.execute('SELECT id FROM keyframes ORDER BY id')]
     selected=sorted(set([ids[0],ids[len(ids)//3],ids[2*len(ids)//3],ids[-1]]))
+    has_cache=bool(c.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='xfeat_features'").fetchone())
+    if has_cache and 'xfeat' not in meta:
+        raise RuntimeError('xfeat_features exists but metadata xfeat is missing')
     frames=[]
     for identifier in selected:
         count,points,pixels,jpeg=c.execute('SELECT feature_count,points,keypoints,color_jpeg FROM keyframes WHERE id=?',(identifier,)).fetchone()
-        frames.append(dict(id=identifier,points=np.frombuffer(points,'<f4').reshape(count,3),
-            pixels=np.frombuffer(pixels,'<f4').reshape(count,2),color_jpeg=jpeg))
+        frame=dict(id=identifier,points=np.frombuffer(points,'<f4').reshape(count,3),
+            pixels=np.frombuffer(pixels,'<f4').reshape(count,2),color_jpeg=jpeg)
+        if has_cache:
+            cached=c.execute('SELECT keypoints,descriptors,points,feature_count,depth_source FROM xfeat_features WHERE id=?',(identifier,)).fetchone()
+            if cached is None:
+                raise RuntimeError('missing XFeat cache for keyframe {}'.format(identifier))
+            frame['xfeat_cache']=cached
+            frame['xfeat_metadata']=meta['xfeat']
+        frames.append(frame)
     c.close()
     start=time.monotonic()
     matcher=XFeatMatcher(ROOT/'third_party/accelerated_features',args.dependencies)
     matcher.prepare(frames); matcher.warmup()
     report=dict(database=str(args.database),device=str(matcher.model.dev),
-        setup_seconds=time.monotonic()-start,depth_source='legacy_sparse_interpolated',checks=[])
+        setup_seconds=time.monotonic()-start,
+        depth_source='database_xfeat_cache' if has_cache else 'legacy_sparse_interpolated',checks=[])
     for frame in frames:
         image=cv2.imdecode(np.frombuffer(frame['color_jpeg'],np.uint8),cv2.IMREAD_COLOR)
         start=time.monotonic()
