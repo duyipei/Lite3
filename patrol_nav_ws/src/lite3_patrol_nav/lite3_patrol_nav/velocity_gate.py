@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Dead-man velocity gate with an explicitly armed multi-goal session."""
 
+import json
 import math
 import time
 
@@ -62,6 +63,15 @@ class VelocityGate(Node):
             self.create_subscription(Header, '/patrol/lidar_costmap_heartbeat',
                                      self.lidar_costmap_callback, 1)
         self.last_voa_costmap_time = 0.0
+        self.voa_heartbeat_last_accepted_at = None
+        self.voa_heartbeat_last_received_at = None
+        self.voa_heartbeat_received = 0
+        self.voa_heartbeat_rejected = dict(invalid_frame=0, invalid_stamp=0, future=0,
+                                          stale=0, duplicate=0, out_of_order=0)
+        self.voa_heartbeat_last_rejection = 'none'
+        self.voa_heartbeat_last_rejected_stamp = None
+        self.voa_heartbeat_last_diagnostic = None
+        self.voa_heartbeat_diagnostic_source = None
         if self.require_voa_costmap:
             self.create_subscription(Header, '/patrol/voa/costmap_heartbeat',
                                      self.voa_costmap_callback, 1)
@@ -215,14 +225,57 @@ class VelocityGate(Node):
 
     def voa_costmap_callback(self, message):
         stamp = message.stamp.sec + message.stamp.nanosec / 1e9
-        age = self.now_monotonic() - stamp
+        received_at = self.now_monotonic()
+        age = received_at - stamp
+        self.voa_heartbeat_received += 1
+        self.voa_heartbeat_last_received_at = received_at
         if (message.frame_id != 'map' or message.stamp.sec < 0 or
                 not 0 <= message.stamp.nanosec < 1000000000 or
                 not -.05 <= age <= .5 or stamp <= self.last_voa_costmap_time):
+            if message.frame_id != 'map':
+                reason = 'invalid_frame'
+            elif (message.stamp.sec < 0 or not 0 <= message.stamp.nanosec < 1000000000
+                  or not math.isfinite(stamp)):
+                reason = 'invalid_stamp'
+            elif age < -.05:
+                reason = 'future'
+            elif age > .5:
+                reason = 'stale'
+            elif stamp == self.last_voa_costmap_time:
+                reason = 'duplicate'
+            else:
+                reason = 'out_of_order'
+            self.voa_heartbeat_rejected[reason] += 1
+            self.voa_heartbeat_last_rejection = reason
+            self.voa_heartbeat_last_rejected_stamp = stamp
             return
         if self.last_voa_costmap_time == 0:
             self.get_logger().info('[VOA_COSTMAP] fresh obstacle projection received')
         self.last_voa_costmap_time = stamp
+        self.voa_heartbeat_last_accepted_at = received_at
+
+    def _log_voa_costmap_stale(self, now):
+        # Diagnostic times are monotonic, like the heartbeat's sensor stamp;
+        # never subtract a ROS/wall timestamp here. Rate limit the failure path.
+        first_armed_failure = (self.armed and
+                               self.voa_heartbeat_diagnostic_source != self.last_voa_costmap_time)
+        if (not first_armed_failure and self.voa_heartbeat_last_diagnostic is not None
+                and now-self.voa_heartbeat_last_diagnostic < 1.0):
+            return
+        initialized = self.voa_heartbeat_last_accepted_at is not None
+        details = dict(clock='monotonic', initialized=initialized, now=now,
+                       source_stamp=self.last_voa_costmap_time if initialized else None,
+                       source_age_s=now-self.last_voa_costmap_time if initialized else None,
+                       accepted_at=self.voa_heartbeat_last_accepted_at,
+                       accepted_receive_age_s=now-self.voa_heartbeat_last_accepted_at if initialized else None,
+                       last_receive_age_s=now-self.voa_heartbeat_last_received_at if self.voa_heartbeat_last_received_at is not None else None,
+                       received=self.voa_heartbeat_received,
+                       rejected=self.voa_heartbeat_rejected.copy(),
+                       last_rejection=self.voa_heartbeat_last_rejection,
+                       last_rejected_source_stamp=self.voa_heartbeat_last_rejected_stamp)
+        self.get_logger().warn('[VOA_COSTMAP] stale heartbeat ' + json.dumps(details))
+        self.voa_heartbeat_last_diagnostic = now
+        self.voa_heartbeat_diagnostic_source = self.last_voa_costmap_time
 
     def lidar_costmap_callback(self, message):
         stamp = message.stamp.sec + message.stamp.nanosec / 1e9
@@ -261,6 +314,7 @@ class VelocityGate(Node):
         if self.require_voa_costmap:
             if (self.last_voa_costmap_time <= 0 or
                     not -.05 <= now - self.last_voa_costmap_time <= .5):
+                self._log_voa_costmap_stale(now)
                 return False, 'voa_costmap_not_ready_or_stale'
             if (self.count_publishers('/patrol/voa/costmap_heartbeat') != 1 or
                     self.count_publishers('/patrol/voa/costmap_obstacles') != 1):

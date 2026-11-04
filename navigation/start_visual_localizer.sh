@@ -22,11 +22,45 @@ if ros2 node list 2>/dev/null | grep -qx /rgbd_visual_localizer; then
   exit 1
 fi
 
-camera_sample=$(timeout 30s ros2 topic echo /camera/color/image_raw \
-  sensor_msgs/msg/Image --no-arr 2>/dev/null | head -n 1 || true)
-if [[ "$camera_sample" != "header:" ]]; then
-  echo "refusing to start: /camera/color/image_raw has no live frames" >&2
-  echo "restart realsense_ros2.service at the robot terminal and retry" >&2
+camera_status=0
+# Match the visual node's sensor QoS. Inspect a real Image instead of parsing
+# CLI output; closing echo's pipe early can raise BrokenPipeError and stderr
+# suppression previously hid discovery/import failures behind "no live frames".
+timeout --kill-after=2s 30s python3 - <<'PY_CAMERA' || camera_status=$?
+import sys
+import time
+import rclpy
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
+from sensor_msgs.msg import Image
+
+rclpy.init()
+node = rclpy.create_node('patrol_visual_camera_check')
+received = []
+def receive(message):
+    if not received:
+        received.append(message)
+try:
+    qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT,
+                     durability=DurabilityPolicy.VOLATILE)
+    subscription = node.create_subscription(Image, '/camera/color/image_raw', receive, qos)
+    deadline = time.monotonic()+30.
+    print('[CAMERA] Waiting for /camera/color/image_raw (up to 30 s)', flush=True)
+    while not received and time.monotonic() < deadline:
+        rclpy.spin_once(node, timeout_sec=.1)
+    if not received:
+        print('[FAIL] No RGB Image received; publishers={}'.format(
+            node.count_publishers('/camera/color/image_raw')), file=sys.stderr, flush=True)
+        raise SystemExit(1)
+    image = received[0]
+    print('[PASS] RGB Image received: {}x{} frame={}'.format(
+        image.width, image.height, image.header.frame_id), flush=True)
+finally:
+    node.destroy_node()
+    rclpy.shutdown()
+PY_CAMERA
+if (( camera_status != 0 )); then
+  echo "refusing to start: RGB camera check failed (exit $camera_status); see diagnostics above" >&2
+  echo "check realsense_ros2.service logs for stream/USB errors; service active alone does not confirm live frames" >&2
   exit 1
 fi
 
