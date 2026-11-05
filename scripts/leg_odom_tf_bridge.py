@@ -24,6 +24,13 @@ class LegOdomTfBridge(Node):
         self.latest_message = None
         self.last_published_stamp = None
         self.last_source_stamp = 0.0
+        self._t22 = None
+        self._t22_input = None
+        try:
+            from lite3_t22_probe import create_probe
+            self._t22 = create_probe('leg')
+        except Exception as error:
+            self.get_logger().warning('[T22] recorder disabled: '+str(error))
         source_qos = QoSProfile(depth=1)
         source_qos.reliability = ReliabilityPolicy.BEST_EFFORT
         source_qos.durability = DurabilityPolicy.VOLATILE
@@ -39,6 +46,9 @@ class LegOdomTfBridge(Node):
         )
 
     def callback(self, message):
+        probe = self._t22
+        tracing = probe is not None and probe.active()
+        t2_enter_ns = time.monotonic_ns() if tracing else None
         pose = message.pose.pose
         values = (
             pose.position.x,
@@ -50,21 +60,51 @@ class LegOdomTfBridge(Node):
             pose.orientation.w,
         )
         if not all(math.isfinite(value) for value in values):
+            if tracing:
+                probe.count('input.rejected.non_finite')
             self.get_logger().error("discarding non-finite /leg_odom2 pose")
             return
         stamp=message.header.stamp.sec + message.header.stamp.nanosec/1e9
         q=pose.orientation
+        validation_now = None
         if (not 0 <= message.header.stamp.nanosec < 1000000000
                 or stamp <= self.last_source_stamp
-                or not -.05 <= time.monotonic()-stamp <= .5
+                or not -.05 <= (validation_now := time.monotonic())-stamp <= .5
                 or abs(q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w-1.) > .01):
+            if tracing:
+                reason = ('invalid_stamp' if not 0 <= message.header.stamp.nanosec < 1000000000
+                          else 'duplicate' if stamp == self.last_source_stamp
+                          else 'out_of_order' if stamp < self.last_source_stamp
+                          else 'future' if validation_now-stamp < -.05
+                          else 'stale' if validation_now-stamp > .5 else 'quaternion')
+                probe.count('input.rejected.'+reason)
             return
+        t2_valid_ns = time.monotonic_ns() if tracing else None
         self.last_source_stamp=stamp
 
         self.latest_message = message
         self.last_message = time.monotonic()
+        previous = self._t22_input
+        self._t22_input = None
+        if tracing:
+            source_ns = message.header.stamp.sec*1000000000+message.header.stamp.nanosec
+            cached_ns = time.monotonic_ns()
+            if previous is not None:
+                published_ns = (None if self.last_published_stamp is None else
+                                self.last_published_stamp[0]*1000000000+self.last_published_stamp[1])
+                if previous[0] != published_ns:
+                    probe.count('input.overwritten_before_tf')
+            self._t22_input = (source_ns, t2_enter_ns, t2_valid_ns, cached_ns)
+            probe.count('input.accepted')
+            probe.emit('leg_input', source_stamp_ns=source_ns, t2_enter_ns=t2_enter_ns,
+                       t2_valid_ns=t2_valid_ns, cached_ns=cached_ns)
 
     def publish_latest(self):
+        probe = self._t22
+        tracing = probe is not None and probe.active()
+        t3a_ns = time.monotonic_ns() if tracing else None
+        if tracing:
+            probe.tick(t3a_ns)
         message = self.latest_message
         if message is None:
             return
@@ -80,9 +120,21 @@ class LegOdomTfBridge(Node):
         if source_stamp == self.last_published_stamp:
             return
         graph_stamp = self.get_clock().now().to_msg()
+        copy_begin_ns = time.monotonic_ns() if tracing else None
         sampled = copy.deepcopy(message)
+        copy_end_ns = time.monotonic_ns() if tracing else None
         sampled.header.stamp = graph_stamp
-        self.sampled_publisher.publish(sampled)
+        sampled_begin_ns = time.monotonic_ns() if tracing else None
+        try:
+            self.sampled_publisher.publish(sampled)
+        except Exception as error:
+            if tracing:
+                probe.emit('leg_tx_error', stage='sampled_publish',
+                           source_stamp_ns=source_stamp[0]*1000000000+source_stamp[1],
+                           t3a_ns=t3a_ns, call_begin_ns=sampled_begin_ns,
+                           call_return_ns=time.monotonic_ns(), error_type=type(error).__name__)
+            raise
+        t3b_ns = time.monotonic_ns() if tracing else None
         pose = message.pose.pose
         transform = TransformStamped()
         transform.header.stamp = message.header.stamp
@@ -92,8 +144,29 @@ class LegOdomTfBridge(Node):
         transform.transform.translation.y = float(pose.position.y)
         transform.transform.translation.z = float(pose.position.z)
         transform.transform.rotation = pose.orientation
-        self.broadcaster.sendTransform(transform)
+        t3c_ns = time.monotonic_ns() if tracing else None
+        try:
+            self.broadcaster.sendTransform(transform)
+        except Exception as error:
+            if tracing:
+                probe.emit('leg_tx_error', stage='sendTransform',
+                           source_stamp_ns=source_stamp[0]*1000000000+source_stamp[1],
+                           t3a_ns=t3a_ns, t3c_ns=t3c_ns, t3d_ns=time.monotonic_ns(),
+                           error_type=type(error).__name__)
+            raise
+        t3d_ns = time.monotonic_ns() if tracing else None
         self.last_published_stamp = source_stamp
+        if tracing:
+            source_ns = source_stamp[0]*1000000000+source_stamp[1]
+            previous = self._t22_input
+            matched = previous is not None and previous[0] == source_ns
+            probe.emit('leg_tx', source_stamp_ns=source_ns,
+                       t2_enter_ns=previous[1] if matched else None,
+                       t2_valid_ns=previous[2] if matched else None,
+                       cached_ns=previous[3] if matched else None,
+                       t3a_ns=t3a_ns, copy_begin_ns=copy_begin_ns, copy_end_ns=copy_end_ns,
+                       sampled_begin_ns=sampled_begin_ns, t3b_ns=t3b_ns,
+                       t3c_ns=t3c_ns, t3d_ns=t3d_ns)
 
     def check_freshness(self):
         age = time.monotonic() - self.last_message

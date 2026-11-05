@@ -56,6 +56,9 @@ class ProjectionFreshnessTests(unittest.TestCase):
         clock = patch.object(M.time, 'monotonic', return_value=100.2)
         self.now = clock.start()
         self.addCleanup(clock.stop)
+        ns_clock = patch.object(M.time, 'monotonic_ns', side_effect=lambda: round(self.now.return_value*1e9))
+        ns_clock.start()
+        self.addCleanup(ns_clock.stop)
 
     def lookup(self, target, source, stamp):
         self.queries.append((target, stamp))

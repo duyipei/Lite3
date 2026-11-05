@@ -33,6 +33,50 @@ MAX_PREDICTION = .5
 PUBLISH_MAX_AGE = .35
 # Bound projection attempts per tick; deferred fresh frames get a later turn.
 MAX_PENDING_TRIES = 4
+TF_RETRY_MAX_WAIT_MS = 150.
+TF_RETRY_PROCESSING_RESERVE_MS = 100.
+TF_RETRY_MAX_ATTEMPTS = 8  # Includes the first, zero-wait projection attempt.
+
+
+def retry_settings(wait_ms, reserve_ms, attempts):
+    if (type(wait_ms) not in (int, float) or not math.isfinite(wait_ms)
+            or not 0 <= wait_ms <= PUBLISH_MAX_AGE*1000
+            or type(reserve_ms) not in (int, float) or not math.isfinite(reserve_ms)
+            or not 0 < reserve_ms < PUBLISH_MAX_AGE*1000
+            or type(attempts) is not int or not 1 <= attempts <= 64):
+        raise ValueError('invalid bounded TF retry settings')
+    return round(wait_ms*1000000), reserve_ms/1000, attempts
+
+
+class Candidate:
+    """One source observation, retained only in the existing 16-frame deque."""
+    def __init__(self, message, seen_ns):
+        self.message = message
+        stamp = message.header.stamp
+        self.source_stamp_ns = stamp.sec*1000000000 + stamp.nanosec
+        self.stamp = stamp_seconds(stamp)
+        self.first_seen_monotonic_ns = seen_ns
+        self.first_tf_failure_monotonic_ns = None
+        self.last_retry_monotonic_ns = None
+        self.retry_deadline_monotonic_ns = None
+        self.deadline_reason = None
+        self.attempt_count = 0
+        self.state = 'NEW'
+        self.last_tf_error_type = None
+        self.last_tf_error = None
+        self.tf_ready_ns = None
+
+
+class ProjectionUnavailable(ValueError):
+    """All legal projection paths failed; preserve the original TF evidence."""
+    def __init__(self, failures):
+        recoverable = [failure for failure in failures if failure[2] == 'future']
+        stage, error, category, _ = (recoverable or failures)[-1]
+        self.retryable = bool(recoverable)
+        self.category = category
+        self.error_type = type(error).__name__
+        self.first_failure_ns = min(failure[3] for failure in failures)
+        super().__init__('{}:{}:{}:{}'.format(stage, self.error_type, category, str(error)[:240]))
 
 
 def stamp_seconds(stamp):
@@ -155,7 +199,13 @@ def project_to_map(xyz, transform):
 
 class Bridge:
     def __init__(self, node, buffer, cloud_type, field_type, header_type, time_type, minimum,
-                 output_topic=TOPIC, heartbeat_topic=HEARTBEAT, tf_exceptions=()):
+                 output_topic=TOPIC, heartbeat_topic=HEARTBEAT, tf_exceptions=(),
+                 tf_retry_max_wait_ms=TF_RETRY_MAX_WAIT_MS,
+                 tf_retry_processing_reserve_ms=TF_RETRY_PROCESSING_RESERVE_MS,
+                 tf_retry_max_attempts=TF_RETRY_MAX_ATTEMPTS):
+        (self.tf_retry_max_wait_ns, self.tf_retry_processing_reserve_s,
+         self.tf_retry_max_attempts) = retry_settings(
+            tf_retry_max_wait_ms, tf_retry_processing_reserve_ms, tf_retry_max_attempts)
         self.node, self.buffer = node, buffer
         self.Cloud, self.Field, self.Header, self.Time = cloud_type, field_type, header_type, time_type
         self.minimum = minimum
@@ -168,7 +218,18 @@ class Bridge:
                                 candidate_expired_checks=0, exact_tf_misses=0,
                                 anchor_tf_misses=0, no_eligible_anchor=0,
                                 anchors_tf_unavailable=0, projection_errors=0,
-                                processing_expired=0, published=0)
+                                processing_expired=0, published=0,
+                                retry_scheduled=0, retry_attempts=0, retry_recovered=0,
+                                retry_wait_samples=0, retry_wait_ns_total=0, retry_wait_ns_max=0,
+                                source_expired=0, tf_wait_timeout=0, retry_source_budget=0,
+                                tf_attempts_exhausted=0, permanent_tf_failure=0,
+                                candidate_superseded=0, candidate_evicted=0,
+                                publish_failed=0, publish_expired=0, diagnostic_errors=0)
+        self.last_candidate_event = None
+        self.last_diagnostic_error = None
+        # A publish attempt may have reached DDS even if publish() raises.
+        # This ordering fence is NOT an effective projection/heartbeat stamp.
+        self.last_cloud_attempt_stamp_ns = 0
         self.last_input_time = self.last_input_stamp = None
         self.last_input_result = 'uninitialized'
         self.last_process_s = self.last_publish_s = None
@@ -183,8 +244,8 @@ class Bridge:
         self.announced = False
         self.anchors = deque(maxlen=12)
         self.predictions = 0
-        # MultiThreadedExecutor runs the TF listener, grid callback and timer
-        # concurrently; this lock keeps Bridge state consistent.
+        # Business callbacks share a mutually exclusive group. The independent
+        # TF listener can run concurrently; keep the existing state lock.
         self.lock = threading.RLock()
         self.publisher = node.create_publisher(cloud_type, output_topic, 1)
         self.heartbeat = node.create_publisher(header_type, heartbeat_topic, 1)
@@ -202,7 +263,10 @@ class Bridge:
             now = time.monotonic()
             self.last_input_time, self.last_input_stamp = now, stamp
             if fresh(stamp, now) and stamp > self.last_received:
-                self.pending.append(msg)
+                if len(self.pending) == self.pending.maxlen:
+                    self._finish_candidate(self.pending.popleft(), 'EXPIRED', 'candidate_evicted')
+                candidate = Candidate(msg, time.monotonic_ns())
+                self.pending.append(candidate)
                 self.last_received = stamp
                 self.diag_counts['grid_accepted'] += 1
                 self.last_input_result = 'accepted'
@@ -226,13 +290,48 @@ class Bridge:
                 return
             self.anchors.append(msg)
 
+    def _tf_category(self, error):
+        # Foxy exposes direction in ExtrapolationException text, not a code.
+        # Only expected TF exceptions may schedule retries, never arbitrary
+        # Python exceptions which happen to contain the word "future".
+        if not isinstance(error, self.tf_exceptions):
+            return 'unexpected'
+        names = {cls.__name__ for cls in type(error).__mro__}
+        text = str(error).lower()
+        if 'ConnectivityException' in names:
+            return 'connectivity'
+        if 'LookupException' in names:
+            return 'lookup'
+        if 'future' in text:
+            return 'future'
+        if 'past' in text:
+            return 'past'
+        return 'tf_other'
+
+    def _tf_failure(self, stage, msg, requested_header, error):
+        failed_ns = time.monotonic_ns()
+        probe = getattr(self, '_t22', None)
+        if probe is not None:
+            try:
+                probe.miss(stage, msg.header, requested_header, error)
+            except Exception as diagnostic_error:
+                self.diag_counts['diagnostic_errors'] += 1
+                self.last_diagnostic_error = '{}:{}'.format(
+                    type(diagnostic_error).__name__, str(diagnostic_error)[:120])
+        return stage, error, self._tf_category(error), failed_ns
+
     def projection_transform(self, msg):
         self.projection_failure = 'none'
         target_time = self.Time.from_msg(msg.header.stamp)
+        failures = []
         try:
             return self.buffer.lookup_transform('map', 'base_link', target_time).transform
-        except Exception:
+        except Exception as error:
+            failure = self._tf_failure('map_grid', msg, msg.header, error)
             self.diag_counts['exact_tf_misses'] += 1
+            if failure[2] == 'unexpected':
+                raise
+            failures.append(failure)
         stamp = stamp_seconds(msg.header.stamp)
         # Both leg transforms must exist at their exact requested timestamps.
         # Missing/stale odometry never refreshes the obstacle heartbeat.
@@ -242,10 +341,14 @@ class Bridge:
             if not 0 <= age <= MAX_PREDICTION:
                 continue
             eligible_anchors += 1
+            leg_stage = 'leg_anchor'
             try:
                 leg0 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', self.Time.from_msg(anchor.header.stamp))
+                leg_stage = 'leg_grid'
                 leg1 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', target_time)
-            except self.tf_exceptions:
+            except self.tf_exceptions as error:
+                failures.append(self._tf_failure(
+                    leg_stage, msg, anchor.header if leg_stage == 'leg_anchor' else msg.header, error))
                 self.diag_counts['anchor_tf_misses'] += 1
                 continue
             pose = anchor.pose.pose
@@ -256,7 +359,83 @@ class Bridge:
         self.projection_failure = ('anchors_tf_unavailable' if eligible_anchors
                                    else 'no_eligible_anchor')
         self.diag_counts[self.projection_failure] += 1
-        raise ValueError('no recent NDT anchor with timestamped leg odometry')
+        raise ProjectionUnavailable(failures) from failures[-1][1]
+
+    def _finish_candidate(self, candidate, state, reason):
+        candidate.state = state
+        if reason in self.diag_counts:
+            self.diag_counts[reason] += 1
+        # One bounded metadata snapshot; do not retain another GridMap cache.
+        self.last_candidate_event = dict(
+            source_stamp_ns=candidate.source_stamp_ns, state=state, reason=reason,
+            first_seen_monotonic_ns=candidate.first_seen_monotonic_ns,
+            first_tf_failure_monotonic_ns=candidate.first_tf_failure_monotonic_ns,
+            last_retry_monotonic_ns=candidate.last_retry_monotonic_ns,
+            retry_deadline_monotonic_ns=candidate.retry_deadline_monotonic_ns,
+            attempt_count=candidate.attempt_count,
+            last_tf_error_type=candidate.last_tf_error_type,
+            last_tf_error=candidate.last_tf_error)
+
+    def _remaining_wait_ns(self, candidate, source_now):
+        # Source-age semantics stay identical to fresh(); elapsed waiting uses
+        # monotonic_ns. Never substitute receive time or a ROS wall clock.
+        return round((PUBLISH_MAX_AGE-(source_now-candidate.stamp)
+                      - self.tf_retry_processing_reserve_s)*1000000000)
+
+    def _retry_limit(self, candidate, now, now_ns, check_attempts=True):
+        if self._remaining_wait_ns(candidate, now) <= 0:
+            return 'retry_source_budget'
+        if now_ns > candidate.retry_deadline_monotonic_ns:
+            return candidate.deadline_reason
+        if check_attempts and candidate.attempt_count >= self.tf_retry_max_attempts:
+            return 'tf_attempts_exhausted'
+        return None
+
+    def _prune_candidates(self, now, now_ns):
+        keep = []
+        for candidate in self.pending:
+            if candidate.state not in ('NEW', 'PENDING_TF'):
+                continue
+            reason = None
+            if candidate.source_stamp_ns <= self.last_cloud_attempt_stamp_ns:
+                reason = 'candidate_superseded'
+            elif not fresh(candidate.stamp, now, PUBLISH_MAX_AGE):
+                self.diag_counts['candidate_expired_checks'] += 1
+                reason = 'source_expired'
+            elif candidate.state == 'PENDING_TF':
+                reason = self._retry_limit(candidate, now, now_ns)
+            if reason:
+                self._finish_candidate(candidate, 'EXPIRED', reason)
+            else:
+                keep.append(candidate)
+        self.pending.clear()
+        self.pending.extend(keep)
+
+    def _defer_candidate(self, candidate, error):
+        now, now_ns = time.monotonic(), time.monotonic_ns()
+        if candidate.first_tf_failure_monotonic_ns is None:
+            candidate.first_tf_failure_monotonic_ns = error.first_failure_ns
+            wait_end = error.first_failure_ns+self.tf_retry_max_wait_ns
+            # The source stamp uses this same Jetson monotonic clock. An
+            # absolute source deadline cannot be extended by preemption
+            # between reading monotonic() and monotonic_ns().
+            source_end = candidate.source_stamp_ns + round(
+                (PUBLISH_MAX_AGE-self.tf_retry_processing_reserve_s)*1000000000)
+            candidate.retry_deadline_monotonic_ns = min(wait_end, source_end)
+            candidate.deadline_reason = ('tf_wait_timeout' if wait_end <= source_end
+                                         else 'retry_source_budget')
+        if not fresh(candidate.stamp, now, PUBLISH_MAX_AGE):
+            self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
+            return
+        reason = self._retry_limit(candidate, now, now_ns)
+        if self.tf_retry_max_wait_ns == 0:
+            reason = 'tf_wait_timeout'
+        if reason:
+            self._finish_candidate(candidate, 'EXPIRED', reason)
+        else:
+            if candidate.state == 'NEW':
+                self.diag_counts['retry_scheduled'] += 1
+            candidate.state = 'PENDING_TF'
 
     def _projection_diagnostics(self, now):
         return dict(clock='monotonic', source_stamp=self.last_published or None,
@@ -268,7 +447,11 @@ class Bridge:
                     anchors=len(self.anchors), current_failure=self.last_failure,
                     process_s=self.last_process_s, publish_s=self.last_publish_s,
                     fail_project=self.fail_project, fail_grid=self.fail_grid,
-                    counts=self.diag_counts.copy())
+                    counts=self.diag_counts.copy(),
+                    candidate_states={state: sum(c.state == state for c in self.pending)
+                                      for state in ('NEW', 'PENDING_TF')},
+                    last_candidate_event=self.last_candidate_event,
+                    last_diagnostic_error=self.last_diagnostic_error)
 
     def publish(self):
         with self.lock:
@@ -285,26 +468,38 @@ class Bridge:
             # Scan only the bounded cache for age eligibility, not for TF. Always
             # probe the newest frame first; spend the remaining attempts on the
             # deferred older suffix so fast input cannot starve valid old frames.
-            candidates = []
-            for msg in reversed(self.pending):
-                stamp = stamp_seconds(msg.header.stamp)
-                if stamp <= self.last_published:
-                    continue
-                if not fresh(stamp, now, PUBLISH_MAX_AGE):
-                    self.diag_counts['candidate_expired_checks'] += 1
-                    continue
-                candidates.append((stamp, msg))
+            self._prune_candidates(now, time.monotonic_ns())
+            candidates = list(reversed(self.pending))
             if candidates:
                 older = candidates[1:]
-                deferred = [(stamp, msg) for stamp, msg in older
-                            if self.retry_before is not None and stamp < self.retry_before]
+                deferred = [candidate for candidate in older
+                            if self.retry_before is not None and candidate.stamp < self.retry_before]
                 candidates = ([candidates[0]] + (deferred or older))[:MAX_PENDING_TRIES]
             else:
                 self.retry_before = None
-            for stamp, msg in candidates:
+            for candidate in candidates:
+                stamp, msg = candidate.stamp, candidate.message
+                # Earlier candidates can consume time. Recheck each candidate
+                # immediately before its zero-wait queries, not just per tick.
+                attempt_now, attempt_ns = time.monotonic(), time.monotonic_ns()
+                if not fresh(stamp, attempt_now, PUBLISH_MAX_AGE):
+                    self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
+                    continue
+                if candidate.state == 'PENDING_TF':
+                    limit = self._retry_limit(candidate, attempt_now, attempt_ns)
+                    if limit:
+                        self._finish_candidate(candidate, 'EXPIRED', limit)
+                        continue
+                    self.diag_counts['retry_attempts'] += 1
+                candidate.attempt_count += 1
+                candidate.last_retry_monotonic_ns = attempt_ns
                 self.retry_before = stamp
-                frame_started = time.monotonic()
+                frame_started = attempt_now
+                self.projection_failure = 'none'
                 try:
+                    if (msg.header.stamp.sec*1000000000+msg.header.stamp.nanosec
+                            != candidate.source_stamp_ns):
+                        raise ValueError('candidate source stamp changed')
                     transform = self.projection_transform(msg)
                 except Exception as error:
                     self.fail_project += 1
@@ -313,7 +508,21 @@ class Bridge:
                     self.last_failure = '{}:{}:{}'.format(
                         self.projection_failure if self.projection_failure != 'none' else 'projection_error',
                         type(error).__name__, str(error)[:80])
+                    candidate.last_tf_error_type = (error.error_type if isinstance(error, ProjectionUnavailable)
+                                                    else type(error).__name__)
+                    candidate.last_tf_error = str(error)[:320]
+                    if isinstance(error, ProjectionUnavailable) and error.retryable:
+                        self._defer_candidate(candidate, error)
+                    else:
+                        self._finish_candidate(candidate, 'FAILED_PERMANENTLY', 'permanent_tf_failure')
                     continue  # Never fall back to latest pose for an older frame.
+                candidate.tf_ready_ns = time.monotonic_ns()
+                if candidate.state == 'PENDING_TF':
+                    limit = self._retry_limit(candidate, time.monotonic(), candidate.tf_ready_ns,
+                                              check_attempts=False)
+                    if limit:
+                        self._finish_candidate(candidate, 'EXPIRED', limit)
+                        continue
                 try:
                     xyz, stats = grid_obstacles(msg, self.minimum, include_unknown=True)
                     points = project_to_map(xyz, transform)
@@ -321,7 +530,9 @@ class Bridge:
                     self.fail_grid += 1
                     self.last_process_s = time.monotonic()-frame_started
                     self.last_failure = 'grid:{}:{}'.format(type(error).__name__, str(error)[:80])
+                    self._finish_candidate(candidate, 'FAILED_PERMANENTLY', 'invalid_grid')
                     continue
+                candidate.state = 'PROJECTED'
                 output = self.Cloud()
                 output.header.stamp = msg.header.stamp
                 output.header.frame_id = 'map'
@@ -336,15 +547,39 @@ class Bridge:
                 if not fresh(stamp, published_at, PUBLISH_MAX_AGE):
                     self.diag_counts['processing_expired'] += 1
                     self.last_failure = 'processing_expired'
+                    self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
                     continue
-                self.publisher.publish(output)  # Empty fresh clouds are valid.
-                self.heartbeat.publish(output.header)
+                self.last_cloud_attempt_stamp_ns = candidate.source_stamp_ns
+                try:
+                    self.publisher.publish(output)  # Empty fresh clouds are valid.
+                    # A slow/uncertain publish must not gain a fresh heartbeat
+                    # or be reissued. Already handed-off DDS data cannot be recalled.
+                    if not fresh(stamp, time.monotonic(), PUBLISH_MAX_AGE):
+                        self.last_failure = 'publish_expired'
+                        self._finish_candidate(candidate, 'EXPIRED', 'publish_expired')
+                        break
+                    self.heartbeat.publish(output.header)
+                except Exception:
+                    self._finish_candidate(candidate, 'FAILED_PERMANENTLY', 'publish_failed')
+                    self._prune_candidates(time.monotonic(), time.monotonic_ns())
+                    raise  # Preserve publisher exception propagation; never retry it as TF.
                 completed_at = time.monotonic()
                 self.last_publish_s = completed_at-published_at
+                if not fresh(stamp, completed_at, PUBLISH_MAX_AGE):
+                    self.last_failure = 'publish_expired'
+                    self._finish_candidate(candidate, 'EXPIRED', 'publish_expired')
+                    break
                 self.last_published = stamp
                 self.retry_before = None
                 self.last_publish_time = completed_at
                 self.diag_counts['published'] += 1
+                if candidate.first_tf_failure_monotonic_ns is not None:
+                    waited = candidate.tf_ready_ns-candidate.first_tf_failure_monotonic_ns
+                    self.diag_counts['retry_recovered'] += 1
+                    self.diag_counts['retry_wait_samples'] += 1
+                    self.diag_counts['retry_wait_ns_total'] += waited
+                    self.diag_counts['retry_wait_ns_max'] = max(self.diag_counts['retry_wait_ns_max'], waited)
+                self._finish_candidate(candidate, 'PUBLISHED', 'success')
                 self.last_failure = 'none'
                 stats.update(source_age_s=round(published_at-stamp, 4), compensated=self.predictions)
                 reason = 'projected ' + json.dumps(stats)
@@ -352,6 +587,7 @@ class Bridge:
                     self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
                     self.announced = True
                 break
+            self._prune_candidates(time.monotonic(), time.monotonic_ns())
             diagnostic_now = time.monotonic()
             if (self.last_published
                     and (diagnostic_now-self.last_publish_time > PUBLISH_MAX_AGE
@@ -371,7 +607,7 @@ def main():
     import argparse
     import yaml
     import rclpy
-    from rclpy.callback_groups import ReentrantCallbackGroup
+    from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
     from rclpy.executors import MultiThreadedExecutor
     from rclpy.qos import QoSProfile, ReliabilityPolicy
     from rclpy.time import Time
@@ -382,7 +618,13 @@ def main():
     from tf2_ros import Buffer, TransformListener, TransformException
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, required=True)
+    parser.add_argument('--tf-retry-max-wait-ms', type=float, default=TF_RETRY_MAX_WAIT_MS)
+    parser.add_argument('--tf-retry-processing-reserve-ms', type=float,
+                        default=TF_RETRY_PROCESSING_RESERVE_MS)
+    parser.add_argument('--tf-retry-max-attempts', type=int, default=TF_RETRY_MAX_ATTEMPTS)
     args = parser.parse_args()
+    retry_settings(args.tf_retry_max_wait_ms, args.tf_retry_processing_reserve_ms,
+                   args.tf_retry_max_attempts)
     # One obstacle threshold for VOA braking and Nav2 planning, no duplicate
     # parameter to silently drift away from the factory predicate.
     params = yaml.safe_load(args.config.read_text())['/**']['ros__parameters']
@@ -391,10 +633,23 @@ def main():
         raise ValueError('invalid VOA obstacle height')
     rclpy.init()
     node = rclpy.create_node('patrol_voa_costmap_bridge')
+    probe = None
+    try:
+        from lite3_t22_probe import create_probe, receiver_types
+        probe = create_probe('voa')
+        if probe is not None:
+            Buffer, TransformListener = receiver_types(Buffer, TransformListener, probe)
+    except Exception as error:
+        probe = None
+        node.get_logger().warning('[T22] recorder disabled: '+str(error))
     buffer = Buffer()
     listener = TransformListener(buffer, node)
     bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum,
-                    tf_exceptions=(TransformException,))
+                    tf_exceptions=(TransformException,),
+                    tf_retry_max_wait_ms=args.tf_retry_max_wait_ms,
+                    tf_retry_processing_reserve_ms=args.tf_retry_processing_reserve_ms,
+                    tf_retry_max_attempts=args.tf_retry_max_attempts)
+    bridge._t22 = probe
     def on_grid(message):
         # Only enqueue here. Projection is done by the 25 ms timer so the
         # 30 Hz grid callback cannot starve the TF listener callbacks that the
@@ -404,7 +659,7 @@ def main():
     def on_registration(message):
         bridge.registration(message)
     latest_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
-    group = ReentrantCallbackGroup()
+    group = MutuallyExclusiveCallbackGroup()
     subscription = node.create_subscription(
         GridMap, '/patrol/voa/grid_map', on_grid, latest_qos,
         callback_group=group)

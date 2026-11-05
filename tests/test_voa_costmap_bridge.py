@@ -106,6 +106,10 @@ class Field(NS):
     FLOAT32 = 7
 
 
+class ExtrapolationException(Exception):
+    """A recognizable expected TF failure, rather than a Python validation error."""
+
+
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
         self.outputs = {}
@@ -117,12 +121,15 @@ class RuntimeTests(unittest.TestCase):
         self.tf_queries = []
         def lookup(target, source, stamp):
             self.tf_queries.append(stamp)
-            if stamp > self.tf_until: raise ValueError('future TF')
+            if stamp > self.tf_until: raise ExtrapolationException('future TF')
             return NS(transform=transform(x=1.))
         self.bridge = M.Bridge(node, NS(lookup_transform=lookup), Cloud, Field, NS,
-                               NS(from_msg=M.stamp_seconds), .1)
+                               NS(from_msg=M.stamp_seconds), .1,
+                               tf_exceptions=(ExtrapolationException,))
         self.clock = patch.object(M.time, 'monotonic', return_value=100.2)
         self.now = self.clock.start(); self.addCleanup(self.clock.stop)
+        ns_clock = patch.object(M.time, 'monotonic_ns', side_effect=lambda: round(self.now.return_value*1e9))
+        ns_clock.start(); self.addCleanup(ns_clock.stop)
 
     def test_newest_transformable_sample_empty_cloud_and_original_stamp(self):
         self.bridge.receive(grid(stamp=100.))
@@ -163,7 +170,7 @@ class RuntimeTests(unittest.TestCase):
                                     orientation=NS(x=0.,y=0.,z=0.,w=1.))))
         self.bridge.registration(anchor)
         def lookup(target, source, stamp):
-            if target == 'map': raise ValueError('NDT not caught up')
+            if target == 'map': raise ExtrapolationException('NDT not caught up')
             self.assertEqual((target, source), ('robot_odom','leg_base_link'))
             return NS(transform=transform(x=2.+(stamp-100.)))
         self.bridge.buffer.lookup_transform = lookup
