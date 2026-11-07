@@ -1,0 +1,12 @@
+1793424800.059673 [0] visual_pos: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[WARN] [1793424800.752197968] [visual_pose_initializer]: visual initializer ready; velocity remains independently gated
+[INFO] [1793424813.209564144] [visual_pose_initializer]: COLLECTING_VISUAL_POSES
+[INFO] [1793424822.576838992] [visual_pose_initializer]: COLLECTING:1/4
+[INFO] [1793424823.586956880] [visual_pose_initializer]: COLLECTING:2/4
+[INFO] [1793424824.704003152] [visual_pose_initializer]: COLLECTING:3/4
+[INFO] [1793424825.480874928] [visual_pose_initializer]: WAITING_NDT:x=0.092,y=-0.175,yaw=-0.060
+[INFO] [1793424825.755763184] [visual_pose_initializer]: WAITING_NDT:matching_or_leg_odometry_not_ready
+[INFO] [1793424826.947240688] [visual_pose_initializer]: WAITING_NDT:accepted_scans=1/3
+[INFO] [1793424827.047832400] [visual_pose_initializer]: WAITING_NDT:accepted_scans=2/3
+[INFO] [1793424827.168445744] [visual_pose_initializer]: WAITING_NDT:accepted_scans=3/3
+[INFO] [1793424827.176140080] [visual_pose_initializer]: READY:visual_plus_ndt_confirmed_0.061m_0.005rad

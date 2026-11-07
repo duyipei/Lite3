@@ -285,7 +285,9 @@ class ProjectionFreshnessTests(unittest.TestCase):
 
         self.bridge.buffer.lookup_transform = lookup
         self.bridge.publish()
-        self.assertEqual(len(self.queries), M.MAX_PENDING_TRIES*(1+2*12))
+        self.assertEqual(len(self.queries), M.MAX_PENDING_TRIES*(1+12+1))
+        for index in range(M.MAX_PENDING_TRIES):
+            self.assertEqual(self.queries.count(('robot_odom', 100.+(15-index)*.005)), 1)
         self.assertFalse(self.clouds())
 
     def test_processing_that_crosses_deadline_does_not_publish(self):

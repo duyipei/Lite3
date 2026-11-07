@@ -303,7 +303,8 @@ class ProjectionDiagnosticTests(unittest.TestCase):
         self.case.prepare_anchors(missing=(100.2,))
         with self.assertRaises(ValueError):
             self.case.bridge.projection_transform(self.fixtures.grid(100.2))
-        self.assertEqual([event[0] for event in self.events], ['map_grid','leg_grid','leg_grid'])
+        self.assertEqual([event[0] for event in self.events], ['map_grid','leg_grid'])
+        self.assertEqual(self.case.queries.count(('robot_odom', 100.2)), 1)
         for stage, grid_header, requested_header, error in self.events:
             self.assertIsInstance(error, self.fixtures.TfUnavailable)
             if stage == 'leg_grid': self.assertEqual(grid_header.stamp, requested_header.stamp)

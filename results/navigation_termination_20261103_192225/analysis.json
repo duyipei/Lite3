@@ -1,0 +1,21 @@
+{
+  "session": "/home/duyipei/Lite3_Projects/lite3_patrol_project/logs/lite3_indoor_nav_patrol_map_20261031_01_area_v2_review_20261103_191424_4270",
+  "finding": "SIGINT-triggered session shutdown before goal execution",
+  "goal_queued": true,
+  "path_preview_poses": 102,
+  "arm_success_records": 0,
+  "gate_fault_records": 0,
+  "nav_goal_accepted_records": 0,
+  "nav_execution_records": 0,
+  "dwb_invalid_trajectory_records": 0,
+  "nav_sigint_records": 8,
+  "clean_exit_records": 8,
+  "direct_cause_evidence": "All eight Nav2 processes report signal 2 at epoch 1793425040.148 (~VM 19:20:14); no accepted goal, action abort or gate fault",
+  "trigger_not_determined": "No main launcher terminal output, exit status or control event log in this session; cannot distinguish operator interrupt, QUIT, EOF, HUP or other cleanup trigger",
+  "runtime_differences": {
+    "voa_prefix": "/home/ysc/lite_cog_ros2/voa/install/voa",
+    "footprint_critic": "dwb_critics::ObstacleFootprintCritic",
+    "previous_session_used": "factory_voa_safety_ws and lite3_nav2_critics::FilledFootprintCritic"
+  },
+  "read_only": true
+}

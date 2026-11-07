@@ -1,0 +1,21 @@
+{
+  "motion_sender": {
+    "repository": "https://github.com/DeepRoboticsLab/Lite3_ROS",
+    "commit": "e4ab5dc1c7f3ff46274162a1ef302253936578aa",
+    "file": "src/transfer/src/Jetson2Motion.cpp",
+    "source_sha256": "169383cc460a702bcf2374a5a5321889f57111eb98033e5330c93591c69c9edc",
+    "callback_lines": [
+      354,
+      394
+    ]
+  },
+  "nav2": {
+    "repository": "https://github.com/ros-navigation/navigation2",
+    "commit": "0c9917ffc3cd53175a066b87659ea3920e3a4f20",
+    "branch": "foxy-devel",
+    "source_file": "nav2_dwb_controller/dwb_plugins/include/dwb_plugins/one_d_velocity_iterator.hpp",
+    "source_sha256": "8c6af7e04b49762ee9563fca06aee11038d8470ac726dbf3c462c102bb3bb1ee"
+  },
+  "deployment_match": "unproven; these are offline upstream reference fixtures",
+  "fixture_normalization": "Trailing spaces and final newline normalized; callback operations unchanged."
+}

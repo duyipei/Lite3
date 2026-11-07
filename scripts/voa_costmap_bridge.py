@@ -335,20 +335,41 @@ class Bridge:
         stamp = stamp_seconds(msg.header.stamp)
         # Both leg transforms must exist at their exact requested timestamps.
         # Missing/stale odometry never refreshes the obstacle heartbeat.
+        grid_stamp = (msg.header.stamp.sec, msg.header.stamp.nanosec)
+        grid_lookup = None
+
+        def lookup_leg(header, stage):
+            nonlocal grid_lookup
+            at_grid_time = (header.stamp.sec, header.stamp.nanosec) == grid_stamp
+            if at_grid_time and grid_lookup is not None:
+                result, failure = grid_lookup
+                # Retain the logical path's failure priority without another
+                # TF query/diagnostic. A zero-age anchor uses this lookup too.
+                return result, ((stage,) + failure[1:] if failure is not None else None)
+            try:
+                result = self.buffer.lookup_transform(
+                    'robot_odom', 'leg_base_link',
+                    target_time if at_grid_time else self.Time.from_msg(header.stamp))
+            except self.tf_exceptions as error:
+                result = None
+                failure = self._tf_failure(stage, msg, header, error)
+            else:
+                failure = None
+            if at_grid_time:
+                grid_lookup = result, failure
+            return result, failure
+
         eligible_anchors = 0
         for anchor in reversed(self.anchors):
             age = stamp-stamp_seconds(anchor.header.stamp)
             if not 0 <= age <= MAX_PREDICTION:
                 continue
             eligible_anchors += 1
-            leg_stage = 'leg_anchor'
-            try:
-                leg0 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', self.Time.from_msg(anchor.header.stamp))
-                leg_stage = 'leg_grid'
-                leg1 = self.buffer.lookup_transform('robot_odom', 'leg_base_link', target_time)
-            except self.tf_exceptions as error:
-                failures.append(self._tf_failure(
-                    leg_stage, msg, anchor.header if leg_stage == 'leg_anchor' else msg.header, error))
+            leg0, failure = lookup_leg(anchor.header, 'leg_anchor')
+            if failure is None:
+                leg1, failure = lookup_leg(msg.header, 'leg_grid')
+            if failure is not None:
+                failures.append(failure)
                 self.diag_counts['anchor_tf_misses'] += 1
                 continue
             pose = anchor.pose.pose

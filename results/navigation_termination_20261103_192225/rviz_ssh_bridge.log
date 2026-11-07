@@ -1,0 +1,24 @@
+1793704615.730777 [0]    python3: selected interface "lo" is not multicast-capable: disabling multicast
+[INFO] [1793704615.852630987] [patrol_rviz_ssh_local]: RViz SSH transport started: local
+1793424850.942663 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793424852.175310896] [patrol_rviz_ssh_remote]: RViz SSH transport started: remote
+[INFO] [1793704626.154774377] [patrol_rviz_ssh_local]: first SSH message delivered: /tf
+[INFO] [1793704626.155826573] [patrol_rviz_ssh_local]: first SSH message delivered: /tf_static
+[INFO] [1793704626.156711806] [patrol_rviz_ssh_local]: first SSH message delivered: /aligned_points
+[INFO] [1793704626.157454412] [patrol_rviz_ssh_local]: first SSH message delivered: /odom
+[INFO] [1793704626.157840424] [patrol_rviz_ssh_local]: first SSH message delivered: /patrol/localization_ready
+[INFO] [1793704647.016016542] [patrol_rviz_ssh_local]: first SSH message delivered: /map
+[WARN] [1793424875.537586992] [patrol_rviz_ssh_remote]: New publisher discovered on this topic, offering incompatible QoS. No messages will be received from it. Last incompatible policy: DURABILITY_QOS_POLICY
+[INFO] [1793704650.896035997] [patrol_rviz_ssh_local]: first SSH message delivered: /local_costmap/costmap
+[INFO] [1793704650.897671893] [patrol_rviz_ssh_local]: first SSH message delivered: /local_costmap/published_footprint
+[INFO] [1793704650.955192416] [patrol_rviz_ssh_local]: first SSH message delivered: /global_costmap/published_footprint
+[INFO] [1793704650.975749437] [patrol_rviz_ssh_local]: first SSH message delivered: /global_costmap/costmap
+[INFO] [1793704653.395330797] [patrol_rviz_ssh_local]: first SSH message delivered: /local_costmap/costmap_updates
+[INFO] [1793704653.954651616] [patrol_rviz_ssh_local]: first SSH message delivered: /global_costmap/costmap_updates
+[INFO] [1793704670.074641693] [patrol_rviz_ssh_local]: first SSH message delivered: /patrol/goal_bridge_state
+[INFO] [1793704695.474567189] [patrol_rviz_ssh_local]: first SSH message delivered: /patrol/gate_state
+[INFO] [1793704695.475727267] [patrol_rviz_ssh_local]: first SSH message delivered: /patrol/armed
+[INFO] [1793704757.996933091] [patrol_rviz_ssh_local]: RViz goal sent over SSH: x=4.686, y=-1.623
+[INFO] [1793424984.076028720] [patrol_rviz_ssh_remote]: first SSH message delivered: /patrol/goal_request
+[INFO] [1793704758.257654932] [patrol_rviz_ssh_local]: first SSH message delivered: /plan
+[ERROR] [1793425052.394928592] [patrol_rviz_ssh_remote]: RViz SSH transport closed: SSH stream closed

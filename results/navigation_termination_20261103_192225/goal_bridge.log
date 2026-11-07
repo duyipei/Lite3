@@ -1,0 +1,5 @@
+1793424895.101334 [0]    python3: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793424896.271632624] [patrol_goal_pose_bridge]: bridging isolated /patrol/goal_request to Foxy /navigate_to_pose; the first goal requires ARM and later goals run in the same explicitly armed session
+[INFO] [1793424896.595546768] [patrol_goal_pose_bridge]: Foxy /navigate_to_pose action server is ready
+[WARN] [1793424984.087181712] [patrol_goal_pose_bridge]: queued bridged goal 1; only the first goal requires ARM
+[INFO] [1793424984.243891216] [patrol_goal_pose_bridge]: path preview ready for queued goal 1 (102 poses)

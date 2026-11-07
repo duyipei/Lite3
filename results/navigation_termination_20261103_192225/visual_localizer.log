@@ -1,0 +1,7 @@
+1793424780.443476 [0] rgbd_visua: using network interface eth0 (udp/192.168.1.103) selected arbitrarily from: eth0, wlan0, docker0
+[INFO] [1793424781.581218096] [rgbd_visual_localizer]: preparing XFeat/LighterGlue reference features before accepting images
+[INFO] [1793424807.112773200] [rgbd_visual_localizer]: loaded 40 visual keyframes; startup references=13; strategy=global
+[INFO] [1793424813.586584208] [rgbd_visual_localizer]: REJECTED:xfeat_lighterglue:no_pnp_solution:26:raw=1,depth=1,inliers=0,reason=too_few_depth_matches|27:raw=0,depth=0,inliers=0,reason=too_few_depth_matches
+[INFO] [1793424819.112781168] [rgbd_visual_localizer]: ERROR:image_timeout
+[INFO] [1793424824.686669232] [rgbd_visual_localizer]: POSE:mode=global,source=xfeat_lighterglue_pnp,kf=2,inliers=90,x=0.03,y=-0.18,yaw=-0.05,query_age=0.66s,input_age=0.09s,inference=0.57s
+[INFO] [1793424827.616814992] [rgbd_visual_localizer]: PAUSED:localization_ready_ndt_odometry_active
