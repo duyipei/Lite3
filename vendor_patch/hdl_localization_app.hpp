@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include <deque>
 #include <memory>
 #include <mutex>
@@ -110,25 +111,15 @@ public:
             "/velodyne_points", 
             1,
             [this](sensor_msgs::msg::PointCloud2::SharedPtr msg){
-                pending_scan_ = msg;
+                QueueScan(msg);
             }
         );
         // A 20 Hz leg-TF stream can legitimately arrive ~50 ms after a scan.
-        // Keep only the newest scan and retry exact-time TF without blocking
-        // callbacks or relabelling an older pose. Missing data still expires.
+        // Keep the newest scan plus one waiting candidate. New input must not
+        // continually replace a frame whose exact-time TF is about to arrive.
+        // Both slots share the existing exclusive group; no parallel matching.
         scan_timer_=create_wall_timer(std::chrono::milliseconds(10),[this](){
-            if(!pending_scan_) return;
-            const auto stamp=rclcpp::Time(pending_scan_->header.stamp.sec,
-                pending_scan_->header.stamp.nanosec,RCL_STEADY_TIME);
-            const double now=rclcpp::Clock(RCL_STEADY_TIME).now().seconds();
-            const bool tf_ready=tf_buffer.canTransform(robot_odom_frame_id,
-                robot_odom_child_frame_id,stamp,rclcpp::Duration(0));
-            const auto decision=ScanReadiness(stamp.seconds(),now,last_processed_scan_,tf_ready);
-            if(decision==ScanDecision::Wait) return;
-            auto scan=pending_scan_;pending_scan_.reset();
-            if(decision==ScanDecision::Drop) return;
-            last_processed_scan_=stamp.seconds();
-            LidarCallback(scan);
+            ProcessPendingScan();
         });
         globalmap_sub = create_subscription<sensor_msgs::msg::PointCloud2>(
             "/globalmap", 
@@ -558,6 +549,65 @@ private:
     }
     // END_SCAN_READINESS
 
+    // BEGIN_SCAN_CANDIDATES
+    static std::int64_t ScanStampNs(const sensor_msgs::msg::PointCloud2::SharedPtr& scan) {
+        return static_cast<std::int64_t>(scan->header.stamp.sec)*1000000000LL +
+            scan->header.stamp.nanosec;
+    }
+
+    void PruneScanCandidates(double now) {
+        for(auto* slot : {&pending_scan_, &waiting_scan_}) {
+            if(*slot && (ScanStampNs(*slot) <= last_processed_scan_ns_ ||
+               ScanReadiness(ScanStampNs(*slot)/1e9, now, 0, false) == ScanDecision::Drop)) {
+                slot->reset();
+            }
+        }
+    }
+
+    void QueueScan(const sensor_msgs::msg::PointCloud2::SharedPtr& scan) {
+        const double now=rclcpp::Clock(RCL_STEADY_TIME).now().seconds();
+        PruneScanCandidates(now);
+        const auto stamp=ScanStampNs(scan);
+        if(scan->header.stamp.nanosec >= 1000000000U ||
+           stamp <= last_received_scan_ns_ || stamp <= last_processed_scan_ns_ ||
+           ScanReadiness(stamp/1e9, now, 0, false) == ScanDecision::Drop) return;
+        if(pending_scan_ && !waiting_scan_) waiting_scan_=pending_scan_;
+        pending_scan_=scan;
+        last_received_scan_ns_=stamp;
+    }
+
+    void ProcessPendingScan() {
+        PruneScanCandidates(rclcpp::Clock(RCL_STEADY_TIME).now().seconds());
+        sensor_msgs::msg::PointCloud2::SharedPtr selected;
+        // At most two zero-wait probes, newest first. Never drain a backlog.
+        for(const auto* slot : {&pending_scan_, &waiting_scan_}) {
+            if(!*slot) continue;
+            const auto& header=(*slot)->header.stamp;
+            const auto stamp=rclcpp::Time(header.sec,header.nanosec,RCL_STEADY_TIME);
+            if(tf_buffer.canTransform(robot_odom_frame_id,robot_odom_child_frame_id,
+                                      stamp,rclcpp::Duration(0))) {
+                selected=*slot;
+                break;
+            }
+        }
+        if(!selected) return;
+        last_processed_scan_ns_=ScanStampNs(selected);
+        // Remove the selected frame and all older candidates before matching.
+        // This is an attempt cursor, not a successful-localization heartbeat.
+        PruneScanCandidates(rclcpp::Clock(RCL_STEADY_TIME).now().seconds());
+        const double started=rclcpp::Clock(RCL_STEADY_TIME).now().seconds();
+        LidarCallback(selected);
+        const double completed=rclcpp::Clock(RCL_STEADY_TIME).now().seconds();
+        PruneScanCandidates(completed);
+        // An unselected latest frame may have spent this whole callback in
+        // the slot. Coalesce it if another callback of the observed duration
+        // would exceed the existing age cap. This does not gate future input
+        // on an old timing estimate or extend any candidate's lifetime.
+        if(pending_scan_ && ScanReadiness(ScanStampNs(pending_scan_)/1e9,
+           completed+(completed-started),0,false) == ScanDecision::Drop) pending_scan_.reset();
+    }
+    // END_SCAN_CANDIDATES
+
     bool ExpectedPoseFromLegOdom(const Eigen::Matrix4f& current_leg, Eigen::Matrix4f& expected){
         std::lock_guard<std::mutex> anchor_lock(manual_anchor_mutex_);
         if(!manual_anchor_valid_ || !current_leg.allFinite()) return false;
@@ -967,6 +1017,9 @@ private:
             RCLCPP_ERROR(get_logger(), "waiting for initial pose input!!");
             return;
         }
+        // Preprocessing or scheduling can consume the remaining source budget.
+        if(ScanReadiness(points_time.seconds(),rclcpp::Clock(RCL_STEADY_TIME).now().seconds(),
+                         0,true) == ScanDecision::Drop) return;
 
         // predict
         if(!use_imu) {
@@ -1059,6 +1112,8 @@ private:
             return (posterior.block<3,1>(0,3)-expected_pose.block<3,1>(0,3)).norm()<=manual_pose_translation_gate &&
                 yaw<=manual_pose_yaw_gate && rotation<=manual_pose_yaw_gate;
         };
+        if(ScanReadiness(points_time.seconds(),rclcpp::Clock(RCL_STEADY_TIME).now().seconds(),
+                         0,true) == ScanDecision::Drop) return;
         auto aligned=pose_estimator->correct(points_time,filtered,refine,validate,guess,acquiring);
         const auto matched_at=std::chrono::steady_clock::now();
         if(!aligned) {
@@ -1076,23 +1131,30 @@ private:
         if(was_rejected) RCLCPP_INFO(get_logger(),"accepted registration transaction resumed");
 
         const auto gated_at = std::chrono::steady_clock::now();
-        // pub
-        if(!correction_rejected_ && aligned_pub->get_subscription_count()) {
-            // Registration voxel centroids can average a 16 cm obstacle with
-            // the ground inside a 30 cm cell. Keep their use in matching/status,
-            // but publish every sensor return with the SAME accepted full P.
-            auto obstacle_aligned = TransformObstacleCloud(cloud, published_pose);
-            sensor_msgs::msg::PointCloud2 ros_cloud;
-            pcl::toROSMsg(*obstacle_aligned, ros_cloud);
-            ros_cloud.header.frame_id = "map";
-            ros_cloud.header.stamp = points_time;
-            aligned_pub->publish(ros_cloud);
-        }
+        // Keep safety status ahead of odometry; both precede extra cloud work.
         if(status_pub->get_subscription_count()) {
             PublishScanMatchingStatus(msg->header, aligned, published_pose);
         }
         const auto status_at = std::chrono::steady_clock::now();
         PublishOdometry(msg->header.stamp, published_pose);
+        const auto odom_at = std::chrono::steady_clock::now();
+        try {
+            if(!correction_rejected_ && aligned_pub->get_subscription_count()) {
+                // Registration voxel centroids can average a 16 cm obstacle
+                // with ground. Preserve every return and the SAME accepted P.
+                auto obstacle_aligned = TransformObstacleCloud(cloud, published_pose);
+                sensor_msgs::msg::PointCloud2 ros_cloud;
+                pcl::toROSMsg(*obstacle_aligned, ros_cloud);
+                ros_cloud.header.frame_id = "map";
+                ros_cloud.header.stamp = points_time;
+                aligned_pub->publish(ros_cloud);
+            }
+        } catch(const std::exception& error) {
+            // Localization is already confirmed and published. Do not roll it
+            // back, retry its publication, or manufacture an empty cloud.
+            RCLCPP_ERROR_THROTTLE(get_logger(), *get_clock(), 5000,
+                "aligned_points output failed after accepted localization: %s", error.what());
+        }
 
         auto end = std::chrono::steady_clock::now();
         auto diff = end - start;
@@ -1101,10 +1163,11 @@ private:
             return std::chrono::duration<double, std::milli>(b - a).count();
         };
         RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 5000,
-            "scan profile points=%zu prep=%.1f match=%.1f gate=%.1f status=%.1f odom=%.1f total=%.1f ms",
+            "scan profile points=%zu prep=%.1f match=%.1f gate=%.1f status=%.1f odom=%.1f total=%.1f ms display=%.1f ms",
             filtered->size(), elapsed_ms(start, prepared_at),
             elapsed_ms(prepared_at, matched_at), elapsed_ms(matched_at, gated_at),
-            elapsed_ms(gated_at, status_at), elapsed_ms(status_at, end), ms);
+            elapsed_ms(gated_at, status_at), elapsed_ms(status_at, odom_at), ms,
+            elapsed_ms(odom_at, end));
 
         {
             std::lock_guard<std::mutex> lock(timer_data_mutex_);
@@ -1488,7 +1551,9 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::TimerBase::SharedPtr scan_timer_;
     sensor_msgs::msg::PointCloud2::SharedPtr pending_scan_;
-    double last_processed_scan_=0;
+    sensor_msgs::msg::PointCloud2::SharedPtr waiting_scan_;
+    std::int64_t last_received_scan_ns_=0;
+    std::int64_t last_processed_scan_ns_=0;
 
 private:
     bool enable_robot_odometry_prediction;

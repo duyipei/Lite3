@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guarded visual-map pose injection followed by NDT odometry confirmation."""
+"""Guarded visual or RViz initial pose followed by NDT odometry confirmation."""
 
 import math
 import time
@@ -32,6 +32,11 @@ def mean_angle(values):
 class VisualPoseInitializer(Node):
     def __init__(self):
         super().__init__("visual_pose_initializer")
+        self.declare_parameter("initialization_mode", "visual")
+        self.declare_parameter("manual_pose_topic", "/patrol/manual_initialpose_request")
+        self.initialization_mode = str(self.get_parameter("initialization_mode").value)
+        if self.initialization_mode not in ("visual", "manual"):
+            raise ValueError("initialization_mode must be visual or manual")
         self.declare_parameter("configured", False)
         self.declare_parameter("visual_pose_topic", "/visual_localization/pose")
         self.declare_parameter("visual_map_frame", "visual_map")
@@ -102,8 +107,10 @@ class VisualPoseInitializer(Node):
         )
         self.create_subscription(
             PoseWithCovarianceStamped,
-            self.get_parameter("visual_pose_topic").value,
-            self.visual_pose_callback,
+            self.get_parameter("manual_pose_topic" if self.initialization_mode == "manual"
+                               else "visual_pose_topic").value,
+            self.manual_pose_callback if self.initialization_mode == "manual"
+            else self.visual_pose_callback,
             10,
         )
         self.create_subscription(
@@ -112,13 +119,21 @@ class VisualPoseInitializer(Node):
         self.create_subscription(ScanMatchingStatus, "/status", self.status_callback, 20)
         self.create_subscription(Odometry, "/patrol/leg_odom_sampled", self.leg_callback, 5)
         self.create_subscription(Bool, "/patrol/armed", self.armed_callback, 10)
-        self.create_service(Trigger, "/patrol/request_visual_initialization", self.request_callback)
-        self.create_service(Trigger, "/patrol/reset_visual_initialization", self.reset_callback)
+        if self.initialization_mode == "visual":
+            self.create_service(Trigger, "/patrol/request_visual_initialization", self.request_callback)
+            self.create_service(Trigger, "/patrol/reset_visual_initialization", self.reset_callback)
         self.create_timer(0.2, self.timer_callback)
 
         self.samples = deque(maxlen=max(2, int(self.get_parameter("stable_samples").value)))
-        self.requested = bool(self.get_parameter("auto_initialize").value)
+        self.requested = (self.initialization_mode == "visual"
+                          and bool(self.get_parameter("auto_initialize").value))
         self.state = "COLLECTING_VISUAL_POSES" if self.requested else "IDLE"
+        if self.initialization_mode == "manual":
+            self.state = "WAITING_MANUAL_INITIALPOSE"
+        self.manual_seed_locked = False
+        self.last_manual_stamp = 0
+        self.last_armed_time = None
+        self.manual_quiet_since = None
         self.candidate = None
         self.candidate_time = 0.0
         self.last_visual_time = 0.0
@@ -145,7 +160,11 @@ class VisualPoseInitializer(Node):
         self.sample_covariance_xy = 0.0
         self.sample_covariance_yaw = 0.0
         self.set_ready(False)
-        if not self.get_parameter("configured").value:
+        if self.initialization_mode == "manual":
+            self.get_logger().warn(
+                "manual initialization ready; use RViz 2D Pose Estimate; NDT confirmation is required"
+            )
+        elif not self.get_parameter("configured").value:
             self.state = "BLOCKED:map_transform_not_configured"
             self.get_logger().error(
                 "visual initialization blocked: visual_map -> lidar map transform is not configured"
@@ -207,6 +226,10 @@ class VisualPoseInitializer(Node):
         self.get_logger().error("localization readiness revoked: " + reason)
 
     def request_callback(self, _request, response):
+        if self.initialization_mode == "manual":
+            response.success = False
+            response.message = "manual mode requires RViz 2D Pose Estimate"
+            return response
         if self.armed:
             response.success = False
             response.message = "DISARM before requesting visual initialization"
@@ -262,8 +285,106 @@ class VisualPoseInitializer(Node):
         )
 
     def armed_callback(self, message):
+        self.last_armed_time = self.now_monotonic()
         self.armed = bool(message.data)
         self.has_been_armed = self.has_been_armed or self.armed
+        if (self.initialization_mode == "manual" and self.armed
+                and self.candidate is not None and not self.state.startswith("READY")):
+            self.manual_seed_locked = True
+            self.reset("FAILED:armed_during_manual_initialization")
+
+    def manual_motion_reason(self, now):
+        """Allow only a fresh DISARMED gate, or the quiet pre-Nav2 bootstrap.
+
+        The normal launcher starts the gate after initialization. In that
+        phase require an observed one-second absence of all motion publishers;
+        absence of an armed message alone is never treated as DISARMED.
+        """
+        if self.armed or self.has_been_armed:
+            return "armed_or_session_already_used"
+        try:
+            if any(self.count_publishers(t) for t in ("/cmd_vel", "/patrol/cmd_vel_raw")):
+                self.manual_quiet_since = None
+                return "navigation_or_velocity_publisher_active"
+            gate_exists = any(self.count_publishers(t) for t in
+                              ("/patrol/armed", "/cmd_vel_corrected"))
+        except Exception:
+            self.manual_quiet_since = None
+            return "motion_graph_unavailable"
+        if gate_exists:
+            self.manual_quiet_since = None
+            if (self.last_armed_time is None or now-self.last_armed_time
+                    > float(self.get_parameter("sensor_max_age_s").value)):
+                return "disarmed_confirmation_missing_or_stale"
+        else:
+            if self.manual_quiet_since is None:
+                self.manual_quiet_since = now
+            if now-self.manual_quiet_since < 1.0:
+                return "waiting_for_quiet_motion_graph"
+        return None
+
+    def manual_pose_callback(self, message):
+        if self.initialization_mode != "manual":
+            return
+        now = self.now_monotonic()
+        reason = "initialization_already_completed" if (
+            self.manual_seed_locked or self.state.startswith("READY")) else self.manual_motion_reason(now)
+        if not reason and (message.header.frame_id != self.get_parameter("lidar_map_frame").value
+                           or not self.valid_pose(message)):
+            reason = "invalid_map_pose"
+        stamp = self.stamp_ns(message)
+        if not reason and (message.header.stamp.sec < 0
+                           or not 0 <= message.header.stamp.nanosec < 1000000000
+                           or stamp <= self.last_manual_stamp):
+            reason = "invalid_or_replayed_request_stamp"
+        p = message.pose.pose.position
+        if not reason and not (
+            float(self.get_parameter("map_min_x").value) <= p.x
+            <= float(self.get_parameter("map_max_x").value)
+            and float(self.get_parameter("map_min_y").value) <= p.y
+            <= float(self.get_parameter("map_max_y").value)):
+            reason = "pose_out_of_map"
+        covariance = list(message.pose.covariance)
+        if not reason and (len(covariance) != 36 or not all(math.isfinite(v) for v in covariance)
+                           or any(covariance[i] < 0 for i in (0, 7, 14, 21, 28, 35))):
+            reason = "invalid_covariance"
+        if not reason and (self.latest_leg_pose is None or self.last_leg_time <= 0
+                           or now-self.last_leg_time
+                           > float(self.get_parameter("sensor_max_age_s").value)):
+            reason = "leg_odometry_missing_or_stale"
+        if reason:
+            self.get_logger().warn("manual initial pose rejected: " + reason)
+            return
+
+        # RViz supplies a map-frame operator command, not a visual-map sensor
+        # measurement. Do not apply the visual/IMU registration offset again.
+        # VM and Jetson wall clocks may differ: stamp the new accepted command
+        # with Jetson ROS time, and keep the scan boundary in monotonic time.
+        initial = PoseWithCovarianceStamped()
+        initial.header.stamp = self.get_clock().now().to_msg()
+        initial.header.frame_id = self.get_parameter("lidar_map_frame").value
+        initial.pose.pose.position.x, initial.pose.pose.position.y = p.x, p.y
+        initial.pose.pose.position.z = p.z
+        q = message.pose.pose.orientation
+        norm = math.sqrt(q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w)
+        iq = initial.pose.pose.orientation
+        iq.x, iq.y, iq.z, iq.w = q.x/norm, q.y/norm, q.z/norm, q.w/norm
+        initial.pose.covariance = covariance
+        boundary = max(self.last_status_stamp, self.stamp_ns(self.latest_odom)
+                       if self.latest_odom is not None else 0, int(now*1e9))
+        self.reset("WAITING_MANUAL_INITIALPOSE")
+        self.last_manual_stamp = stamp
+        self.candidate = (p.x, p.y, p.z, yaw_from_quaternion(iq))
+        self.candidate_time = now
+        self.initialpose_stamp = boundary
+        try:
+            self.initialpose_publisher.publish(initial)
+        except Exception as error:
+            self.reset("FAILED:manual_initialpose_publish")
+            self.get_logger().error("manual initial pose publish failed: " + str(error))
+            return
+        self.set_state("WAITING_NDT:manual_x={:.3f},y={:.3f},yaw={:.3f}".format(
+            p.x, p.y, self.candidate[3]))
 
     def timing_fault(self, reason, age):
         """Before the first ARM only, hold readiness through a bounded load spike.
@@ -356,6 +477,8 @@ class VisualPoseInitializer(Node):
             self.confirm_ndt()
 
     def visual_pose_callback(self, message):
+        if self.initialization_mode != "visual":
+            return
         ready = self.state.startswith("READY")
         if not self.requested and not ready:
             return
@@ -654,6 +777,8 @@ class VisualPoseInitializer(Node):
                 "WAITING_NDT:delta={:.3f}m,{:.3f}rad".format(position_delta, yaw_delta)
             )
         if self.ndt_good_count >= int(self.get_parameter("ndt_confirmation_samples").value):
+            if self.initialization_mode == "manual":
+                self.manual_seed_locked = True
             self.stationary_guard.reset()
             if self.latest_leg_pose is not None:
                 self.stationary_guard.observe(current, self.latest_leg_pose)
@@ -664,12 +789,14 @@ class VisualPoseInitializer(Node):
             self.ready_visual_bad_count = 0
             self.set_ready(True)
             self.set_state(
-                "READY:visual_plus_ndt_confirmed_{:.3f}m_{:.3f}rad".format(
-                    position_delta, yaw_delta
+                "READY:{}_plus_ndt_confirmed_{:.3f}m_{:.3f}rad".format(
+                    self.initialization_mode, position_delta, yaw_delta
                 )
             )
 
     def timer_callback(self):
+        if self.initialization_mode == "manual" and not self.manual_seed_locked:
+            self.manual_motion_reason(self.now_monotonic())
         timing_pending = False
         if self.state.startswith("READY"):
             now = self.now_monotonic()
@@ -684,7 +811,7 @@ class VisualPoseInitializer(Node):
             ):
                 timing_pending = True
                 self.timing_fault("odometry_stale", now - self.last_odom_time)
-            elif bool(self.get_parameter("supervise_visual_after_ready").value) and now - self.last_visual_time > float(
+            elif self.initialization_mode == "visual" and bool(self.get_parameter("supervise_visual_after_ready").value) and now - self.last_visual_time > float(
                 self.get_parameter("ready_visual_max_age_s").value
             ):
                 self.revoke_ready("visual_pose_stale")

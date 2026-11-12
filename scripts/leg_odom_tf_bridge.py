@@ -22,7 +22,12 @@ class LegOdomTfBridge(Node):
         )
         self.last_message = time.monotonic()
         self.latest_message = None
+        # Both cursors identify raw sensor stamps, not the auxiliary graph stamp.
         self.last_published_stamp = None
+        self.last_sampled_stamp = None
+        # At most one (original graph stamp, copied message) for an aux retry.
+        self._pending_sampled = None
+        self._sampled_failed = False
         self.last_source_stamp = 0.0
         self._t22 = None
         self._t22_input = None
@@ -117,58 +122,85 @@ class LegOdomTfBridge(Node):
         # restamp that copy into graph time so its arrival can be supervised
         # independently without breaking NDT interpolation.
         source_stamp = (message.header.stamp.sec, message.header.stamp.nanosec)
-        if source_stamp == self.last_published_stamp:
+        if source_stamp == self.last_published_stamp and source_stamp == self.last_sampled_stamp:
             return
-        graph_stamp = self.get_clock().now().to_msg()
-        copy_begin_ns = time.monotonic_ns() if tracing else None
-        sampled = copy.deepcopy(message)
-        copy_end_ns = time.monotonic_ns() if tracing else None
-        sampled.header.stamp = graph_stamp
-        sampled_begin_ns = time.monotonic_ns() if tracing else None
+        sent_tf = source_stamp != self.last_published_stamp
+        if sent_tf:
+            tf_build_begin_ns = time.monotonic_ns() if tracing else None
+            pose = message.pose.pose
+            transform = TransformStamped()
+            transform.header.stamp = message.header.stamp
+            transform.header.frame_id = "robot_odom"
+            transform.child_frame_id = "leg_base_link"
+            transform.transform.translation.x = float(pose.position.x)
+            transform.transform.translation.y = float(pose.position.y)
+            transform.transform.translation.z = float(pose.position.z)
+            transform.transform.rotation = pose.orientation
+            t3c_ns = time.monotonic_ns() if tracing else None
+            try:
+                self.broadcaster.sendTransform(transform)
+            except Exception as error:
+                if tracing:
+                    probe.emit('leg_tx_error', stage='sendTransform',
+                               source_stamp_ns=source_stamp[0]*1000000000+source_stamp[1],
+                               t3a_ns=t3a_ns, t3c_ns=t3c_ns, t3d_ns=time.monotonic_ns(),
+                               error_type=type(error).__name__)
+                raise
+            t3d_ns = time.monotonic_ns() if tracing else None
+            # TF is already sent even if preparing/publishing the auxiliary
+            # message fails. A newer source supersedes any old auxiliary retry.
+            self.last_published_stamp = source_stamp
+            self._pending_sampled = None
+        elif tracing:
+            probe.count('sampled.retry')
+
+        copy_begin_ns = copy_end_ns = sampled_begin_ns = t3b_ns = None
+        stage = 'sampled_prepare'
         try:
+            if self._pending_sampled is None:
+                self._pending_sampled = (self.get_clock().now().to_msg(), None)
+            graph_stamp, sampled = self._pending_sampled
+            if sampled is None:
+                copy_begin_ns = time.monotonic_ns() if tracing else None
+                sampled = copy.deepcopy(message)
+                copy_end_ns = time.monotonic_ns() if tracing else None
+                sampled.header.stamp = graph_stamp
+                self._pending_sampled = (graph_stamp, sampled)
+            stage = 'sampled_publish'
+            sampled_begin_ns = time.monotonic_ns() if tracing else None
             self.sampled_publisher.publish(sampled)
+            t3b_ns = time.monotonic_ns() if tracing else None
+            self.last_sampled_stamp = source_stamp
+            self._pending_sampled = None
+            if self._sampled_failed:
+                self.get_logger().info('/patrol/leg_odom_sampled publication recovered')
+            self._sampled_failed = False
         except Exception as error:
+            if not self._sampled_failed:
+                self.get_logger().error('/patrol/leg_odom_sampled failed; retrying only fresh input: '+str(error))
+            self._sampled_failed = True
             if tracing:
-                probe.emit('leg_tx_error', stage='sampled_publish',
+                probe.emit('leg_tx_error', stage=stage,
                            source_stamp_ns=source_stamp[0]*1000000000+source_stamp[1],
-                           t3a_ns=t3a_ns, call_begin_ns=sampled_begin_ns,
+                           t3a_ns=t3a_ns, call_begin_ns=sampled_begin_ns or copy_begin_ns,
                            call_return_ns=time.monotonic_ns(), error_type=type(error).__name__)
-            raise
-        t3b_ns = time.monotonic_ns() if tracing else None
-        pose = message.pose.pose
-        transform = TransformStamped()
-        transform.header.stamp = message.header.stamp
-        transform.header.frame_id = "robot_odom"
-        transform.child_frame_id = "leg_base_link"
-        transform.transform.translation.x = float(pose.position.x)
-        transform.transform.translation.y = float(pose.position.y)
-        transform.transform.translation.z = float(pose.position.z)
-        transform.transform.rotation = pose.orientation
-        t3c_ns = time.monotonic_ns() if tracing else None
-        try:
-            self.broadcaster.sendTransform(transform)
-        except Exception as error:
-            if tracing:
-                probe.emit('leg_tx_error', stage='sendTransform',
-                           source_stamp_ns=source_stamp[0]*1000000000+source_stamp[1],
-                           t3a_ns=t3a_ns, t3c_ns=t3c_ns, t3d_ns=time.monotonic_ns(),
-                           error_type=type(error).__name__)
-            raise
-        t3d_ns = time.monotonic_ns() if tracing else None
-        self.last_published_stamp = source_stamp
-        if tracing:
-            source_ns = source_stamp[0]*1000000000+source_stamp[1]
-            previous = self._t22_input
-            matched = previous is not None and previous[0] == source_ns
-            probe.emit('leg_tx', source_stamp_ns=source_ns,
-                       t2_enter_ns=previous[1] if matched else None,
-                       t2_valid_ns=previous[2] if matched else None,
-                       cached_ns=previous[3] if matched else None,
-                       t3a_ns=t3a_ns, copy_begin_ns=copy_begin_ns, copy_end_ns=copy_end_ns,
-                       sampled_begin_ns=sampled_begin_ns, t3b_ns=t3b_ns,
-                       t3c_ns=t3c_ns, t3d_ns=t3d_ns)
+        finally:
+            if tracing and sent_tf:
+                source_ns = source_stamp[0]*1000000000+source_stamp[1]
+                previous = self._t22_input
+                matched = previous is not None and previous[0] == source_ns
+                probe.emit('leg_tx', source_stamp_ns=source_ns, publish_order='tf_first',
+                           t2_enter_ns=previous[1] if matched else None,
+                           t2_valid_ns=previous[2] if matched else None,
+                           cached_ns=previous[3] if matched else None,
+                           t3a_ns=t3a_ns, tf_build_begin_ns=tf_build_begin_ns,
+                           copy_begin_ns=copy_begin_ns, copy_end_ns=copy_end_ns,
+                           sampled_begin_ns=sampled_begin_ns, t3b_ns=t3b_ns,
+                           t3c_ns=t3c_ns, t3d_ns=t3d_ns)
 
     def check_freshness(self):
+        if self._sampled_failed:
+            self.get_logger().error('/patrol/leg_odom_sampled publication is failing; freshness is not refreshed')
         age = time.monotonic() - self.last_message
         if age > 0.5:
             self.get_logger().error(

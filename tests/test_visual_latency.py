@@ -35,7 +35,8 @@ class VisualLatencyTests(unittest.TestCase):
         exec(compile(ast.Module(body=functions+[cls], type_ignores=[]), str(path), 'exec'), scope)
         n = self.node = scope['VisualLocalizer']()
         self.params = dict(max_input_age_s=1.5, max_query_age_s=5.,
-                           startup_timeout_s=8., candidate_count=10,
+                           startup_timeout_s=8., startup_min_attempts=8,
+                           xfeat_candidates=2, candidate_count=10,
                            recovery_search_interval_s=5., startup_appearance_fallback=False,
                            ratio_test=.8, min_matches=18, min_inliers=15,
                            max_reprojection_error=4., pnp_candidate_count=4,
@@ -54,6 +55,8 @@ class VisualLatencyTests(unittest.TestCase):
         n.pose_publisher = NS(publish=lambda msg: self.poses.append(copy.deepcopy(msg)))
         n.visual_paused = False; n.latest_image = None; n.last_processed_stamp = None
         n.search_started = 0.; n.search_strategy = n.search_mode = 'global'
+        n.configured_search_strategy = 'global'; n.startup_attempts = 0
+        n.xfeat_matcher = NS(remember=lambda solutions: None, reset_search=lambda: None)
         n.confirmation_history = deque(maxlen=1)
         n.confirmation_source = None; n.last_candidate_time = 0.
         n.failed_searches = 0; n.last_recovery_search = 0.; n.metric_pose_seen = False

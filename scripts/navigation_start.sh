@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Indoor/outdoor visual-initial-pose + NDT-confirmed isolated Nav2 field launcher.
+# Visual or RViz manual initial pose + NDT-confirmed isolated Nav2 field launcher.
 # Run this script on the Ubuntu development VM, not on the Jetson.
 set -Eeuo pipefail
 
@@ -18,11 +18,16 @@ fi
 VISUAL_MAP_ID=${LITE3_VISUAL_MAP_ID:-$DEFAULT_VISUAL_MAP_ID}
 VISUAL_BACKEND=${LITE3_VISUAL_BACKEND:-orb}
 VISUAL_SEARCH_STRATEGY=${LITE3_VISUAL_SEARCH_STRATEGY:-startup_then_global}
+INITIALIZATION_MODE=${LITE3_INITIALIZATION_MODE:-visual}
+case "$ACTION" in
+  start-manual) INITIALIZATION_MODE=manual ;;
+  start-visual) INITIALIZATION_MODE=visual ;;
+esac
 VISUAL_WAIT_TIMEOUT_S=${LITE3_VISUAL_WAIT_TIMEOUT_S:-240}
 DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
 DYNAMIC_OBSTACLES_EXPLICIT=${LITE3_DYNAMIC_OBSTACLES:+1}
 GROUND_MODE=${LITE3_GROUND_MODE:-map}
-LOCALIZATION_RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-vendor}
+LOCALIZATION_RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-audited}
 OBSTACLE_BACKEND=${LITE3_OBSTACLE_BACKEND:-}
 USE_VENDOR_VOA=${LITE3_USE_VENDOR_VOA:-$DYNAMIC_OBSTACLES}
 USE_VENDOR_VOA_EXPLICIT=${LITE3_USE_VENDOR_VOA:+1}
@@ -76,6 +81,8 @@ usage() {
   $0 preflight [MAP_ID]
   $0 relocalize [MAP_ID]
   $0 start [MAP_ID]
+  $0 start-manual [MAP_ID]
+  $0 start-visual [MAP_ID]
   $0 arm [MAP_ID]
   $0 disarm [MAP_ID]
   $0 status [MAP_ID]
@@ -83,7 +90,7 @@ usage() {
 
 默认 MAP_ID：$DEFAULT_MAP_ID
 
-relocalize 仅测试视觉初始重定位和 NDT 连续确认，保持就绪 10 秒后
+relocalize 仅测试所选初始定位方式和 NDT 连续确认，保持就绪 10 秒后
 自动关闭本次定位节点；不启动 Nav2、目标桥或速度门。
 静止测试使用与正式导航相同的地图定位参数。
 
@@ -93,10 +100,13 @@ start 自动完成：部署脚本 -> Mid360/NDT -> 视觉关键帧检索
 -> 完整隔离 Nav2 -> DISARMED 速度门。脚本不会自动允许机器狗运动。
 
 视觉地图可通过 LITE3_VISUAL_MAP_ID 指定，默认：$VISUAL_MAP_ID
+start-manual 使用 RViz 2D Pose Estimate 手动初值，并保留 NDT 确认及全部运动安全门。
+start/start-visual 保留视觉初始化；也可用 LITE3_INITIALIZATION_MODE=manual|visual 选择。
 LITE3_VISUAL_BACKEND=orb（默认）或 xfeat_lighterglue；XFeat 首次使用需运行 tools/deploy_xfeat_runtime.sh。
 RViz 默认通过无线 SSH 转发地图、点云和目标，适用于 NAT 虚拟机。
 LITE3_RVIZ_SSH_BRIDGE=0 可恢复直接 DDS 显示。
 LITE3_DYNAMIC_OBSTACLES=1 启用实时全局绕行、等待和 VOA 近距离停车；需预先构建 VOA。
+LITE3_LOCALIZATION_RUNTIME=audited（默认）加载已校验的项目 NDT；vendor 回退原厂安装版。
 LITE3_OBSTACLE_BACKEND=factory_only（第一阶段默认）仅使用原厂 VOA 障碍感知；
   private_combined 保留私有 VOA 速度修正、Mid-360 与相机联合代价地图。
   未设置时沿用旧行为：LITE3_DYNAMIC_OBSTACLES=1 等价 private_combined。
@@ -104,6 +114,11 @@ EOF
 }
 
 validate_inputs() {
+  [[ "$INITIALIZATION_MODE" == visual || "$INITIALIZATION_MODE" == manual ]] || \
+    die 'LITE3_INITIALIZATION_MODE must be visual or manual'
+  if [[ "$INITIALIZATION_MODE" == manual && ${LITE3_RVIZ_ENABLED:-1} == 0 ]]; then
+    die '手动初始定位需要 RViz；不能设置 LITE3_RVIZ_ENABLED=0'
+  fi
   [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || die 'LITE3_DYNAMIC_OBSTACLES must be 0 or 1'
   [[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || die 'LITE3_GROUND_MODE must be map or local'
   [[ "$LOCALIZATION_RUNTIME" == vendor || "$LOCALIZATION_RUNTIME" == audited ]] || die 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited'
@@ -173,7 +188,7 @@ deploy_runtime() {
   [[ -r "$local_map_dir/nav2_safe.yaml" ]] || \
     die "本地缺少导航参数: $local_map_dir/nav2_safe.yaml"
   [[ -r "$local_map_dir/visual_initialization.yaml" ]] || \
-    die "本地缺少视觉初始化参数: $local_map_dir/visual_initialization.yaml"
+    die "本地缺少初始化守卫参数: $local_map_dir/visual_initialization.yaml"
   local summary_file
   local -a map_summaries=()
   for summary_file in traversability_summary.json patrol_map_summary.json; do
@@ -216,6 +231,7 @@ deploy_runtime() {
     "$PROJECT_DIR/navigation/start_map_display_only.sh" \
     "$PROJECT_DIR/navigation/start_visual_localizer.sh" \
     "$PROJECT_DIR/navigation/start_visual_initialization.sh" \
+    "$PROJECT_DIR/navigation/start_manual_initialization.sh" \
     "$PROJECT_DIR/navigation/start_nav_isolated.sh" \
     "$PROJECT_DIR/navigation/start_local_ground.sh" \
     "$PROJECT_DIR/navigation/start_gate_disarmed.sh" \
@@ -257,6 +273,7 @@ chmod 0755 \
   "$PROJECT/navigation/start_map_display_only.sh" \
   "$PROJECT/navigation/start_visual_localizer.sh" \
   "$PROJECT/navigation/start_visual_initialization.sh" \
+  "$PROJECT/navigation/start_manual_initialization.sh" \
   "$PROJECT/navigation/start_nav_isolated.sh" \
   "$PROJECT/navigation/start_gate_disarmed.sh" \
   "$PROJECT/navigation/start_factory_voa.sh"
@@ -266,13 +283,14 @@ REMOTE
 
 static_preflight() {
   title "启动前检查"
-  "${SSH[@]}" "$(factory_env_prefix) bash -s -- '$MAP_ID' '$VISUAL_MAP_ID' '$USE_VENDOR_VOA' '$DYNAMIC_OBSTACLES' '$OBSTACLE_BACKEND'" <<'REMOTE'
+  "${SSH[@]}" "$(factory_env_prefix) bash -s -- '$MAP_ID' '$VISUAL_MAP_ID' '$USE_VENDOR_VOA' '$DYNAMIC_OBSTACLES' '$OBSTACLE_BACKEND' '$INITIALIZATION_MODE'" <<'REMOTE'
 set -Eeuo pipefail
 MAP_ID=$1
 VISUAL_MAP_ID=$2
 USE_VOA=$3
 DYNAMIC_OBSTACLES=$4
 BACKEND=$5
+INITIALIZATION_MODE=$6
 PROJECT=/home/ysc/lite3_patrol_project
 MAP_DIR=$PROJECT/navigation/$MAP_ID
 fail=0
@@ -348,12 +366,14 @@ then
 else
   bad "nav2_safe.yaml 缺少必要的速度隔离或足迹避障配置"
 fi
-if [[ -r "$PROJECT/results/visual_maps/$VISUAL_MAP_ID/visual_map.db" ]]; then
+if [[ "$INITIALIZATION_MODE" == manual ]]; then
+  pass '手动初始定位不依赖视觉数据库或 XFeat 模型'
+elif [[ -r "$PROJECT/results/visual_maps/$VISUAL_MAP_ID/visual_map.db" ]]; then
   pass "视觉地图数据库可读: $VISUAL_MAP_ID/visual_map.db"
 else
   bad "缺少视觉地图数据库: $PROJECT/results/visual_maps/$VISUAL_MAP_ID/visual_map.db"
 fi
-if python3 - "$MAP_DIR/visual_initialization.yaml" <<'PY'
+if python3 - "$MAP_DIR/visual_initialization.yaml" "$INITIALIZATION_MODE" <<'PY'
 import sys
 import json
 import math
@@ -362,10 +382,11 @@ import yaml
 
 config = yaml.safe_load(open(sys.argv[1], "r"))
 params = config["visual_pose_initializer"]["ros__parameters"]
-assert params["configured"] is True
-assert params["visual_map_frame"] == "visual_map"
+if sys.argv[2] == 'visual':
+    assert params["configured"] is True
+    assert params["visual_map_frame"] == "visual_map"
 assert params["lidar_map_frame"] == "map"
-if Path(sys.argv[1]).parent.name == 'indoor_fusion_20260912_001_area_review':
+if sys.argv[2] == 'visual' and Path(sys.argv[1]).parent.name == 'indoor_fusion_20260912_001_area_review':
     binary = Path('/home/ysc/lite_cog_ros2/nav/install/hdl_localization/lib/hdl_localization/hdl_localization_composition')
     assert b'globalmap_downsample_resolution' in binary.read_bytes(), \
         'Update/rebuild the map server patch before using independent map downsampling'
@@ -382,11 +403,13 @@ if Path(sys.argv[1]).parent.name == 'indoor_fusion_20260912_001_area_review':
     assert params['ndt_seed_reference_rpy'] == [0., -pitch, 0.]
 PY
 then
-  pass "视觉到雷达地图变换已配置"
+  pass "初始定位配置有效（$INITIALIZATION_MODE）"
 else
   bad "visual_initialization.yaml 未正确配置"
 fi
-if [[ $(systemctl is-active realsense_ros2.service 2>/dev/null || true) == active ]]; then
+if [[ "$INITIALIZATION_MODE" == manual && "$USE_VOA" != 1 && "$BACKEND" != factory_only ]]; then
+  pass '手动定位不需要 RGB 相机；所选避障后端仍独立检查传感器'
+elif [[ $(systemctl is-active realsense_ros2.service 2>/dev/null || true) == active ]]; then
   pass "RealSense 服务在线"
 else
   bad "realsense_ros2.service 未运行"
@@ -400,7 +423,7 @@ else
 fi
 
 conflicts=$(pgrep -af \
-  'start_localization_only|start_map_display_only|start_visual_localizer|start_visual_initialization|start_nav_isolated|start_gate_disarmed|start_factory_voa|patrol_navigation.launch.py|hdl_localization|livox_ros_driver2|manual_ndt_guard|rgbd_visual_localizer|visual_pose_initializer|velocity_gate|voa_composition' \
+  'start_localization_only|start_map_display_only|start_visual_localizer|start_visual_initialization|start_manual_initialization|start_nav_isolated|start_gate_disarmed|start_factory_voa|patrol_navigation.launch.py|hdl_localization|livox_ros_driver2|manual_ndt_guard|rgbd_visual_localizer|visual_pose_initializer|velocity_gate|voa_composition' \
   || true)
 if [[ -n "$conflicts" ]]; then
   bad "发现上次遗留的定位/导航进程；先执行 navigation_start.sh stop"
@@ -424,12 +447,14 @@ fi
 # messages are arriving.  The online visual localizer only consumes RGB, so
 # gate startup on one deserialized color frame instead of unnecessarily
 # requiring the depth stream as well.
+if [[ "$INITIALIZATION_MODE" == visual ]]; then
 camera_sample=$(timeout 20s ros2 topic echo /camera/color/image_raw \
   sensor_msgs/msg/Image --no-arr 2>/dev/null | head -n 1 || true)
 if [[ "$camera_sample" == "header:" ]]; then
   pass "/camera/color/image_raw 有实时帧"
 else
   bad "/camera/color/image_raw 无实时帧；RealSense 服务可能假在线"
+fi
 fi
 for topic in /cmd_vel /cmd_vel_corrected; do
   count=$(timeout 8s ros2 topic info "$topic" 2>/dev/null | awk '/Publisher count:/ {print $3}' || true)
@@ -532,7 +557,7 @@ wait_visual_ready() {
   for attempt in 1 2; do
     result=0
     "${SSH[@]}" \
-    "source '$REMOTE_PROJECT/navigation/patrol_env.sh' >/dev/null 2>&1; python3 - '$VISUAL_WAIT_TIMEOUT_S' '$stable_seconds' '$phase'" <<'PY' || result=$?
+    "source '$REMOTE_PROJECT/navigation/patrol_env.sh' >/dev/null 2>&1; python3 - '$VISUAL_WAIT_TIMEOUT_S' '$stable_seconds' '$phase' '$INITIALIZATION_MODE'" <<'PY' || result=$?
 import math
 import sys
 import time
@@ -546,6 +571,7 @@ from std_msgs.msg import Bool, String
 timeout_s = float(sys.argv[1])
 stable_seconds = float(sys.argv[2])
 phase = sys.argv[3]
+initialization_mode = sys.argv[4] if len(sys.argv) > 4 else 'visual'
 rclpy.init()
 node = Node("navigation_visual_initialization_monitor")
 latest = {"visual": "WAITING", "guard": "WAITING", "ready": False, "odom": None}
@@ -578,7 +604,10 @@ def odom_callback(message):
     )
     latest["odom"] = (pose.position.x, pose.position.y, math.degrees(yaw))
 
-node.create_subscription(String, "/visual_localization/state", state_callback("visual"), 10)
+if initialization_mode == 'visual':
+    node.create_subscription(String, "/visual_localization/state", state_callback("visual"), 10)
+else:
+    latest["visual"] = "MANUAL_RVIZ_INPUT"
 node.create_subscription(String, "/patrol/visual_init_state", state_callback("guard"), 10)
 node.create_subscription(
     Bool,
@@ -600,7 +629,8 @@ while rclpy.ok() and time.monotonic() - started < timeout_s:
         if now - ready_since >= stable_seconds:
             print("[PASS] " + (
                 "完整 Nav2 负载下 NDT + 里程计持续就绪 {:.0f} 秒".format(stable_seconds)
-                if phase == "tracking" else "视觉粗定位已由 NDT 连续确认"
+                if phase == "tracking" else "{}初值已由 NDT 连续确认".format(
+                    "手动" if initialization_mode == 'manual' else "视觉")
             ), flush=True)
             if latest["odom"] is not None:
                 print(
@@ -894,7 +924,7 @@ def boolean(value):
     return "true" if value else "false"
 
 print("[STATUS] localization_ready=" + boolean(state["localization_ready"]))
-print("[STATUS] visual_init=" + str(state["visual_state"] or "UNKNOWN"))
+print("[STATUS] localization_init=" + str(state["visual_state"] or "UNKNOWN"))
 print("[STATUS] goal_bridge_ready=" + boolean(state["bridge_ready"]))
 print("[STATUS] goal_active=" + boolean(state["goal_active"]))
 print("[STATUS] goal_pending=" + boolean(state["goal_pending"]))
@@ -930,10 +960,12 @@ status_log_fallback() {
 
   echo "[FALLBACK] DDS 实时订阅不可用，显示日志中的最近状态："
   echo "[FALLBACK] 日志目录=$status_log_dir"
+  local initializer_log=$status_log_dir/visual_initializer.log
+  [[ ! -r "$status_log_dir/manual_initializer.log" ]] || initializer_log=$status_log_dir/manual_initializer.log
   local line_value
-  line_value=$(grep -Ei 'READY:|FAILED:|BLOCKED:|WAITING_NDT:|COLLECTING:' \
-    "$status_log_dir/visual_initializer.log" 2>/dev/null | tail -n 1 || true)
-  echo "[FALLBACK] 视觉初始化=${line_value:-NO_LOG_ENTRY}"
+  line_value=$(grep -Ei 'READY:|FAILED:|BLOCKED:|WAITING_NDT:|COLLECTING:|manual initial' \
+    "$initializer_log" 2>/dev/null | tail -n 1 || true)
+  echo "[FALLBACK] 初始定位=${line_value:-NO_LOG_ENTRY}"
   line_value=$(grep -Ei 'action server|accepted bridged goal|rejected|result|cancel' \
     "$status_log_dir/goal_bridge.log" 2>/dev/null | tail -n 1 || true)
   echo "[FALLBACK] 目标桥=${line_value:-NO_LOG_ENTRY}"
@@ -987,6 +1019,7 @@ patterns=(
   '/scripts/leg_odom_tf_bridge.py'
   '/scripts/voa_costmap_bridge.py'
   '/scripts/goal_pose_bridge.py'
+  '/navigation/start_manual_initialization.sh'
   '/navigation/start_visual_initialization.sh'
   '/lite3_patrol_nav/visual_pose_initializer'
   '/navigation/start_visual_localizer.sh'
@@ -1142,6 +1175,29 @@ start_rviz() {
   sed -i \
     's#Value: /goal_pose$#Value: /patrol/goal_request#' \
     "$local_rviz_config"
+  local -a rviz_initialpose_args=()
+  if [[ "$INITIALIZATION_MODE" == manual ]]; then
+    python3 - "$local_rviz_config" <<'PY_MANUAL_RVIZ'
+import sys
+from pathlib import Path
+import yaml
+
+path = Path(sys.argv[1])
+config = yaml.safe_load(path.read_text())
+tools = config['Visualization Manager']['Tools']
+matches = [tool for tool in tools if tool.get('Class') == 'rviz_default_plugins/SetInitialPose']
+if not matches:
+    matches = [{'Class': 'rviz_default_plugins/SetInitialPose'}]
+    tools.extend(matches)
+for tool in matches:
+    tool['Topic'] = {
+        'Depth': 1, 'Durability Policy': 'Volatile', 'History Policy': 'Keep Last',
+        'Reliability Policy': 'Reliable', 'Value': '/patrol/manual_initialpose_request',
+    }
+path.write_text(yaml.safe_dump(config, sort_keys=False))
+PY_MANUAL_RVIZ
+    rviz_initialpose_args=(--allow-manual-initialpose)
+  fi
   if [[ "$RVIZ_SSH_BRIDGE" == 1 ]]; then
     (
       set +u
@@ -1149,7 +1205,7 @@ start_rviz() {
       set -u
       exec env RMW_IMPLEMENTATION=rmw_cyclonedds_cpp ROS_LOCALHOST_ONLY=1 \
         python3 "$SCRIPT_DIR/rviz_ssh_bridge.py" --robot "$ROBOT" --key "$SSH_KEY" \
-          --parent-pid "$$"
+          --parent-pid "$$" "${rviz_initialpose_args[@]}"
     ) >"$LOG_DIR/rviz_ssh_bridge.log" 2>&1 &
     RVIZ_SSH_BRIDGE_PID=$!
     sleep 1
@@ -1233,6 +1289,31 @@ REMOTE
   echo '[PASS] 初始视觉定位进程已退出，释放模型与特征缓存；NDT 和里程计继续定位'
 }
 
+start_initialization_display() {
+  if [[ ${LITE3_RVIZ_ENABLED:-1} == 0 ]]; then
+    echo '[INFO] 无 RViz 模式：直接使用 Nav2 地图服务，跳过临时显示服务'
+    return
+  fi
+  title "启动临时地图显示与 RViz"
+  "${SSH_BG[@]}" \
+    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' bash '$REMOTE_PROJECT/navigation/start_map_display_only.sh'" \
+    >"$LOG_DIR/map_display.log" 2>&1 &
+  MAP_DISPLAY_SSH_PID=$!
+  sleep 2
+  if ! kill -0 "$MAP_DISPLAY_SSH_PID" 2>/dev/null || ! wait_map_display; then
+    show_failure_logs
+    die "临时地图显示启动失败"
+  fi
+  start_rviz
+  if [[ -n "$RVIZ_SSH_PID" ]]; then
+    sleep 2
+    if ! kill -0 "$RVIZ_SSH_PID" 2>/dev/null; then
+      show_failure_logs
+      die "本地 RViz 启动失败"
+    fi
+  fi
+}
+
 start_session() {
   local mode=${1:-navigation}
   # The initializer has already confirmed accepted scans. Observe its first
@@ -1245,6 +1326,7 @@ start_session() {
   fi
   validate_inputs
   mkdir -p "$LOG_DIR"
+  printf '%s\n' "$INITIALIZATION_MODE" >"$LOG_DIR/initialization_mode.txt"
   deploy_runtime
   static_preflight
   SESSION_ACTIVE=1
@@ -1260,6 +1342,25 @@ start_session() {
     die "定位链路启动失败"
   fi
 
+  if [[ "$INITIALIZATION_MODE" == manual ]]; then
+    title "启动 RViz 手动初始化守卫"
+    "${SSH_BG[@]}" \
+      "exec env LITE3_PATROL_MAP_ID='$MAP_ID' bash '$REMOTE_PROJECT/navigation/start_manual_initialization.sh'" \
+      >"$LOG_DIR/manual_initializer.log" 2>&1 &
+    VISUAL_INITIALIZER_SSH_PID=$!
+    if ! wait_visual_node /visual_pose_initializer; then
+      show_failure_logs
+      die "手动初始化守卫未启动"
+    fi
+    start_initialization_display
+    title "等待 RViz 手动初值与 NDT 确认"
+    echo '[INFO] 保持机器狗静止且不 ARM；在 RViz 使用 2D Pose Estimate，拖出位置和朝向。'
+    echo '[INFO] 初值只送入初始化守卫；NDT 确认和后续安全检查通过后才启动完整导航。'
+    if ! wait_visual_ready "$initial_stable_seconds"; then
+      show_failure_logs
+      die "手动初始定位未通过；机器狗保持静止，不要发送导航目标"
+    fi
+  else
   title "启动视觉关键帧检索与初始化守卫"
   echo "[INFO] 视觉初始化期间请保持机器狗静止，并保证前置相机视野无遮挡。"
   "${SSH_BG[@]}" \
@@ -1285,41 +1386,22 @@ start_session() {
     show_failure_logs
     die "视觉初始重定位未通过；机器狗保持静止，不要发送导航目标"
   fi
+  fi
 
   if [[ "$mode" == relocalize ]]; then
     title "RELOCALIZATION PASSED（初始重定位测试通过）"
     echo "地图：$MAP_ID；视觉地图：$VISUAL_MAP_ID"
-    echo "视觉粗定位已由 NDT 确认，且连续保持就绪 10 秒。"
+    echo "$INITIALIZATION_MODE 初值已由 NDT 确认，且连续保持就绪 10 秒。"
     echo "日志：$LOG_DIR"
     return 0
   fi
 
-  if [[ "$DYNAMIC_OBSTACLES" == 1 ]]; then
+  if [[ "$INITIALIZATION_MODE" == visual && "$DYNAMIC_OBSTACLES" == 1 ]]; then
     stop_visual_frontend_after_initialization
   fi
 
-  if [[ ${LITE3_RVIZ_ENABLED:-1} != 0 ]]; then
-  title "启动临时地图显示与 RViz"
-  "${SSH_BG[@]}" \
-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' bash '$REMOTE_PROJECT/navigation/start_map_display_only.sh'" \
-    >"$LOG_DIR/map_display.log" 2>&1 &
-  MAP_DISPLAY_SSH_PID=$!
-  sleep 2
-  if ! kill -0 "$MAP_DISPLAY_SSH_PID" 2>/dev/null || ! wait_map_display; then
-    show_failure_logs
-    die "临时地图显示启动失败"
-  fi
-
-  start_rviz
-  if [[ -n "$RVIZ_SSH_PID" ]]; then
-    sleep 2
-    if ! kill -0 "$RVIZ_SSH_PID" 2>/dev/null; then
-      show_failure_logs
-      die "本地 RViz 启动失败"
-    fi
-  fi
-  else
-    echo '[INFO] 无 RViz 模式：直接使用 Nav2 地图服务，跳过临时显示服务'
+  if [[ "$INITIALIZATION_MODE" == visual ]]; then
+    start_initialization_display
   fi
 
   title "切换到完整隔离 Nav2"
@@ -1374,7 +1456,7 @@ start_session() {
   cat <<EOF
 雷达地图：$MAP_ID
 视觉地图：$VISUAL_MAP_ID
-初始定位：视觉粗定位已由 NDT 确认
+初始定位：$INITIALIZATION_MODE 初值已由 NDT 确认
 日志：$LOG_DIR
 
 目标操作：
@@ -1382,7 +1464,7 @@ start_session() {
 2. 在 RViz 点击 2D Goal Pose，选择白色自由区内距当前位置 1~2 米的目标；
 3. 确认预览路径正确，手持遥控器并在本终端输入一次 ARM；
 4. 到达后终端会输出 [NAV DONE]；机器狗保持 ARMED 零速待命，直接点击下一个目标；
-5. 结束测试输入 DISARM；故障后先 STATUS 检查。定位 FAILED 需 QUIT 后重新 start 完成视觉初始化；CLEAR 只清速度门故障。
+5. 结束测试输入 DISARM；故障后先 STATUS 检查。定位 FAILED 需 QUIT 后按原模式重新启动并完成初始化；CLEAR 只清速度门故障。
 
 控制命令：STATUS / CLEAR / ARM / DISARM / CANCEL / QUIT
 EOF
@@ -1471,7 +1553,7 @@ case "$ACTION" in
     static_preflight
     ;;
   relocalize) start_session relocalize ;;
-  start) start_session ;;
+  start|start-manual|start-visual) start_session ;;
   arm) remote_arm ;;
   disarm) remote_disarm ;;
   status) remote_status ;;

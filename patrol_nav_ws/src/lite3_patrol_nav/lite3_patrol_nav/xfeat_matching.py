@@ -14,6 +14,9 @@ from lite3_patrol_nav.visual_matching import solve_candidate
 class CandidateScheduler:
     """Stable round-robin coverage with one preferred reference after a success."""
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.pending = []
         self.preferred = None
         self.misses = 0
@@ -105,6 +108,9 @@ class XFeatMatcher:
 
     def remember(self, solutions):
         self.scheduler.remember(solutions)
+
+    def reset_search(self):
+        self.scheduler.reset()
 
     def match(self, frame, query, k, min_matches, min_inliers, max_error):
         reference = self.references[int(frame['id'])]

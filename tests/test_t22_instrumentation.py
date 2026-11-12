@@ -108,13 +108,14 @@ class LegInstrumentationTests(unittest.TestCase):
 
     def assert_equivalent(self, nodes):
         first, second = nodes
-        for attr in ('calls', 'samples', 'transforms', 'last_source_stamp', 'last_published_stamp',
+        for attr in ('samples', 'transforms', 'last_source_stamp', 'last_published_stamp',
                      'last_message', 'latest_message', 'timers'):
             self.assertEqual(getattr(first, attr), getattr(second, attr), attr)
+        self.assertCountEqual(first.calls, second.calls)
         self.assertEqual(first.subscription_args[-1], second.subscription_args[-1])
         self.assertEqual(first.publisher_args, second.publisher_args)
 
-    def test_valid_input_headers_call_order_and_duplicate_publish_unchanged(self):
+    def test_valid_input_headers_tf_first_order_and_duplicate_publish(self):
         nodes = self.nodes()
         for node in nodes:
             source = odometry()
@@ -125,10 +126,11 @@ class LegInstrumentationTests(unittest.TestCase):
             self.assertEqual(node.transforms[0].header.stamp, source.header.stamp)
             self.assertEqual(node.samples[0].header.stamp.sec, 1793426540)
         self.assert_equivalent(nodes)
-        self.assertEqual(nodes[1].calls, ['sampled_publish','sendTransform'])
+        self.assertEqual(nodes[1].calls, ['sendTransform','sampled_publish'])
         row = next(r for r in nodes[1]._t22.rows if r['kind']=='leg_tx')
         times = [row[k] for k in ('t2_enter_ns','t2_valid_ns','cached_ns','t3a_ns',
-                 'copy_begin_ns','copy_end_ns','sampled_begin_ns','t3b_ns','t3c_ns','t3d_ns')]
+                 'tf_build_begin_ns','t3c_ns','t3d_ns','copy_begin_ns','copy_end_ns',
+                 'sampled_begin_ns','t3b_ns')]
         self.assertEqual(times, sorted(times))
 
     def test_disabled_diagnostics_preserve_business_behavior(self):
@@ -173,19 +175,24 @@ class LegInstrumentationTests(unittest.TestCase):
             with self.assertRaises(RuntimeError) as caught: node.publish_latest()
             self.assertIs(caught.exception, failure)
             self.assertIsNone(node.last_published_stamp)
-        self.assert_equivalent(nodes)
+        self.assertEqual(nodes[0].calls, ['sampled_publish','sendTransform'])
+        self.assertEqual(nodes[1].calls, ['sendTransform'])
+        self.assertFalse(nodes[1].samples)
         self.assertEqual(nodes[1]._t22.rows[-1]['error_type'], 'RuntimeError')
 
-    def test_sampled_publish_exception_prevents_tf_in_both_versions(self):
+    def test_sampled_exception_keeps_sent_tf_and_does_not_stop_timer(self):
         nodes = self.nodes()
         failure = ValueError('original auxiliary publisher exception')
         for node in nodes:
             node.callback(odometry())
             node.sample_error = failure
-            with self.assertRaises(ValueError) as caught: node.publish_latest()
-            self.assertIs(caught.exception, failure)
-        self.assert_equivalent(nodes)
-        self.assertFalse(nodes[1].transforms)
+        with self.assertRaises(ValueError) as caught: nodes[0].publish_latest()
+        self.assertIs(caught.exception, failure)
+        nodes[1].publish_latest()
+        self.assertEqual(len(nodes[1].transforms), 1)
+        self.assertIsNotNone(nodes[1].last_published_stamp)
+        self.assertIsNone(nodes[1].last_sampled_stamp)
+        self.assertTrue(any(r['kind']=='leg_tx_error' for r in nodes[1]._t22.rows))
 
     def test_timer_periods_qos_and_spin_configuration_are_unchanged(self):
         nodes = self.nodes()

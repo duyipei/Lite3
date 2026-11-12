@@ -68,6 +68,7 @@ class VisualLocalizer(Node):
         self.declare_parameter("search_strategy", "startup_then_global")
         self.declare_parameter("startup_keyframe_count", 6)
         self.declare_parameter("startup_timeout_s", 8.0)
+        self.declare_parameter("startup_min_attempts", 8)
         self.declare_parameter("confirmation_samples", 3)
         self.declare_parameter("confirmation_max_position_m", 0.50)
         self.declare_parameter("confirmation_max_yaw_rad", 0.35)
@@ -135,7 +136,7 @@ class VisualLocalizer(Node):
             frame for frame in self.keyframes if int(frame["id"]) in startup_ids
         ]
         if not self.startup_keyframes:
-            self.startup_keyframes = self.keyframes[:1]
+            raise RuntimeError("no configured startup keyframes exist in the visual database")
         startup_pose = metadata.get("startup_pose_map_base")
         if startup_pose is None:
             fallback = self.startup_keyframes[0]["map_camera"] @ np.linalg.inv(
@@ -157,9 +158,11 @@ class VisualLocalizer(Node):
         strategy = str(self.get_parameter("search_strategy").value).strip().lower()
         if strategy not in ("startup_then_global", "startup_only", "global"):
             raise RuntimeError("invalid search_strategy: {}".format(strategy))
+        self.configured_search_strategy = strategy
         self.search_strategy = strategy
         self.search_mode = "global" if strategy == "global" else "startup"
         self.search_started = 0.0
+        self.startup_attempts = 0
         self.confirmation_history = deque(
             maxlen=max(1, int(self.get_parameter("confirmation_samples").value))
         )
@@ -174,8 +177,6 @@ class VisualLocalizer(Node):
                 int(self.get_parameter("xfeat_top_k").value))
             self.xfeat_matcher.prepare(self.keyframes)
             self.xfeat_matcher.warmup()
-            self.search_mode = "global"
-            self.search_strategy = "global"
         # Both backends only provide the initial pose. Keep expensive ORB/
         # LoFTR inference off the navigation workload once NDT confirms READY.
         ready_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.RELIABLE,
@@ -242,7 +243,15 @@ class VisualLocalizer(Node):
         self.visual_paused = False
         self.localization_ready = False
         self.confirmation_history.clear()
+        self.confirmation_source = None
         self.search_started = 0.0
+        self.startup_attempts = 0
+        self.search_strategy = self.configured_search_strategy
+        self.search_mode = "global" if self.search_strategy == "global" else "startup"
+        self.failed_searches = 0
+        self.last_recovery_search = 0.0
+        if self.xfeat_matcher is not None:
+            self.xfeat_matcher.reset_search()
         self.latest_image = None
         self.last_processed_stamp = None
         self.metric_pose_seen = False
@@ -252,8 +261,11 @@ class VisualLocalizer(Node):
     def xfeat_solutions(self, color, appearance_ranked):
         query = self.xfeat_matcher.query(color)
         solutions, details = [], []
+        allowed_ids = {int(frame["id"]) for frame in (
+            self.startup_keyframes if self.search_mode == "startup" else self.keyframes
+        )}
         frames = self.xfeat_matcher.select_candidates(
-            [frame for _, frame in appearance_ranked],
+            [frame for _, frame in appearance_ranked if int(frame["id"]) in allowed_ids],
             int(self.get_parameter("xfeat_candidates").value))
         for frame in frames:
             result, detail = self.xfeat_matcher.match(
@@ -268,7 +280,6 @@ class VisualLocalizer(Node):
                     inliers=result["inliers"], reprojection=result["reprojection"],
                     pose=pose, source="xfeat_lighterglue_pnp"))
         self.last_learned_detail = "|".join(details)
-        self.xfeat_matcher.remember(solutions)
         return solutions
 
     def publish_state(self, value):
@@ -409,9 +420,21 @@ class VisualLocalizer(Node):
                 and self.search_mode == "startup"
                 and now - self.search_started
                 >= float(self.get_parameter("startup_timeout_s").value)
+                and (self.backend != "xfeat_lighterglue" or self.startup_attempts >= max(
+                    int(self.get_parameter("startup_min_attempts").value),
+                    math.ceil(len(self.startup_keyframes) / max(
+                        1, int(self.get_parameter("xfeat_candidates").value)))
+                    + max(1, int(self.get_parameter("confirmation_samples").value)) - 1,
+                ))
             ):
                 self.search_mode = "global"
                 self.confirmation_history.clear()
+                self.confirmation_source = None
+                self.last_candidate_time = 0.0
+                self.failed_searches = 0
+                self.last_recovery_search = 0.0
+                if self.xfeat_matcher is not None:
+                    self.xfeat_matcher.reset_search()
                 self.get_logger().warn(
                     "no confirmed start-area match; switching to global keyframe search"
                 )
@@ -500,6 +523,13 @@ class VisualLocalizer(Node):
             best_failed_keyframe = -1
             if self.backend == "xfeat_lighterglue":
                 solutions = self.xfeat_solutions(color, appearance_ranked)
+                # Count real matching attempts on fresh images, not camera
+                # waiting, duplicate stamps, exceptions or stale inference.
+                attempt_age = (self.get_clock().now().nanoseconds / 1e9
+                               - float(stamp[0]) - stamp[1] / 1e9)
+                if (self.search_mode == "startup" and -0.5 <= attempt_age
+                        <= float(self.get_parameter("max_query_age_s").value)):
+                    self.startup_attempts += 1
             elif appearance_coarse:
                 solutions.append({
                     "keyframe": appearance_ranked[0][1]["id"],
@@ -632,11 +662,6 @@ class VisualLocalizer(Node):
                 )
                 return
 
-            # Once a start-area solution is temporally confirmed, keep the
-            # restricted pool.  This prevents a repetitive corridor farther
-            # along the route from stealing the initial-pose estimate.
-            if self.search_mode == "startup" and best["source"] != "start_appearance":
-                self.search_strategy = "startup_only"
             result = PoseWithCovarianceStamped()
             result.header.stamp = message.header.stamp
             result.header.frame_id = self.get_parameter("map_frame").value
@@ -655,6 +680,14 @@ class VisualLocalizer(Node):
             result.pose.covariance[14] = 0.09
             result.pose.covariance[35] = sigma_yaw*sigma_yaw
             self.pose_publisher.publish(result)
+            # Lock the restricted pool only after the confirmed pose was
+            # published; a failed publish must not suppress global fallback.
+            if self.search_mode == "startup" and best["source"] != "start_appearance":
+                self.search_strategy = "startup_only"
+            if self.backend == "xfeat_lighterglue":
+                # Only a published pose that passed all checks can promote a
+                # preferred reference; raw PnP candidates never change it.
+                self.xfeat_matcher.remember([best])
             self.publish_state(
                 "POSE:mode={},source={},kf={},inliers={},x={:.2f},y={:.2f},yaw={:.2f},query_age={:.2f}s,input_age={:.2f}s,inference={:.2f}s".format(
                     self.search_mode, best["source"], best["keyframe"], best["inliers"], pose[0, 3], pose[1, 3], yaw,

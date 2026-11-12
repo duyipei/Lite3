@@ -70,3 +70,42 @@ visual-plus-NDT pose, emergency stop, and fenced test area have been reviewed.
 The velocity gate also requires `/patrol/localization_ready=true`. The mission
 requires both `enabled: true` and
 `review_required: false`, plus the runner's `--execute` flag.
+
+## RViz 手动初始定位（保留原视觉入口）
+
+在开发虚拟机的对应项目目录执行；新版和独立的 11 月 2 日副本均支持：
+
+```bash
+LITE3_OBSTACLE_BACKEND=factory_only LITE3_DYNAMIC_OBSTACLES=1 \
+  LITE3_USE_VENDOR_VOA=0 \
+  bash scripts/navigation_start.sh start-manual patrol_map_20261031_01_area_v2_review
+```
+
+1. 先结束其他导航会话，保持机器狗静止且不 ARM。
+2. 启动器先打开静态地图和 RViz，不加载 XFeat 或视觉地图数据库。
+3. 使用 **2D Pose Estimate** 在地图上拖出机器狗当前的位置和朝向。
+   这是地图中 `base_link` 的人工初值，不再应用视觉/IMU 参考坐标偏移。
+   RViz 通常给出平面位姿；NDT 是否能从该初值正确收敛仍需实机验证。
+4. 初值经 `/patrol/manual_initialpose_request` 送到 Jetson 初始化守卫，
+   经确认静止启动阶段或新鲜 DISARMED 状态检查后，才向 `/initialpose` 注入。
+   输入命令采用 Jetson 接收时的 ROS 时间；NDT 扫描边界仍使用单调时间，
+   不重写任何传感器或 TF 时间戳。
+5. 保留 NDT 内部稳定确认、外层独立扫描确认、原地图距离/yaw 阈值，
+   以及 READY 后的定位、里程计新鲜度和静止漂移保护。点选本身不会置 READY。
+6. 通过确认后启动原 Nav2、目标桥和 DISARMED 速度门，再由操作者选择目标并授权。
+   初始化完成后，后续 2D Pose Estimate 点选会被拒绝；需要重新定位时退出会话重启。
+
+原视觉流程继续使用 `start`（默认）或显式的 `start-visual`；
+`LITE3_INITIALIZATION_MODE=manual|visual` 也可选择模式。
+手动入口只跳过视觉定位，不关闭 Factory Only 避障所需的深度相机和 VOA。
+
+两份虚拟机项目彼此独立，但启动器仍会将运行文件同步到同一个 Jetson 项目目录。
+不要同时运行两套启动器；修改开发端文件本身不会部署或重启实机。
+
+离线测试（只使用 Mock，不启动 ROS 节点）：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_manual_initialization.py'
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_navigation_manual_mode.py'
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_rviz_ssh_bridge.py'
+```

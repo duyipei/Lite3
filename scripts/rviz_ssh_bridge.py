@@ -2,7 +2,8 @@
 """Carry RViz topics and isolated goal requests over one authenticated SSH pipe.
 
 The Jetson keeps all navigation and motion supervision. No velocity, arming,
-initial-pose, or action messages are accepted from this display transport.
+or action messages are accepted. Manual mode can explicitly forward an
+isolated initial-pose request; the robot-side guard alone publishes /initialpose.
 """
 import argparse
 from collections import deque
@@ -40,6 +41,12 @@ TOPICS = (
 )
 GOAL_ID = 100
 GOAL_TOPIC = '/patrol/goal_request'
+INITIALPOSE_ID = 101
+INITIALPOSE_TOPIC = '/patrol/manual_initialpose_request'
+
+
+def operator_event(ident):
+    return ident in (GOAL_ID, INITIALPOSE_ID)
 
 
 def read_exact(stream, count):
@@ -66,8 +73,9 @@ def write_packet(stream, ident, payload):
     stream.flush()
 
 
-def validate_direction(side, ident):
-    allowed = ident == GOAL_ID if side == 'remote' else 0 <= ident < len(TOPICS)
+def validate_direction(side, ident, allow_manual_initialpose=False):
+    allowed = ((ident == GOAL_ID or (allow_manual_initialpose and ident == INITIALPOSE_ID))
+               if side == 'remote' else 0 <= ident < len(TOPICS))
     if not allowed:
         raise ValueError('message is not allowed in this transport direction')
 
@@ -117,6 +125,7 @@ def run(args):
 
     os.environ['RCUTILS_LOGGING_USE_STDOUT'] = '0'
     remote = args.side == 'remote'
+    allow_manual_initialpose = bool(getattr(args, 'allow_manual_initialpose', False))
     child = None
     if remote:
         incoming, outgoing = sys.stdin.buffer, sys.stdout.buffer
@@ -124,6 +133,8 @@ def run(args):
         command = 'source /home/ysc/lite3_patrol_project/navigation/patrol_env.sh >/dev/null 2>&1; '
         command += 'exec env RCUTILS_LOGGING_USE_STDOUT=0 PYTHONUNBUFFERED=1 python3 '
         command += shlex.quote(args.remote_script) + ' --side remote'
+        if allow_manual_initialpose:
+            command += ' --allow-manual-initialpose'
         child = subprocess.Popen(
             ['ssh', '-T', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=8',
              '-o', 'ServerAliveInterval=3', '-o', 'ServerAliveCountMax=2',
@@ -160,16 +171,19 @@ def run(args):
                     for transform in message.transforms:
                         transforms[ident][transform.child_frame_id] = transform
                     message.transforms = list(transforms[ident].values())
-                rate = TOPICS[ident][2] if ident != GOAL_ID else 0
+                rate = 0 if operator_event(ident) else TOPICS[ident][2]
                 now = time.monotonic()
                 if rate and now - last_sent.get(ident, 0) < 1 / rate:
                     return
                 last_sent[ident] = now
-                ordered = ident == GOAL_ID or TOPICS[ident][4]
+                ordered = operator_event(ident) or TOPICS[ident][4]
                 outbound.put(ident, serialize_message(message), ordered)
                 if ident == GOAL_ID:
                     p = message.pose.position
                     node.get_logger().info('RViz goal sent over SSH: x={:.3f}, y={:.3f}'.format(p.x, p.y))
+                elif ident == INITIALPOSE_ID:
+                    p = message.pose.pose.position
+                    node.get_logger().info('RViz manual initial pose request sent over SSH: x={:.3f}, y={:.3f}'.format(p.x, p.y))
             except Exception as error:
                 fail(error)
         return send
@@ -188,13 +202,20 @@ def run(args):
         publishers[GOAL_ID] = node.create_publisher(goal_type, GOAL_TOPIC, 10)
     else:
         node.create_subscription(goal_type, GOAL_TOPIC, callback(GOAL_ID), 10)
+    if allow_manual_initialpose:
+        pose_type = get_message('geometry_msgs/msg/PoseWithCovarianceStamped')
+        types[INITIALPOSE_ID] = pose_type
+        if remote:
+            publishers[INITIALPOSE_ID] = node.create_publisher(pose_type, INITIALPOSE_TOPIC, 10)
+        else:
+            node.create_subscription(pose_type, INITIALPOSE_TOPIC, callback(INITIALPOSE_ID), 10)
 
     def reader():
         try:
             while not stop.is_set():
                 ident, payload = read_packet(incoming)
-                validate_direction(args.side, ident)
-                received.put(ident, payload, ident == GOAL_ID or TOPICS[ident][4])
+                validate_direction(args.side, ident, allow_manual_initialpose)
+                received.put(ident, payload, operator_event(ident) or TOPICS[ident][4])
         except Exception as error:
             fail(error)
 
@@ -221,7 +242,8 @@ def run(args):
             publishers[ident].publish(message)
             if ident not in first:
                 first.add(ident)
-                name = GOAL_TOPIC if ident == GOAL_ID else TOPICS[ident][0]
+                name = (GOAL_TOPIC if ident == GOAL_ID else INITIALPOSE_TOPIC
+                        if ident == INITIALPOSE_ID else TOPICS[ident][0])
                 node.get_logger().info('first SSH message delivered: ' + name)
 
     node.create_timer(.02, publish_received)
@@ -259,6 +281,8 @@ def main():
     parser.add_argument('--key', default='/home/duyipei/.ssh/id_ed25519_cyberdog')
     parser.add_argument('--remote-script', default='/home/ysc/lite3_patrol_project/scripts/rviz_ssh_bridge.py')
     parser.add_argument('--parent-pid', type=int, default=0)
+    parser.add_argument('--allow-manual-initialpose', action='store_true',
+                        help='Forward only isolated RViz initial-pose requests to the startup guard')
     raise SystemExit(run(parser.parse_args()))
 
 

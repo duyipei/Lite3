@@ -152,9 +152,14 @@ def analyze(files):
     metrics['T2_enter_to_valid']=differences(inputs,'t2_valid_ns','t2_enter_ns','T2_enter_to_valid')
     for name,end,begin in [('T2_valid_to_T3a','t3a_ns','t2_valid_ns'),('cache_to_T3a','t3a_ns','cached_ns'),
             ('T3a_to_T3b','t3b_ns','t3a_ns'),('deepcopy','copy_end_ns','copy_begin_ns'),
-            ('sampled_publish_call','t3b_ns','sampled_begin_ns'),('TF_build','t3c_ns','t3b_ns'),
+            ('sampled_publish_call','t3b_ns','sampled_begin_ns'),('T3a_to_T3c','t3c_ns','t3a_ns'),
             ('T3c_to_T3d','t3d_ns','t3c_ns')]:
         metrics[name]=differences(tx.values(),end,begin,name)
+    # TF-first records have their own build boundary; legacy captures built TF
+    # after auxiliary publish. Never reinterpret T3b or clamp a negative value.
+    build_rows = [dict(r, tf_build_begin_ns=r.get('tf_build_begin_ns', r.get('t3b_ns')))
+                  for r in tx.values()]
+    metrics['TF_build']=differences(build_rows,'t3c_ns','tf_build_begin_ns','TF_build')
     metrics['T1_to_T2']=dict(stats_ns([]),reason='not measured: actual C++ publish time T1 is absent')
     metrics['T4b_to_T4c']=differences(rx.values(),'t4c_ns','t4b_ns','T4b_to_T4c')
     metrics['T4a_to_T4b']=differences(rx.values(),'t4b_ns','t4a_ns','T4a_to_T4b')

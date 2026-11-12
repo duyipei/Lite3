@@ -13,6 +13,8 @@ import inspect
 import json
 import multiprocessing
 from pathlib import Path
+import queue
+import subprocess
 import sys
 import threading
 import types
@@ -26,6 +28,7 @@ from t22_fixtures import recorder
 
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE = json.loads((Path(__file__).parent/'fixtures/t24_foxy_reference.json').read_text())
+TF_REFERENCE = json.loads((Path(__file__).parent/'fixtures/foxy_tf_executor_reference.json').read_text())
 
 
 def source_module(name, source):
@@ -56,6 +59,13 @@ class OfflineProtocol:
         self._tasks_lock = threading.Lock()
         self._is_shutdown = False
         self._guard = NS(trigger=lambda: None)
+        self._guard.destroy = lambda: None
+        self._sigint_gc = NS(destroy=lambda: None)
+        self._shutdown_lock = threading.Lock()
+        self._nodes_lock = threading.RLock()
+        self._nodes = set()
+        self._context = context
+        self._cb_iter = self._last_args = self._last_kwargs = None
         self._work_tracker = EXEC['_WorkTracker']()
         self.node = None
         self.hook = None
@@ -75,6 +85,9 @@ class OfflineProtocol:
         return self.ready.popleft()
 
     def dispatch(self, entity, message=None, already_selected=False):
+        owner = getattr(entity.node, 'executor', None)
+        if owner is not None and owner is not self:
+            return owner.dispatch(entity, message, already_selected)
         # This slot mocks KEEP_LAST(1). Admission itself is the unmodified
         # Foxy Executor.can_execute / CallbackGroup.beginning_execution path.
         entity.latest = message
@@ -106,11 +119,64 @@ EXEC = dict(__name__='t24_foxy_executor', OfflineProtocol=OfflineProtocol,
             Callable=typing.Callable, Coroutine=typing.Coroutine, Any=typing.Any,
             Union=typing.Union)
 exec(compile(REFERENCE['executors']['source'], '<Foxy executor extract>', 'exec'), EXEC)
+# Extend the frozen handler/Task fixture with the exact Foxy lifecycle and
+# SingleThreadedExecutor methods. RMW readiness remains the only fake protocol.
+exec('class Lifecycle:\n' + ''.join(TF_REFERENCE['lifecycle_source'].values()), EXEC)
+for _name in TF_REFERENCE['lifecycle_source']:
+    setattr(EXEC['Executor'], _name, getattr(EXEC['Lifecycle'], _name))
+exec(compile(TF_REFERENCE['single_threaded_source'], '<Foxy single executor>', 'exec'), EXEC)
+
+
+class OfflineSingleExecutor(EXEC['SingleThreadedExecutor']):
+    def __init__(self, *, context=None):
+        super().__init__(context=context)
+        self.ready_queue = queue.Queue()
+        self.completions = {}
+        self.nodes_seen = []
+
+    def add_node(self, node):
+        self.nodes_seen.append(node)
+        return super().add_node(node)
+
+    def dispatch(self, entity, message=None, already_selected=False):
+        entity.latest = message
+        if not already_selected and not self.can_execute(entity):
+            return None
+        def take(current):
+            current.takes += 1
+            return current.latest
+        invoke = self._execute_timer if entity.kind == 'timer' else self._execute_subscription
+        handler = self._make_handler(entity, entity.node, take, invoke)
+        done = threading.Event()
+        self.completions[handler] = done
+        self.ready_queue.put((handler, entity, entity.node))
+        def result(timeout=None):
+            if not done.wait(timeout):
+                raise TimeoutError('offline listener callback did not finish')
+            return handler.result()
+        return NS(task=handler, future=NS(result=result))
+
+    def wait_for_ready_callbacks(self, timeout_sec=None):
+        try:
+            self.current = self.ready_queue.get(timeout=timeout_sec)
+            return self.current
+        except queue.Empty:
+            self.current = None
+            raise EXEC['TimeoutException']()
+
+    def spin_once(self, timeout_sec=None):
+        self.current = None
+        try:
+            return super().spin_once(timeout_sec)
+        finally:
+            if self.current is not None:
+                self.completions[self.current[0]].set()
 
 
 class Entity:
     def __init__(self, node, kind, name, callback, group, qos=None, period=None):
         self.kind, self.name, self.callback_group = kind, name, group
+        self.node = node
         self.qos, self.period = qos, period
         self.original_callback = callback
         self._executor_event = False
@@ -135,10 +201,22 @@ class Publisher:
 
 
 class MockNode:
-    def __init__(self):
+    def __init__(self, name='business', context=None, trace=None):
+        self.name, self.context = name, context
         self.subscriptions, self.timers, self.publishers, self.trace = [], [], {}, []
+        if trace is not None: self.trace = trace
         self.default_group = GROUPS.MutuallyExclusiveCallbackGroup()
         self.destroyed = False
+        self._executor = None
+
+    @property
+    def executor(self): return self._executor
+
+    @executor.setter
+    def executor(self, value):
+        if self._executor is not None and value is not None and self._executor is not value:
+            raise AssertionError('one node must not join two executors')
+        self._executor = value
 
     def create_publisher(self, kind, topic, qos):
         self.publishers[topic] = Publisher()
@@ -159,7 +237,7 @@ class MockNode:
     def destroy_subscription(self, subscription):
         if subscription in self.subscriptions: self.subscriptions.remove(subscription)
 
-    def get_logger(self): return NS(info=lambda *v: None, warning=lambda *v: None)
+    def get_logger(self): return NS(info=lambda *v: None, warning=lambda *v: None, error=lambda *v: None)
     def destroy_node(self): self.destroyed = True
 
 
@@ -192,6 +270,11 @@ def run_main(hook, baseline=False, diagnostics=False):
     """Execute the real production main with ROS imports replaced, not its logic."""
     source = (ROOT/'scripts/voa_costmap_bridge.py').read_text()
     if baseline:
+        # Historical T2.4 control: shared TF executor and reentrant business
+        # callbacks. The current production code uses a separate TF executor.
+        source = subprocess.check_output(['git', 'show',
+            'b9f81142f6dee3a43a9c62582b3890dc2db92ac5:scripts/voa_costmap_bridge.py'],
+            cwd=ROOT, text=True)
         source = source.replace('from rclpy.callback_groups import MutuallyExclusiveCallbackGroup',
                                 'from rclpy.callback_groups import ReentrantCallbackGroup')
         source = source.replace('group = MutuallyExclusiveCallbackGroup()', 'group = ReentrantCallbackGroup()')
@@ -199,8 +282,16 @@ def run_main(hook, baseline=False, diagnostics=False):
     clock = NS(now=100.2)
     bridge_module.time = NS(monotonic=lambda: clock.now,
                             monotonic_ns=lambda: round(clock.now*1e9))
-    node = MockNode()
+    context = NS(running=True)
+    context.ok = lambda: context.running
+    nodes, trace = [], []
+    def create_node(name, **kwargs):
+        if kwargs: assert kwargs['context'] is context
+        current = MockNode(name, context, trace)
+        nodes.append(current)
+        return current
     instances = []
+    singles = []
 
     def module(name, **values):
         value = types.ModuleType(name); value.__dict__.update(values); return value
@@ -210,14 +301,12 @@ def run_main(hook, baseline=False, diagnostics=False):
             self.depth, self.reliability = depth, 'reliable'
             self.__dict__.update(values)
 
-    class UnexpectedSpinThread:
-        def __init__(self, *args, **kwargs): raise AssertionError('no dedicated spin thread')
-
     qos = module('rclpy.qos', QoSProfile=QoS,
                  ReliabilityPolicy=NS(BEST_EFFORT='best_effort'),
                  DurabilityPolicy=NS(VOLATILE='volatile', TRANSIENT_LOCAL='transient_local'),
                  HistoryPolicy=NS(KEEP_LAST='keep_last'))
-    modules = {'rclpy':module('rclpy', init=lambda: None, create_node=lambda *a: node, shutdown=lambda: None),
+    modules = {'rclpy':module('rclpy', init=lambda: None, create_node=create_node,
+        ok=context.ok, shutdown=lambda: setattr(context, 'running', False)),
         'rclpy.callback_groups':GROUPS, 'rclpy.qos':qos,
         'rclpy.time':module('rclpy.time', Time=NS(from_msg=bridge_module.stamp_seconds)),
         'sensor_msgs':module('sensor_msgs'), 'sensor_msgs.msg':module('sensor_msgs.msg', PointCloud2=geometry.Cloud, PointField=geometry.Field),
@@ -231,23 +320,46 @@ def run_main(hook, baseline=False, diagnostics=False):
         executor = EXEC['MultiThreadedExecutor'](*args, **kwargs)
         instances.append(executor)
         def configured(current):
+            node = nodes[0]
+            current.node = node
             current.bridge = node.timers[0].original_callback.__self__
             current.clock = clock
             current.entities = {e.name:e for e in node.subscriptions}
+            current.tf_node = nodes[-1]
+            current.entities.update({e.name:e for e in current.tf_node.subscriptions})
             current.timer = node.timers[0]
             hook(current)
         executor.hook = configured
+        original_spin = executor.spin_once
+        executor.in_hook = False
+        def spin_once(timeout_sec=None):
+            if executor.in_hook:
+                return original_spin(timeout_sec)
+            executor.in_hook = True
+            try:
+                configured(executor)
+            finally:
+                context.running = False
+        executor.spin_once = spin_once
+        executor.hook = lambda current: spin_once()
         return executor
 
+    def make_single(**kwargs):
+        current = OfflineSingleExecutor(**kwargs)
+        singles.append(current)
+        return current
+
     modules['rclpy.executors'] = module('rclpy.executors', MultiThreadedExecutor=make_executor,
-                                       SingleThreadedExecutor=UnexpectedSpinThread)
+                                       SingleThreadedExecutor=make_single)
     with patch.dict(sys.modules, modules):
         listener = source_module('t24_foxy_listener', REFERENCE['listener']['source']).TransformListener
         modules['tf2_ros'].TransformListener = listener
-        probe = NS(active=lambda: False) if diagnostics else None
+        probe = NS(active=lambda: False, close=lambda: None) if diagnostics else None
         with patch.object(recorder, 'create_probe', return_value=probe):
             with patch.object(sys, 'argv', ['voa_costmap_bridge.py','--config',str(ROOT/'navigation/vendor_voa.yaml')]):
                 bridge_module.main()
+    for executor in instances:
+        executor._executor.shutdown(wait=True)
     return instances[0]
 
 
@@ -297,6 +409,10 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(grid.qos.reliability,'best_effort')
         self.assertEqual(reg.qos,1)
         self.assertFalse(hasattr(tf.original_callback.__self__,'dedicated_listener_thread'))
+        self.assertIsNot(executor.node,executor.tf_node)
+        self.assertIsNot(executor,executor.tf_node.executor)
+        self.assertEqual(len(executor.node.subscriptions),2)
+        self.assertEqual(len(executor.tf_node.subscriptions),2)
 
     def test_main_registers_three_business_callbacks_and_independent_tf_group(self):
         run_main(self.check_configuration)

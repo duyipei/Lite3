@@ -47,6 +47,23 @@ class AnalysisTests(unittest.TestCase):
         self.assertIsNone(result['mean_ms'])
         self.assertIn('not measured', result['reason'])
 
+    def test_tf_first_timestamps_use_explicit_build_start_and_keep_legacy_support(self):
+        leg, voa = sample_rows()
+        row = leg[2]
+        row['publish_order'] = 'tf_first'
+        row['tf_build_begin_ns'] = row['t3a_ns']+1000
+        row['t3c_ns'] = row['tf_build_begin_ns']+1000
+        row['t3d_ns'] = row['t3c_ns']+1000
+        row['copy_begin_ns'] = row['t3d_ns']+1000
+        row['copy_end_ns'] = row['copy_begin_ns']+1000
+        row['sampled_begin_ns'] = row['copy_end_ns']+1000
+        row['t3b_ns'] = row['sampled_begin_ns']+1000
+        result = analyze([capture_file(self.root, 'leg', leg), capture_file(self.root, 'voa', voa)])
+        self.assertTrue(result['complete'], result['warnings'])
+        self.assertEqual(result['metrics']['TF_build']['mean_ms'], .001)
+        self.assertEqual(result['metrics']['TF_build']['negative_count'], 0)
+        self.assertEqual(result['metrics']['T3a_to_T3c']['mean_ms'], .002)
+
     def test_any_missing_role_is_partial_with_warning(self):
         for role in ('leg', 'voa'):
             with self.subTest(role=role):

@@ -19,14 +19,16 @@ if [[ "$MAP_ID" == indoor_fusion_20260912_001_area_review ]]; then
 fi
 MAP_DIR=$PROJECT/navigation/$MAP_ID
 source "$PROJECT/navigation/patrol_env.sh"
-RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-vendor}
+# Use the verified project build; vendor remains an explicit rollback option.
+RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-audited}
 case "$RUNTIME" in
   vendor) ;;
   audited)
+    AUDITED_ROOT=$PROJECT/results/ndt_realtime_current
     python3 "$PROJECT/scripts/check_localization_runtime.py" \
-      "$PROJECT/results/audit_repairs_20261028/runtime_manifest.json"
+      "$AUDITED_ROOT/runtime_manifest.json"
     set +u
-    source "$PROJECT/results/ground_acceptance_20261028/ws/install/setup.bash"
+    source "$AUDITED_ROOT/ws/install/setup.bash"
     set -u
     ;;
   *) echo 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited' >&2; exit 1;;

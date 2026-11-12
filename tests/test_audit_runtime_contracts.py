@@ -38,6 +38,7 @@ def test_old_leg_samples_cannot_be_restamped_as_current():
     clock=N(value=100.);scope=dict(math=math,copy=copy,time=N(monotonic=lambda:clock.value))
     exec(compile(ast.Module(body=[cls],type_ignores=[]),str(path),'exec'),scope)
     node=scope['LegOdomTfBridge']();node.last_source_stamp=0.;node.last_message=0.;node.latest_message=None
+    node._t22=None;node._t22_input=None
     node.get_logger=lambda:N(error=lambda message:None)
     pose=N(position=N(x=0.,y=0.,z=0.),orientation=N(x=0.,y=0.,z=0.,w=1.))
     msg=N(header=N(stamp=N(sec=90,nanosec=0)),pose=N(pose=pose))

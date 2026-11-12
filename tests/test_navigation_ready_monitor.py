@@ -14,7 +14,7 @@ MONITOR = SOURCE.split('wait_visual_ready() {', 1)[1].split("<<'PY' || result=$?
 
 
 class ReadyMonitorTests(unittest.TestCase):
-    def run_monitor(self, scenario):
+    def run_monitor(self, scenario, mode='visual', phase='tracking'):
         clock = [0.0]
         subscriptions = {}
         ns = types.SimpleNamespace
@@ -62,10 +62,24 @@ class ReadyMonitorTests(unittest.TestCase):
             'time': ns(monotonic=lambda: clock[0]),
         }
         output = io.StringIO()
-        with patch.dict(sys.modules, modules), patch.object(sys, 'argv', ['monitor', '20', '3', 'tracking']), \
+        with patch.dict(sys.modules, modules), patch.object(sys, 'argv', ['monitor', '20', '3', phase, mode]), \
                 contextlib.redirect_stdout(output), self.assertRaises(SystemExit) as result:
             exec(compile(MONITOR, '<launcher-monitor>', 'exec'), {})
+        if mode == 'manual':
+            self.assertNotIn('/visual_localization/state', subscriptions)
         return result.exception.code, output.getvalue()
+
+    def test_manual_initialization_uses_guard_ready_and_odometry_without_visual_frontend(self):
+        code, output = self.run_monitor('healthy', mode='manual', phase='initialization')
+        self.assertEqual(code, 0)
+        self.assertIn('手动初值已由 NDT 连续确认', output)
+
+    def test_manual_mode_still_rejects_missing_stale_and_revoked_confirmation(self):
+        for scenario in ('missing_odom', 'stopped_guard', 'stopped_odom', 'revoked'):
+            with self.subTest(scenario=scenario):
+                code, output = self.run_monitor(scenario, mode='manual')
+                self.assertNotEqual(code, 0)
+                self.assertNotIn('[PASS]', output)
 
     def test_tracking_succeeds_without_visual_messages(self):
         code, output = self.run_monitor('healthy')

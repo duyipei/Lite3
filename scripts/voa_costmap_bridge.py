@@ -624,8 +624,99 @@ class Bridge:
                 self.last_log = now
 
 
+class DedicatedTFListener:
+    """One TF-only node/executor; the business node never joins this executor.
+
+    Foxy's spin_thread=True spins the supplied node. Own the separate node and
+    thread explicitly so teardown does not depend on TransformListener.__del__.
+    BufferCore serializes insertion/lookup internally; no business RLock is used.
+    """
+    def __init__(self, buffer, business_node, listener_type):
+        import rclpy
+        from rclpy.executors import SingleThreadedExecutor
+
+        class OwnedListener(listener_type):
+            def __init__(self, *args, **kwargs):
+                try:
+                    super().__init__(*args, **kwargs)
+                except BaseException:
+                    self.unregister()
+                    raise
+
+            def unregister(self):
+                # Foxy's destructor calls unregister again. Also handle a
+                # constructor that created /tf but failed creating /tf_static.
+                if getattr(self, '_subscriptions_closed', False):
+                    return
+                self._subscriptions_closed = True
+                for name in ('tf_sub', 'tf_static_sub'):
+                    subscription = getattr(self, name, None)
+                    if subscription is not None:
+                        self.node.destroy_subscription(subscription)
+
+        self.node = self.executor = self.listener = self.thread = None
+        self._stop = threading.Event()
+        self._error = None
+        self._closed = False
+        try:
+            self.node = rclpy.create_node('patrol_voa_tf_listener', context=business_node.context,
+                                         start_parameter_services=False, enable_rosout=False)
+            self.executor = SingleThreadedExecutor(context=business_node.context)
+            self.listener = OwnedListener(buffer, self.node, spin_thread=False)
+            self.executor.add_node(self.node)
+            self.thread = threading.Thread(target=self._spin, name='voa_tf_listener')
+            self.thread.start()
+        except BaseException:
+            self.close()
+            raise
+
+    def _spin(self):
+        try:
+            while not self._stop.is_set() and self.node.context.ok():
+                # Bounded idle wait, not a TF lookup timeout or a busy loop.
+                self.executor.spin_once(timeout_sec=.1)
+        except BaseException as error:
+            if not self._stop.is_set() and self.node.context.ok():
+                self._error = error
+
+    def check(self):
+        if self._error is not None:
+            raise RuntimeError('VOA TF Listener stopped; stopping business executor') from self._error
+
+    def close(self):
+        if self._closed:
+            return
+        self._closed = True
+        self._stop.set()
+        # Leave the context, executor and subscriptions alive until spin_once
+        # and any active insertion return. Only this thread ever spins them.
+        if self.thread is not None and self.thread.ident is not None:
+            self.thread.join()
+        try:
+            if self.executor is not None:
+                self.executor.shutdown()
+        finally:
+            try:
+                if self.listener is not None:
+                    self.listener.unregister()
+            finally:
+                if self.node is not None:
+                    self.node.destroy_node()
+
+
+def stop_business_executor(executor):
+    # Foxy's public shutdown waits for running callbacks, but does not join its
+    # ThreadPoolExecutor. Drain submitted handlers before destroying its guard
+    # conditions or nodes. No more spin_once submissions occur during teardown.
+    try:
+        executor._executor.shutdown(wait=True)
+    finally:
+        executor.shutdown()
+
+
 def main():
     import argparse
+    from contextlib import ExitStack
     import yaml
     import rclpy
     from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
@@ -652,52 +743,54 @@ def main():
     minimum = float(params['kObstatleHeight'])
     if not math.isfinite(minimum) or minimum <= 0:
         raise ValueError('invalid VOA obstacle height')
-    rclpy.init()
-    node = rclpy.create_node('patrol_voa_costmap_bridge')
-    probe = None
-    try:
-        from lite3_t22_probe import create_probe, receiver_types
-        probe = create_probe('voa')
-        if probe is not None:
-            Buffer, TransformListener = receiver_types(Buffer, TransformListener, probe)
-    except Exception as error:
+    with ExitStack() as cleanup:
+        rclpy.init()
+        cleanup.callback(lambda: rclpy.shutdown() if rclpy.ok() else None)
+        node = rclpy.create_node('patrol_voa_costmap_bridge')
+        cleanup.callback(node.destroy_node)
         probe = None
-        node.get_logger().warning('[T22] recorder disabled: '+str(error))
-    buffer = Buffer()
-    listener = TransformListener(buffer, node)
-    bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum,
-                    tf_exceptions=(TransformException,),
-                    tf_retry_max_wait_ms=args.tf_retry_max_wait_ms,
-                    tf_retry_processing_reserve_ms=args.tf_retry_processing_reserve_ms,
-                    tf_retry_max_attempts=args.tf_retry_max_attempts)
-    bridge._t22 = probe
-    def on_grid(message):
-        # Only enqueue here. Projection is done by the 25 ms timer so the
-        # 30 Hz grid callback cannot starve the TF listener callbacks that the
-        # projection itself needs. Under Nav2 load the old callback path could
-        # leave >0.5 s heartbeat gaps and trip the velocity gate.
-        bridge.receive(message)
-    def on_registration(message):
-        bridge.registration(message)
-    latest_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
-    group = MutuallyExclusiveCallbackGroup()
-    subscription = node.create_subscription(
-        GridMap, '/patrol/voa/grid_map', on_grid, latest_qos,
-        callback_group=group)
-    registration = node.create_subscription(
-        Odometry, '/patrol/registration_odom', on_registration, 1,
-        callback_group=group)
-    timer = node.create_timer(.025, bridge.publish, callback_group=group)
-    executor = MultiThreadedExecutor(num_threads=2)
-    executor.add_node(node)
-    try:
-        executor.spin()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        executor.shutdown()
-        node.destroy_node()
-        rclpy.shutdown()
+        try:
+            from lite3_t22_probe import create_probe, receiver_types
+            probe = create_probe('voa')
+            if probe is not None:
+                Buffer, TransformListener = receiver_types(Buffer, TransformListener, probe)
+        except Exception as error:
+            probe = None
+            node.get_logger().warning('[T22] recorder disabled: '+str(error))
+        if probe is not None:
+            cleanup.callback(probe.close)
+        buffer = Buffer()
+        listener = DedicatedTFListener(buffer, node, TransformListener)
+        cleanup.callback(listener.close)
+        bridge = Bridge(node, buffer, PointCloud2, PointField, Header, Time, minimum,
+                        tf_exceptions=(TransformException,),
+                        tf_retry_max_wait_ms=args.tf_retry_max_wait_ms,
+                        tf_retry_processing_reserve_ms=args.tf_retry_processing_reserve_ms,
+                        tf_retry_max_attempts=args.tf_retry_max_attempts)
+        bridge._t22 = probe
+        def on_grid(message):
+            # Enqueue only; projection/retry stays on the existing 25 ms timer.
+            bridge.receive(message)
+        def on_registration(message):
+            bridge.registration(message)
+        latest_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
+        group = MutuallyExclusiveCallbackGroup()
+        subscription = node.create_subscription(
+            GridMap, '/patrol/voa/grid_map', on_grid, latest_qos,
+            callback_group=group)
+        registration = node.create_subscription(
+            Odometry, '/patrol/registration_odom', on_registration, 1,
+            callback_group=group)
+        timer = node.create_timer(.025, bridge.publish, callback_group=group)
+        executor = MultiThreadedExecutor(num_threads=2)
+        cleanup.callback(stop_business_executor, executor)
+        executor.add_node(node)
+        try:
+            while node.context.ok():
+                listener.check()
+                executor.spin_once(timeout_sec=.1)
+        except KeyboardInterrupt:
+            pass
 
 
 if __name__ == '__main__':
