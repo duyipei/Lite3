@@ -45,6 +45,7 @@ class FrontendLifecycleTests(unittest.TestCase):
             localization_ready=False,confirmation_history=deque([1]),publish_state=self.states.append,
             latest_image='old',search_started=20,last_processed_stamp=(1,2),metric_pose_seen=True,last_candidate_time=5)
         self.node.configured_search_strategy = 'global'
+        self.node.learned_tried_ids = set()
         self.node.xfeat_matcher = SimpleNamespace(reset_search=lambda: None)
 
     def test_ready_pauses_and_loss_does_not_resume(self):

@@ -5,6 +5,7 @@
 #   private_combined private VOA speed correction + LiDAR/camera costmaps
 set -Eeuo pipefail
 PROJECT=/home/ysc/lite3_patrol_project
+python3 "$PROJECT/scripts/check_system_time.py" check
 source "$PROJECT/navigation/patrol_env.sh"
 BACKEND=${LITE3_OBSTACLE_BACKEND:-}
 DYNAMIC=${LITE3_DYNAMIC_OBSTACLES:-0}

@@ -127,6 +127,13 @@ class ProjectionFreshnessTests(unittest.TestCase):
             return result
 
         old, new = definitions(baseline), definitions(current)
+        class LegacySourceClock(ast.NodeTransformer):
+            def visit_Call(self, node):
+                if isinstance(node.func, ast.Name) and node.func.id == 'sensor_time':
+                    node.func = ast.Attribute(value=ast.Name(id='time', ctx=ast.Load()),
+                                              attr='monotonic', ctx=ast.Load())
+                return self.generic_visit(node)
+        new['registration'] = LegacySourceClock().visit(new['registration'])
         for name in ('stamp_seconds', 'fresh', 'grid_obstacles', 'transform_matrix',
                      'compensated_pose', 'project_to_map', 'registration',
                      'MAX_AGE', 'MAX_PREDICTION', 'PUBLISH_MAX_AGE',
@@ -348,7 +355,8 @@ class ProjectionFreshnessTests(unittest.TestCase):
         details = json.loads(warnings[-1].split('heartbeat_gap ', 1)[1])
         self.assertAlmostEqual(details['source_age_s'], .51)
         self.assertAlmostEqual(details['publish_gap_s'], .17)
-        self.assertEqual(details['clock'], 'monotonic')
+        self.assertEqual(details['clock'], 'ros_steady')
+        self.assertEqual(details['interval_clock'], 'monotonic')
         for index in range(10):
             self.now.return_value = 100.52+index*.01
             self.bridge.publish()
@@ -564,8 +572,11 @@ class GateHeartbeatDiagnosticsTests(unittest.TestCase):
         old = methods(self.baseline_source)
         new = methods((ROOT / GATE).read_text())
         for name, method in old.items():
-            if name not in ('__init__', 'voa_costmap_callback', 'sensor_health'):
+            if name not in ('__init__', 'voa_costmap_callback', 'sensor_health', 'now_monotonic'):
                 self.assertEqual(ast.dump(new[name]), ast.dump(method), name)
+        clock_return = next(n for n in new['now_monotonic'].body if isinstance(n, ast.Return))
+        self.assertEqual(ast.dump(clock_return.value), ast.dump(
+            ast.Call(func=ast.Name(id='sensor_time', ctx=ast.Load()), args=[], keywords=[])))
         # The health method differs only by one diagnostic call in its existing
         # stale branch. All predicates, their order and return values match.
         class RemoveDiagnostic(ast.NodeTransformer):

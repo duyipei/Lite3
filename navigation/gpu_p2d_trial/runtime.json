@@ -1,0 +1,29 @@
+{
+  "backend": "gpu_p2d",
+  "root": "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu",
+  "manifest": "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/runtime_manifest.json",
+  "manifest_sha256": "7626e49b5e3ff9546ea472a3241643b79a2da8ce1055adb1b34cf6dd73c33d1d",
+  "expected_dependencies": {
+    "libfast_gicp.so": "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/deps/install/lib/libfast_gicp.so",
+    "libfast_vgicp_cuda.so": "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/deps/install/lib/libfast_vgicp_cuda.so",
+    "libndt_omp.so": "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so"
+  },
+  "pinned_libraries": {
+    "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/deps/install/lib/libfast_gicp.so": "1860652df8f1d6fe68e4d1c260ac631bc8018171fadb75cb268d9077e54ef38f",
+    "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/deps/install/lib/libfast_vgicp_cuda.so": "1a37d19dbc8e775830c23afb95fc944745d92904432305b32991aa04f0669531",
+    "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so": "00318664bca0005516217ecea384261b52eeac3e1b117ce50d1e36d832695aed"
+  },
+  "library_dirs": [
+    "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/ws/install/hdl_localization/lib",
+    "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/deps/install/lib",
+    "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib",
+    "/home/ysc/lite_cog_ros2/nav/install/dr_nav2/lib",
+    "/home/ysc/lite_cog_ros2/nav/install/hdl_global_localization/lib",
+    "/home/ysc/lite_cog_ros2/nav/install/sensor_test/lib",
+    "/usr/local/cuda-11.4/lib64",
+    "/opt/ros/foxy/lib",
+    "/opt/ros/foxy/lib/aarch64-linux-gnu"
+  ],
+  "launch_file": "/home/ysc/lite3_patrol_project/results/gpu_p2d_navigation_20261117_s14eaj55/gpu/ws/install/hdl_localization/share/hdl_localization/launch/gpu_p2d_navigation.launch.py",
+  "launch_sha256": "2d1db972e6e0d6bc9dab78706d848e9497f070ce97229a1c0d9945289f463c85"
+}

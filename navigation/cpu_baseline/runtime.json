@@ -1,0 +1,23 @@
+{
+  "backend": "cpu_omp",
+  "root": "/home/ysc/lite3_patrol_project/results/ndt_realtime_20261112_7iwl6ku",
+  "manifest": "/home/ysc/lite3_patrol_project/results/ndt_realtime_20261112_7iwl6ku/runtime_manifest.json",
+  "manifest_sha256": "8ab29b919442db05861c4db7f1e21a6b29a47c107e5834ce891e42cffad7fce7",
+  "expected_dependencies": {
+    "libndt_omp.so": "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so",
+    "libfast_gicp.so": "/home/ysc/lite_cog_ros2/fast_gicp/build/fast_gicp/libfast_gicp.so",
+    "libfast_vgicp_cuda.so": "/home/ysc/lite_cog_ros2/fast_gicp/build/fast_gicp/libfast_vgicp_cuda.so"
+  },
+  "pinned_libraries": {
+    "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so": "00318664bca0005516217ecea384261b52eeac3e1b117ce50d1e36d832695aed",
+    "/home/ysc/lite_cog_ros2/fast_gicp/build/fast_gicp/libfast_gicp.so": "69a4fb746e4c1e4d14da7423aa9f4dd6348d7583ffdd73bab8f4189cc1e4a234",
+    "/home/ysc/lite_cog_ros2/fast_gicp/build/fast_gicp/libfast_vgicp_cuda.so": "cd7cca061d65b1323432d3ebe471e5769065d0ac0f33cf42fba823832bb0ae0d"
+  },
+  "library_dirs": [
+    "/home/ysc/lite3_patrol_project/results/ndt_realtime_20261112_7iwl6ku/ws/install/hdl_localization/lib",
+    "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib",
+    "/home/ysc/lite_cog_ros2/fast_gicp/build/fast_gicp"
+  ],
+  "launch_file": "/home/ysc/lite3_patrol_project/patrol_nav_ws/install_merged/share/lite3_patrol_nav/launch/patrol_navigation.launch.py",
+  "launch_sha256": "e35e603fd5c2b7ebb1a2b9fd5fe77664f7fde4c17e8ab2696976a54072f0c050"
+}

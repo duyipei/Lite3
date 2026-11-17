@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-14",
+  "state": "deferred_navigation_active",
+  "jetson_actions": "read-only /proc, files, symbols, version queries, SQLite reads; no writes/build/GPU benchmark",
+  "operator_statement": "navigation is ready, setting goals, DISARMED",
+  "navigation_running_at_snapshot": true,
+  "native_build_executed": false,
+  "gpu_ndt_executed": false,
+  "kernel_trace_collected": false,
+  "cpu_gpu_performance_measured": false,
+  "full_ndt_integration_ready": false,
+  "cpu_library": {
+    "path": "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so",
+    "realpath": "/home/ysc/lite_cog_ros2/ndt_omp/install/ndt_omp/lib/libndt_omp.so",
+    "sha256": "00318664bca0005516217ecea384261b52eeac3e1b117ce50d1e36d832695aed"
+  },
+  "cpu_backend": {
+    "algorithm": "ndt_omp",
+    "search": "DIRECT1",
+    "resolution": 1.0,
+    "epsilon": 0.01,
+    "max_iterations": 35,
+    "step_size": 0.1,
+    "omp_threads": 1
+  },
+  "live_preprocessing": {
+    "map": "patrol_map_20261031_01_area_v2_review",
+    "scan_leaf": 0.3,
+    "map_leaf": 0.3
+  },
+  "historical_smoke_input": {
+    "frames": 6,
+    "seed_cases_per_frame": 2,
+    "map": "outdoor_20260921_003_area_review",
+    "map_leaf": 0.5,
+    "source": "historically preprocessed, not a current raw preprocessing replay"
+  },
+  "dataset_gap": "historical 0.5 samples are not an end-to-end current 0.3 baseline",
+  "continuous_outdoor_input_ready": false,
+  "bag_found": {
+    "path": "/home/ysc/lite3_patrol_project/results/round3a_lio_motion/patrol_map_20261031_01_lio.db3",
+    "duration_s": 169.031345056,
+    "topics": [
+      [
+        "/fast_livo2/livox/lidar",
+        "livox_ros_driver2/msg/CustomMsg"
+      ],
+      [
+        "/fast_livo2/livox/imu",
+        "sensor_msgs/msg/Imu"
+      ]
+    ],
+    "limitation": "only raw Livox CustomMsg and IMU; no paired NDT-frame source/full 3-D pose or outdoor-map provenance"
+  },
+  "tests": {
+    "passed": 154,
+    "failed": 0,
+    "skipped": 2,
+    "scope": "local C++/Mock/static checks, no Jetson native GPU execution",
+    "skip_reason": "two before-P0/P1 baseline comparisons require an unavailable header"
+  },
+  "native_cpu_vm_compile": "passed; stage fields checked; not Jetson performance",
+  "artifacts": "/tmp/lite3_gpu_native_20261114_wn52dqvf",
+  "outstanding": [
+    "idle navigation/localization plus fresh operator safe-state confirmation",
+    "private sm_72 native build and link verification",
+    "actual NDT CUDA kernel trace",
+    "same-Jetson CPU/P2D/D2D comparison",
+    "validated continuous real outdoor scans"
+  ]
+}

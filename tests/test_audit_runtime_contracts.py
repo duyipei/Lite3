@@ -35,7 +35,8 @@ def test_old_leg_samples_cannot_be_restamped_as_current():
     path=ROOT/'scripts/leg_odom_tf_bridge.py';tree=ast.parse(path.read_text())
     cls=next(n for n in tree.body if isinstance(n,ast.ClassDef));cls.bases=[]
     cls.body=[n for n in cls.body if getattr(n,'name','')!='__init__']
-    clock=N(value=100.);scope=dict(math=math,copy=copy,time=N(monotonic=lambda:clock.value))
+    clock=N(value=100.);scope=dict(math=math,copy=copy,time=N(monotonic=lambda:clock.value),
+                                  sensor_time=lambda:clock.value)
     exec(compile(ast.Module(body=[cls],type_ignores=[]),str(path),'exec'),scope)
     node=scope['LegOdomTfBridge']();node.last_source_stamp=0.;node.last_message=0.;node.latest_message=None
     node._t22=None;node._t22_input=None

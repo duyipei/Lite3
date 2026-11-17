@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "default_backend": "gpu_p2d",
+  "build_id": "GPU_P2D_C_20261117_s14eaj55",
+  "runtime_tested": false
+}

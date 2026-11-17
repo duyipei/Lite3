@@ -11,6 +11,7 @@ from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from tf2_ros import TransformBroadcaster
+from lite3_patrol_nav.sensor_time import sensor_time
 
 
 class LegOdomTfBridge(Node):
@@ -74,7 +75,7 @@ class LegOdomTfBridge(Node):
         validation_now = None
         if (not 0 <= message.header.stamp.nanosec < 1000000000
                 or stamp <= self.last_source_stamp
-                or not -.05 <= (validation_now := time.monotonic())-stamp <= .5
+                or not -.05 <= (validation_now := sensor_time())-stamp <= .5
                 or abs(q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w-1.) > .01):
             if tracing:
                 reason = ('invalid_stamp' if not 0 <= message.header.stamp.nanosec < 1000000000
@@ -114,7 +115,7 @@ class LegOdomTfBridge(Node):
         if message is None:
             return
         source_time=message.header.stamp.sec + message.header.stamp.nanosec/1e9
-        if not -.05 <= time.monotonic()-source_time <= .5:
+        if not -.05 <= sensor_time()-source_time <= .5:
             return
         # /leg_odom2 and the LiDAR use the controller/sensor time domain.  NDT
         # queries this TF at the LiDAR stamp, so the TF must retain the source

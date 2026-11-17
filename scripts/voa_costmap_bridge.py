@@ -23,6 +23,7 @@ import time
 from types import SimpleNamespace
 
 import numpy as np
+from lite3_patrol_nav.sensor_time import sensor_time
 
 TOPIC = '/patrol/voa/costmap_obstacles'
 HEARTBEAT = '/patrol/voa/costmap_heartbeat'
@@ -262,7 +263,7 @@ class Bridge:
                 raise  # Preserve the existing invalid-stamp exception behavior.
             now = time.monotonic()
             self.last_input_time, self.last_input_stamp = now, stamp
-            if fresh(stamp, now) and stamp > self.last_received:
+            if fresh(stamp, sensor_time()) and stamp > self.last_received:
                 if len(self.pending) == self.pending.maxlen:
                     self._finish_candidate(self.pending.popleft(), 'EXPIRED', 'candidate_evicted')
                 candidate = Candidate(msg, time.monotonic_ns())
@@ -271,7 +272,7 @@ class Bridge:
                 self.diag_counts['grid_accepted'] += 1
                 self.last_input_result = 'accepted'
             else:
-                self.last_input_result = ('grid_age_rejected' if not fresh(stamp, now)
+                self.last_input_result = ('grid_age_rejected' if not fresh(stamp, sensor_time())
                                           else 'grid_duplicate' if stamp == self.last_received
                                           else 'grid_out_of_order')
                 self.diag_counts[self.last_input_result] += 1
@@ -280,7 +281,7 @@ class Bridge:
         with self.lock:
             stamp = stamp_seconds(msg.header.stamp)
             if (msg.header.frame_id != 'map' or msg.child_frame_id != 'ndt_registration'
-                    or not 0 <= time.monotonic()-stamp <= MAX_AGE
+                    or not 0 <= sensor_time()-stamp <= MAX_AGE
                     or (self.anchors and stamp <= stamp_seconds(self.anchors[-1].header.stamp))):
                 return
             p = msg.pose.pose
@@ -404,7 +405,7 @@ class Bridge:
                       - self.tf_retry_processing_reserve_s)*1000000000)
 
     def _retry_limit(self, candidate, now, now_ns, check_attempts=True):
-        if self._remaining_wait_ns(candidate, now) <= 0:
+        if self._remaining_wait_ns(candidate, sensor_time()) <= 0:
             return 'retry_source_budget'
         if now_ns > candidate.retry_deadline_monotonic_ns:
             return candidate.deadline_reason
@@ -420,7 +421,7 @@ class Bridge:
             reason = None
             if candidate.source_stamp_ns <= self.last_cloud_attempt_stamp_ns:
                 reason = 'candidate_superseded'
-            elif not fresh(candidate.stamp, now, PUBLISH_MAX_AGE):
+            elif not fresh(candidate.stamp, sensor_time(), PUBLISH_MAX_AGE):
                 self.diag_counts['candidate_expired_checks'] += 1
                 reason = 'source_expired'
             elif candidate.state == 'PENDING_TF':
@@ -433,19 +434,21 @@ class Bridge:
         self.pending.extend(keep)
 
     def _defer_candidate(self, candidate, error):
-        now, now_ns = time.monotonic(), time.monotonic_ns()
+        # Sample the elapsed clock first. If preempted before reading the
+        # source clock, the converted deadline is conservative, never extended.
+        now = time.monotonic()
+        now_ns = time.monotonic_ns()
+        source_now = sensor_time()
         if candidate.first_tf_failure_monotonic_ns is None:
             candidate.first_tf_failure_monotonic_ns = error.first_failure_ns
             wait_end = error.first_failure_ns+self.tf_retry_max_wait_ns
-            # The source stamp uses this same Jetson monotonic clock. An
-            # absolute source deadline cannot be extended by preemption
-            # between reading monotonic() and monotonic_ns().
-            source_end = candidate.source_stamp_ns + round(
-                (PUBLISH_MAX_AGE-self.tf_retry_processing_reserve_s)*1000000000)
+            # Header stamps use ROS steady time; retry deadlines remain in
+            # Python monotonic_ns. Never compare their absolute values.
+            source_end = min(now_ns, int(now*1000000000)) + self._remaining_wait_ns(candidate, source_now)
             candidate.retry_deadline_monotonic_ns = min(wait_end, source_end)
             candidate.deadline_reason = ('tf_wait_timeout' if wait_end <= source_end
                                          else 'retry_source_budget')
-        if not fresh(candidate.stamp, now, PUBLISH_MAX_AGE):
+        if not fresh(candidate.stamp, sensor_time(), PUBLISH_MAX_AGE):
             self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
             return
         reason = self._retry_limit(candidate, now, now_ns)
@@ -459,8 +462,9 @@ class Bridge:
             candidate.state = 'PENDING_TF'
 
     def _projection_diagnostics(self, now):
-        return dict(clock='monotonic', source_stamp=self.last_published or None,
-                    source_age_s=now-self.last_published if self.last_published else None,
+        return dict(clock='ros_steady', interval_clock='monotonic',
+                    source_stamp=self.last_published or None,
+                    source_age_s=sensor_time()-self.last_published if self.last_published else None,
                     publish_gap_s=now-self.last_publish_time if self.last_published else None,
                     last_input_stamp=self.last_input_stamp,
                     input_receive_age_s=now-self.last_input_time if self.last_input_time is not None else None,
@@ -503,7 +507,7 @@ class Bridge:
                 # Earlier candidates can consume time. Recheck each candidate
                 # immediately before its zero-wait queries, not just per tick.
                 attempt_now, attempt_ns = time.monotonic(), time.monotonic_ns()
-                if not fresh(stamp, attempt_now, PUBLISH_MAX_AGE):
+                if not fresh(stamp, sensor_time(), PUBLISH_MAX_AGE):
                     self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
                     continue
                 if candidate.state == 'PENDING_TF':
@@ -565,7 +569,8 @@ class Bridge:
                 output.data = points.tobytes()
                 published_at = time.monotonic()
                 self.last_process_s = published_at-frame_started
-                if not fresh(stamp, published_at, PUBLISH_MAX_AGE):
+                published_source_age = sensor_time()-stamp
+                if not fresh(stamp, sensor_time(), PUBLISH_MAX_AGE):
                     self.diag_counts['processing_expired'] += 1
                     self.last_failure = 'processing_expired'
                     self._finish_candidate(candidate, 'EXPIRED', 'source_expired')
@@ -575,7 +580,7 @@ class Bridge:
                     self.publisher.publish(output)  # Empty fresh clouds are valid.
                     # A slow/uncertain publish must not gain a fresh heartbeat
                     # or be reissued. Already handed-off DDS data cannot be recalled.
-                    if not fresh(stamp, time.monotonic(), PUBLISH_MAX_AGE):
+                    if not fresh(stamp, sensor_time(), PUBLISH_MAX_AGE):
                         self.last_failure = 'publish_expired'
                         self._finish_candidate(candidate, 'EXPIRED', 'publish_expired')
                         break
@@ -586,7 +591,7 @@ class Bridge:
                     raise  # Preserve publisher exception propagation; never retry it as TF.
                 completed_at = time.monotonic()
                 self.last_publish_s = completed_at-published_at
-                if not fresh(stamp, completed_at, PUBLISH_MAX_AGE):
+                if not fresh(stamp, sensor_time(), PUBLISH_MAX_AGE):
                     self.last_failure = 'publish_expired'
                     self._finish_candidate(candidate, 'EXPIRED', 'publish_expired')
                     break
@@ -602,7 +607,7 @@ class Bridge:
                     self.diag_counts['retry_wait_ns_max'] = max(self.diag_counts['retry_wait_ns_max'], waited)
                 self._finish_candidate(candidate, 'PUBLISHED', 'success')
                 self.last_failure = 'none'
-                stats.update(source_age_s=round(published_at-stamp, 4), compensated=self.predictions)
+                stats.update(source_age_s=round(published_source_age, 4), compensated=self.predictions)
                 reason = 'projected ' + json.dumps(stats)
                 if not self.announced:
                     self.node.get_logger().info('[VOA_COSTMAP] first fresh projection published')
@@ -612,7 +617,7 @@ class Bridge:
             diagnostic_now = time.monotonic()
             if (self.last_published
                     and (diagnostic_now-self.last_publish_time > PUBLISH_MAX_AGE
-                         or diagnostic_now-self.last_published > MAX_AGE)
+                         or sensor_time()-self.last_published > MAX_AGE)
                     and diagnostic_now-self.last_gap_log >= 1.0):
                 self.node.get_logger().info(
                     '[VOA_COSTMAP] heartbeat_gap ' +

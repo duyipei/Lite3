@@ -1,0 +1,97 @@
+--- a/include/fast_gicp/cuda/ndt_cuda.cuh
++++ b/include/fast_gicp/cuda/ndt_cuda.cuh
+@@ -24,6 +24,7 @@
+ namespace cuda {
+ 
+ class GaussianVoxelMap;
++struct P2DWorkspace;
+ 
+ class NDTCudaCore {
+ public:
+@@ -65,6 +66,9 @@
+ 
+   Eigen::Isometry3f linearized_x;
+   std::unique_ptr<Correspondences> correspondences;
++
++private:
++  mutable std::unique_ptr<P2DWorkspace> p2d_workspace_;
+ };
+ 
+ }  // namespace cuda
+--- a/src/fast_gicp/cuda/ndt_cuda.cu
++++ b/src/fast_gicp/cuda/ndt_cuda.cu
+@@ -1,6 +1,7 @@
+ #include <fast_gicp/cuda/ndt_cuda.cuh>
+ 
+ #include <thrust/device_vector.h>
++#include <thrust/copy.h>
+ 
+ #include <fast_gicp/cuda/gaussian_voxelmap.cuh>
+ #include <fast_gicp/cuda/covariance_regularization.cuh>
+@@ -9,6 +10,15 @@
+ 
+ namespace fast_gicp {
+ namespace cuda {
++
++// Per-instance P2D scratch only. Calls on one NDTCudaCore remain serialized,
++// as in the original implementation. No global allocator or shared workspace.
++struct P2DWorkspace {
++  P2DWorkspace() : search_pose(1), evaluation_poses(2), host_poses(2) {}
++  thrust::device_vector<Eigen::Isometry3f> search_pose;
++  thrust::device_vector<Eigen::Isometry3f> evaluation_poses;
++  thrust::host_vector<Eigen::Isometry3f, Eigen::aligned_allocator<Eigen::Isometry3f>> host_poses;
++};
+ 
+ NDTCudaCore::NDTCudaCore() {
+   cudaDeviceSynchronize();
+@@ -140,6 +150,25 @@
+ }
+ 
+ void NDTCudaCore::update_correspondences(const Eigen::Isometry3d& trans) {
++  if (distance_mode == fast_gicp::NDTDistanceMode::P2D) {
++    if (!p2d_workspace_) p2d_workspace_.reset(new P2DWorkspace());
++    // The previous search/reduction has completed before this synchronous
++    // update. Keep the search's original completion event and compaction.
++    p2d_workspace_->search_pose[0] = trans.cast<float>();
++    if (!correspondences) {
++      correspondences.reset(new Correspondences());
++      correspondences->reserve(source_points->size() * offsets->size());
++    }
++    // Preserve the existing vector's capacity/growth policy after its first
++    // reservation. Repeated exact reserve(new_maximum) could defeat geometric
++    // growth for gradually larger scans. The original search still resizes,
++    // rewrites and compacts the current entries on every linearization.
++    linearized_x = trans.cast<float>();
++    find_voxel_correspondences(*source_points, *target_voxelmap,
++                              p2d_workspace_->search_pose.data(), *offsets, *correspondences);
++    return;
++  }
++
+   thrust::device_vector<Eigen::Isometry3f> trans_ptr(1);
+   trans_ptr[0] = trans.cast<float>();
+ 
+@@ -160,6 +189,24 @@
+ }
+ 
+ double NDTCudaCore::compute_error(const Eigen::Isometry3d& trans, Eigen::Matrix<double, 6, 6>* H, Eigen::Matrix<double, 6, 1>* b) const {
++  if (distance_mode == fast_gicp::NDTDistanceMode::P2D) {
++    if (!p2d_workspace_) p2d_workspace_.reset(new P2DWorkspace());
++    auto& workspace = *p2d_workspace_;
++    workspace.host_poses[0] = linearized_x;
++    workspace.host_poses[1] = trans.cast<float>();
++    // Synchronous H2D copy retains the original stream ordering. Each
++    // reduction below returns a host scalar (and derivatives when needed),
++    // so its device work finishes before these buffers can be overwritten.
++    thrust::copy(workspace.host_poses.begin(), workspace.host_poses.end(),
++                 workspace.evaluation_poses.begin());
++    const auto x0 = workspace.evaluation_poses.data();
++    const auto xi = workspace.evaluation_poses.data() + 1;
++    if (H == nullptr && b == nullptr) {
++      return p2d_ndt_compute_error_only(*target_voxelmap, *source_points, *correspondences, xi);
++    }
++    return p2d_ndt_compute_derivatives(*target_voxelmap, *source_points, *correspondences, x0, xi, H, b);
++  }
++
+   thrust::host_vector<Eigen::Isometry3f, Eigen::aligned_allocator<Eigen::Isometry3f>> trans_(2);
+   trans_[0] = linearized_x;
+   trans_[1] = trans.cast<float>();

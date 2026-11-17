@@ -28,6 +28,7 @@ DYNAMIC_OBSTACLES=${LITE3_DYNAMIC_OBSTACLES:-0}
 DYNAMIC_OBSTACLES_EXPLICIT=${LITE3_DYNAMIC_OBSTACLES:+1}
 GROUND_MODE=${LITE3_GROUND_MODE:-map}
 LOCALIZATION_RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-audited}
+NDT_BACKEND=${LITE3_NDT_BACKEND:-default}
 OBSTACLE_BACKEND=${LITE3_OBSTACLE_BACKEND:-}
 USE_VENDOR_VOA=${LITE3_USE_VENDOR_VOA:-$DYNAMIC_OBSTACLES}
 USE_VENDOR_VOA_EXPLICIT=${LITE3_USE_VENDOR_VOA:+1}
@@ -107,6 +108,7 @@ RViz 默认通过无线 SSH 转发地图、点云和目标，适用于 NAT 虚�
 LITE3_RVIZ_SSH_BRIDGE=0 可恢复直接 DDS 显示。
 LITE3_DYNAMIC_OBSTACLES=1 启用实时全局绕行、等待和 VOA 近距离停车；需预先构建 VOA。
 LITE3_LOCALIZATION_RUNTIME=audited（默认）加载已校验的项目 NDT；vendor 回退原厂安装版。
+LITE3_NDT_BACKEND=default 使用机载发布配置；gpu_p2d 选择 GPU C，cpu_omp 选择原 CPU 构建。
 LITE3_OBSTACLE_BACKEND=factory_only（第一阶段默认）仅使用原厂 VOA 障碍感知；
   private_combined 保留私有 VOA 速度修正、Mid-360 与相机联合代价地图。
   未设置时沿用旧行为：LITE3_DYNAMIC_OBSTACLES=1 等价 private_combined。
@@ -122,6 +124,7 @@ validate_inputs() {
   [[ "$DYNAMIC_OBSTACLES" == 0 || "$DYNAMIC_OBSTACLES" == 1 ]] || die 'LITE3_DYNAMIC_OBSTACLES must be 0 or 1'
   [[ "$GROUND_MODE" == map || "$GROUND_MODE" == local ]] || die 'LITE3_GROUND_MODE must be map or local'
   [[ "$LOCALIZATION_RUNTIME" == vendor || "$LOCALIZATION_RUNTIME" == audited ]] || die 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited'
+  [[ "$NDT_BACKEND" == default || "$NDT_BACKEND" == cpu_omp || "$NDT_BACKEND" == gpu_p2d ]] || die 'LITE3_NDT_BACKEND must be default, cpu_omp or gpu_p2d'
   case "$OBSTACLE_BACKEND" in
     '') ;;
     factory_only)
@@ -206,6 +209,8 @@ deploy_runtime() {
     "$SCRIPT_DIR/local_ground_costmap_bridge.py" \
     "$SCRIPT_DIR/capture_ground_reference.py" \
     "$SCRIPT_DIR/check_localization_runtime.py" \
+    "$SCRIPT_DIR/select_ndt_backend.py" \
+    "$SCRIPT_DIR/check_system_time.py" \
     "$SCRIPT_DIR/navigation_recovery_budget.py" \
     "$SCRIPT_DIR/voa_camera_tf.py" \
     "$SCRIPT_DIR/voa_costmap_bridge.py" \
@@ -216,6 +221,7 @@ deploy_runtime() {
     "$ROBOT:$REMOTE_PROJECT/scripts/"
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/velocity_gate.py" \
+    "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/sensor_time.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/voa_protocol.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/patrol_runner.py" \
     "$PROJECT_DIR/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/rgbd_visual_localizer.py" \
@@ -228,6 +234,7 @@ deploy_runtime() {
   scp -q -o BatchMode=yes -o ConnectTimeout=8 -i "$SSH_KEY" \
     "$PROJECT_DIR/navigation/patrol_env.sh" \
     "$PROJECT_DIR/navigation/start_localization_only.sh" \
+    "$PROJECT_DIR/navigation/ndt_runtime_env.sh" \
     "$PROJECT_DIR/navigation/start_map_display_only.sh" \
     "$PROJECT_DIR/navigation/start_visual_localizer.sh" \
     "$PROJECT_DIR/navigation/start_visual_initialization.sh" \
@@ -262,7 +269,7 @@ cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/launch/patrol_navigation.launch.
   "$PROJECT/patrol_nav_ws/install_merged/share/lite3_patrol_nav/launch/patrol_navigation.launch.py"
 cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/launch/map_display.launch.py" \
   "$PROJECT/patrol_nav_ws/install_merged/share/lite3_patrol_nav/launch/map_display.launch.py"
-for module in velocity_gate voa_protocol rgbd_visual_localizer visual_matching learned_matching xfeat_matching visual_pose_initializer localization_consistency patrol_runner; do
+for module in velocity_gate voa_protocol sensor_time rgbd_visual_localizer visual_matching learned_matching xfeat_matching visual_pose_initializer localization_consistency patrol_runner; do
   cp "$PROJECT/patrol_nav_ws/src/lite3_patrol_nav/lite3_patrol_nav/$module.py" \
     "$PROJECT/patrol_nav_ws/install_merged/lib/python3.8/site-packages/lite3_patrol_nav/$module.py"
 done
@@ -296,6 +303,10 @@ MAP_DIR=$PROJECT/navigation/$MAP_ID
 fail=0
 pass() { echo "[PASS] $*"; }
 bad() { echo "[FAIL] $*"; fail=1; }
+
+if ! python3 "$PROJECT/scripts/check_system_time.py" check; then
+  bad 'Jetson 系统时间未经可信 NTP 同步，拒绝启动定位与导航'
+fi
 
 if [[ "$BACKEND" == factory_only ]]; then
   if bash "$PROJECT/navigation/start_factory_voa.sh" --check; then
@@ -1333,7 +1344,7 @@ start_session() {
 
   title "启动 Mid360、IMU 和修正后的 NDT"
   "${SSH_BG[@]}" \
-    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_NDT_FINE_REFINE='$FINE_REGISTRATION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' LITE3_LOCALIZATION_RUNTIME='$LOCALIZATION_RUNTIME' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
+    "exec env LITE3_PATROL_MAP_ID='$MAP_ID' LITE3_NDT_RESOLUTION='$NDT_RESOLUTION' LITE3_NDT_FINE_REFINE='$FINE_REGISTRATION' LITE3_DOWNSAMPLE_RESOLUTION='$DOWNSAMPLE_RESOLUTION' LITE3_LOCALIZATION_RUNTIME='$LOCALIZATION_RUNTIME' LITE3_NDT_BACKEND='$NDT_BACKEND' bash '$REMOTE_PROJECT/navigation/start_localization_only.sh'" \
     >"$LOG_DIR/localization.log" 2>&1 &
   LOCALIZATION_SSH_PID=$!
   sleep 2

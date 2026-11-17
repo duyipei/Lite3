@@ -18,18 +18,19 @@ if [[ "$MAP_ID" == indoor_fusion_20260912_001_area_review ]]; then
   GLOBALMAP_DOWNSAMPLE_RESOLUTION=0.1
 fi
 MAP_DIR=$PROJECT/navigation/$MAP_ID
+TIME_BASELINE=$(python3 "$PROJECT/scripts/check_system_time.py" check)
 source "$PROJECT/navigation/patrol_env.sh"
 # Use the verified project build; vendor remains an explicit rollback option.
 RUNTIME=${LITE3_LOCALIZATION_RUNTIME:-audited}
+NDT_REG_METHOD=NDT_OMP
+NDT_LAUNCH_ARGS=(lite3_patrol_nav patrol_navigation.launch.py)
 case "$RUNTIME" in
-  vendor) ;;
+  vendor)
+    [[ ${LITE3_NDT_BACKEND:-default} != gpu_p2d ]] || { echo 'GPU requires the audited C release' >&2; exit 1; }
+    echo '[CONFIG] NDT_BACKEND=CPU_NDT_OMP runtime=vendor'
+    ;;
   audited)
-    AUDITED_ROOT=$PROJECT/results/ndt_realtime_current
-    python3 "$PROJECT/scripts/check_localization_runtime.py" \
-      "$AUDITED_ROOT/runtime_manifest.json"
-    set +u
-    source "$AUDITED_ROOT/ws/install/setup.bash"
-    set -u
+    source "$PROJECT/navigation/ndt_runtime_env.sh"
     ;;
   *) echo 'LITE3_LOCALIZATION_RUNTIME must be vendor or audited' >&2; exit 1;;
 esac
@@ -123,7 +124,7 @@ fi
 # Bound OpenMP teams: FLANN status queries otherwise contend with scan matching
 # and the ROS callbacks on the six-core Jetson. Keep all quality checks intact.
 setsid env OMP_NUM_THREADS=1 OMP_WAIT_POLICY=PASSIVE GOMP_SPINCOUNT=0 \
-  ros2 launch lite3_patrol_nav patrol_navigation.launch.py \
+  ros2 launch "${NDT_LAUNCH_ARGS[@]}" \
   map_yaml:="$MAP_DIR/patrol_map.yaml" \
   globalmap_pcd:="$MAP_DIR/localization_map.pcd" \
   params_file:="$MAP_DIR/nav2_safe.yaml" \
@@ -134,4 +135,8 @@ setsid env OMP_NUM_THREADS=1 OMP_WAIT_POLICY=PASSIVE GOMP_SPINCOUNT=0 \
   globalmap_downsample_resolution:="$GLOBALMAP_DOWNSAMPLE_RESOLUTION" \
   downsample_resolution:="$DOWNSAMPLE_RESOLUTION" &
 localization_pid=$!
+# On a clock step, return nonzero into the existing EXIT cleanup. This stops
+# only this launcher's children; old TF/scan/anchor state is never reused.
+python3 "$PROJECT/scripts/check_system_time.py" watch \
+  --pid "$localization_pid" --baseline "$TIME_BASELINE"
 wait "$localization_pid"

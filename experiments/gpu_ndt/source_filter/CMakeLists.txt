@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.10)
+project(lite3_ndt_source_filter LANGUAGES C CXX)
+find_package(PCL 1.10 REQUIRED COMPONENTS io filters)
+add_executable(lite3_ndt_source_filter main.cpp)
+target_compile_features(lite3_ndt_source_filter PRIVATE cxx_std_14)
+target_include_directories(lite3_ndt_source_filter SYSTEM PRIVATE ${PCL_INCLUDE_DIRS})
+target_compile_options(lite3_ndt_source_filter PRIVATE ${PCL_DEFINITIONS})
+target_link_libraries(lite3_ndt_source_filter PRIVATE ${PCL_LIBRARIES})

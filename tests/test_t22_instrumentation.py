@@ -71,6 +71,9 @@ def load_leg(source):
         'tf2_ros': module('tf2_ros', TransformBroadcaster=FakeBroadcaster)}
     result = module('fake_leg_node')
     with patch.dict(sys.modules, modules): exec(compile(source, '<mock leg source>', 'exec'), result.__dict__)
+    # The fake ROS source clock follows this fixture's deterministic clock.
+    # Clock-domain mismatch regressions override it independently.
+    result.sensor_time = lambda: result.time.monotonic()
     return result
 
 

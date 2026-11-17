@@ -264,12 +264,18 @@ def test_copy_cost_is_removed_from_tf_critical_path_without_extra_copy():
     assert results[True] == 6000000 and results[False] == 0
 
 
-def test_sampling_period_qos_and_validation_function_unchanged():
+def test_sampling_period_qos_and_validation_unchanged_except_correct_source_clock():
     before = ast.parse(BASELINE)
     after = ast.parse((ROOT/'scripts/leg_odom_tf_bridge.py').read_text())
     def callback(tree):
         return next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == 'callback')
-    assert ast.dump(callback(before)) == ast.dump(callback(after))
+    class SourceClock(ast.NodeTransformer):
+        def visit_Call(self, node):
+            if isinstance(node.func, ast.Name) and node.func.id == 'sensor_time':
+                node.func = ast.Attribute(value=ast.Name(id='time', ctx=ast.Load()),
+                                          attr='monotonic', ctx=ast.Load())
+            return self.generic_visit(node)
+    assert ast.dump(callback(before)) == ast.dump(SourceClock().visit(callback(after)))
     node, _, _ = make_node()
     assert node.timers == [(.05, 'publish_latest'), (1., 'check_freshness')]
     assert node.subscription_args[-1].depth == 1

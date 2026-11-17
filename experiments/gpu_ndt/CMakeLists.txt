@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.15)
+project(lite3_gpu_ndt_registration_experiment LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenMP REQUIRED)
+link_libraries(OpenMP::OpenMP_CXX)
+include(targets.cmake)

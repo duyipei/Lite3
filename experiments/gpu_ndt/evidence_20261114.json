@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-14",
+  "feasibility": "conditional",
+  "base_head": "5647a93201aac03a86eff926adca888ffe99edc0",
+  "production_activated": false,
+  "production_tracked_files_changed": 0,
+  "jetson": {
+    "l4t": "R35.4.1",
+    "nvcc": "11.4.315",
+    "cudart": "11.4.298",
+    "jetpack_package_version": null,
+    "eigen": "3.3.7-2",
+    "pcl": "1.10.0+dfsg-5ubuntu1",
+    "gpu_architecture_expected": "Xavier NX Volta sm_72",
+    "gpu_architecture_enumerated": false,
+    "build_vgicp_cuda": true,
+    "ndt_cuda_pointxyzi_symbols_present": true,
+    "pcl_shared_ptr_abi": "boost",
+    "native_cubins_found": [
+      "sm_52"
+    ],
+    "ptx_found": [
+      "compute_52"
+    ],
+    "sm72_native_cubin_found": false,
+    "fast_gicp_sha256": "69a4fb746e4c1e4d14da7423aa9f4dd6348d7583ffdd73bab8f4189cc1e4a234",
+    "resolved_cuda_core_sha256": "cd7cca061d65b1323432d3ebe471e5769065d0ac0f33cf42fba823832bb0ae0d",
+    "kernel_executed_in_this_task": false,
+    "environment_actions": "read-only SSH only"
+  },
+  "tests": {
+    "gpu_experiment_passed": 94,
+    "related_regressions_passed": 168,
+    "failed": 0,
+    "skipped": 2,
+    "skip_reason": "P0/P1 before-change baseline header not available",
+    "actual_fast_gicp_headers_syntax": "passed with real PCL and declaration-only CUDA API substitute; no CUDA link",
+    "native_cpu_benchmark_build": "passed",
+    "native_cpu_only_gpu_refusal": "passed",
+    "gpu_native_build": "not executed; VM has no CUDA, Jetson build not authorized",
+    "jetson_integration": "not executed"
+  },
+  "cpu_benchmark": {
+    "host": "Ubuntu x86_64 virtual machine",
+    "omp_num_threads": 1,
+    "cxx_release_flags": "-O1 -DNDEBUG",
+    "resolution": 1.0,
+    "map_leaf": 0.5,
+    "ndt_omp_reference_commit": "5495fd9214945afcb4b35d5a1da385e405c52bf9",
+    "binary_sha256": "000f1a4540258610ad9fefd2748a9ad26b7c2ade8fb43c388509096587147779",
+    "results": {
+      "indoor": {
+        "comparison_status": "partial",
+        "scope": "VM CPU registration only; not Jetson/UKF/TF/VOA acceptance",
+        "dataset_id": "63a91194b43fb4215f131dd817a2460b942dcd77402ffd9a419634d553f49584",
+        "target_points": 831,
+        "steady_calls": 60,
+        "unique_frames": 6,
+        "seed_cases_per_frame": 2,
+        "warmup": 2,
+        "repeats": 5,
+        "converged": 60,
+        "independent_spatial_pass": 60,
+        "align_ms": {
+          "n": 60,
+          "mean": 1.2386107666666668,
+          "p50": 1.1986154999999998,
+          "p95": 2.5911519500000004,
+          "p99": 2.9621444599999984,
+          "max": 3.216969
+        },
+        "quality_ms": {
+          "n": 60,
+          "mean": 1.2715306333333334,
+          "p50": 1.2515580000000002,
+          "p95": 1.43362065,
+          "p99": 1.6426325499999992,
+          "max": 1.762612
+        },
+        "registration_pipeline_ms": {
+          "n": 60,
+          "mean": 2.5133064999999997,
+          "p50": 2.412849,
+          "p95": 3.7425395,
+          "p99": 4.3084884899999984,
+          "max": 4.521413
+        },
+        "rss_bytes": {
+          "n": 60,
+          "mean": 30085461.333333332,
+          "p50": 30175232.0,
+          "p95": 30175232.0,
+          "p99": 30175232.0,
+          "max": 30175232.0
+        }
+      },
+      "outdoor": {
+        "comparison_status": "partial",
+        "scope": "VM CPU registration only; not Jetson/UKF/TF/VOA acceptance",
+        "dataset_id": "9502827deada704d0ccf8929c239a0473e5298319da32d10c63d01861fdd8ac6",
+        "target_points": 130410,
+        "steady_calls": 60,
+        "unique_frames": 6,
+        "seed_cases_per_frame": 2,
+        "warmup": 2,
+        "repeats": 5,
+        "converged": 60,
+        "independent_spatial_pass": 60,
+        "align_ms": {
+          "n": 60,
+          "mean": 20.376971116666663,
+          "p50": 21.417313999999998,
+          "p95": 42.61866405,
+          "p99": 47.57808416999998,
+          "max": 50.915264
+        },
+        "quality_ms": {
+          "n": 60,
+          "mean": 6.359284249999999,
+          "p50": 6.790629,
+          "p95": 8.0586831,
+          "p99": 8.820851819999998,
+          "max": 8.962925
+        },
+        "registration_pipeline_ms": {
+          "n": 60,
+          "mean": 26.751701199999996,
+          "p50": 29.041225500000003,
+          "p95": 48.99324324999999,
+          "p99": 55.433999249999985,
+          "max": 58.974486
+        },
+        "rss_bytes": {
+          "n": 60,
+          "mean": 154122581.33333334,
+          "p50": 154312704.0,
+          "p95": 154652672.0,
+          "p99": 154652672.0,
+          "max": 154652672.0
+        }
+      }
+    }
+  },
+  "gpu_p2d": "unverified",
+  "gpu_d2d": "unverified",
+  "end_to_end_voa_benefit": "unverified",
+  "evidence_directory": "/tmp/lite3_gpu_ndt_20261114_7_nx5vg6",
+  "excluded_run": {
+    "path": "/tmp/lite3_gpu_ndt_20261114_7_nx5vg6/indoor_cpu_run",
+    "reason": "initial outdoor sample/indoor map mismatch; excluded from reported results"
+  }
+}

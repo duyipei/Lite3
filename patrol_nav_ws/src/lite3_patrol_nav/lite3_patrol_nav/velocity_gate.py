@@ -13,6 +13,7 @@ from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import Bool, Empty, Header, String
 from std_srvs.srv import SetBool, Trigger
 from .voa_protocol import VoaExchange, braking_correction
+from .sensor_time import sensor_time
 
 
 def clamp(value, limit):
@@ -124,7 +125,9 @@ class VelocityGate(Node):
         self.get_logger().warn("velocity gate started DISARMED; non-zero output is blocked")
 
     def now_monotonic(self):
-        return time.monotonic()
+        # Use the publishers' ROS steady clock for source ages and elapsed
+        # intervals. Safety thresholds and receive/source checks are unchanged.
+        return sensor_time()
 
     def raw_callback(self, message):
         if not all(math.isfinite(v) for v in (message.linear.x, message.linear.y, message.angular.z)):
@@ -190,7 +193,7 @@ class VelocityGate(Node):
                 or abs(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w - 1.) > .01):
             self.trip('invalid_odometry')
             return
-        # NDT output retains this Jetson's monotonic LiDAR source clock.
+        # NDT output retains this Jetson's ROS steady LiDAR source clock.
         if (message.header.frame_id != 'map' or message.child_frame_id != 'base_link'
                 or not 0 <= message.header.stamp.nanosec < 1000000000
                 or stamp <= self.last_odom_source_stamp

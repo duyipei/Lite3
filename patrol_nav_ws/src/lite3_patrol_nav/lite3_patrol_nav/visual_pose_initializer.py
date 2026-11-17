@@ -3,6 +3,8 @@
 
 import math
 import time
+
+from .sensor_time import sensor_time
 from collections import deque
 
 import rclpy
@@ -173,7 +175,9 @@ class VisualPoseInitializer(Node):
             self.get_logger().warn("visual initializer ready; velocity remains independently gated")
 
     def now_monotonic(self):
-        return time.monotonic()
+        # NDT status/odom use ROS steady sensor stamps, not Python monotonic.
+        # This clock also measures receipt intervals without wall-clock jumps.
+        return sensor_time()
 
     def set_ready(self, value):
         message = Bool()
@@ -444,7 +448,7 @@ class VisualPoseInitializer(Node):
     def status_callback(self, message):
         stamp = self.stamp_ns(message)
         now = self.now_monotonic()
-        # Source stamps are in Jetson CLOCK_MONOTONIC, not ROS wall time.
+        # Source stamps use Jetson ROS steady time, not ROS wall time.
         # Arrival alone cannot certify a queued/replayed scan as fresh.
         if (stamp <= 0 or stamp <= self.last_status_stamp
                 or not -.05 <= now-stamp/1e9 <= float(self.get_parameter('sensor_max_age_s').value)):

@@ -436,6 +436,10 @@ class FactoryVoaLauncherTests(unittest.TestCase):
                 'export PATH="%s/bin:$PATH"\n' % root)
             (root / 'scripts/navigation_recovery_budget.py').write_text(
                 'print(60.0)\n')
+            # This supervisor test assumes a trusted clock; clock refusal and
+            # step handling are exercised separately in test_system_time_safety.
+            (root / 'scripts/check_system_time.py').write_text(
+                'import sys\nassert sys.argv[1:] == ["check"]\n')
             factory = root / 'navigation/start_factory_voa.sh'
             factory.write_text(
                 '#!/usr/bin/env bash\n'

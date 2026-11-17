@@ -1,0 +1,53 @@
+{
+  "origin": "read-only Jetson source snapshot used for gpu_ndt_20261116_ksq6a947",
+  "production_activated": false,
+  "files": {
+    "src/fast_gicp/cuda/ndt_cuda.cu": "309f1d653af9242c62a83869a37194e011dbb4e0e208af4cbd393de923f59611",
+    "src/fast_gicp/cuda/ndt_compute_derivatives.cu": "036410f9c8022b2618d74d8c75abe2d83d329edf5627d724067943425a0e8182",
+    "src/fast_gicp/cuda/find_voxel_correspondences.cu": "17dc377084955bba9bb87d9abfb8e3c9e0fb8c32242412a7b477a71d3b6426bb",
+    "include/fast_gicp/gicp/impl/lsq_registration_impl.hpp": "8989a9fa44f83fc5be7f1872e4431379a369ee3f9a33317e80bbf8e3b7b16203",
+    "include/fast_gicp/ndt/impl/ndt_cuda_impl.hpp": "cac8a760d44bd9a427463bc2a34aac0bba26f697dd34ca0fbaad0a71c458affe"
+  },
+  "reference_headers": {
+    "include/fast_gicp/cuda/ndt_cuda.cuh": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/cuda/ndt_cuda.cuh",
+      "sha256": "0863508f8e5772facad3af349bd6cf1509ef57c8143bb872ebbb727a77f7b170",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/cuda/ndt_compute_derivatives.cuh": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/cuda/ndt_compute_derivatives.cuh",
+      "sha256": "2c97feb04dd2accb8aab6892103213396e96a41fb5525188971098321ee30034",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/cuda/gaussian_voxelmap.cuh": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/cuda/gaussian_voxelmap.cuh",
+      "sha256": "ba3b6782b8ae7558066f122ce97654119587c8a3feb8c7e8c68c591dacded9ad",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/cuda/find_voxel_correspondences.cuh": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/cuda/find_voxel_correspondences.cuh",
+      "sha256": "8926605cc74831c31198f7c8a0a8d263d47adc93f042116a5077f0c7d7fd697a",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/cuda/covariance_regularization.cuh": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/cuda/covariance_regularization.cuh",
+      "sha256": "788c4f1d04ca0808c414f60482e9484cc46bcf4119021eceac70668b2e9f2d3c",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/ndt/ndt_settings.hpp": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/ndt/ndt_settings.hpp",
+      "sha256": "ab01583ddaff16e02e56461118ea91a6846782005f88ec9d8111934463dab0a7",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/gicp/gicp_settings.hpp": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/gicp/gicp_settings.hpp",
+      "sha256": "47e9d0f57c505751205ffbc7c655e5244429f172b18944cb2cae79f99f5d9238",
+      "installed_jetson_header_verified": false
+    },
+    "include/fast_gicp/so3/so3.hpp": {
+      "url": "https://raw.githubusercontent.com/koide3/fast_gicp/0e7ec1441c99f7be453db2ea216d5de029387417/include/fast_gicp/so3/so3.hpp",
+      "sha256": "c54cc85c64e42dd95803a9b897bd252ffadd0dc2401027c9f9ec6f533b37d37e",
+      "installed_jetson_header_verified": false
+    }
+  }
+}

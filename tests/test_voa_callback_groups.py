@@ -357,6 +357,7 @@ def run_main(hook, baseline=False, diagnostics=False):
         probe = NS(active=lambda: False, close=lambda: None) if diagnostics else None
         with patch.object(recorder, 'create_probe', return_value=probe):
             with patch.object(sys, 'argv', ['voa_costmap_bridge.py','--config',str(ROOT/'navigation/vendor_voa.yaml')]):
+                bridge_module.sensor_time = lambda: bridge_module.time.monotonic()
                 bridge_module.main()
     for executor in instances:
         executor._executor.shutdown(wait=True)

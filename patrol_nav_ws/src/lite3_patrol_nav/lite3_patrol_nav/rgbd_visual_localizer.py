@@ -202,6 +202,7 @@ class VisualLocalizer(Node):
         self.metric_pose_seen = False
         self.confirmation_source = None
         self.last_candidate_time = 0.0
+        self.last_initializer_state = None
         self.pose_publisher = self.create_publisher(
             PoseWithCovarianceStamped, self.get_parameter("pose_topic").value, 10
         )
@@ -237,8 +238,23 @@ class VisualLocalizer(Node):
         # Only the initializer's explicit request resumes the visual frontend.
 
     def initializer_state_callback(self, message):
-        if (not self.visual_paused
-                or message.data != "COLLECTING_VISUAL_POSES"):
+        previous = getattr(self, 'last_initializer_state', None)
+        self.last_initializer_state = message.data
+        if (not self.visual_paused and message.data != previous
+                and message.data.startswith(("COLLECTING:position_std_", "COLLECTING:yaw_std_"))):
+            # The independent initializer rejected this cluster. Do not keep
+            # probing the same weak reference forever; preserve tried IDs so
+            # the next batch explores other allowed references.
+            self.learned_preferred_ids = []
+            self.confirmation_history.clear()
+            self.confirmation_source = None
+            if self.search_mode == 'startup':
+                self.search_strategy = self.configured_search_strategy
+            if self.xfeat_matcher is not None:
+                self.xfeat_matcher.reset_search()
+            return
+        if (message.data != "COLLECTING_VISUAL_POSES"
+                or (not self.visual_paused and message.data == previous)):
             return
         self.visual_paused = False
         self.localization_ready = False
@@ -250,6 +266,9 @@ class VisualLocalizer(Node):
         self.search_mode = "global" if self.search_strategy == "global" else "startup"
         self.failed_searches = 0
         self.last_recovery_search = 0.0
+        self.learned_preferred_ids = []
+        self.learned_tried_ids.clear()
+        self.learned_misses = 0
         if self.xfeat_matcher is not None:
             self.xfeat_matcher.reset_search()
         self.latest_image = None
@@ -383,11 +402,9 @@ class VisualLocalizer(Node):
         if int(self.get_parameter("learned_required_references").value) == 1:
             consistent = solutions
         self.last_learned_detail = "{};agree={}".format("|".join(details), len(consistent))
-        if consistent or solutions:
-            self.learned_preferred_ids = [item["keyframe"] for item in sorted(
-                consistent or solutions, key=lambda item: item["inliers"], reverse=True)[:2]]
-            self.learned_misses = 0
-        else:
+        # A raw PnP solution is not yet a confirmed observation. In particular,
+        # ambiguous/stale/temporally inconsistent results must not pin search.
+        if not consistent:
             self.learned_misses += 1
             if self.learned_misses >= 5:
                 self.learned_preferred_ids = []
@@ -435,6 +452,9 @@ class VisualLocalizer(Node):
                 self.last_recovery_search = 0.0
                 if self.xfeat_matcher is not None:
                     self.xfeat_matcher.reset_search()
+                self.learned_preferred_ids = []
+                self.learned_tried_ids.clear()
+                self.learned_misses = 0
                 self.get_logger().warn(
                     "no confirmed start-area match; switching to global keyframe search"
                 )
@@ -688,6 +708,9 @@ class VisualLocalizer(Node):
                 # Only a published pose that passed all checks can promote a
                 # preferred reference; raw PnP candidates never change it.
                 self.xfeat_matcher.remember([best])
+            elif best['source'] == 'learned_pnp':
+                self.learned_preferred_ids = [item['keyframe'] for item in solutions[:2]]
+                self.learned_misses = 0
             self.publish_state(
                 "POSE:mode={},source={},kf={},inliers={},x={:.2f},y={:.2f},yaw={:.2f},query_age={:.2f}s,input_age={:.2f}s,inference={:.2f}s".format(
                     self.search_mode, best["source"], best["keyframe"], best["inliers"], pose[0, 3], pose[1, 3], yaw,

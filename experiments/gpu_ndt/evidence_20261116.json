@@ -1,0 +1,216 @@
+{
+  "date": "2026-11-16",
+  "outcome": "native GPU works; production integration acceptance gate not passed",
+  "native_cuda_verified": true,
+  "sm72_cubin_verified": true,
+  "gpu_kernel_verified": true,
+  "production_cpu_replaced": false,
+  "gpu_ros_node_built": false,
+  "full_chain_tested": false,
+  "operator_power_cycle_confirmed": true,
+  "post_power_cycle_auto_ntp_verified": true,
+  "rtc_initial_boot_value": "2026-11-16T10:04:52 UTC",
+  "post_boot_ntp_initial_sync": "2026-11-16T18:05:37 Asia/Shanghai",
+  "final_ntp_reset_initial_sync": "2026-11-16T18:19:54 Asia/Shanghai",
+  "time_sources_effective": [
+    "ntp.tuna.tsinghua.edu.cn",
+    "ntp.ubuntu.com",
+    "ntp.aliyun.com",
+    "time.cloudflare.com"
+  ],
+  "original_time_backup": "/var/backups/lite3-time-20261031T064201-29006",
+  "final_time_backup": "/var/backups/lite3-time-20261116T101946-6662",
+  "tests": {
+    "passed": 392,
+    "failed": 0,
+    "skipped": 2,
+    "new_tests": 62,
+    "gpu_specific": 130,
+    "scope": "VM Mock/static/real C++ extracted regressions; actual Jetson native benchmarks and traces are separate"
+  },
+  "artifacts": "/home/duyipei/Lite3_GPU_NDT_results/20261116_ksq6a947",
+  "remote_experiment": "/home/ysc/lite3_patrol_project/results/gpu_ndt_20261116_ksq6a947",
+  "report": "docs/Jetson_时间同步与GPU_NDT验证_20261116.rst",
+  "metrics": {
+    "outdoor": {
+      "unique_scans": 6,
+      "steady_samples_per_backend": 120,
+      "backends": {
+        "NDT_OMP": {
+          "converged": 120,
+          "common_spatial_pass": 120,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 63.91758939166666,
+            "p50": 68.151636,
+            "p95": 133.20402725,
+            "p99": 140.74593984,
+            "max": 140.941896
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 103.07081387499998,
+            "p50": 114.71552349999999,
+            "p95": 172.76991844999998,
+            "p99": 186.10580457,
+            "max": 186.940232
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 101.66321666666666,
+            "p50": 113.1425,
+            "p95": 170.65175,
+            "p99": 182.53987,
+            "max": 184.128
+          }
+        },
+        "NDT_CUDA_P2D": {
+          "converged": 120,
+          "common_spatial_pass": 120,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 73.26536283333333,
+            "p50": 80.066071,
+            "p95": 124.3305027,
+            "p99": 197.04429373000002,
+            "max": 269.845687
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 115.13042260833332,
+            "p50": 114.371956,
+            "p95": 171.6473337,
+            "p99": 309.87697625000015,
+            "max": 333.725373
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 87.24584166666666,
+            "p50": 90.041,
+            "p95": 126.44725,
+            "p99": 156.54419000000001,
+            "max": 169.514
+          }
+        },
+        "NDT_CUDA_D2D": {
+          "converged": 106,
+          "common_spatial_pass": 106,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 86.16585054166666,
+            "p50": 77.615516,
+            "p95": 162.28780009999997,
+            "p99": 185.38715837,
+            "max": 186.658337
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 126.38007759166665,
+            "p50": 117.91181700000001,
+            "p95": 212.2542603,
+            "p99": 231.03059317,
+            "max": 232.273515
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 95.15822499999999,
+            "p50": 87.13499999999999,
+            "p95": 155.6155,
+            "p99": 158.70586,
+            "max": 159.039
+          }
+        }
+      }
+    },
+    "indoor": {
+      "unique_scans": 6,
+      "steady_samples_per_backend": 120,
+      "backends": {
+        "NDT_OMP": {
+          "converged": 120,
+          "common_spatial_pass": 120,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 5.141007366666667,
+            "p50": 5.087756,
+            "p95": 11.14566715,
+            "p99": 11.2334404,
+            "max": 11.417675
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 13.653869041666665,
+            "p50": 13.964828,
+            "p95": 19.19223685,
+            "p99": 19.44561421,
+            "max": 19.52672
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 13.505683333333332,
+            "p50": 13.8355,
+            "p95": 19.04035,
+            "p99": 19.20334,
+            "max": 19.321
+          }
+        },
+        "NDT_CUDA_P2D": {
+          "converged": 115,
+          "common_spatial_pass": 115,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 43.69621073333334,
+            "p50": 42.9197305,
+            "p95": 77.71608684999998,
+            "p99": 123.85823248000001,
+            "max": 126.276737
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 53.728494575,
+            "p50": 52.3230315,
+            "p95": 87.67304579999998,
+            "p99": 134.20028410999998,
+            "max": 135.012587
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 39.828783333333334,
+            "p50": 39.7455,
+            "p95": 63.578749999999985,
+            "p99": 94.5148,
+            "max": 94.968
+          }
+        },
+        "NDT_CUDA_D2D": {
+          "converged": 117,
+          "common_spatial_pass": 117,
+          "align_sync_ms": {
+            "n": 120,
+            "mean": 25.035357058333336,
+            "p50": 22.988031,
+            "p95": 38.75562219999999,
+            "p99": 42.20244618,
+            "max": 43.778475
+          },
+          "standalone_pipeline_ms": {
+            "n": 120,
+            "mean": 35.29572046666667,
+            "p50": 33.0980885,
+            "p95": 48.780039949999995,
+            "p99": 54.27445299,
+            "max": 54.871111
+          },
+          "process_cpu_ms": {
+            "n": 120,
+            "mean": 26.681874999999998,
+            "p50": 24.670499999999997,
+            "p95": 35.1535,
+            "p99": 40.87841,
+            "max": 41.07
+          }
+        }
+      }
+    }
+  }
+}

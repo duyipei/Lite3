@@ -16,6 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('voa_costmap', ROOT/'scripts/voa_costmap_bridge.py')
 M = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(M)
+# Ordinary geometry/runtime fixtures use one deterministic clock domain.
+# Dedicated regressions exercise independent ROS steady and retry clocks.
+M.sensor_time = lambda: M.time.monotonic()
 
 
 def transform(yaw=0, pitch=0, x=0, y=0):

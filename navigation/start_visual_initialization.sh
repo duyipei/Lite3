@@ -3,6 +3,7 @@
 set -Eeuo pipefail
 
 PROJECT=/home/ysc/lite3_patrol_project
+python3 "$PROJECT/scripts/check_system_time.py" check
 MAP_ID=${LITE3_PATROL_MAP_ID:-site_fusion_20260909_001}
 CONFIG=$PROJECT/navigation/$MAP_ID/visual_initialization.yaml
 TEST_ONLY=${LITE3_RELOCALIZATION_TEST_ONLY:-0}
